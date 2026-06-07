@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Impressum — Structural Content</title>
+  <meta name="description" content="Impressum / legal notice for Structural Content, Sebastian Messerer, Berlin." />
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#F7F5F0" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --stone:        #F7F5F0;
+      --charcoal:     #1F1D1A;
+      --charcoal-soft:#403C36;
+      --muted:        #6B665D;
+      --accent:       #1F5E55;
+      --accent-deep:  #184a43;
+      --line:         #E3DFD6;
+      --serif: "Fraunces", Georgia, "Times New Roman", serif;
+      --sans:  "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--stone);
+      color: var(--charcoal);
+      font-family: var(--sans);
+      font-size: 18px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent-deep); text-decoration: underline; text-underline-offset: 3px; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+
+    .wrap { max-width: 720px; margin: 0 auto; padding: 0 28px; }
+
+    .site-header { border-bottom: 1px solid var(--line); }
+    .site-header .wrap {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 68px; gap: 16px;
+    }
+    .wordmark {
+      font-family: var(--serif); font-weight: 600; font-size: 1.15rem;
+      color: var(--charcoal); letter-spacing: -0.01em; white-space: nowrap;
+    }
+    .wordmark:hover { text-decoration: none; color: var(--charcoal); }
+    .back { font-size: 0.95rem; font-weight: 500; }
+    .back::before { content: "\2190 "; }
+
+    main { padding: 80px 0 96px; }
+    h1 {
+      font-family: var(--serif); font-weight: 500;
+      font-size: clamp(1.9rem, 4vw, 2.4rem); line-height: 1.15;
+      letter-spacing: -0.01em; margin: 0 0 36px;
+    }
+    .imprint p { margin: 0 0 1.3rem; color: var(--charcoal-soft); font-size: 0.98rem; }
+    .imprint strong { color: var(--charcoal); font-weight: 600; }
+
+    .site-footer { padding: 40px 0; border-top: 1px solid var(--line); }
+    .site-footer .wrap {
+      display: flex; align-items: baseline; justify-content: space-between;
+      flex-wrap: wrap; gap: 10px 28px;
+    }
+    .site-footer .fw { font-family: var(--serif); font-weight: 600; color: var(--charcoal); }
+    .site-footer .meta { font-size: 0.9rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a href="index.html" class="wordmark">Structural Content</a>
+      <a href="index.html" class="back">Back to home</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap imprint">
+      <h1>Impressum</h1>
+      <p>Angaben gemäß § 5 DDG (Digitale-Dienste-Gesetz)</p>
+      <p>
+        Sebastian Messerer<br />
+        Gleimstraße 36<br />
+        10437 Berlin<br />
+        Deutschland
+      </p>
+      <p>
+        <strong>Kontakt</strong><br />
+        E-Mail: <a href="mailto:sebastian@sebastianmesserer.com">sebastian@sebastianmesserer.com</a>
+      </p>
+      <p>
+        <strong>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</strong><br />
+        Sebastian Messerer, Anschrift wie oben.
+      </p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span class="fw">Structural Content</span>
+      <span class="meta">Berlin, Germany</span>
+    </div>
+  </footer>
+</body>
+</html>
