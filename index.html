@@ -7,6 +7,7 @@
   <meta name="description" content="Structural Content is an AI system that connects to the tools where work already happens, detects moments where content can move a real business outcome, and drafts the content to act on them." />
   <meta name="author" content="Sebastian Messerer" />
   <meta name="theme-color" content="#F7F5F0" />
+  <script>document.documentElement.className += " js";</script>
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
@@ -268,33 +269,133 @@
       .step:last-child { border-bottom: none; }
     }
 
-    /* ---------- Example cards ---------- */
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
+    /* ---------- Examples: trace -> content job ---------- */
+    #examples .section-head .support {
+      font-size: 1rem;
+      color: var(--muted);
+      margin-bottom: 0;
     }
-    .card {
+    .col-caps {
+      display: grid;
+      grid-template-columns: 96px 1fr 40px 1fr;
+      gap: 0 18px;
+      margin-bottom: 14px;
+    }
+    .col-caps span {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .col-caps .cap-trace { grid-column: 2; }
+    .col-caps .cap-job { grid-column: 4; }
+
+    .jobs { display: flex; flex-direction: column; gap: 18px; }
+
+    .job-row {
+      display: grid;
+      grid-template-columns: 96px 1fr 40px 1fr;
+      gap: 0 18px;
+      align-items: stretch;
+    }
+
+    .fn-pill {
+      align-self: start;
+      margin-top: 6px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 4px 9px;
+      border-radius: 6px;
+      white-space: nowrap;
+      justify-self: start;
+    }
+    .fn-sales     { background: #F3E2C7; color: #7a5a1e; }
+    .fn-product   { background: #F4EDCB; color: #6f6420; }
+    .fn-community { background: #D6E8E2; color: #1d524a; }
+    .fn-cs        { background: #DBE9D8; color: #38612f; }
+
+    .trace-card {
       background: var(--stone-card);
       border: 1px solid var(--line);
       border-radius: 12px;
-      padding: 28px 26px;
+      padding: 18px 20px;
       box-shadow: var(--shadow);
-      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
     }
-    .card:hover {
-      transform: translateY(-2px);
-      border-color: var(--line-strong);
-      box-shadow: 0 2px 4px rgba(31,29,26,0.05), 0 14px 34px rgba(31,29,26,0.08);
+    .trace-src, .job-label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
     }
-    .card h3 {
-      font-size: 1.22rem;
-      margin-bottom: 12px;
-    }
-    .card p { font-size: 0.96rem; margin: 0; color: var(--muted); }
+    .trace-card p { font-size: 0.96rem; line-height: 1.45; margin: 0; color: var(--charcoal); }
+    .trace-meta { display: block; margin-top: 8px; font-size: 0.82rem; color: var(--muted); font-style: italic; }
 
-    @media (max-width: 920px) { .cards { grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 600px) { .cards { grid-template-columns: 1fr; } }
+    .arrow {
+      align-self: center;
+      justify-self: center;
+      color: var(--muted);
+      font-size: 1.25rem;
+      line-height: 1;
+    }
+    .arrow .down { display: none; }
+
+    .job-card {
+      background: var(--charcoal);
+      border-radius: 12px;
+      padding: 18px 20px;
+      box-shadow: var(--shadow);
+    }
+    .job-card .job-label { color: #9a948a; }
+    .job-card p { font-size: 0.96rem; line-height: 1.45; margin: 0; color: #F4F1EB; }
+    .job-meta { display: block; margin-top: 8px; font-size: 0.82rem; color: #8d978f; }
+
+    /* Scroll-triggered staged reveal — only when JS is on and motion is allowed */
+    @media (prefers-reduced-motion: no-preference) {
+      html.js .trace-card,
+      html.js .arrow,
+      html.js .job-card {
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      html.js .arrow { transform: none; }
+      html.js .jobs.reveal .trace-card,
+      html.js .jobs.reveal .arrow,
+      html.js .jobs.reveal .job-card {
+        opacity: 1;
+        transform: none;
+      }
+      /* Stage 1: traces populate first, staggered top-to-bottom */
+      html.js .jobs.reveal .job-row:nth-child(1) .trace-card { transition-delay: 0s; }
+      html.js .jobs.reveal .job-row:nth-child(2) .trace-card { transition-delay: 0.12s; }
+      html.js .jobs.reveal .job-row:nth-child(3) .trace-card { transition-delay: 0.24s; }
+      html.js .jobs.reveal .job-row:nth-child(4) .trace-card { transition-delay: 0.36s; }
+      /* Stage 2: arrows */
+      html.js .jobs.reveal .arrow { transition-delay: 0.6s; }
+      /* Stage 3: content jobs respond, staggered */
+      html.js .jobs.reveal .job-row:nth-child(1) .job-card { transition-delay: 0.85s; }
+      html.js .jobs.reveal .job-row:nth-child(2) .job-card { transition-delay: 0.97s; }
+      html.js .jobs.reveal .job-row:nth-child(3) .job-card { transition-delay: 1.09s; }
+      html.js .jobs.reveal .job-row:nth-child(4) .job-card { transition-delay: 1.21s; }
+    }
+
+    @media (max-width: 760px) {
+      .col-caps { display: none; }
+      .job-row {
+        grid-template-columns: 1fr;
+        gap: 10px 0;
+        justify-items: stretch;
+      }
+      .arrow { justify-self: center; }
+      .arrow .right { display: none; }
+      .arrow .down { display: inline; }
+    }
 
     /* ---------- Fit / Distinction ---------- */
     .prose p { max-width: 70ch; }
@@ -490,32 +591,72 @@
         <div class="section-head measure">
           <p class="eyebrow">Examples</p>
           <h2 id="examples-h">What that looks like in practice</h2>
+          <p class="support">From the traces a business already emits to the content job that moves the outcome. Illustrative — a dev-tooling scale-up. Fictional, real-world plausible.</p>
         </div>
-        <div class="cards">
-          <article class="card">
-            <h3>Deal reactivation</h3>
-            <p>A deal was lost because a feature or integration was missing. The feature has now shipped. Structural Content spots the match between the old blocker and the new reality, then drafts targeted re-engagement outreach for the seller.</p>
-          </article>
-          <article class="card">
-            <h3>Module and feature adoption</h3>
-            <p>A customer segment is underusing a high-value capability. Structural Content identifies the pattern in usage data and drafts tailored enablement content that helps the right accounts adopt the feature or module.</p>
-          </article>
-          <article class="card">
-            <h3>Support-ticket pre-emption</h3>
-            <p>The same issue keeps generating support volume. Structural Content detects the cluster and drafts proactive educational content that can answer the issue before another ticket is opened.</p>
-          </article>
-          <article class="card">
-            <h3>Renewal protection</h3>
-            <p>An account is drifting, usage is softening, or a champion has changed ahead of renewal. Structural Content can help generate the content that reminds the customer of value already realized and supports the save motion.</p>
-          </article>
-          <article class="card">
-            <h3>Advocacy and proof</h3>
-            <p>A customer is clearly succeeding but has not yet been asked for a review, testimonial, reference, or story. Structural Content spots the moment and drafts a personalized ask anchored in that customer’s own result.</p>
-          </article>
-          <article class="card">
-            <h3>Activation and onboarding</h3>
-            <p>New users keep stalling at the same step before activation. Structural Content turns that stall signal into context-specific content that helps users complete the next meaningful action.</p>
-          </article>
+
+        <div class="col-caps" aria-hidden="true">
+          <span class="cap-trace">The trace it reads</span>
+          <span class="cap-job">The content job it drafts</span>
+        </div>
+
+        <div class="jobs">
+          <div class="job-row">
+            <span class="fn-pill fn-sales">Sales</span>
+            <article class="trace-card">
+              <span class="trace-src">Lost deal · last quarter</span>
+              <p>Deal lost to a self-hosted competitor — cited missing SSO/SAML. SSO shipped in the latest release.</p>
+              <span class="trace-meta">2 other lost deals named the same gap</span>
+            </article>
+            <div class="arrow" aria-hidden="true"><span class="right">→</span><span class="down">↓</span></div>
+            <article class="job-card">
+              <span class="job-label">Content job</span>
+              <p>Draft reactivation outreach to the 3 deals lost on SSO, leading with the shipped feature and a migration path. Route to deal owners.</p>
+              <span class="job-meta">Measure: reply rate · reopened pipeline</span>
+            </article>
+          </div>
+
+          <div class="job-row">
+            <span class="fn-pill fn-product">Product</span>
+            <article class="trace-card">
+              <span class="trace-src">Product usage</span>
+              <p>New Insights module live 6 weeks. Under 12% of Enterprise accounts have enabled it.</p>
+              <span class="trace-meta">41 multi-seat accounts</span>
+            </article>
+            <div class="arrow" aria-hidden="true"><span class="right">→</span><span class="down">↓</span></div>
+            <article class="job-card">
+              <span class="job-label">Content job</span>
+              <p>Draft an in-app guide and targeted email showing Enterprise admins how to switch on Insights, populated with their own workspace data.</p>
+              <span class="job-meta">Measure: activation rate over 21 days</span>
+            </article>
+          </div>
+
+          <div class="job-row">
+            <span class="fn-pill fn-community">Community</span>
+            <article class="trace-card">
+              <span class="trace-src">Forum + Discord</span>
+              <p>Thread on rate-limiting hit 40+ replies with no official answer. Same question twice in Discord this week.</p>
+            </article>
+            <div class="arrow" aria-hidden="true"><span class="right">→</span><span class="down">↓</span></div>
+            <article class="job-card">
+              <span class="job-label">Content job</span>
+              <p>Draft a canonical how-to and docs update answering the rate-limit question; publish from the official account and pin it.</p>
+              <span class="job-meta">Measure: thread resolved · tickets deflected</span>
+            </article>
+          </div>
+
+          <div class="job-row">
+            <span class="fn-pill fn-cs">Cust. Success</span>
+            <article class="trace-card">
+              <span class="trace-src">Renewal in 60 days</span>
+              <p>Champion left in April; weekly active usage down to 31%. CS flagged at-risk.</p>
+            </article>
+            <div class="arrow" aria-hidden="true"><span class="right">→</span><span class="down">↓</span></div>
+            <article class="job-card">
+              <span class="job-label">Content job</span>
+              <p>Draft a value-recap and re-activation sequence for the account's admins, anchored in their own usage and wins to date.</p>
+              <span class="job-meta">Measure: WAU change · renewal outcome</span>
+            </article>
+          </div>
         </div>
       </div>
     </section>
@@ -626,5 +767,24 @@
       <a class="meta foot-link" href="impressum.html">Impressum</a>
     </div>
   </footer>
+
+  <script>
+    (function () {
+      var jobs = document.querySelector(".jobs");
+      if (!jobs || !("IntersectionObserver" in window)) {
+        if (jobs) jobs.classList.add("reveal");
+        return;
+      }
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("reveal");
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.25, rootMargin: "0px 0px -10% 0px" });
+      obs.observe(jobs);
+    })();
+  </script>
 </body>
 </html>
