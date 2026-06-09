@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="SC">
+  <rect width="128" height="128" rx="26" fill="#1F5E55"/>
+  <text x="64" y="68"
+        text-anchor="middle" dominant-baseline="central"
+        fill="#F7F5F0"
+        font-family="Fraunces, Georgia, 'Times New Roman', serif"
+        font-size="82"
+        letter-spacing="-3"
+        style="font-variation-settings:'opsz' 72,'wght' 600,'SOFT' 0,'WONK' 0;">SC</text>
+</svg>

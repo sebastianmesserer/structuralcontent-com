@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewBox="0 0 1000 1000" role="img" aria-label="Structural Content — SC">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#23685e"/>
+      <stop offset="1" stop-color="#184a43"/>
+    </linearGradient>
+  </defs>
+  <rect width="1000" height="1000" rx="96" fill="url(#bg)"/>
+  <rect x="34" y="34" width="932" height="932" rx="66" fill="none" stroke="#F7F5F0" stroke-opacity="0.10" stroke-width="2"/>
+  <text x="500" y="512"
+        text-anchor="middle" dominant-baseline="central"
+        fill="#F7F5F0"
+        font-family="Fraunces, Georgia, 'Times New Roman', serif"
+        font-size="560"
+        letter-spacing="-14"
+        style="font-variation-settings:'opsz' 144,'wght' 540,'SOFT' 0,'WONK' 0;">SC</text>
+</svg>
