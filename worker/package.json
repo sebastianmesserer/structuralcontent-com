@@ -1,0 +1,18 @@
+{
+  "name": "sc-cascade-worker",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Cloudflare Worker proxy for the Structural Content cascade demo",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "put-prompt": "wrangler secret put SYSTEM_PROMPT < prompts/system-prompt.md"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.90.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0",
+    "wrangler": "^4.0.0"
+  }
+}

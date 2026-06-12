@@ -1,0 +1,25 @@
+name = "sc-cascade"
+main = "src/index.ts"
+compatibility_date = "2026-06-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+# Quality default. Cheaper/faster alternative: "claude-sonnet-4-6" (one-line switch, redeploy).
+MODEL = "claude-opus-4-8"
+
+# Secrets (set once via wrangler, never in this file):
+#   npx wrangler secret put ANTHROPIC_API_KEY
+#   npx wrangler secret put SYSTEM_PROMPT < prompts/system-prompt.md
+
+[[unsafe.bindings]]
+name = "RATE_LIMITER"
+type = "ratelimit"
+namespace_id = "1001"
+simple = { limit = 5, period = 60 }
+
+# Consented research storage. Local dev simulates KV; before the first deploy run
+#   npx wrangler kv namespace create RESEARCH
+# and replace the placeholder id below with the one it prints.
+[[kv_namespaces]]
+binding = "RESEARCH"
+id = "00000000000000000000000000000000"
