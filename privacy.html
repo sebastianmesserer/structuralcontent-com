@@ -12,11 +12,31 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/Media/logo/favicon-32.png" />
   <link rel="apple-touch-icon" href="/Media/logo/apple-touch-icon.png" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="preload" href="/Media/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/Media/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
 
   <style>
+    /* Self-hosted fonts (no external CDN; see privacy.html) */
+    @font-face {
+      font-family: "Fraunces"; font-style: normal; font-weight: 400 600; font-display: swap;
+      src: url("/Media/fonts/fraunces-latin.woff2") format("woff2");
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    @font-face {
+      font-family: "Fraunces"; font-style: normal; font-weight: 400 600; font-display: swap;
+      src: url("/Media/fonts/fraunces-latin-ext.woff2") format("woff2");
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+    @font-face {
+      font-family: "Inter"; font-style: normal; font-weight: 400 600; font-display: swap;
+      src: url("/Media/fonts/inter-latin.woff2") format("woff2");
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    @font-face {
+      font-family: "Inter"; font-style: normal; font-weight: 400 600; font-display: swap;
+      src: url("/Media/fonts/inter-latin-ext.woff2") format("woff2");
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
     :root {
       --stone:        #F7F5F0;
       --charcoal:     #1F1D1A;
@@ -125,11 +145,9 @@
 
       <h2>Fonts</h2>
       <p>
-        This site loads typefaces from <strong>Google Fonts</strong> (Google
-        Ireland Ltd. / Google LLC, USA). When a page loads, your browser requests
-        the font files from Google's servers, which involves transmitting your IP
-        address to Google. The legal basis is our legitimate interest in a
-        consistent visual presentation (Art. 6(1)(f) GDPR).
+        Typefaces are served directly from this website's own server. No font CDN
+        or other third party (such as Google Fonts) is contacted to load them, so
+        no data is shared with anyone for this purpose.
       </p>
 
       <h2>The interactive demo</h2>
