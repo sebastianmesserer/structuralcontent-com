@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Structural Content — Turn business signals into content that drives adoption, retention, and revenue</title>
-  <meta name="description" content="Structural Content is an AI system that connects to the tools where work already happens, detects moments where content can move a real business outcome, and drafts the content to act on them." />
+  <title>Structural Content — Turn business signals into content that moves your strategic priorities</title>
+  <meta name="description" content="Structural Content is an AI system that reads a company's goals and live systems, finds where content can help, and turns that into clear work for the content team." />
   <meta name="author" content="Sebastian Messerer" />
   <meta name="theme-color" content="#F7F5F0" />
   <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -17,7 +17,7 @@
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Structural Content" />
-  <meta property="og:description" content="Turn business signals into content that drives adoption, retention, and revenue. An AI system that reads operational reality and drafts the content that moves outcomes." />
+  <meta property="og:description" content="An AI system that reads a company's goals and live systems, finds where content can help, and turns that into clear work for the content team." />
   <meta property="og:url" content="https://structuralcontent.com/" />
   <meta property="og:site_name" content="Structural Content" />
   <meta property="og:image" content="https://structuralcontent.com/Media/logo/sc-linkedin-800.png" />
@@ -26,7 +26,7 @@
   <meta property="og:image:alt" content="Structural Content" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Structural Content" />
-  <meta name="twitter:description" content="Turn business signals into content that drives adoption, retention, and revenue." />
+  <meta name="twitter:description" content="An AI system for turning strategic priorities into content work." />
   <meta name="twitter:image" content="https://structuralcontent.com/Media/logo/sc-linkedin-800.png" />
 
   <!-- Organization structured data -->
@@ -38,7 +38,7 @@
     "url": "https://structuralcontent.com/",
     "logo": "https://structuralcontent.com/Media/logo/sc-linkedin-800.png",
     "image": "https://structuralcontent.com/Media/logo/sc-linkedin-800.png",
-    "description": "Structural Content is an AI system that connects to the tools where work already happens, detects moments where content can move a real business outcome, and drafts the content to act on them.",
+    "description": "Structural Content is an AI system that reads a company's goals and live systems, finds where content can help, and turns that into clear work for the content team.",
     "email": "sebastian@structuralcontent.com",
     "sameAs": [
       "https://www.linkedin.com/company/structural-content"
@@ -93,7 +93,7 @@
 
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
-      * { transition: none !important; }
+      * { transition: none !important; animation: none !important; }
     }
 
     h1, h2, h3 {
@@ -159,7 +159,15 @@
       transform: translateY(-1px);
       box-shadow: 0 6px 18px rgba(24,74,67,0.22);
     }
+    .btn-primary:disabled { opacity: 0.55; cursor: default; transform: none; box-shadow: none; }
     .btn-sm { padding: 0.6em 1.15em; font-size: 0.9rem; }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--line-strong);
+    }
+    .btn-ghost:hover { border-color: var(--accent); text-decoration: none; }
 
     .link-quiet {
       font-weight: 500;
@@ -199,7 +207,7 @@
     .nav {
       display: flex;
       align-items: center;
-      gap: 28px;
+      gap: 24px;
     }
     .nav a {
       color: var(--charcoal-soft);
@@ -209,7 +217,7 @@
     .nav a:hover { color: var(--accent); text-decoration: none; }
     .header-cta { margin-left: 8px; }
 
-    @media (max-width: 860px) {
+    @media (max-width: 960px) {
       .nav { display: none; }
     }
 
@@ -218,32 +226,43 @@
     .section { padding: 92px 0; border-top: 1px solid var(--line); }
     .section-head { margin-bottom: 40px; }
     h2 { font-size: clamp(1.7rem, 3.4vw, 2.3rem); line-height: 1.15; }
+    .section-head .support {
+      font-size: 1.02rem;
+      color: var(--muted);
+      margin: 1rem 0 0;
+    }
 
     /* ---------- Hero ---------- */
     .hero {
       padding: 96px 0 84px;
     }
     .hero h1 {
+      position: relative;
       font-size: clamp(2.2rem, 5.2vw, 3.5rem);
       line-height: 1.08;
-      max-width: 16ch;
+      max-width: 22ch;
       margin-bottom: 1.5rem;
+    }
+    .hero h1 .cycle {
+      color: var(--accent);
+      transition: opacity 0.22s ease;
+    }
+    .hero h1 .cycle.fade { opacity: 0; }
+    .cycle-stroke {
+      position: absolute;
+      color: var(--accent);
+      pointer-events: none;
+      overflow: visible;
     }
     .hero .subhead {
       font-size: clamp(1.05rem, 1.7vw, 1.28rem);
       color: var(--charcoal-soft);
       max-width: 60ch;
-      margin-bottom: 1.1rem;
+      margin-bottom: 2.2rem;
     }
     .hero .subhead sup {
       font-size: 0.55em;
       vertical-align: super;
-    }
-    .hero .support {
-      font-size: 1.02rem;
-      color: var(--muted);
-      max-width: 62ch;
-      margin-bottom: 2.2rem;
     }
     .hero-actions {
       display: flex;
@@ -262,10 +281,514 @@
     }
     .trust-line strong { color: var(--charcoal-soft); font-weight: 600; }
 
-    /* ---------- Concept ---------- */
+    /* ---------- Demo: form ---------- */
+    .field-label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 8px;
+    }
+
+    textarea, input[type="text"], select {
+      width: 100%;
+      font-family: var(--sans);
+      font-size: 0.98rem;
+      color: var(--charcoal);
+      background: var(--stone-card);
+      border: 1px solid var(--line-strong);
+      border-radius: 9px;
+      padding: 12px 14px;
+      line-height: 1.5;
+    }
+    textarea { resize: vertical; min-height: 76px; }
+    textarea:focus, input[type="text"]:focus, select:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 1px;
+      border-color: var(--accent);
+    }
+    ::placeholder { color: #A39D90; opacity: 1; }
+
+    .priority-block { margin-bottom: 30px; }
+
+    .metric-card {
+      background: var(--stone-card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .metric-card .metric-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .metric-card .metric-title {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .metric-remove {
+      background: none;
+      border: none;
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 2px 4px;
+    }
+    .metric-remove:hover { color: var(--accent-deep); text-decoration: underline; }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 14px;
+    }
+    .metric-grid .full { grid-column: 1 / -1; }
+    .metric-grid .sub-label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--muted);
+      margin-bottom: 5px;
+    }
+    .delta-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; grid-column: 1 / -1; }
+
+    @media (max-width: 640px) {
+      .metric-grid { grid-template-columns: 1fr; }
+      .delta-row { grid-template-columns: 1fr; }
+    }
+
+    .form-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px 20px;
+      margin-top: 24px;
+    }
+
+    .consent-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 22px;
+      max-width: 60ch;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .consent-row input[type="checkbox"] {
+      accent-color: var(--accent);
+      width: 16px;
+      height: 16px;
+      margin: 3px 0 0;
+      flex: none;
+      cursor: pointer;
+    }
+
+    .form-error {
+      margin-top: 16px;
+      font-size: 0.92rem;
+      color: #8a3b2e;
+      background: #F7E8E2;
+      border: 1px solid #E8CFC5;
+      border-radius: 9px;
+      padding: 12px 16px;
+      display: none;
+    }
+    .form-error.visible { display: block; }
+
+    /* ---------- Demo: pipeline loader ---------- */
+    .pipeline { display: none; padding: 8px 0 24px; }
+    .pipeline.visible { display: block; }
+    .pipeline ol { list-style: none; margin: 0; padding: 0; max-width: 560px; }
+    .pipeline li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 10px 0;
+      color: var(--muted);
+      transition: color 0.4s ease;
+    }
+    .pipeline li .dot {
+      flex: none;
+      width: 22px;
+      height: 22px;
+      margin-top: 2px;
+      border-radius: 50%;
+      border: 2px solid var(--line-strong);
+      background: var(--stone-card);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      color: #fff;
+      transition: background-color 0.4s ease, border-color 0.4s ease;
+    }
+    .pipeline .stage-title {
+      display: block;
+      font-size: 1rem;
+      line-height: 1.45;
+    }
+    .pipeline .stage-sub {
+      display: block;
+      font-size: 0.82rem;
+      line-height: 1.45;
+      color: var(--muted);
+      opacity: 0.85;
+    }
+    .pipeline li.active .stage-title { color: var(--charcoal); }
+    .pipeline li.active .stage-sub { animation: subpulse 1.6s ease-in-out infinite; }
+    @keyframes subpulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+    .pipeline li.active .dot {
+      border-color: var(--accent);
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+    .pipeline li.done .stage-title { color: var(--charcoal-soft); }
+    .pipeline li.done .dot { background: var(--accent); border-color: var(--accent); }
+    .pipeline li.done .dot::after { content: "\2713"; }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(31,94,85,0.25); }
+      50% { box-shadow: 0 0 0 7px rgba(31,94,85,0.08); }
+    }
+    .pipeline .pipeline-note {
+      font-size: 0.88rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-top: 14px;
+    }
+
+    /* ---------- Demo: cascade output ---------- */
+    .results { display: none; padding: 8px 0 20px; }
+    .results.visible { display: block; }
+
+    .results-title {
+      font-size: clamp(1.3rem, 2.4vw, 1.6rem);
+      margin: 0 0 24px;
+    }
+
+    .priority-echo {
+      background: var(--stone-card);
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--accent);
+      border-radius: 12px;
+      padding: 20px 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 36px;
+    }
+    .priority-echo .echo-label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .priority-echo .echo-text {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      line-height: 1.35;
+      color: var(--charcoal);
+    }
+
+    .metric-pressure {
+      background: var(--stone-card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 18px 22px;
+      box-shadow: var(--shadow);
+      margin-bottom: 16px;
+    }
+    .metric-pressure .mp-label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .metric-pressure .mp-text { font-size: 1.05rem; color: var(--charcoal); }
+
+    .fn-pill {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 4px 9px;
+      border-radius: 6px;
+      white-space: nowrap;
+      font-family: var(--sans);
+    }
+    .fn-sales     { background: #F3E2C7; color: #7a5a1e; }
+    .fn-product   { background: #F4EDCB; color: #6f6420; }
+    .fn-community { background: #D6E8E2; color: #1d524a; }
+    .fn-cs        { background: #DBE9D8; color: #38612f; }
+    .fn-marketing { background: #F0DDD2; color: #8a4b2e; }
+    .fn-neutral   { background: #E8E4DA; color: #57524a; }
+
+    /* ---------- Demo: simulated product window ---------- */
+    .app-window {
+      background: var(--stone-card);
+      border: 1px solid var(--line-strong);
+      border-radius: 14px;
+      box-shadow: 0 2px 6px rgba(31,29,26,0.06), 0 18px 48px rgba(31,29,26,0.10);
+      overflow: hidden;
+      margin-top: 10px;
+    }
+    .aw-titlebar {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 11px 18px;
+      background: #EFECE4;
+      border-bottom: 1px solid var(--line);
+    }
+    .aw-dots { display: flex; gap: 6px; flex: none; }
+    .aw-dots i {
+      display: block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--line-strong);
+    }
+    .aw-title {
+      min-width: 0; /* lets the flex item shrink so the nowrap title ellipsizes instead of widening the page */
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--charcoal-soft);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .aw-badge {
+      margin-left: auto;
+      flex: none;
+      font-size: 0.66rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: var(--stone);
+      border: 1px solid var(--line-strong);
+      border-radius: 5px;
+      padding: 3px 8px;
+    }
+    .aw-footer {
+      padding: 10px 18px;
+      border-top: 1px solid var(--line);
+      background: #EFECE4;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* Two lanes inside the window: jobs (left) -> arrows -> inset board panel (right) */
+    .flow {
+      display: grid;
+      grid-template-columns: 1fr 44px 1.15fr;
+      row-gap: 14px;
+      padding: 18px;
+      align-items: stretch;
+    }
+    .lane-cap {
+      align-self: center;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 12px 2px;
+    }
+    .board-bg {
+      background: var(--stone);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      z-index: 0;
+    }
+    .board-head {
+      z-index: 1;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 16px 0;
+    }
+    .board-head .bh-title {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--charcoal-soft);
+    }
+    .board-head .bh-count { font-size: 0.75rem; color: var(--muted); flex: none; }
+    .board-pad { z-index: 1; height: 4px; }
+    .team-row { align-self: end; padding: 6px 2px 0; }
+
+    .jobf {
+      background: var(--stone-card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 16px 18px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .card-trace {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 10px;
+    }
+    .card-trace .tr-label { color: var(--muted); }
+    .jobf .job-text { font-size: 0.95rem; line-height: 1.5; margin: 0; color: var(--charcoal); }
+
+    .arrow {
+      align-self: center;
+      justify-self: center;
+      color: var(--muted);
+      font-size: 1.25rem;
+      line-height: 1;
+    }
+    .arrow .down { display: none; }
+
+    .ticket-cell { z-index: 1; padding: 0 16px; }
+    .ticket {
+      background: var(--charcoal);
+      border-radius: 12px;
+      padding: 16px 18px;
+      box-shadow: var(--shadow);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .ticket .ticket-key {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #9a948a;
+      margin: 0 0 6px;
+    }
+    .ticket .ticket-title {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #F4F1EB;
+      margin: 0;
+    }
+    .ticket .ticket-what {
+      font-size: 0.86rem;
+      line-height: 1.5;
+      color: #c9c4ba;
+      margin: 5px 0 0;
+    }
+    .ticket .ticket-fields {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      column-gap: 12px;
+      row-gap: 2px;
+      margin-top: 10px;
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+    .ticket .ticket-fields dt {
+      margin: 0;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 0.66rem;
+      line-height: 1.8;
+      color: #9a948a;
+    }
+    .ticket .ticket-fields dd { margin: 0; color: #c9c4ba; }
+
+    /* Staged reveal */
+    @media (prefers-reduced-motion: no-preference) {
+      html.js .reveal-item {
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      html.js .reveal-item.revealed { opacity: 1; transform: none; }
+    }
+
+    @media (max-width: 760px) {
+      .fn-pill { white-space: normal; line-height: 1.5; }
+      /* Lanes collapse: block flow ignores the inline grid placements. */
+      .flow { display: block; padding: 14px; }
+      .board-bg, .board-pad { display: none; }
+      .lane-cap { display: block; padding: 0 0 4px; }
+      .board-head { padding: 0 0 12px; }
+      .team-row { padding: 8px 0 10px; }
+      .jobf { margin-bottom: 10px; }
+      .arrow { display: block; text-align: center; margin: 0 0 10px; }
+      .arrow .right { display: none; }
+      .arrow .down { display: inline; }
+      .ticket-cell { padding: 0; margin-bottom: 18px; }
+      .ticket { height: auto; }
+    }
+
+    /* ---------- Demo: refusal / error ---------- */
+    .notice-card {
+      display: none;
+      background: var(--stone-card);
+      border: 1px solid var(--line-strong);
+      border-radius: 12px;
+      padding: 20px 24px;
+      box-shadow: var(--shadow);
+      margin: 8px 0 24px;
+      max-width: 680px;
+    }
+    .notice-card.visible { display: block; }
+    .notice-card p { margin: 0; font-size: 0.98rem; }
+
+    /* ---------- Demo: closing ---------- */
+    .closing {
+      display: none;
+      margin-top: 24px;
+      padding-top: 36px;
+      border-top: 1px solid var(--line);
+    }
+    .closing.visible { display: block; }
+    .closing .breadth {
+      font-family: var(--serif);
+      font-size: clamp(1.15rem, 2.2vw, 1.45rem);
+      line-height: 1.4;
+      color: var(--charcoal);
+      max-width: 56ch;
+      margin: 0 0 26px;
+    }
+    .closing-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px 22px;
+      margin-bottom: 14px;
+    }
+    .closing .secondary { font-size: 0.95rem; color: var(--muted); }
+
+    /* ---------- What it is ---------- */
     .lead p { font-size: 1.12rem; }
 
-    /* ---------- Process ---------- */
+    /* ---------- How it works ---------- */
     .steps {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -305,135 +828,7 @@
       .step:last-child { border-bottom: none; }
     }
 
-    /* ---------- Examples: trace -> content job ---------- */
-    #examples .section-head .support {
-      font-size: 1rem;
-      color: var(--muted);
-      margin-bottom: 0;
-    }
-    .col-caps {
-      display: grid;
-      grid-template-columns: 120px 1fr 40px 1fr;
-      gap: 0 18px;
-      margin-bottom: 14px;
-    }
-    .col-caps span {
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.09em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .col-caps .cap-trace { grid-column: 2; }
-    .col-caps .cap-job { grid-column: 4; }
-
-    .jobs { display: flex; flex-direction: column; gap: 18px; }
-
-    .job-row {
-      display: grid;
-      grid-template-columns: 120px 1fr 40px 1fr;
-      gap: 0 18px;
-      align-items: stretch;
-    }
-
-    .fn-pill {
-      align-self: start;
-      margin-top: 6px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      padding: 4px 9px;
-      border-radius: 6px;
-      white-space: nowrap;
-      justify-self: start;
-    }
-    .fn-sales     { background: #F3E2C7; color: #7a5a1e; }
-    .fn-product   { background: #F4EDCB; color: #6f6420; }
-    .fn-community { background: #D6E8E2; color: #1d524a; }
-    .fn-cs        { background: #DBE9D8; color: #38612f; }
-
-    .trace-card {
-      background: var(--stone-card);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 18px 20px;
-      box-shadow: var(--shadow);
-    }
-    .trace-src, .job-label {
-      display: block;
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 8px;
-    }
-    .trace-card p { font-size: 0.96rem; line-height: 1.45; margin: 0; color: var(--charcoal); }
-    .trace-meta { display: block; margin-top: 8px; font-size: 0.82rem; color: var(--muted); font-style: italic; }
-
-    .arrow {
-      align-self: center;
-      justify-self: center;
-      color: var(--muted);
-      font-size: 1.25rem;
-      line-height: 1;
-    }
-    .arrow .down { display: none; }
-
-    .job-card {
-      background: var(--charcoal);
-      border-radius: 12px;
-      padding: 18px 20px;
-      box-shadow: var(--shadow);
-    }
-    .job-card .job-label { color: #9a948a; }
-    .job-card p { font-size: 0.96rem; line-height: 1.45; margin: 0; color: #F4F1EB; }
-    .job-meta { display: block; margin-top: 8px; font-size: 0.82rem; color: #8d978f; }
-
-    /* Scroll-triggered staged reveal — only when JS is on and motion is allowed */
-    @media (prefers-reduced-motion: no-preference) {
-      html.js .trace-card,
-      html.js .arrow,
-      html.js .job-card {
-        opacity: 0;
-        transform: translateY(10px);
-        transition: opacity 0.5s ease, transform 0.5s ease;
-      }
-      html.js .arrow { transform: none; }
-      html.js .jobs.reveal .trace-card,
-      html.js .jobs.reveal .arrow,
-      html.js .jobs.reveal .job-card {
-        opacity: 1;
-        transform: none;
-      }
-      /* Stage 1: traces populate first, staggered top-to-bottom */
-      html.js .jobs.reveal .job-row:nth-child(1) .trace-card { transition-delay: 0s; }
-      html.js .jobs.reveal .job-row:nth-child(2) .trace-card { transition-delay: 0.12s; }
-      html.js .jobs.reveal .job-row:nth-child(3) .trace-card { transition-delay: 0.24s; }
-      html.js .jobs.reveal .job-row:nth-child(4) .trace-card { transition-delay: 0.36s; }
-      /* Stage 2: arrows */
-      html.js .jobs.reveal .arrow { transition-delay: 0.6s; }
-      /* Stage 3: content jobs respond, staggered */
-      html.js .jobs.reveal .job-row:nth-child(1) .job-card { transition-delay: 0.85s; }
-      html.js .jobs.reveal .job-row:nth-child(2) .job-card { transition-delay: 0.97s; }
-      html.js .jobs.reveal .job-row:nth-child(3) .job-card { transition-delay: 1.09s; }
-      html.js .jobs.reveal .job-row:nth-child(4) .job-card { transition-delay: 1.21s; }
-    }
-
-    @media (max-width: 760px) {
-      .col-caps { display: none; }
-      .job-row {
-        grid-template-columns: 1fr;
-        gap: 10px 0;
-        justify-items: stretch;
-      }
-      .arrow { justify-self: center; }
-      .arrow .right { display: none; }
-      .arrow .down { display: inline; }
-    }
-
-    /* ---------- Fit / Distinction ---------- */
+    /* ---------- Prose sections ---------- */
     .prose p { max-width: 70ch; }
     .prose p + p { margin-top: 0; }
 
@@ -462,14 +857,6 @@
         margin: 2px 20px 10px 0;
       }
     }
-    .selective-note {
-      font-size: 0.92rem;
-      color: var(--muted);
-      font-style: italic;
-      border-left: 2px solid var(--line-strong);
-      padding-left: 18px;
-      margin-top: 1.8rem;
-    }
 
     /* ---------- Contact ---------- */
     .contact {
@@ -491,11 +878,39 @@
     .contact .secondary a:hover { color: #b6e3da; }
 
     /* ---------- FAQ ---------- */
-    .faq-item { margin-bottom: 32px; }
-    .faq-item:last-child { margin-bottom: 0; }
-    .faq-item h3 { font-size: 1.18rem; margin-bottom: 8px; }
-    .faq-item p { color: var(--muted); margin: 0 0 0.6rem; }
-    .faq-item p:last-child { margin-bottom: 0; }
+    .faq-item {
+      border-bottom: 1px solid var(--line);
+    }
+    .faq-item summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 20px 0;
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 1.15rem;
+      line-height: 1.35;
+      color: var(--charcoal);
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after {
+      content: "+";
+      flex: none;
+      font-family: var(--sans);
+      font-weight: 400;
+      font-size: 1.3rem;
+      line-height: 1;
+      color: var(--accent);
+      transition: transform 0.18s ease;
+    }
+    .faq-item[open] summary::after { transform: rotate(45deg); }
+    .faq-item summary:hover { color: var(--accent-deep); }
+    .faq-item .faq-body { padding: 0 0 22px; }
+    .faq-item .faq-body p { color: var(--muted); margin: 0 0 0.6rem; max-width: 68ch; }
+    .faq-item .faq-body p:last-child { margin-bottom: 0; }
 
     /* ---------- Footer ---------- */
     .site-footer {
@@ -546,12 +961,13 @@
     <div class="wrap">
       <a href="#top" class="wordmark">Structural Content</a>
       <nav class="nav" aria-label="Primary">
-        <a href="#concept">Concept</a>
-        <a href="#examples">Examples</a>
-        <a href="#fit">Fit</a>
+        <a href="#demo">Demo</a>
+        <a href="#what">What it is</a>
+        <a href="#how">How it works</a>
+        <a href="#why">Why it differs</a>
+        <a href="#fit">Who it fits</a>
         <a href="#about">About</a>
         <a href="#faq">FAQ</a>
-        <a href="#contact">Contact</a>
       </nav>
       <a class="btn btn-primary btn-sm header-cta" href="https://calendly.com/sebastian-structuralcontent" target="_blank" rel="noopener">Book a call</a>
     </div>
@@ -563,28 +979,91 @@
     <!-- ============ HERO ============ -->
     <section class="hero" aria-labelledby="hero-h">
       <div class="wrap">
-        <h1 id="hero-h">Turn business signals into content that drives adoption, retention, and revenue.</h1>
-        <p class="subhead">Structural Content<sup>TM</sup> is an AI content operations system that connects to tools like CRM, support, product, and project management to detect moments where content can move a business outcome.</p>
-        <p class="support">A lost deal is won back through reactivation content; underuse triggers early re-engagement; recurring support tickets prompt educational content.</p>
+        <h1 id="hero-h">Turn business signals into content that moves <span class="cycle" id="cycle">your strategic priorities</span>.</h1>
+        <p class="subhead">Structural Content<sup>TM</sup> is an AI system that reads a company&rsquo;s goals and live systems, finds where content can help, and turns that into clear work for the content team.</p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="https://calendly.com/sebastian-structuralcontent" target="_blank" rel="noopener">Book an exploratory call</a>
+          <a class="btn btn-primary" href="#demo">Try it on your priority</a>
           <a class="link-quiet" href="https://sebastianmesserer.com/essays/structural-content/" target="_blank" rel="noopener">Read the TLDR Marketing-featured essay</a>
         </div>
         <p class="trust-line">Built by <strong>Sebastian Messerer</strong>, formerly Senior Content Strategist at Amazon, where he built and scaled an AI-driven content and communications system across 13 countries.</p>
       </div>
     </section>
 
-    <!-- ============ CONCEPT ============ -->
-    <section class="section" id="concept" aria-labelledby="concept-h">
+    <!-- ============ DEMO ============ -->
+    <section class="section" id="demo" aria-labelledby="demo-h">
       <div class="wrap">
         <div class="section-head measure">
-          <p class="eyebrow">Concept</p>
-          <h2 id="concept-h">What Structural Content is</h2>
+          <p class="eyebrow">Live demo</p>
+          <h2 id="demo-h">See what Structural Content could do for you.</h2>
+          <p class="support">Enter what is important to your company today. See how content could help.</p>
+        </div>
+
+        <form id="cascade-form" novalidate>
+          <div class="priority-block measure">
+            <label class="field-label" for="priority">Strategic priority</label>
+            <textarea id="priority" maxlength="300" rows="2" placeholder="e.g. Expand into the US enterprise segment in 2026"></textarea>
+          </div>
+
+          <div class="measure">
+            <span class="field-label">Metrics under pressure</span>
+            <div id="metrics"></div>
+            <button type="button" class="btn btn-ghost btn-sm" id="add-metric">+ Add a metric</button>
+          </div>
+
+          <label class="consent-row" for="consent">
+            <input type="checkbox" id="consent" />
+            <span>Optional – I consent to Structural Content using my inputs for user research and product development.</span>
+          </label>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" id="run-btn">Run the system</button>
+          </div>
+          <div class="form-error" id="form-error" role="alert"></div>
+        </form>
+
+        <!-- Pipeline loading state -->
+        <div class="pipeline" id="pipeline" aria-live="polite">
+          <ol>
+            <li><span class="dot"></span><span class="stage-text"><span class="stage-title">Reading your priority</span><span class="stage-sub">The installed system reads these from your goals/OKR systems and planning docs</span></span></li>
+            <li><span class="dot"></span><span class="stage-text"><span class="stage-title">Deriving the metrics under pressure</span><span class="stage-sub">Required change, target state, deadline</span></span></li>
+            <li><span class="dot"></span><span class="stage-text"><span class="stage-title">Identifying owner teams</span><span class="stage-sub">The installed system identifies these from your CRM, project boards, and org context</span></span></li>
+            <li><span class="dot"></span><span class="stage-text"><span class="stage-title">Identifying jobs in motion</span><span class="stage-sub">The installed system detects these in Slack, Asana, support queues, and product usage</span></span></li>
+            <li><span class="dot"></span><span class="stage-text"><span class="stage-title">Generating content job tickets</span><span class="stage-sub">Each tied back to the priority, metric, team job, and deadline</span></span></li>
+            <li><span class="dot"></span><span class="stage-text"><span class="stage-title">Routing them to the content team</span><span class="stage-sub">Onto the content team&rsquo;s board, organized for review, refinement, and use</span></span></li>
+          </ol>
+          <p class="pipeline-note">What the demo does once, the installed system does continuously across priorities.</p>
+        </div>
+
+        <!-- Refusal / error notice -->
+        <div class="notice-card" id="notice" role="alert"><p></p></div>
+
+        <!-- Cascade output -->
+        <div class="results" id="results"></div>
+
+        <!-- Closing -->
+        <div class="closing" id="closing">
+          <p class="breadth">Now imagine the content opportunities produced based on your actual context. Your priorities, your teams, your work.</p>
+          <div class="closing-actions">
+            <a class="btn btn-primary" href="https://calendly.com/sebastian-structuralcontent" target="_blank" rel="noopener">Book a discovery call</a>
+            <button type="button" class="btn btn-ghost" id="run-again">Run another priority</button>
+          </div>
+          <p class="secondary">Or email <a href="mailto:sebastian@structuralcontent.com">sebastian@structuralcontent.com</a></p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============ WHAT IT IS ============ -->
+    <section class="section" id="what" aria-labelledby="what-h">
+      <div class="wrap">
+        <div class="section-head measure">
+          <p class="eyebrow">What it is</p>
+          <h2 id="what-h">An AI system for turning strategic priorities into content work.</h2>
         </div>
         <div class="lead measure">
-          <p>Most companies still create content through a manual intake model: someone asks for something, a team writes a brief, and content gets made if time allows. That leaves a huge amount of business-relevant signal untouched, because the moments where content could help are often visible in systems and workflows long before anyone raises a request.</p>
-          <p>Structural Content works upstream. It reads the traces of what the business is trying to do — in sales, product, customer success, support, community, and elsewhere — and identifies specific moments where content could improve the outcome. It then drafts the content, recommendation, or brief for the right people to review and use.</p>
-          <p>The goal is not more content. The goal is content that appears where it can actually move the business.</p>
+          <p>Most companies still create content through a manual intake model: someone asks for something, a brief gets written, and content gets made if time allows. That leaves a large amount of business-relevant signal untouched, because the work content could support is often visible before anyone submits a request.</p>
+          <p>Structural Content works one layer up. It reads where a company&rsquo;s goals live, works backwards from each strategic priority to the metrics under pressure, the teams on them, and the jobs in motion, then turns what it finds into content job tickets for the content team.</p>
+          <p>The point is not more content. It&rsquo;s to replace broad, murky-ROI use cases like &ldquo;create viral moments&rdquo; with specific content jobs that directly serve meaningful business results. It&rsquo;s making content as a function load-bearing to the business you are growing.</p>
         </div>
       </div>
     </section>
@@ -594,134 +1073,58 @@
       <div class="wrap">
         <div class="section-head measure">
           <p class="eyebrow">How it works</p>
-          <h2 id="how-h">A simple loop</h2>
+          <h2 id="how-h">From priority to content job ticket.</h2>
         </div>
         <div class="steps">
           <div class="step">
             <div class="step-num">1</div>
-            <h3>Connect</h3>
-            <p>Connect to the systems where useful signals already exist, such as CRM, support, product usage, project management, and internal knowledge sources.</p>
+            <h3>Read the priority</h3>
+            <p>Structural Content starts from a strategic priority, scanned from goal or OKR systems or given manually.</p>
           </div>
           <div class="step">
             <div class="step-num">2</div>
-            <h3>Detect</h3>
-            <p>Detect patterns that suggest a content move could help, such as a resolved blocker in a lost deal, repeated support questions, underused product capabilities, or customers ready for advocacy.</p>
+            <h3>Work backwards</h3>
+            <p>It identifies the metrics under pressure, the teams owning them, and from live work traces the jobs those teams are actually running.</p>
           </div>
           <div class="step">
             <div class="step-num">3</div>
-            <h3>Draft</h3>
-            <p>Draft the relevant output: outreach, enablement content, help content, a customer-story prompt, a reference ask, or a structured brief for human review.</p>
+            <h3>Derive content work</h3>
+            <p>It determines where content can help the work already in motion and where content could contribute in ways nobody had planned.</p>
           </div>
           <div class="step">
             <div class="step-num">4</div>
-            <h3>Route</h3>
-            <p>Route it to the people who own that outcome, so content becomes part of the operating system of the business rather than an isolated service desk.</p>
+            <h3>Route to the content team</h3>
+            <p>It delivers content job tickets into the content team&rsquo;s queue, so each item arrives with a clear lineage back to a strategic priority.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ============ EXAMPLES ============ -->
-    <section class="section" id="examples" aria-labelledby="examples-h">
-      <div class="wrap">
-        <div class="section-head measure">
-          <p class="eyebrow">Examples</p>
-          <h2 id="examples-h">What that looks like in practice</h2>
-          <p class="support">From the traces a business already emits to the content job that moves the outcome. Illustrative — a dev-tooling scale-up. Fictional, real-world plausible.</p>
-        </div>
-
-        <div class="col-caps" aria-hidden="true">
-          <span class="cap-trace">The trace it reads</span>
-          <span class="cap-job">The content job it drafts</span>
-        </div>
-
-        <div class="jobs">
-          <div class="job-row">
-            <span class="fn-pill fn-sales">Sales</span>
-            <article class="trace-card">
-              <span class="trace-src">Lost deal · last quarter</span>
-              <p>Deal lost to a self-hosted competitor — cited missing SSO/SAML. SSO shipped in the latest release.</p>
-              <span class="trace-meta">2 other lost deals named the same gap</span>
-            </article>
-            <div class="arrow" aria-hidden="true"><span class="right">→</span><span class="down">↓</span></div>
-            <article class="job-card">
-              <span class="job-label">Content job</span>
-              <p>Draft reactivation outreach to the 3 deals lost on SSO, leading with the shipped feature and a migration path. Route to deal owners.</p>
-              <span class="job-meta">Measure: reply rate · reopened pipeline</span>
-            </article>
-          </div>
-
-          <div class="job-row">
-            <span class="fn-pill fn-product">Product</span>
-            <article class="trace-card">
-              <span class="trace-src">Product usage</span>
-              <p>New Insights module live 6 weeks. Under 12% of Enterprise accounts have enabled it.</p>
-              <span class="trace-meta">41 multi-seat accounts</span>
-            </article>
-            <div class="arrow" aria-hidden="true"><span class="right">→</span><span class="down">↓</span></div>
-            <article class="job-card">
-              <span class="job-label">Content job</span>
-              <p>Draft an in-app guide and targeted email showing Enterprise admins how to switch on Insights, populated with their own workspace data.</p>
-              <span class="job-meta">Measure: activation rate over 21 days</span>
-            </article>
-          </div>
-
-          <div class="job-row">
-            <span class="fn-pill fn-community">Community</span>
-            <article class="trace-card">
-              <span class="trace-src">Forum + Discord</span>
-              <p>Thread on rate-limiting hit 40+ replies with no official answer. Same question twice in Discord this week.</p>
-            </article>
-            <div class="arrow" aria-hidden="true"><span class="right">→</span><span class="down">↓</span></div>
-            <article class="job-card">
-              <span class="job-label">Content job</span>
-              <p>Draft a canonical how-to and docs update answering the rate-limit question; publish from the official account and pin it.</p>
-              <span class="job-meta">Measure: thread resolved · tickets deflected</span>
-            </article>
-          </div>
-
-          <div class="job-row">
-            <span class="fn-pill fn-cs">Cust. Success</span>
-            <article class="trace-card">
-              <span class="trace-src">Renewal in 60 days</span>
-              <p>Champion left in April; weekly active usage down to 31%. CS flagged at-risk.</p>
-            </article>
-            <div class="arrow" aria-hidden="true"><span class="right">→</span><span class="down">↓</span></div>
-            <article class="job-card">
-              <span class="job-label">Content job</span>
-              <p>Draft a value-recap and re-activation sequence for the account's admins, anchored in their own usage and wins to date.</p>
-              <span class="job-meta">Measure: WAU change · renewal outcome</span>
-            </article>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ FIT ============ -->
-    <section class="section" id="fit" aria-labelledby="fit-h">
-      <div class="wrap">
-        <div class="section-head measure">
-          <p class="eyebrow">Best fit</p>
-          <h2 id="fit-h">Who this is for</h2>
-        </div>
-        <div class="prose measure">
-          <p>Structural Content is best suited to growth-stage B2B software companies where useful signals already exist across several functions at once: sales, product, customer success, support, marketing, community, and hiring.</p>
-          <p>The sharpest fit is an EU-headquartered Series B or C B2B SaaS scale-up with roughly 150 to 600 employees, a hybrid product-led plus sales-led motion, more than one product or module, an engaged customer or practitioner base, and a small central content team that cannot manually keep up with the full range of business needs.</p>
-          <p>In companies like this, content can become load-bearing across the business rather than staying trapped inside campaign calendars and ad hoc requests.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ DISTINCTION ============ -->
+    <!-- ============ WHY IT DIFFERS ============ -->
     <section class="section" id="why" aria-labelledby="why-h">
       <div class="wrap">
         <div class="section-head measure">
-          <p class="eyebrow">Why it matters</p>
-          <h2 id="why-h">Why this is different</h2>
+          <p class="eyebrow">Why it differs</p>
+          <h2 id="why-h">It does not just automate content already planned.</h2>
         </div>
         <div class="prose measure">
-          <p>Many tools help teams publish, automate campaigns, manage docs, or run lifecycle journeys. Structural Content addresses a different problem: identifying the moments where content should exist in the first place by reading the business signals those systems already contain.</p>
-          <p>The unit of value is not a single use case. It is the standing system: a durable queue of content opportunities that keeps refilling as the company keeps operating.</p>
+          <p>Most AI content tools help teams produce content faster once someone already knows what should be made. Structural Content sits one layer up: it uncovers what content could be doing for each strategic priority, including contributions nobody had planned, and operationalizes that work as content job tickets.</p>
+          <p>The unit of value is not a single use case. It is a standing system that keeps discovering, structuring, and routing content work as the business keeps operating.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ WHO IT FITS ============ -->
+    <section class="section" id="fit" aria-labelledby="fit-h">
+      <div class="wrap">
+        <div class="section-head measure">
+          <p class="eyebrow">Who it fits</p>
+          <h2 id="fit-h">Best for companies where priorities, pressure, and work traces are legible.</h2>
+        </div>
+        <div class="prose measure">
+          <p>Structural Content fits companies where strategic priorities are clear, at least one metric under pressure can be named, and the systems of the teams owning that priority are digitally reachable.</p>
+          <p>It is strongest when a content team or named content owner exists to review, refine, and act on the resulting ticket queue.</p>
+          <p>In that setting, content can become load-bearing across the business instead of staying trapped inside campaign calendars and ad hoc requests.</p>
         </div>
       </div>
     </section>
@@ -743,17 +1146,18 @@
       </div>
     </section>
 
-    <!-- ============ CONTACT ============ -->
+    <!-- ============ NEXT STEP ============ -->
     <section class="section contact" id="contact" aria-labelledby="contact-h">
       <div class="wrap">
         <div class="section-head measure">
-          <p class="eyebrow">Contact</p>
-          <h2 id="contact-h">Interested in exploring a pilot?</h2>
+          <p class="eyebrow">Next step</p>
+          <h2 id="contact-h">Book a discovery call.</h2>
         </div>
         <div class="measure">
-          <p>If you lead content, marketing, product, customer success, or a broader commercial function at a growth-stage B2B company, I’d be glad to explore whether Structural Content fits your business.</p>
+          <p>If you lead content or work closely with the teams whose priorities content could support, the next step is a discovery call. We use it to test whether Structural Content would be useful in your setting and whether a deeper scan is warranted.</p>
+          <p>You have already seen the logic here in miniature. The next stage is to run it on a bounded slice of real company data and see what it finds.</p>
           <div class="contact-actions">
-            <a class="btn btn-primary" href="https://calendly.com/sebastian-structuralcontent" target="_blank" rel="noopener">Book a 20-minute call</a>
+            <a class="btn btn-primary" href="https://calendly.com/sebastian-structuralcontent" target="_blank" rel="noopener">Book a discovery call</a>
           </div>
           <p class="secondary">Or email <a href="mailto:sebastian@structuralcontent.com">sebastian@structuralcontent.com</a></p>
           <p class="secondary">For more depth, read the <a href="https://sebastianmesserer.com/essays/structural-content/" target="_blank" rel="noopener">Structural Content essay</a>.</p>
@@ -769,26 +1173,55 @@
           <h2 id="faq-h">Frequently asked questions</h2>
         </div>
         <div class="faq measure">
-          <div class="faq-item">
-            <h3>How does Structural Content get installed in my company?</h3>
-            <p>Structural Content is deployed as a single-tenant instance for your company, connecting to the systems where useful signals already exist, such as CRM, support, product usage, and project management tools.</p>
-            <p>Hosted deployment is the default, with client-cloud or on-prem deployment possible where needed.</p>
-          </div>
-          <div class="faq-item">
-            <h3>How do I know my data is secure?</h3>
-            <p>Each deployment is isolated, uses scoped and revocable client credentials, and retains only the lean data needed to run the system.</p>
-            <p>Hosted deployments run in Frankfurt by default.</p>
-          </div>
-          <div class="faq-item">
-            <h3>How does Structural Content change the way my content team works?</h3>
-            <p>Structural Content gives the team a standing flow of content opportunities tied to real business signals across sales, product, customer success, support, and community.</p>
-            <p>The content team reviews, refines, and decides what gets used, with better timing, prioritization, and starting points.</p>
-          </div>
-          <div class="faq-item">
-            <h3>How do I know whether it’s worth exploring for my company?</h3>
-            <p>Structural Content is the strongest fit for growth-stage B2B software companies with useful signals across several functions, more than one product or audience, and a small central content team that cannot keep up manually.</p>
-            <p>It is especially relevant when opportunities like deal reactivation, feature adoption, support education, renewal protection, onboarding recovery, or advocacy are visible in the business but rarely turned into content at the right moment.</p>
-          </div>
+          <details class="faq-item">
+            <summary>How does Structural Content get installed in my company?</summary>
+            <div class="faq-body">
+              <p>Structural Content is installed as a single-tenant AI system for your company. It reads where your goals live and connects to the systems of the teams owning the priority being worked, such as CRM, support, product usage, Slack, or project management tools.</p>
+              <p>The first step is not a full installation. It is a discovery call, followed &mdash; if the fit is real &mdash; by a bounded scan on a slice of live company data.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary>How do I know my data is secure?</summary>
+            <div class="faq-body">
+              <p>Each deployment is isolated and uses scoped, revocable client credentials. The system retains only the lean data needed to run the agreed workflow.</p>
+              <p>Hosted deployment is the default, with other deployment setups possible where needed.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary>How does Structural Content change the way my content team works?</summary>
+            <div class="faq-body">
+              <p>Structural Content gives the content team a flow of content job tickets tied back to strategic priorities, the metrics under pressure, and the jobs in motion across the business. Instead of relying only on manual requests, the team receives structured work that already carries its business rationale and can be reviewed, refined, and acted on.</p>
+              <p>The content team is always the gate. Nothing enters company channels system-direct.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary>What exactly does the system produce?</summary>
+            <div class="faq-body">
+              <p>The output is content job tickets for the content team to act on. Depending on scope, those tickets can include just the structured brief or also a generated v1 draft.</p>
+              <p>Each ticket is tied back to a strategic priority and carries its lineage: the metric under pressure, the team job it supports, the audience state-change required, and the deadline.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary>How do I know whether this is worth exploring for my company?</summary>
+            <div class="faq-body">
+              <p>Structural Content is worth exploring when at least one strategic priority is clear, a metric under pressure can be named, the owning teams work in digitally reachable systems, and someone in-house owns the content queue.</p>
+              <p>It tends to be strongest where useful signals are visible across several functions, but content still reaches the business mostly through campaign planning and ad hoc requests.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary>Is this mainly for marketing content?</summary>
+            <div class="faq-body">
+              <p>No. Structural Content uses &ldquo;content&rdquo; in a broader sense: communication that helps move an audience from a current state to a required end-state in service of a job, a metric, and a strategic priority.</p>
+              <p>That can include marketing content, but also enablement, education, adoption, support, retention, recruiting, or other forms of operational communication.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary>What is the next step after the demo?</summary>
+            <div class="faq-body">
+              <p>The next step is a discovery call to test whether the system would be useful in your setting and whether a deeper scan is warranted.</p>
+              <p>If the fit is real, the next stage is a bounded scan and readout: what the system found in your own data, the content jobs it would ticket, and the most attractive pilot rung to start with.</p>
+            </div>
+          </details>
         </div>
       </div>
     </section>
@@ -806,20 +1239,512 @@
 
   <script>
     (function () {
-      var jobs = document.querySelector(".jobs");
-      if (!jobs || !("IntersectionObserver" in window)) {
-        if (jobs) jobs.classList.add("reveal");
-        return;
-      }
-      var obs = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("reveal");
-            obs.unobserve(entry.target);
-          }
+      "use strict";
+
+      var REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      /* ================= Hero: cycling headline ================= */
+
+      (function () {
+        var cycle = document.getElementById("cycle");
+        if (!cycle) return;
+        var h1 = document.getElementById("hero-h");
+
+        // Hand-drawn underline under the settled phrase: one slightly wavy
+        // stroke per rendered line (the span can wrap on small screens).
+        function drawUnderline(animate) {
+          h1.querySelectorAll(".cycle-stroke").forEach(function (s) { s.remove(); });
+          var h1Rect = h1.getBoundingClientRect();
+          Array.prototype.forEach.call(cycle.getClientRects(), function (r, idx) {
+            // A confident marker stroke: slightly wider than the text, one
+            // bold sweep with a gentle bow instead of nervous wiggles.
+            var w = r.width * 1.03;
+            if (w < 20) return;
+            var hgt = 12;
+            var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            svg.setAttribute("class", "cycle-stroke");
+            svg.setAttribute("width", w);
+            svg.setAttribute("height", hgt);
+            svg.setAttribute("viewBox", "0 0 " + w + " " + hgt);
+            svg.setAttribute("aria-hidden", "true");
+            svg.style.left = (r.left - h1Rect.left + (r.width - w) / 2) + "px";
+            svg.style.top = (r.bottom - h1Rect.top - 3) + "px";
+            var path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            path.setAttribute("d",
+              "M3 7 C " + (w * 0.3) + " 4, " + (w * 0.72) + " 8.5, " + (w - 3) + " 5");
+            path.setAttribute("fill", "none");
+            path.setAttribute("stroke", "currentColor");
+            path.setAttribute("stroke-width", "5");
+            path.setAttribute("stroke-linecap", "round");
+            svg.appendChild(path);
+            h1.appendChild(svg);
+            if (animate) {
+              var len = path.getTotalLength();
+              path.style.strokeDasharray = len;
+              path.style.strokeDashoffset = len;
+              path.getBoundingClientRect(); // flush so the transition runs
+              path.style.transition = "stroke-dashoffset 0.32s cubic-bezier(0.3, 0, 0.2, 1) " + (idx * 0.12) + "s";
+              path.style.strokeDashoffset = "0";
+            }
+          });
+        }
+
+        var settled = false;
+        function settle() {
+          settled = true;
+          setTimeout(function () { drawUnderline(!REDUCED_MOTION); }, 200);
+        }
+        window.addEventListener("resize", function () {
+          if (settled) drawUnderline(false);
         });
-      }, { threshold: 0.25, rootMargin: "0px 0px -10% 0px" });
-      obs.observe(jobs);
+
+        if (REDUCED_MOTION) { settle(); return; }
+
+        var WORDS = ["adoption", "retention", "renewals", "pipeline", "support", "hiring", "your strategic priorities"];
+        // Lock the height measured with the final (longest) phrase so the
+        // shorter cycling words don't reflow the page.
+        h1.style.minHeight = h1.offsetHeight + "px";
+        var i = 0;
+        cycle.textContent = WORDS[0];
+        function next() {
+          cycle.classList.add("fade");
+          setTimeout(function () {
+            i += 1;
+            cycle.textContent = WORDS[i];
+            cycle.classList.remove("fade");
+            if (i < WORDS.length - 1) setTimeout(next, 850);
+            else settle();
+          }, 220);
+        }
+        setTimeout(next, 850);
+      })();
+
+      /* ================= Demo ================= */
+
+      var IS_LOCAL = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      // After the first `wrangler deploy`, replace YOUR-SUBDOMAIN with the
+      // workers.dev subdomain wrangler prints.
+      var API = IS_LOCAL
+        ? "http://localhost:8787/v1/cascade"
+        : "https://sc-cascade.YOUR-SUBDOMAIN.workers.dev/v1/cascade";
+
+      var MAX_METRICS = 3;
+      var STAGE_MS = 5500;
+
+      var form = document.getElementById("cascade-form");
+      var metricsEl = document.getElementById("metrics");
+      var addBtn = document.getElementById("add-metric");
+      var runBtn = document.getElementById("run-btn");
+      var formError = document.getElementById("form-error");
+      var pipeline = document.getElementById("pipeline");
+      var notice = document.getElementById("notice");
+      var results = document.getElementById("results");
+      var closing = document.getElementById("closing");
+
+      /* ---------- Metric rows ---------- */
+
+      function el(tag, className, text) {
+        var node = document.createElement(tag);
+        if (className) node.className = className;
+        if (text !== undefined) node.textContent = text;
+        return node;
+      }
+
+      function addMetricRow() {
+        if (metricsEl.children.length >= MAX_METRICS) return;
+        var card = el("div", "metric-card");
+
+        var head = el("div", "metric-head");
+        head.appendChild(el("span", "metric-title", ""));
+        var removeBtn = el("button", "metric-remove", "Remove");
+        removeBtn.type = "button";
+        removeBtn.addEventListener("click", function () {
+          card.remove();
+          renumberMetrics();
+          addBtn.style.display = metricsEl.children.length >= MAX_METRICS ? "none" : "";
+        });
+        head.appendChild(removeBtn);
+        card.appendChild(head);
+
+        var grid = el("div", "metric-grid");
+
+        var nameWrap = el("div", "full");
+        var nameLabel = el("label", "sub-label", "Metric");
+        var nameInput = document.createElement("input");
+        nameInput.type = "text";
+        nameInput.maxLength = 120;
+        nameInput.placeholder = "e.g. qualified enterprise prospects";
+        nameInput.className = "m-name";
+        nameWrap.appendChild(nameLabel);
+        nameWrap.appendChild(nameInput);
+        grid.appendChild(nameWrap);
+
+        var dirWrap = el("div", "full");
+        var dirLabel = el("label", "sub-label", "Required change");
+        var dirSelect = document.createElement("select");
+        dirSelect.className = "m-direction";
+        ["increase", "maintain", "decrease"].forEach(function (d) {
+          var opt = document.createElement("option");
+          opt.value = d;
+          opt.textContent = d.charAt(0).toUpperCase() + d.slice(1);
+          dirSelect.appendChild(opt);
+        });
+        dirWrap.appendChild(dirLabel);
+        dirWrap.appendChild(dirSelect);
+        grid.appendChild(dirWrap);
+
+        var delta = el("div", "delta-row");
+        [
+          ["Today", "m-status-quo", "e.g. 2"],
+          ["Target", "m-target", "e.g. >5"],
+          ["Deadline", "m-deadline", "e.g. within 7 days"]
+        ].forEach(function (spec) {
+          var w = el("div");
+          w.appendChild(el("label", "sub-label", spec[0]));
+          var input = document.createElement("input");
+          input.type = "text";
+          input.maxLength = 80;
+          input.className = spec[1];
+          input.placeholder = spec[2];
+          w.appendChild(input);
+          delta.appendChild(w);
+        });
+        grid.appendChild(delta);
+
+        card.appendChild(grid);
+        metricsEl.appendChild(card);
+        renumberMetrics();
+        addBtn.style.display = metricsEl.children.length >= MAX_METRICS ? "none" : "";
+      }
+
+      function renumberMetrics() {
+        Array.prototype.forEach.call(metricsEl.children, function (card, i) {
+          card.querySelector(".metric-title").textContent = "Metric under pressure " + (i + 1);
+          var rm = card.querySelector(".metric-remove");
+          rm.style.display = metricsEl.children.length > 1 ? "" : "none";
+        });
+      }
+
+      addBtn.addEventListener("click", addMetricRow);
+      addMetricRow();
+
+      /* ---------- Validation + submit ---------- */
+
+      function readInput() {
+        var priority = document.getElementById("priority").value.trim();
+        if (priority.length < 10) return { error: "Describe the strategic priority in at least a short sentence." };
+        var metrics = [];
+        var cards = metricsEl.children;
+        for (var i = 0; i < cards.length; i++) {
+          var c = cards[i];
+          var name = c.querySelector(".m-name").value.trim();
+          if (!name) return { error: "Give metric " + (i + 1) + " a name." };
+          metrics.push({
+            name: name,
+            direction: c.querySelector(".m-direction").value,
+            status_quo: c.querySelector(".m-status-quo").value.trim(),
+            target: c.querySelector(".m-target").value.trim(),
+            deadline: c.querySelector(".m-deadline").value.trim()
+          });
+        }
+        if (!metrics.length) return { error: "Add at least one metric under pressure." };
+        return {
+          input: {
+            priority: priority,
+            metrics: metrics,
+            consent: document.getElementById("consent").checked
+          }
+        };
+      }
+
+      function showFormError(msg) {
+        formError.textContent = msg;
+        formError.classList.add("visible");
+      }
+
+      function clearFormError() {
+        formError.textContent = "";
+        formError.classList.remove("visible");
+      }
+
+      /* ---------- Pipeline animation ---------- */
+
+      var stageTimer = null;
+
+      function startPipeline() {
+        pipeline.classList.add("visible");
+        var items = pipeline.querySelectorAll("li");
+        items.forEach(function (li) { li.classList.remove("active", "done"); });
+        if (REDUCED_MOTION) {
+          items.forEach(function (li) { li.classList.add("active"); });
+          return;
+        }
+        var stage = 0;
+        items[0].classList.add("active");
+        stageTimer = setInterval(function () {
+          if (stage >= items.length - 1) { clearInterval(stageTimer); stageTimer = null; return; }
+          items[stage].classList.remove("active");
+          items[stage].classList.add("done");
+          stage += 1;
+          items[stage].classList.add("active");
+        }, STAGE_MS);
+      }
+
+      function finishPipeline(cb) {
+        if (stageTimer) { clearInterval(stageTimer); stageTimer = null; }
+        var items = pipeline.querySelectorAll("li");
+        items.forEach(function (li) { li.classList.remove("active"); li.classList.add("done"); });
+        setTimeout(function () {
+          pipeline.classList.remove("visible");
+          cb();
+        }, REDUCED_MOTION ? 0 : 600);
+      }
+
+      function hidePipeline() {
+        if (stageTimer) { clearInterval(stageTimer); stageTimer = null; }
+        pipeline.classList.remove("visible");
+      }
+
+      /* ---------- Rendering ---------- */
+
+      var PILL_MAP = [
+        [/sales|revops|revenue/i, "fn-sales"],
+        [/marketing|demand|growth|brand/i, "fn-marketing"],
+        [/product/i, "fn-product"],
+        [/community|devrel|advoca/i, "fn-community"],
+        [/success|support|cs\b|service/i, "fn-cs"]
+      ];
+
+      function pillClass(fn) {
+        for (var i = 0; i < PILL_MAP.length; i++) {
+          if (PILL_MAP[i][0].test(fn)) return PILL_MAP[i][1];
+        }
+        return "fn-neutral";
+      }
+
+      var revealCounter = 0;
+
+      function revealItem(node) {
+        node.classList.add("reveal-item");
+        var delay = revealCounter * 0.1;
+        revealCounter += 1;
+        node.style.transitionDelay = delay.toFixed(2) + "s";
+        return node;
+      }
+
+      function stripDot(s) {
+        return String(s).replace(/\.\s*$/, "");
+      }
+
+      function jobCard(job) {
+        var card = el("article", "jobf");
+        var trace = el("p", "card-trace");
+        trace.appendChild(el("span", "tr-label", "Found in: "));
+        trace.appendChild(document.createTextNode(job.trace || "Live work traces"));
+        card.appendChild(trace);
+        card.appendChild(el("p", "job-text", job.job));
+        return card;
+      }
+
+      // Compact but self-justifying: title answers "what", the three fields
+      // answer "for whom / to move what / by when". Full ticket stays backend-side.
+      function ticketCard(t, key) {
+        var card = el("article", "ticket");
+        card.appendChild(el("span", "ticket-key", key));
+        card.appendChild(el("h3", "ticket-title", t.title || ""));
+        if (t.summary) card.appendChild(el("p", "ticket-what", stripDot(t.summary)));
+        var fields = el("dl", "ticket-fields");
+        [
+          ["Audience", t.audience],
+          ["Moves", t.moves],
+          ["By", t.deadline]
+        ].forEach(function (f) {
+          if (!f[1]) return;
+          fields.appendChild(el("dt", null, f[0]));
+          fields.appendChild(el("dd", null, stripDot(f[1])));
+        });
+        if (fields.children.length) card.appendChild(fields);
+        return card;
+      }
+
+      function arrowEl() {
+        var arrow = el("div", "arrow");
+        arrow.setAttribute("aria-hidden", "true");
+        arrow.appendChild(el("span", "right", "→"));
+        arrow.appendChild(el("span", "down", "↓"));
+        return arrow;
+      }
+
+      function place(node, row, col) {
+        node.style.gridRow = String(row);
+        node.style.gridColumn = String(col);
+        return node;
+      }
+
+      function renderCascade(data) {
+        results.textContent = "";
+        revealCounter = 0;
+
+        results.appendChild(revealItem(el("h3", "results-title", "Your priority, served by content.")));
+
+        var echo = revealItem(el("div", "priority-echo"));
+        echo.appendChild(el("span", "echo-label", "Strategic priority"));
+        echo.appendChild(el("div", "echo-text", data.priority));
+        results.appendChild(echo);
+
+        data.metrics.forEach(function (metric) {
+          var pressure = revealItem(el("div", "metric-pressure"));
+          pressure.appendChild(el("span", "mp-label", "Metric under pressure"));
+          pressure.appendChild(el("div", "mp-text", metric.required_change));
+          results.appendChild(pressure);
+        });
+
+        // One board column per unique team, jobs pooled across metrics.
+        var teams = [];
+        data.metrics.forEach(function (metric) {
+          (metric.owners || []).forEach(function (owner) {
+            var entry = null;
+            for (var i = 0; i < teams.length; i++) {
+              if (teams[i].fn === owner.function) entry = teams[i];
+            }
+            if (!entry) { entry = { fn: owner.function, jobs: [] }; teams.push(entry); }
+            (owner.jobs || []).forEach(function (job) { entry.jobs.push(job); });
+          });
+        });
+
+        if (teams.length) {
+          var win = revealItem(el("div", "app-window"));
+
+          var bar = el("div", "aw-titlebar");
+          var dots = el("span", "aw-dots");
+          dots.setAttribute("aria-hidden", "true");
+          for (var d = 0; d < 3; d++) dots.appendChild(document.createElement("i"));
+          bar.appendChild(dots);
+          bar.appendChild(el("span", "aw-title", "Structural Content"));
+          bar.appendChild(el("span", "aw-badge", "Simulated preview"));
+          win.appendChild(bar);
+
+          // Two lanes on one grid: jobs (col 1) -> arrows (col 2) -> board panel (col 3).
+          var jobCount = teams.reduce(function (n, team) { return n + team.jobs.length; }, 0);
+          var totalRows = 1 + teams.length + jobCount + 1; // captions + team headers + pairs + bottom pad
+          var flow = el("div", "flow");
+          flow.style.gridTemplateRows = "repeat(" + totalRows + ", auto)";
+
+          // Recessed board panel behind column 3.
+          flow.appendChild(place(el("div", "board-bg"), "1 / " + (totalRows + 1), 3));
+
+          flow.appendChild(place(el("span", "lane-cap", "Likely jobs in motion"), 1, 1));
+          var bhead = place(el("div", "board-head"), 1, 3);
+          bhead.appendChild(el("span", "bh-title", "Content team board"));
+          bhead.appendChild(el("span", "bh-count", jobCount + (jobCount === 1 ? " ticket" : " tickets")));
+          flow.appendChild(bhead);
+
+          var row = 2;
+          var ticketNum = 0;
+          teams.forEach(function (team) {
+            var tr = place(el("div", "team-row"), row, 1);
+            tr.appendChild(el("span", "fn-pill " + pillClass(team.fn), team.fn));
+            flow.appendChild(tr);
+            row += 1;
+            team.jobs.forEach(function (job) {
+              ticketNum += 1;
+              flow.appendChild(place(revealItem(jobCard(job)), row, 1));
+              flow.appendChild(place(revealItem(arrowEl()), row, 2));
+              var cell = place(el("div", "ticket-cell"), row, 3);
+              cell.appendChild(revealItem(ticketCard(job.ticket || {}, "SC-" + ticketNum)));
+              flow.appendChild(cell);
+              row += 1;
+            });
+          });
+          flow.appendChild(place(el("div", "board-pad"), row, 3));
+
+          win.appendChild(flow);
+          win.appendChild(el("div", "aw-footer", "Generated from what you typed — installed, the system reads your real goals and live systems."));
+          results.appendChild(win);
+        }
+
+        results.classList.add("visible");
+        closing.classList.add("visible");
+
+        // Trigger the staged reveal on the next frame.
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            results.querySelectorAll(".reveal-item").forEach(function (n) {
+              n.classList.add("revealed");
+            });
+          });
+        });
+      }
+
+      /* ---------- State transitions ---------- */
+
+      function showNotice(msg) {
+        notice.querySelector("p").textContent = msg;
+        notice.classList.add("visible");
+      }
+
+      function resetOutput() {
+        notice.classList.remove("visible");
+        results.classList.remove("visible");
+        results.textContent = "";
+        closing.classList.remove("visible");
+      }
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        clearFormError();
+        var read = readInput();
+        if (read.error) { showFormError(read.error); return; }
+
+        resetOutput();
+        form.style.display = "none";
+        startPipeline();
+
+        var controller = new AbortController();
+        var timeout = setTimeout(function () { controller.abort(); }, 180000);
+
+        fetch(API, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(read.input),
+          signal: controller.signal
+        })
+          .then(function (res) {
+            return res.json().then(function (body) { return { ok: res.ok, body: body }; });
+          })
+          .then(function (r) {
+            clearTimeout(timeout);
+            if (!r.ok) {
+              var msg = (r.body && r.body.error && r.body.error.message) ||
+                "The system hiccuped — please try again.";
+              throw new Error(msg);
+            }
+            if (r.body.refusal) {
+              finishPipeline(function () {
+                form.style.display = "";
+                showNotice(r.body.refusal);
+              });
+              return;
+            }
+            finishPipeline(function () { renderCascade(r.body); });
+          })
+          .catch(function (err) {
+            clearTimeout(timeout);
+            hidePipeline();
+            form.style.display = "";
+            showNotice(
+              err.name === "AbortError"
+                ? "That run took too long — please try again."
+                : err.message
+            );
+          });
+      });
+
+      document.getElementById("run-again").addEventListener("click", function () {
+        resetOutput();
+        form.style.display = "";
+        document.getElementById("demo").scrollIntoView({ behavior: REDUCED_MOTION ? "auto" : "smooth" });
+      });
     })();
   </script>
 </body>
