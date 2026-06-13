@@ -14,6 +14,16 @@ interface Env {
   RESEARCH?: {
     put(key: string, value: string, opts?: { expirationTtl?: number }): Promise<void>;
   };
+  // Per-IP usage cap counter; absent until the KV namespace is bound.
+  USAGE?: {
+    get(key: string, type: "json"): Promise<UsageRecord | null>;
+    put(key: string, value: string, opts?: { expiration?: number }): Promise<void>;
+  };
+}
+
+interface UsageRecord {
+  count: number;
+  resetAt: number; // unix seconds — when this IP's window expires and the count resets
 }
 
 const ALLOWED_ORIGINS = [
@@ -25,6 +35,10 @@ const ALLOWED_ORIGINS = [
 
 const DIRECTIONS = ["increase", "maintain", "decrease"];
 const MAX_BODY_BYTES = 4096;
+// Longer-window per-IP cap so the demo can't be used as an ongoing work tool.
+// (The RATE_LIMITER binding only stops bursts; its window maxes out at 60s.)
+const USAGE_CAP = 10;
+const USAGE_WINDOW_SEC = 30 * 24 * 60 * 60; // resets 30 days after an IP's first run
 const LIMITS = {
   priority: { min: 10, max: 300 },
   name: { max: 120 },
@@ -135,6 +149,22 @@ function truncateCascade(cascade: any): any {
   return cascade;
 }
 
+// Best-effort per-IP run counter. KV isn't atomic, but the burst limiter caps
+// per-IP concurrency, so a rare off-by-one under a race is acceptable here.
+// Uses an absolute `expiration` so the 30-day window stays anchored to the
+// first run rather than sliding forward on every increment.
+async function incrementUsage(env: Env, ip: string): Promise<void> {
+  if (!env.USAGE) return;
+  const now = Math.floor(Date.now() / 1000);
+  const key = `runs:${ip}`;
+  const existing = await env.USAGE.get(key, "json");
+  const record: UsageRecord =
+    existing && existing.resetAt - now > 60
+      ? { count: existing.count + 1, resetAt: existing.resetAt }
+      : { count: 1, resetAt: now + USAGE_WINDOW_SEC };
+  await env.USAGE.put(key, JSON.stringify(record), { expiration: record.resetAt });
+}
+
 export default {
   async fetch(request: Request, env: Env, ctx: { waitUntil(p: Promise<unknown>): void }): Promise<Response> {
     const origin = request.headers.get("Origin");
@@ -159,6 +189,20 @@ export default {
         429,
         origin,
       );
+    }
+
+    // Longer-window cap: the demo is for evaluation, not ongoing content work.
+    if (env.USAGE && ip !== "unknown") {
+      const now = Math.floor(Date.now() / 1000);
+      const usage = await env.USAGE.get(`runs:${ip}`, "json");
+      if (usage && usage.resetAt > now && usage.count >= USAGE_CAP) {
+        return errorResponse(
+          "usage_limited",
+          "You've reached this demo's limit. The full Structural Content system runs continuously on your own stack — get in touch to see it on your real priorities.",
+          429,
+          origin,
+        );
+      }
     }
 
     const contentLength = Number(request.headers.get("Content-Length") ?? "0");
@@ -251,6 +295,11 @@ export default {
             expirationTtl: 31536000, // 1 year
           }).catch((e) => console.log("research put failed:", e instanceof Error ? e.message : String(e))),
         );
+      }
+
+      // Count this completed run toward the per-IP cap (best-effort, non-blocking).
+      if (env.USAGE && ip !== "unknown") {
+        ctx.waitUntil(incrementUsage(env, ip));
       }
 
       return jsonResponse(cascade, 200, origin);

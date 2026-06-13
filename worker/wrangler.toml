@@ -22,3 +22,9 @@ simple = { limit = 5, period = 60 }
 [[kv_namespaces]]
 binding = "RESEARCH"
 id = "51d2d51ecda74abca4f9fcac487eaced"
+
+# Per-IP usage cap counter (10 runs / 30-day window). Created via
+#   npx wrangler kv namespace create USAGE
+[[kv_namespaces]]
+binding = "USAGE"
+id = "b9ccec2acc204fb7bea66075636a6bbf"
