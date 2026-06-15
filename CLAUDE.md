@@ -9,9 +9,11 @@ Cloudflare Worker backend that powers its "cascade" sales demo. Two independent
 deployables in one repo:
 
 - **The site** (repo root): a static one-page site. `index.html` (inline CSS +
-  JS, no build step), `impressum.html`, `Media/`, `favicon.ico`. Served by
-  **GitHub Pages** from `main` at path `/`. `CNAME` pins the domain and
-  `.nojekyll` disables Jekyll processing.
+  JS, no build step) plus the standalone `impressum.html` and `privacy.html`
+  legal pages, `Media/`, `favicon.ico`. Served by **GitHub Pages** from `main`
+  at path `/`. `CNAME` pins the domain and `.nojekyll` disables Jekyll
+  processing. (`examples-anim-preview.html` is gitignored local scratch, not
+  part of the deployed site.)
 - **The worker** (`worker/`): a Cloudflare Worker that proxies the cascade demo
   to the Anthropic API, holding the API key and system prompt as Worker secrets.
 
@@ -47,7 +49,10 @@ owner functions → content-job tickets). Notable behaviors in `src/index.ts`:
 
 - **CORS allowlist** (`ALLOWED_ORIGINS`) — only the production domains and
   `localhost:8000` may call it. Update this list if origins change.
-- **Rate limiting** per IP via an unsafe `ratelimit` binding (5 req / 60s).
+- **Two-layer abuse protection per IP**: a burst guard via the unsafe
+  `RATE_LIMITER` binding (5 req / 60s, declared in `wrangler.toml`), plus a
+  longer-horizon usage cap (`USAGE_CAP` = 10 runs / 30-day window) counted in
+  the `USAGE` KV namespace, keyed by IP.
 - **Prospect input is data, never instructions** — it goes only in the user
   turn; the system prompt is the only instruction source.
 - **Consented research storage**: when `consent === true`, the input + cascade
@@ -78,9 +83,11 @@ Never commit these — they're gitignored and must stay that way:
 
 ## Current state of the demo
 
-The cascade worker code is committed on `main`, but `index.html` was reverted to
-the pre-demo version (the live page does not yet call the worker). Wiring it back
-up requires deploying the worker and replacing the placeholder
-`sc-cascade.YOUR-SUBDOMAIN.workers.dev` URL with the real one. See the
-`cascade-demo` memory for the full resume path and the design decisions already
-settled (don't relitigate them).
+The cascade demo UI is wired into the committed `index.html` (the form, the
+`fetch(API)` call, and `renderCascade`), but it still points at the placeholder
+`sc-cascade.YOUR-SUBDOMAIN.workers.dev` URL — so the live page calls nothing real
+yet. Going live requires deploying the worker (`wrangler deploy`) and replacing
+that placeholder with the real `workers.dev` URL (`API` is defined near the
+bottom of the inline script in `index.html`; localhost uses
+`http://localhost:8787/v1/cascade`). See the `cascade-demo` memory for the full
+resume path and the design decisions already settled (don't relitigate them).
