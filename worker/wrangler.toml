@@ -3,6 +3,13 @@ main = "src/index.ts"
 compatibility_date = "2026-06-01"
 compatibility_flags = ["nodejs_compat"]
 
+# Inline prompts/system-prompt.md (core IP, gitignored) into the Worker bundle as a
+# Text module — the prompt exceeds the 5.1 kB Worker-secret limit, so it can't be a
+# secret. `import SYSTEM_PROMPT from "../prompts/system-prompt.md"` in src/index.ts.
+rules = [
+  { type = "Text", globs = ["**/*.md"], fallthrough = true }
+]
+
 [vars]
 # Quality default. Cheaper/faster alternative: "claude-sonnet-4-6" (one-line switch, redeploy).
 MODEL = "claude-opus-4-8"

@@ -37,10 +37,12 @@ the `structuralcontent-deploy` memory.
 ```bash
 cd worker
 npm install
-wrangler dev      # local; reads secrets from worker/.dev.vars (gitignored)
-wrangler deploy   # production
-npm run put-prompt   # push the system prompt as a secret (no code deploy needed)
+wrangler dev      # local; reads ANTHROPIC_API_KEY from worker/.dev.vars (gitignored)
+wrangler deploy   # production — bundles prompts/system-prompt.md into the script
 ```
+
+The worker is **deployed and live** at `https://sc-cascade.structuralcontent.workers.dev`
+(`POST /v1/cascade`), and `index.html` points at it.
 
 The worker exposes a single endpoint: `POST /v1/cascade`. It validates a
 `{ priority, metrics[], consent }` body, calls the Anthropic API with a
@@ -74,20 +76,28 @@ three: prompt, `truncateCascade`, and any UI assumptions.
 Never commit these — they're gitignored and must stay that way:
 
 - `worker/prompts/system-prompt.md` — the cascade system prompt (core IP). Lives
-  only on Sebastian's machine and as the Cloudflare secret `SYSTEM_PROMPT`. Push
-  changes with `npm run put-prompt`; they take effect immediately, no deploy.
-- `worker/.dev.vars` — local `ANTHROPIC_API_KEY` + `SYSTEM_PROMPT` for
-  `wrangler dev`. Wrangler does **not** hot-reload it; restart dev after editing.
-  Regenerate the single-line `SYSTEM_PROMPT` value per `worker/prompts/README.md`.
+  only on Sebastian's machine; it's **bundled into the Worker at deploy time** as a
+  Text module (the `rules` block in `wrangler.toml` + the `import SYSTEM_PROMPT`
+  line in `src/index.ts`), because at ~10 kB it exceeds Cloudflare's 5.1 kB
+  Worker-secret limit. To change it: edit the file and `wrangler deploy` — the
+  prompt is inlined into the script bundle (which Cloudflare does not serve
+  publicly). There is no separate secret push.
+- `worker/.dev.vars` — local `ANTHROPIC_API_KEY` for `wrangler dev` (the prompt is
+  bundled, so it's no longer needed here). Wrangler does **not** hot-reload it;
+  restart dev after editing.
 - `References/` — strategy/positioning docs. Never publish.
 
 ## Current state of the demo
 
-The cascade demo UI is wired into the committed `index.html` (the form, the
-`fetch(API)` call, and `renderCascade`), but it still points at the placeholder
-`sc-cascade.YOUR-SUBDOMAIN.workers.dev` URL — so the live page calls nothing real
-yet. Going live requires deploying the worker (`wrangler deploy`) and replacing
-that placeholder with the real `workers.dev` URL (`API` is defined near the
-bottom of the inline script in `index.html`; localhost uses
-`http://localhost:8787/v1/cascade`). See the `cascade-demo` memory for the full
-resume path and the design decisions already settled (don't relitigate them).
+The cascade demo is **live**: the worker is deployed, `index.html` calls it at the
+real `sc-cascade.structuralcontent.workers.dev` URL (`API` is defined near the
+bottom of the inline script; localhost uses `http://localhost:8787/v1/cascade`),
+and a production smoke test returns a real cascade. See the `cascade-demo` memory
+for the design decisions already settled (don't relitigate them).
+
+## Analytics
+
+All three deployed pages load **Cloudflare Web Analytics** (cookieless, no consent
+banner) via a beacon `<script>` before `</body>`, disclosed in `privacy.html`. The
+beacon only reports from the live domain, not `localhost`. To change/remove it,
+edit the `data-cf-beacon` token in `index.html`, `impressum.html`, `privacy.html`.

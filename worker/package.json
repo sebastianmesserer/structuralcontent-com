@@ -5,8 +5,7 @@
   "description": "Cloudflare Worker proxy for the Structural Content cascade demo",
   "scripts": {
     "dev": "wrangler dev",
-    "deploy": "wrangler deploy",
-    "put-prompt": "wrangler secret put SYSTEM_PROMPT < prompts/system-prompt.md"
+    "deploy": "wrangler deploy"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.90.0"

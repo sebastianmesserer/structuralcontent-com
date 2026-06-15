@@ -1,13 +1,17 @@
 // sc-cascade — Cloudflare Worker proxy for the Structural Content cascade demo.
-// Holds the API key and the system prompt (both Worker secrets); the page at
+// Holds the API key as a Worker secret. The system prompt is bundled into the
+// Worker at deploy time from the gitignored prompts/system-prompt.md — it exceeds
+// the 5.1 kB Worker-secret limit, so it can't be a secret. The page at
 // structuralcontent.com/cascade.html is the only intended caller.
 
 import Anthropic, { APIError, RateLimitError } from "@anthropic-ai/sdk";
 import { CASCADE_SCHEMA } from "./schema";
+// Inlined at build time via the Text module rule in wrangler.toml. Core IP — the
+// .md is gitignored and must exist locally for `wrangler deploy` to succeed.
+import SYSTEM_PROMPT from "../prompts/system-prompt.md";
 
 interface Env {
   ANTHROPIC_API_KEY: string;
-  SYSTEM_PROMPT: string;
   MODEL: string;
   RATE_LIMITER: { limit(opts: { key: string }): Promise<{ success: boolean }> };
   // Research storage for consented runs; absent until the KV namespace is bound.
@@ -233,7 +237,7 @@ export default {
         system: [
           {
             type: "text",
-            text: env.SYSTEM_PROMPT,
+            text: SYSTEM_PROMPT,
             cache_control: { type: "ephemeral" },
           },
         ],
