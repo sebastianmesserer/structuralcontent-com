@@ -58,7 +58,7 @@ export const CASCADE_SCHEMA = {
                         required: [
                           "title",
                           "summary",
-                          "content",
+                          "draft",
                           "audience",
                           "moves",
                           "routed_to",
@@ -72,7 +72,11 @@ export const CASCADE_SCHEMA = {
                             description:
                               "What the content actually is — the concrete artifact, one line of at most 14 plain words.",
                           },
-                          content: { type: "string" },
+                          draft: {
+                            type: "string",
+                            description:
+                              "An AI-generated first-draft (v1) of the content itself, ready for the content team to edit. For text formats: the actual usable copy (~60-90 words). For rich-media formats (video, podcast): a tight outline/script ending in a generic handoff line, e.g. '→ Hand off to your video-generation tool.' Line breaks allowed.",
+                          },
                           audience: {
                             type: "string",
                             description: "Who this content must move — at most 8 plain words, no channel.",
