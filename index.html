@@ -870,15 +870,27 @@
       gap: 8px;
       font-size: 0.72rem;
       color: #b7b1a6;
+      padding: 7px 10px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.035);
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+    .ticket .ticket-draft summary:hover {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: rgba(255, 255, 255, 0.24);
     }
     .ticket .ticket-draft summary::-webkit-details-marker { display: none; }
-    .ticket .ticket-draft summary::before {
-      content: "\25B8";
-      font-size: 0.7rem;
+    .ticket .ticket-draft .draft-cue {
+      margin-left: auto;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
       color: var(--accent);
-      transition: transform 0.15s ease;
+      white-space: nowrap;
     }
-    .ticket .ticket-draft[open] summary::before { transform: rotate(90deg); }
+    .ticket .ticket-draft .draft-cue::after { content: "Read draft \25BE"; }
+    .ticket .ticket-draft[open] .draft-cue::after { content: "Hide draft \25B4"; }
     .ticket .ticket-draft .draft-label {
       font-weight: 600;
       letter-spacing: 0.04em;
@@ -1165,7 +1177,7 @@
     <section class="hero" aria-labelledby="hero-h">
       <div class="wrap">
         <h1 id="hero-h">Turn business signals into content that moves <span class="cycle" id="cycle">your strategic priorities</span>.</h1>
-        <p class="subhead">Structural Content<sup>TM</sup> is an AI system that reads a company&rsquo;s goals and live systems, finds where content can help, and turns that into clear work for the content team.</p>
+        <p class="subhead">Structural Content<sup>TM</sup> is an AI system that reads a company&rsquo;s goals and live systems, finds where content can help, and turns that into clear work for the content team &ndash; with first drafts already prepared.</p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="#demo">Try it on your priority</a>
           <a class="link-quiet" href="https://sebastianmesserer.com/essays/structural-content/" target="_blank" rel="noopener">Read the TLDR Marketing-featured essay</a>
@@ -1778,6 +1790,7 @@
           var sum = document.createElement("summary");
           sum.appendChild(el("span", "draft-label", "AI first draft"));
           sum.appendChild(el("span", "draft-tag", "v1 · editable"));
+          sum.appendChild(el("span", "draft-cue"));
           draft.appendChild(sum);
           draft.appendChild(el("div", "draft-body", t.draft));
           card.appendChild(draft);
