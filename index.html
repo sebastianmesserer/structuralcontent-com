@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Structural Content — Content tied to business outcomes</title>
+  <title>Structural Content – Content tied to business outcomes</title>
   <meta name="description" content="Structural Content is an installed intelligence layer for content operations. It uses AI to read company goals and live systems, finds where content can help, and turns that into actionable tickets for the content team &ndash; with first drafts already prepared." />
   <meta name="author" content="Sebastian Messerer" />
   <meta name="theme-color" content="#F7F5F0" />
@@ -94,7 +94,7 @@
         "name": "How does Structural Content get installed in my company?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Structural Content is installed as a single-tenant AI system for your company. It reads where your goals live and connects to the systems of the teams owning the priority being worked, such as CRM, support, product usage, Slack, or project management tools. The first step is not a full installation. It is a discovery call, followed — if the fit is real — by a bounded scan on a slice of live company data."
+          "text": "Structural Content is installed as a single-tenant AI system for your company. It reads where your goals live and connects to the systems of the teams owning the priority being worked, such as CRM, support, product usage, Slack, or project management tools. The first step is not a full installation. It is a discovery call, followed – if the fit is real – by a bounded scan on a slice of live company data."
         }
       },
       {
@@ -1229,7 +1229,7 @@
             <li><span class="dot"></span><span class="stage-text"><span class="stage-title">Identifying owner teams</span><span class="stage-sub">From CRM data, project boards, and org context.</span></span></li>
             <li><span class="dot"></span><span class="stage-text"><span class="stage-title">Detecting work already in motion</span><span class="stage-sub">Across Slack, Asana, support queues, and product usage.</span></span></li>
             <li><span class="dot"></span><span class="stage-text"><span class="stage-title">Generating content job tickets</span><span class="stage-sub">Each tied to the priority, metric, team, and deadline.</span></span></li>
-            <li><span class="dot"></span><span class="stage-text"><span class="stage-title">Drafting a first version of each piece</span><span class="stage-sub">A context-rich v1 the content team edits &mdash; or hands off to your preferred AI generation tools.</span></span></li>
+            <li><span class="dot"></span><span class="stage-text"><span class="stage-title">Drafting a first version of each piece</span><span class="stage-sub">A context-rich v1 the content team edits &ndash; or hands off to your preferred AI generation tools.</span></span></li>
             <li><span class="dot"></span><span class="stage-text"><span class="stage-title">Routing them to the content team</span><span class="stage-sub">Organized for review, refinement, and action.</span></span></li>
           </ol>
           <p class="pipeline-note">What the demo does once, the installed system does continuously across priorities.</p>
@@ -1295,7 +1295,7 @@
           <div class="step">
             <div class="step-num">4</div>
             <h3>Deliver review-ready tickets</h3>
-            <p>It hands the content team review-ready tickets, rich in context &mdash; with v1 drafts already prepared.</p>
+            <p>It hands the content team review-ready tickets, rich in context &ndash; with v1 drafts already prepared.</p>
           </div>
         </div>
       </div>
@@ -1324,7 +1324,7 @@
           <h2 id="fit-h">Best for B2B Scale-Ups with standing content teams.</h2>
         </div>
         <div class="prose measure">
-          <p>Structural Content is ideal for B2B series B&ndash;D companies, especially SaaS, with a standing content team, written priorities, and at least one nameable metric under pressure. It works best when relevant teams already operate in reachable systems such as CRM, Slack, Asana, or Jira. It still works when priorities live in messy docs, slides, or spreadsheets rather than a tidy OKR tool. If your team is mainly reacting to requests while trying to prove business impact, this is the setting it is designed for.</p>
+          <p>Structural Content is ideal for B2B software companies around series A&ndash;B &ndash; roughly 50&ndash;200 people &ndash; especially SaaS, with a standing content team, written priorities, and at least one nameable metric under pressure. It works best when relevant teams already operate in reachable systems such as CRM, Slack, Asana, or Jira. It still works when priorities live in messy docs, slides, or spreadsheets rather than a tidy OKR tool. If your team is mainly reacting to requests while trying to prove business impact, this is the setting it is designed for.</p>
         </div>
       </div>
     </section>
@@ -1376,7 +1376,7 @@
             <summary>How does Structural Content get installed in my company?</summary>
             <div class="faq-body">
               <p>Structural Content is installed as a single-tenant AI system for your company. It reads where your goals live and connects to the systems of the teams owning the priority being worked, such as CRM, support, product usage, Slack, or project management tools.</p>
-              <p>The first step is not a full installation. It is a discovery call, followed &mdash; if the fit is real &mdash; by a bounded scan on a slice of live company data.</p>
+              <p>The first step is not a full installation. It is a discovery call, followed &ndash; if the fit is real &ndash; by a bounded scan on a slice of live company data.</p>
             </div>
           </details>
           <details class="faq-item">
@@ -1886,7 +1886,7 @@
           flow.appendChild(place(el("div", "board-pad"), row, 3));
 
           win.appendChild(flow);
-          win.appendChild(el("div", "aw-footer", "Generated from what you typed — each ticket carries an editable AI first draft. Installed, the system reads your real goals and live systems."));
+          win.appendChild(el("div", "aw-footer", "Generated from what you typed – each ticket carries an editable AI first draft. Installed, the system reads your real goals and live systems."));
           results.appendChild(win);
         }
 
@@ -1943,7 +1943,7 @@
             clearTimeout(timeout);
             if (!r.ok) {
               var msg = (r.body && r.body.error && r.body.error.message) ||
-                "The system hiccuped — please try again.";
+                "The system hiccuped – please try again.";
               throw new Error(msg);
             }
             if (r.body.refusal) {
@@ -1961,7 +1961,7 @@
             form.style.display = "";
             showNotice(
               err.name === "AbortError"
-                ? "That run took too long — please try again."
+                ? "That run took too long – please try again."
                 : err.message
             );
           });
