@@ -252,7 +252,7 @@ export default {
         return jsonResponse(
           {
             refusal:
-              "This tool maps business priorities to content jobs — give it a real strategic priority and a metric under pressure, and it will show you the cascade.",
+              "This tool turns business priorities into content tickets – give it a real strategic priority and a metric under pressure, and it will show you the cascade.",
             priority: input.priority,
             metrics: [],
           },
