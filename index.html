@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Structural Content – Content tied to business outcomes</title>
-  <meta name="description" content="Structural Content is a content strategy tool that helps marketing and content teams decide what content to create to support their business goals. It uses AI to analyze company documentation and connected systems to identify high-impact opportunities, then turns them into actionable tickets &ndash; with first drafts already prepared." />
+  <meta name="description" content="Structural Content is a content strategy tool: AI finds high-impact content opportunities and turns them into tickets with first drafts prepared." />
   <meta name="author" content="Sebastian Messerer" />
   <meta name="theme-color" content="#F7F5F0" />
   <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -52,7 +52,6 @@
     },
     "knowsAbout": [
       "Content strategy",
-      "Content operations",
       "AI content systems",
       "Strategic communications",
       "Content marketing"
@@ -105,7 +104,7 @@
         "name": "What exactly does the system produce?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Structural Content identifies high-impact content opportunities and turns them into review-ready, actionable tickets with first drafts already prepared. Every ticket is tied back to a strategic priority and carries its lineage: the metric under pressure, the team job it supports, and the metadata your content team requires."
+          "text": "Structural Content identifies high-impact content opportunities and turns them into review-ready, actionable tickets with first drafts already prepared. Every ticket is tied back to a strategic priority and carries its lineage: the metric under pressure, the work it supports, and the metadata your content team requires."
         }
       },
       {
@@ -1011,7 +1010,7 @@
       line-height: 1;
       margin-bottom: 14px;
     }
-    .step h3 {
+    .step h3, .example h3 {
       font-size: 1.18rem;
       margin-bottom: 10px;
     }
@@ -1035,7 +1034,6 @@
     /* ---------- Examples ---------- */
     .example { max-width: 70ch; }
     .example + .example { margin-top: 32px; }
-    .example h3 { font-size: 1.18rem; margin-bottom: 8px; }
 
     /* ---------- Founder ---------- */
     .about-body { max-width: 760px; }
@@ -1169,6 +1167,7 @@
         <a href="#demo">Demo</a>
         <a href="#what">What it is</a>
         <a href="#how">How it works</a>
+        <a href="#examples">Examples</a>
         <a href="#why">Why it differs</a>
         <a href="#fit">Who it fits</a>
         <a href="#about">About</a>
@@ -1232,7 +1231,7 @@
         <!-- Pipeline loading state -->
         <div class="pipeline" id="pipeline" aria-live="polite">
           <ol>
-            <li><span class="dot"></span><span class="stage-text"><span class="stage-title">Reading your priority</span><span class="stage-sub">The installed system reads these from your goals/OKR systems and planning docs</span></span></li>
+            <li><span class="dot"></span><span class="stage-text"><span class="stage-title">Reading your priority</span><span class="stage-sub">The installed system reads these from your planning documents, goal systems, and other company context.</span></span></li>
             <li><span class="dot"></span><span class="stage-text"><span class="stage-title">Deriving the metrics under pressure</span><span class="stage-sub">The required change, target state, and deadline.</span></span></li>
             <li><span class="dot"></span><span class="stage-text"><span class="stage-title">Identifying owner teams</span><span class="stage-sub">From CRM data, project boards, and org context.</span></span></li>
             <li><span class="dot"></span><span class="stage-text"><span class="stage-title">Detecting work already in motion</span><span class="stage-sub">Across Slack, Asana, support queues, and product usage.</span></span></li>
@@ -1412,7 +1411,7 @@
             <summary>What exactly does the system produce?</summary>
             <div class="faq-body">
               <p>Structural Content identifies high-impact content opportunities and turns them into review-ready, actionable tickets with first drafts already prepared.</p>
-              <p>Every ticket is tied back to a strategic priority and carries its lineage: the metric under pressure, the team job it supports, and the metadata your content team requires.</p>
+              <p>Every ticket is tied back to a strategic priority and carries its lineage: the metric under pressure, the work it supports, and the metadata your content team requires.</p>
             </div>
           </details>
           <details class="faq-item">
@@ -1887,7 +1886,7 @@
           // Recessed board panel behind column 3.
           flow.appendChild(place(el("div", "board-bg"), "1 / " + (totalRows + 1), 3));
 
-          flow.appendChild(place(el("span", "lane-cap", "Jobs in motion"), 1, 1));
+          flow.appendChild(place(el("span", "lane-cap", "Work in motion"), 1, 1));
           var bhead = place(el("div", "board-head"), 1, 3);
           bhead.appendChild(el("span", "bh-title", "Content team board"));
           bhead.appendChild(el("span", "bh-count", jobCount + (jobCount === 1 ? " ticket" : " tickets")));
