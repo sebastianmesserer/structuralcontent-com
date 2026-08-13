@@ -15,7 +15,8 @@ deployables in one repo:
   processing. (`examples-anim-preview.html` is gitignored local scratch, not
   part of the deployed site.)
 - **The worker** (`worker/`): a Cloudflare Worker that proxies the cascade demo
-  to the Anthropic API, holding the API key and system prompt as Worker secrets.
+  to the Anthropic API, holding the API key as a Worker secret and the system
+  prompt as a bundled Text module (see "Secrets and gitignored IP" below).
 
 There is no build, lint, or test tooling for the static site — edit the HTML
 directly.
