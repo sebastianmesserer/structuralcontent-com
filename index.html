@@ -1628,7 +1628,7 @@
         nameInput.maxLength = 120;
         nameInput.placeholder = "e.g. weekly active users in the new CRM";
         nameInput.className = "m-name";
-        if (prefill) nameInput.value = prefill.name;
+        if (prefill) nameInput.value = prefill.name || "";
         nameWrap.appendChild(nameLabel);
         nameWrap.appendChild(nameInput);
         grid.appendChild(nameWrap);
@@ -1643,7 +1643,12 @@
           opt.textContent = d.charAt(0).toUpperCase() + d.slice(1);
           dirSelect.appendChild(opt);
         });
-        if (prefill) dirSelect.value = prefill.direction;
+        if (prefill) {
+          dirSelect.value = prefill.direction;
+          /* An off-list value leaves selectedIndex at -1 and renders blank, which
+             the worker would reject with a 400 and no field-level cue. */
+          if (dirSelect.selectedIndex < 0) dirSelect.selectedIndex = 0;
+        }
         dirWrap.appendChild(dirLabel);
         dirWrap.appendChild(dirSelect);
         grid.appendChild(dirWrap);
@@ -1661,7 +1666,7 @@
           input.maxLength = 80;
           input.className = spec[1];
           input.placeholder = spec[2];
-          if (prefill) input.value = prefill[spec[3]];
+          if (prefill) input.value = prefill[spec[3]] || "";
           w.appendChild(input);
           delta.appendChild(w);
         });
