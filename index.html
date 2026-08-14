@@ -435,7 +435,9 @@
       padding: 12px 14px;
       line-height: 1.5;
     }
-    textarea { resize: vertical; min-height: 76px; }
+    /* Tall enough for the prefilled example to show in full when it wraps to
+       three lines on narrow screens (3 × 23.5px line-height + 24px padding). */
+    textarea { resize: vertical; min-height: 100px; }
     textarea:focus, input[type="text"]:focus, select:focus {
       outline: 2px solid var(--accent);
       outline-offset: 1px;
@@ -1205,7 +1207,7 @@
         <form id="cascade-form" novalidate>
           <div class="priority-block measure">
             <label class="field-label" for="priority">Strategic priority</label>
-            <textarea id="priority" maxlength="300" rows="2" placeholder="e.g. Expand into the US enterprise segment in 2026"></textarea>
+            <textarea id="priority" maxlength="300" rows="2" placeholder="e.g. Get every field team onto the new CRM before the Q4 close"></textarea>
           </div>
 
           <div class="measure">
@@ -1570,6 +1572,18 @@
       var MAX_METRICS = 3;
       var STAGE_MS = 5500;
 
+      /* Prefilled example, so the demo can be run without typing. */
+      var EXAMPLE = {
+        priority: "Fill 12 engineering roles in our new Lisbon office by the end of Q4 without lowering the bar.",
+        metric: {
+          name: "offer acceptance rate",
+          direction: "increase",
+          status_quo: "48%",
+          target: ">75%",
+          deadline: "by end of Q4"
+        }
+      };
+
       var form = document.getElementById("cascade-form");
       var metricsEl = document.getElementById("metrics");
       var addBtn = document.getElementById("add-metric");
@@ -1589,7 +1603,7 @@
         return node;
       }
 
-      function addMetricRow() {
+      function addMetricRow(prefill) {
         if (metricsEl.children.length >= MAX_METRICS) return;
         var card = el("div", "metric-card");
 
@@ -1612,8 +1626,9 @@
         var nameInput = document.createElement("input");
         nameInput.type = "text";
         nameInput.maxLength = 120;
-        nameInput.placeholder = "e.g. qualified enterprise prospects";
+        nameInput.placeholder = "e.g. weekly active users in the new CRM";
         nameInput.className = "m-name";
+        if (prefill) nameInput.value = prefill.name || "";
         nameWrap.appendChild(nameLabel);
         nameWrap.appendChild(nameInput);
         grid.appendChild(nameWrap);
@@ -1628,15 +1643,21 @@
           opt.textContent = d.charAt(0).toUpperCase() + d.slice(1);
           dirSelect.appendChild(opt);
         });
+        if (prefill) {
+          dirSelect.value = prefill.direction;
+          /* An off-list value leaves selectedIndex at -1 and renders blank, which
+             the worker would reject with a 400 and no field-level cue. */
+          if (dirSelect.selectedIndex < 0) dirSelect.selectedIndex = 0;
+        }
         dirWrap.appendChild(dirLabel);
         dirWrap.appendChild(dirSelect);
         grid.appendChild(dirWrap);
 
         var delta = el("div", "delta-row");
         [
-          ["Today", "m-status-quo", "e.g. 2"],
-          ["Target", "m-target", "e.g. >5"],
-          ["Deadline", "m-deadline", "e.g. within 7 days"]
+          ["Today", "m-status-quo", "e.g. 2", "status_quo"],
+          ["Target", "m-target", "e.g. >5", "target"],
+          ["Deadline", "m-deadline", "e.g. within 7 days", "deadline"]
         ].forEach(function (spec) {
           var w = el("div");
           w.appendChild(el("label", "sub-label", spec[0]));
@@ -1645,6 +1666,7 @@
           input.maxLength = 80;
           input.className = spec[1];
           input.placeholder = spec[2];
+          if (prefill) input.value = prefill[spec[3]] || "";
           w.appendChild(input);
           delta.appendChild(w);
         });
@@ -1664,8 +1686,9 @@
         });
       }
 
-      addBtn.addEventListener("click", addMetricRow);
-      addMetricRow();
+      addBtn.addEventListener("click", function () { addMetricRow(); });
+      addMetricRow(EXAMPLE.metric);
+      document.getElementById("priority").value = EXAMPLE.priority;
 
       /* ---------- Validation + submit ---------- */
 
