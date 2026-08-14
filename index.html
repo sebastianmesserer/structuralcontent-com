@@ -435,7 +435,9 @@
       padding: 12px 14px;
       line-height: 1.5;
     }
-    textarea { resize: vertical; min-height: 76px; }
+    /* Tall enough for the prefilled example to show in full when it wraps to
+       three lines on narrow screens (3 × 23.5px line-height + 24px padding). */
+    textarea { resize: vertical; min-height: 100px; }
     textarea:focus, input[type="text"]:focus, select:focus {
       outline: 2px solid var(--accent);
       outline-offset: 1px;
