@@ -447,17 +447,42 @@
       border-top: 1px solid var(--line);
     }
     .trust-line strong { color: var(--charcoal-soft); font-weight: 600; }
+    /* After a run #closing draws its own rule directly above, so drop ours. */
+    #closing.visible + .trust-line { border-top: none; padding-top: 0; margin-top: 2rem; }
+    /* .link-quiet's size is absolute, and its arrow belongs at the end of a
+       standalone line - neither holds for a link inside a sentence. */
+    .trust-line .link-quiet { font-size: inherit; }
+    .trust-line .link-quiet::after { content: none; }
 
     /* Small screens: recover the vertical space that keeps both the priority
        field and a booking CTA above the fold (J5.60). */
     @media (max-width: 640px) {
-      .hero { padding: 26px 0 56px; }
-      .hero h1 { font-size: 1.95rem; margin-bottom: 1rem; }
-      .hero .subhead { margin-bottom: 1.4rem; }
-      .hero .eyebrow { margin-bottom: 0.6rem; }
-      .hero .priority-block { margin-bottom: 18px; }
-      .hero .form-actions { margin-top: 18px; }
+      .hero { padding: 20px 0 56px; }
+      .hero h1 { font-size: 1.95rem; margin-bottom: 0.8rem; }
+      .hero .subhead { margin-bottom: 1.15rem; }
+      .hero .eyebrow { margin-bottom: 0.45rem; }
+      .hero .priority-block { margin-bottom: 14px; }
+      /* The placeholder wraps to two lines here, not three. */
+      .hero .priority-block textarea { min-height: 84px; }
+      .hero .consent-intro { font-size: 0.8rem; margin-top: 12px; }
+      .hero .form-actions { gap: 10px 14px; margin-top: 14px; }
       .hero .trust-line { margin-top: 2rem; }
+    }
+
+    /* Short viewports (laptops at 768, phones in landscape) are a vertical
+       problem, not a width one - tighten the hero's rhythm by height so the
+       booking CTA stays with the field. Threshold sits clear of the ~100px a
+       mobile URL bar adds or removes on the affected devices, so it cannot
+       toggle mid-scroll. */
+    @media (max-height: 860px) {
+      .hero { padding: 20px 0 48px; }
+      .hero h1 { margin-bottom: 0.7rem; }
+      .hero .subhead { margin-bottom: 1rem; }
+      .hero .eyebrow { margin-bottom: 0.4rem; }
+      .hero .priority-block { margin-bottom: 12px; }
+      .hero .priority-block textarea { min-height: 84px; }
+      .hero .consent-intro { margin-top: 10px; }
+      .hero .form-actions { margin-top: 12px; }
     }
 
     /* ---------- Demo: form ---------- */
@@ -569,7 +594,15 @@
       line-height: 1.5;
       color: var(--muted);
     }
-    .consent-intro { margin: 0 0 18px; } /* processing notice: its own note, set off above the consent */
+    /* Stands outside .consent-block now (it must paint before the first keystroke),
+       so it carries the small-note type scale itself. */
+    .consent-intro {
+      margin: 18px 0 0;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+    .consent-block .consent-intro { margin: 0 0 18px; }
     .consent-row {
       display: flex;
       align-items: flex-start;
@@ -604,7 +637,8 @@
     .form-error.visible { display: block; }
 
     /* ---------- Demo: pipeline loader ---------- */
-    .pipeline { display: none; padding: 8px 0 24px; }
+    /* scroll-margin clears the 68px sticky header when the loader is scrolled in. */
+    .pipeline { display: none; padding: 8px 0 24px; scroll-margin-top: 84px; }
     .pipeline.visible { display: block; }
     .pipeline ol { list-style: none; margin: 0; padding: 0; max-width: 560px; }
     .pipeline li {
@@ -1247,8 +1281,12 @@
           <div class="priority-block measure">
             <label class="field-label" for="priority">Strategic priority</label>
             <textarea id="priority" maxlength="300" rows="2" placeholder="e.g. Help us reduce customer churn by 20% by the end of the year"></textarea>
-            <p class="field-hint">Other priorities to try: hire engineers &middot; reduce support volume &middot; accelerate sales cycles &middot; increase product adoption.</p>
+            <p class="field-hint">Other priorities to try: hire engineers &middot; reduce support volume &middot; accelerate sales cycles.</p>
           </div>
+
+          <!-- Stays visible from the first paint: a warning about what not to
+               paste is worthless if it appears after the paste. -->
+          <p class="consent-intro measure">Your input will be processed by our AI provider to generate your result. Please avoid including confidential, personal, or identifying information. <a class="consent-link" href="privacy.html" target="_blank" rel="noopener">How we handle your data</a></p>
 
           <!-- Revealed once a priority is entered: before that, the consideration
                set is one field (J5.41), and the run must execute on what the
@@ -1261,7 +1299,6 @@
             </div>
 
             <div class="consent-block measure">
-              <p class="consent-intro">Your input will be processed by our AI provider to generate your result. Please avoid including confidential, personal, or identifying information. <a class="consent-link" href="privacy.html" target="_blank" rel="noopener">How we handle your data</a></p>
               <div class="consent-row">
                 <input type="checkbox" id="consent" />
                 <label for="consent"><strong>Optional:</strong> I consent to Structural Content storing my submission for customer research and product improvement.</label>
@@ -1275,8 +1312,6 @@
           </div>
           <div class="form-error" id="form-error" role="alert"></div>
         </form>
-
-        <p class="trust-line">Built by <strong>Sebastian Messerer</strong>, formerly Senior Content Strategist at Amazon, where he built and scaled an AI-driven content and communications system across 13 countries. <a class="link-quiet" href="https://sebastianmesserer.com/essays/structural-content/" target="_blank" rel="noopener">Read the TLDR Marketing-featured essay</a></p>
 
         <!-- Pipeline loading state -->
         <div class="pipeline" id="pipeline" aria-live="polite">
@@ -1307,6 +1342,8 @@
           </div>
           <p class="secondary">Or email <a href="mailto:sebastian@structuralcontent.com">sebastian@structuralcontent.com</a></p>
         </div>
+
+        <p class="trust-line">Built by <strong>Sebastian Messerer</strong>, formerly Senior Content Strategist at Amazon, where he built and scaled an AI-driven content and communications system across 13 countries. <a class="link-quiet" href="https://sebastianmesserer.com/essays/structural-content/" target="_blank" rel="noopener">Read the TLDR Marketing-featured essay</a></p>
 
       </div>
     </section>
@@ -1660,8 +1697,14 @@
       /* No prefill parameter by design: PRD 2 R20 forbids demonstrating a
          pre-filled priority or metric - the run executes on what the visitor
          types. Examples live in the placeholders only. */
+      var metricRowSeq = 0;
+
       function addMetricRow() {
         if (metricsEl.children.length >= MAX_METRICS) return;
+        /* Row-unique so each sub-label can carry a `for` - with nothing pre-filled
+           these inputs are always empty, so an unlabelled field leaves a screen
+           reader with only the placeholder. */
+        var rowId = "m" + (metricRowSeq += 1);
         var card = el("div", "metric-card");
 
         var head = el("div", "metric-head");
@@ -1685,6 +1728,8 @@
         nameInput.maxLength = 120;
         nameInput.placeholder = "e.g. weekly active users in the new CRM";
         nameInput.className = "m-name";
+        nameInput.id = rowId + "-name";
+        nameLabel.htmlFor = nameInput.id;
         nameWrap.appendChild(nameLabel);
         nameWrap.appendChild(nameInput);
         grid.appendChild(nameWrap);
@@ -1693,6 +1738,8 @@
         var dirLabel = el("label", "sub-label", "Required change");
         var dirSelect = document.createElement("select");
         dirSelect.className = "m-direction";
+        dirSelect.id = rowId + "-direction";
+        dirLabel.htmlFor = dirSelect.id;
         ["increase", "maintain", "decrease"].forEach(function (d) {
           var opt = document.createElement("option");
           opt.value = d;
@@ -1710,12 +1757,15 @@
           ["Deadline", "m-deadline", "e.g. within 7 days"]
         ].forEach(function (spec) {
           var w = el("div");
-          w.appendChild(el("label", "sub-label", spec[0]));
+          var label = el("label", "sub-label", spec[0]);
           var input = document.createElement("input");
           input.type = "text";
           input.maxLength = 80;
           input.className = spec[1];
           input.placeholder = spec[2];
+          input.id = rowId + "-" + spec[1];
+          label.htmlFor = input.id;
+          w.appendChild(label);
           w.appendChild(input);
           delta.appendChild(w);
         });
@@ -1811,12 +1861,13 @@
       var stageTimer = null;
 
       function startPipeline() {
-        // Bring the demo to the top so the steps are visible while they animate.
-        var demoSection = document.getElementById("demo");
-        if (demoSection) {
-          demoSection.scrollIntoView({ behavior: REDUCED_MOTION ? "auto" : "smooth", block: "start" });
-        }
         pipeline.classList.add("visible");
+        /* Scroll the loader itself, not #demo: #demo is now the hero, so scrolling
+           it to the top is a no-op at scrollY 0 and would leave the ~26s progress
+           indicator off-screen on a short viewport. `nearest` is a no-op when the
+           loader is already fully visible and degrades to top-alignment (respecting
+           scroll-margin-top) when it is taller than the viewport. */
+        pipeline.scrollIntoView({ behavior: REDUCED_MOTION ? "auto" : "smooth", block: "nearest" });
         var items = pipeline.querySelectorAll("li");
         items.forEach(function (li) { li.classList.remove("active", "done"); });
         if (REDUCED_MOTION) {
