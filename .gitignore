@@ -6,8 +6,12 @@ References/
 # Local scratch
 examples-anim-preview.html
 
-# Worker: the system prompt is IP — deployed as a Cloudflare secret, never committed
-worker/prompts/system-prompt.md
+# Worker: the prompts are IP — bundled into the Worker at deploy time, never
+# committed. Ignore the whole directory (not just system-prompt.md): this repo is
+# public, and a ported multi-stage engine adds prompt files that would otherwise
+# be tracked by default. Only the explanatory README is in git.
+worker/prompts/*
+!worker/prompts/README.md
 worker/node_modules/
 worker/.wrangler/
 worker/.dev.vars

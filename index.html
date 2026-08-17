@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Structural Content – Content tied to business outcomes</title>
-  <meta name="description" content="Structural Content is a content strategy tool: it finds where content can solve operational needs and turns them into tickets with first drafts prepared." />
+  <meta name="description" content="Structural Content reads your goals and live systems, finds where content can advance business outcomes, and delivers actionable tickets with first drafts prepared." />
   <meta name="author" content="Sebastian Messerer" />
   <meta name="theme-color" content="#F7F5F0" />
   <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -17,7 +17,7 @@
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Structural Content" />
-  <meta property="og:description" content="Structural Content is a content strategy tool that helps marketing and content teams decide what content to create to support their business goals &ndash; across the entire company. It analyzes company documentation and connected systems, such as CRMs and project-management tools, finds where content can solve real operational needs, and turns those opportunities into actionable tickets for the team, with first drafts already prepared." />
+  <meta property="og:description" content="Structural Content reads your company goals and live systems, finds where content can advance business outcomes, and delivers these opportunities to your team as actionable tickets, with first drafts already prepared." />
   <meta property="og:url" content="https://structuralcontent.com/" />
   <meta property="og:site_name" content="Structural Content" />
   <meta property="og:image" content="https://structuralcontent.com/Media/logo/sc-linkedin-800.png" />
@@ -26,7 +26,7 @@
   <meta property="og:image:alt" content="Structural Content" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Structural Content" />
-  <meta name="twitter:description" content="A content strategy tool that helps teams decide what content to create &ndash; using AI to turn company documentation and connected systems into actionable tickets with first drafts already prepared." />
+  <meta name="twitter:description" content="Structural Content reads your company goals and live systems, finds where content can advance business outcomes, and delivers these opportunities to your team as actionable tickets, with first drafts already prepared." />
   <meta name="twitter:image" content="https://structuralcontent.com/Media/logo/sc-linkedin-800.png" />
 
   <!-- Organization structured data -->
@@ -41,7 +41,7 @@
     "url": "https://structuralcontent.com/",
     "logo": "https://structuralcontent.com/Media/logo/sc-linkedin-800.png",
     "image": "https://structuralcontent.com/Media/logo/sc-linkedin-800.png",
-    "description": "Structural Content is a content strategy tool that helps marketing and content teams decide what content to create to support their business goals – across the entire company. It analyzes company documentation and connected systems, such as CRMs and project-management tools, finds where content can solve real operational needs, and turns those opportunities into actionable tickets for the team, with first drafts already prepared.",
+    "description": "Structural Content reads your company goals and live systems, finds where content can advance business outcomes, and delivers these opportunities to your team as actionable tickets, with first drafts already prepared.",
     "email": "sebastian@structuralcontent.com",
     "address": {
       "@type": "PostalAddress",
@@ -79,7 +79,7 @@
     "@id": "https://structuralcontent.com/#website",
     "name": "Structural Content",
     "url": "https://structuralcontent.com/",
-    "description": "Structural Content is a content strategy tool that helps marketing and content teams decide what content to create to support their business goals – across the entire company. It analyzes company documentation and connected systems, such as CRMs and project-management tools, finds where content can solve real operational needs, and turns those opportunities into actionable tickets for the team, with first drafts already prepared.",
+    "description": "Structural Content reads your company goals and live systems, finds where content can advance business outcomes, and delivers these opportunities to your team as actionable tickets, with first drafts already prepared.",
     "publisher": { "@id": "https://structuralcontent.com/#organization" },
     "inLanguage": "en"
   }
@@ -96,7 +96,7 @@
         "name": "How does Structural Content get installed in my company?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Structural Content is installed as a single-tenant system for your company. It reads where your goals live and connects to the systems of the teams owning the priority being worked, such as CRM, support, product usage, Slack, or project management tools. The first step is not a full installation. It is a demo call, followed – if the fit is real – by a bounded scan on a slice of live company data."
+          "text": "For a customer engagement, Structural Content is set up as a single-tenant system for your company: it reads where your goals live and connects to the systems of the teams owning the priority being worked, such as CRM, support, product usage, Slack, or project management tools. The first step is not that setup. It is a demo call, followed – if the fit is real – by a bounded run on a snapshot of your own data: exports you can pull on read access, such as CRM records, support tickets, or notes. Nothing is connected at that stage."
         }
       },
       {
@@ -144,7 +144,7 @@
         "name": "How do I know my data is secure?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Structural Content runs as a dedicated instance for your company, hosted on Google Cloud Platform and processed in Frankfurt. It reads your systems through scoped, revocable credentials; personal identifiers are filtered at the source, and analysis stays at team level. The system retains only the lean data needed for the agreed workflow. Book a demo to learn more. The demo on this page runs outside that setup: what you enter is processed by Cloudflare and Anthropic, and stored only if you tick the consent box. Details are in our privacy notice."
+          "text": "A customer engagement runs as a dedicated instance for your company, under an Article 28 data processing agreement that commits processing to the EU/EEA and names the hosting provider, the regions, the sub-processors, and the retention and deletion terms, alongside the technical and organisational measures. Systems are read through scoped, revocable credentials; personal identifiers are filtered at the source, and analysis stays at team level. Only the lean data needed for the agreed workflow is retained. Book a demo to learn more. The demo on this page runs outside that setup: what you enter is processed by Cloudflare and Anthropic, and stored only if you tick the consent box. Details are in our privacy notice."
         }
       },
       {
@@ -256,6 +256,20 @@
 
     .measure { max-width: 720px; }
 
+    /* Available to screen readers and the heading outline, not to the page. */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      padding: 0;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      clip-path: inset(50%);
+      white-space: nowrap;
+      border: 0;
+    }
+
     /* ---------- Eyebrow ---------- */
     .eyebrow {
       font-family: var(--sans);
@@ -300,6 +314,14 @@
       border: 1px solid var(--line-strong);
     }
     .btn-ghost:hover { border-color: var(--accent); text-decoration: none; }
+
+    /* The capped time investment, stated at the button itself (J5.20). */
+    .btn-cap {
+      font-weight: 500;
+      opacity: 0.75;
+      white-space: nowrap;
+    }
+    .btn-cap::before { content: "\00b7\00a0"; }
 
     .link-quiet {
       font-weight: 500;
@@ -352,6 +374,23 @@
     @media (max-width: 960px) {
       .nav { display: none; }
     }
+    /* Keep the sticky header's CTA on one line once the nav is gone - it is the
+       booking control that stays in view for the whole page. */
+    @media (max-width: 640px) {
+      .header-cta {
+        white-space: nowrap;
+        font-size: 0.82rem;
+        padding: 0.55em 0.9em;
+      }
+    }
+    /* Below ~380px the wordmark and the full label cannot share the bar without
+       clipping, and a clipped button reads unfinished (J5.21). Drop the cap here
+       and let the label shrink as it did before: the cap stays stated at the
+       demo and contact CTAs, where the ask is actually made. */
+    @media (max-width: 400px) {
+      .header-cta .btn-cap { display: none; }
+      .header-cta { white-space: normal; }
+    }
 
     /* ---------- Sections ---------- */
     section { scroll-margin-top: 84px; }
@@ -364,9 +403,9 @@
       margin: 1rem 0 0;
     }
 
-    /* ---------- Hero ---------- */
+    /* ---------- Hero (carries the demo: the interaction is front-loaded) ---------- */
     .hero {
-      padding: 96px 0 84px;
+      padding: 52px 0 76px;
     }
     .hero h1 {
       position: relative;
@@ -387,31 +426,39 @@
       overflow: visible;
     }
     .hero .subhead {
-      font-size: clamp(1.05rem, 1.7vw, 1.28rem);
+      font-size: clamp(1.02rem, 1.6vw, 1.18rem);
       color: var(--charcoal-soft);
-      max-width: 60ch;
-      margin-bottom: 2.2rem;
+      max-width: 72ch;
+      margin-bottom: 1.9rem;
     }
     .hero .subhead sup {
       font-size: 0.55em;
       vertical-align: super;
     }
-    .hero-actions {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 18px 26px;
-      margin-bottom: 2rem;
-    }
+    /* Metric + consent inputs, held back until a priority is being typed. The
+       gate is `html.js` so the fields stay reachable without JavaScript. */
+    html.js .deferred-fields:not(.revealed) { display: none; }
     .trust-line {
       font-size: 0.92rem;
       color: var(--muted);
       max-width: 64ch;
       padding-top: 1.6rem;
+      margin: 2.6rem 0 0;
       border-top: 1px solid var(--line);
-      margin: 0;
     }
     .trust-line strong { color: var(--charcoal-soft); font-weight: 600; }
+
+    /* Small screens: recover the vertical space that keeps both the priority
+       field and a booking CTA above the fold (J5.60). */
+    @media (max-width: 640px) {
+      .hero { padding: 26px 0 56px; }
+      .hero h1 { font-size: 1.95rem; margin-bottom: 1rem; }
+      .hero .subhead { margin-bottom: 1.4rem; }
+      .hero .eyebrow { margin-bottom: 0.6rem; }
+      .hero .priority-block { margin-bottom: 18px; }
+      .hero .form-actions { margin-top: 18px; }
+      .hero .trust-line { margin-top: 2rem; }
+    }
 
     /* ---------- Demo: form ---------- */
     .field-label {
@@ -435,7 +482,7 @@
       padding: 12px 14px;
       line-height: 1.5;
     }
-    /* Tall enough for the prefilled example to show in full when it wraps to
+    /* Tall enough for the placeholder example to show in full when it wraps to
        three lines on narrow screens (3 × 23.5px line-height + 24px padding). */
     textarea { resize: vertical; min-height: 100px; }
     textarea:focus, input[type="text"]:focus, select:focus {
@@ -446,6 +493,12 @@
     ::placeholder { color: #A39D90; opacity: 1; }
 
     .priority-block { margin-bottom: 30px; }
+    /* Illustrations only - never clickable, never submitted (J5.45, J5.44). */
+    .field-hint {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin: 0.7rem 0 0;
+    }
 
     .metric-card {
       background: var(--stone-card);
@@ -1166,7 +1219,6 @@
     <div class="wrap">
       <a href="#top" class="wordmark">Structural Content</a>
       <nav class="nav" aria-label="Primary">
-        <a href="#demo">Demo</a>
         <a href="#what">What it is</a>
         <a href="#how">How it works</a>
         <a href="#examples">Examples</a>
@@ -1175,60 +1227,56 @@
         <a href="#about">About</a>
         <a href="#faq">FAQ</a>
       </nav>
-      <a class="btn btn-primary btn-sm header-cta" href="https://calendly.com/sebastian-structuralcontent" target="_blank" rel="noopener">Book a demo</a>
+      <a class="btn btn-primary btn-sm header-cta" href="https://calendly.com/sebastian-structuralcontent?utm_source=site&amp;utm_medium=cta&amp;utm_campaign=launch-260901&amp;utm_content=header" target="_blank" rel="noopener">Book a demo <span class="btn-cap">30 min</span></a>
     </div>
   </header>
 
   <main id="main">
     <span id="top"></span>
 
-    <!-- ============ HERO ============ -->
-    <section class="hero" aria-labelledby="hero-h">
+    <!-- ============ HERO + DEMO (front-loaded: the interaction is the page) ============ -->
+    <section class="hero" id="demo" aria-labelledby="hero-h">
       <div class="wrap">
         <h1 id="hero-h">Turn business signals into content that moves <span class="cycle" id="cycle">your strategic priorities</span>.</h1>
-        <p class="subhead">Structural Content<sup>TM</sup> is a content strategy tool. It reads company goals and live systems, such as CRMs and project-management tools, finds where content can help, and turns those opportunities into actionable tickets for the team, with first drafts already prepared.</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#demo">Try it on your priority</a>
-          <a class="link-quiet" href="https://sebastianmesserer.com/essays/structural-content/" target="_blank" rel="noopener">Read the TLDR Marketing-featured essay</a>
-        </div>
-        <p class="trust-line">Built by <strong>Sebastian Messerer</strong>, formerly Senior Content Strategist at Amazon, where he built and scaled an AI-driven content and communications system across 13 countries.</p>
-      </div>
-    </section>
+        <p class="subhead">Structural Content<sup>TM</sup> reads your company goals and live systems, finds where content can advance business outcomes, and delivers these opportunities to your team as actionable tickets, with first drafts already prepared.</p>
 
-    <!-- ============ DEMO ============ -->
-    <section class="section" id="demo" aria-labelledby="demo-h">
-      <div class="wrap">
-        <div class="section-head measure">
-          <p class="eyebrow">Live demo</p>
-          <h2 id="demo-h">See how a business priority becomes a content ticket.</h2>
-          <p class="support">Enter what is important to your company today. See how content could help.</p>
-        </div>
+        <p class="eyebrow">Try it yourself</p>
+        <h2 id="demo-h" class="sr-only">Try Structural Content on your own strategic priority</h2>
 
-        <form id="cascade-form" novalidate>
+        <form id="cascade-form" aria-labelledby="demo-h" novalidate>
           <div class="priority-block measure">
             <label class="field-label" for="priority">Strategic priority</label>
-            <textarea id="priority" maxlength="300" rows="2" placeholder="e.g. Get every field team onto the new CRM before the Q4 close"></textarea>
+            <textarea id="priority" maxlength="300" rows="2" placeholder="e.g. Help us reduce customer churn by 20% by the end of the year"></textarea>
+            <p class="field-hint">Other priorities to try: hire engineers &middot; reduce support volume &middot; accelerate sales cycles &middot; increase product adoption.</p>
           </div>
 
-          <div class="measure">
-            <span class="field-label">Metrics under pressure</span>
-            <div id="metrics"></div>
-            <button type="button" class="btn btn-ghost btn-sm" id="add-metric">+ Add a metric</button>
-          </div>
+          <!-- Revealed once a priority is entered: before that, the consideration
+               set is one field (J5.41), and the run must execute on what the
+               visitor types (PRD 2 R20) - so nothing here is pre-filled. -->
+          <div class="deferred-fields" id="deferred-fields">
+            <div class="measure">
+              <span class="field-label">Metrics under pressure</span>
+              <div id="metrics"></div>
+              <button type="button" class="btn btn-ghost btn-sm" id="add-metric">+ Add a metric</button>
+            </div>
 
-          <div class="consent-block measure">
-            <p class="consent-intro">Your input will be processed by our AI provider to generate your result. Please avoid including confidential, personal, or identifying information. <a class="consent-link" href="privacy.html" target="_blank" rel="noopener">How we handle your data</a></p>
-            <div class="consent-row">
-              <input type="checkbox" id="consent" />
-              <label for="consent"><strong>Optional:</strong> I consent to Structural Content storing my submission for customer research and product improvement.</label>
+            <div class="consent-block measure">
+              <p class="consent-intro">Your input will be processed by our AI provider to generate your result. Please avoid including confidential, personal, or identifying information. <a class="consent-link" href="privacy.html" target="_blank" rel="noopener">How we handle your data</a></p>
+              <div class="consent-row">
+                <input type="checkbox" id="consent" />
+                <label for="consent"><strong>Optional:</strong> I consent to Structural Content storing my submission for customer research and product improvement.</label>
+              </div>
             </div>
           </div>
 
           <div class="form-actions">
-            <button type="submit" class="btn btn-primary" id="run-btn">Run the system</button>
+            <button type="submit" class="btn btn-primary" id="run-btn">Run it on your priority</button>
+            <a class="btn btn-ghost" href="https://calendly.com/sebastian-structuralcontent?utm_source=site&amp;utm_medium=cta&amp;utm_campaign=launch-260901&amp;utm_content=hero" target="_blank" rel="noopener">Book a demo <span class="btn-cap">30 min</span></a>
           </div>
           <div class="form-error" id="form-error" role="alert"></div>
         </form>
+
+        <p class="trust-line">Built by <strong>Sebastian Messerer</strong>, formerly Senior Content Strategist at Amazon, where he built and scaled an AI-driven content and communications system across 13 countries. <a class="link-quiet" href="https://sebastianmesserer.com/essays/structural-content/" target="_blank" rel="noopener">Read the TLDR Marketing-featured essay</a></p>
 
         <!-- Pipeline loading state -->
         <div class="pipeline" id="pipeline" aria-live="polite">
@@ -1254,7 +1302,7 @@
         <div class="closing" id="closing">
           <p class="breadth">Interested in exploring what Structural Content could do for you specifically?</p>
           <div class="closing-actions">
-            <a class="btn btn-primary" href="https://calendly.com/sebastian-structuralcontent" target="_blank" rel="noopener">Book a demo</a>
+            <a class="btn btn-primary" href="https://calendly.com/sebastian-structuralcontent?utm_source=site&amp;utm_medium=cta&amp;utm_campaign=launch-260901&amp;utm_content=demo-close" target="_blank" rel="noopener">Book a demo <span class="btn-cap">30 min</span></a>
             <button type="button" class="btn btn-ghost" id="run-again">Run another priority</button>
           </div>
           <p class="secondary">Or email <a href="mailto:sebastian@structuralcontent.com">sebastian@structuralcontent.com</a></p>
@@ -1385,8 +1433,9 @@
         </div>
         <div class="measure">
           <p>Do you lead content or own strategic priorities in your company? Let&rsquo;s determine whether Structural Content is a fit for your setting, which strategic priorities it could support, and whether there is promise worth validating.</p>
+          <p>Demo capacity is limited to a handful of slots in September.</p>
           <div class="contact-actions">
-            <a class="btn btn-primary" href="https://calendly.com/sebastian-structuralcontent" target="_blank" rel="noopener">Book a demo</a>
+            <a class="btn btn-primary" href="https://calendly.com/sebastian-structuralcontent?utm_source=site&amp;utm_medium=cta&amp;utm_campaign=launch-260901&amp;utm_content=contact" target="_blank" rel="noopener">Book a demo <span class="btn-cap">30 min</span></a>
           </div>
           <p class="secondary">Or email <a href="mailto:sebastian@structuralcontent.com">sebastian@structuralcontent.com</a></p>
           <p class="secondary">For more depth, read the <a href="https://sebastianmesserer.com/essays/structural-content/" target="_blank" rel="noopener">Structural Content essay</a>.</p>
@@ -1405,8 +1454,8 @@
           <details class="faq-item">
             <summary>How does Structural Content get installed in my company?</summary>
             <div class="faq-body">
-              <p>Structural Content is installed as a single-tenant system for your company. It reads where your goals live and connects to the systems of the teams owning the priority being worked, such as CRM, support, product usage, Slack, or project management tools.</p>
-              <p>The first step is not a full installation. It is a demo call, followed &ndash; if the fit is real &ndash; by a bounded scan on a slice of live company data.</p>
+              <p>For a customer engagement, Structural Content is set up as a single-tenant system for your company: it reads where your goals live and connects to the systems of the teams owning the priority being worked, such as CRM, support, product usage, Slack, or project management tools.</p>
+              <p>The first step is not that setup. It is a demo call, followed &ndash; if the fit is real &ndash; by a bounded run on a snapshot of your own data: exports you can pull on read access, such as CRM records, support tickets, or notes. Nothing is connected at that stage.</p>
             </div>
           </details>
           <details class="faq-item">
@@ -1446,7 +1495,7 @@
           <details class="faq-item">
             <summary>How do I know my data is secure?</summary>
             <div class="faq-body">
-              <p>Structural Content runs as a dedicated instance for your company, hosted on Google Cloud Platform and processed in Frankfurt. It reads your systems through scoped, revocable credentials; personal identifiers are filtered at the source, and analysis stays at team level. The system retains only the lean data needed for the agreed workflow. Book a demo to learn more.</p>
+              <p>A customer engagement runs as a dedicated instance for your company, under an Article 28 data processing agreement that commits processing to the EU/EEA and names the hosting provider, the regions, the sub-processors, and the retention and deletion terms, alongside the technical and organisational measures. Systems are read through scoped, revocable credentials; personal identifiers are filtered at the source, and analysis stays at team level. Only the lean data needed for the agreed workflow is retained. Book a demo to learn more.</p>
               <p>The demo on this page runs outside that setup: what you enter is processed by Cloudflare and Anthropic, and stored only if you tick the consent box. Details are in our <a href="privacy.html">privacy notice</a>.</p>
             </div>
           </details>
@@ -1532,13 +1581,29 @@
           });
         }
 
+        /* Only true once the cycle has actually locked a height (never under
+           reduced motion), so the resize handler leaves that path untouched. */
+        var locked = false;
+        function relock() {
+          if (!locked) return;
+          /* A rotation changes the type scale; a stale lock would leave dead
+             space above the demo form and push it out of the fold. */
+          h1.style.minHeight = "";
+          h1.style.minHeight = h1.offsetHeight + "px";
+        }
+
         var settled = false;
         function settle() {
           settled = true;
+          /* The final phrase is the longest, so this is the height to hold - and
+             re-measuring here catches a rotation during the cycle itself. */
+          relock();
           setTimeout(function () { drawUnderline(!REDUCED_MOTION); }, 200);
         }
         window.addEventListener("resize", function () {
-          if (settled) drawUnderline(false);
+          if (!settled) return;
+          relock();
+          drawUnderline(false);
         });
 
         if (REDUCED_MOTION) { settle(); return; }
@@ -1547,6 +1612,7 @@
         // Lock the height measured with the final (longest) phrase so the
         // shorter cycling words don't reflow the page.
         h1.style.minHeight = h1.offsetHeight + "px";
+        locked = true;
         var i = 0;
         cycle.textContent = WORDS[0];
         function next() {
@@ -1572,18 +1638,6 @@
       var MAX_METRICS = 3;
       var STAGE_MS = 5500;
 
-      /* Prefilled example, so the demo can be run without typing. */
-      var EXAMPLE = {
-        priority: "Fill 12 engineering roles in our new Lisbon office by the end of Q4 without lowering the bar.",
-        metric: {
-          name: "offer acceptance rate",
-          direction: "increase",
-          status_quo: "48%",
-          target: ">75%",
-          deadline: "by end of Q4"
-        }
-      };
-
       var form = document.getElementById("cascade-form");
       var metricsEl = document.getElementById("metrics");
       var addBtn = document.getElementById("add-metric");
@@ -1603,7 +1657,10 @@
         return node;
       }
 
-      function addMetricRow(prefill) {
+      /* No prefill parameter by design: PRD 2 R20 forbids demonstrating a
+         pre-filled priority or metric - the run executes on what the visitor
+         types. Examples live in the placeholders only. */
+      function addMetricRow() {
         if (metricsEl.children.length >= MAX_METRICS) return;
         var card = el("div", "metric-card");
 
@@ -1628,7 +1685,6 @@
         nameInput.maxLength = 120;
         nameInput.placeholder = "e.g. weekly active users in the new CRM";
         nameInput.className = "m-name";
-        if (prefill) nameInput.value = prefill.name || "";
         nameWrap.appendChild(nameLabel);
         nameWrap.appendChild(nameInput);
         grid.appendChild(nameWrap);
@@ -1643,21 +1699,15 @@
           opt.textContent = d.charAt(0).toUpperCase() + d.slice(1);
           dirSelect.appendChild(opt);
         });
-        if (prefill) {
-          dirSelect.value = prefill.direction;
-          /* An off-list value leaves selectedIndex at -1 and renders blank, which
-             the worker would reject with a 400 and no field-level cue. */
-          if (dirSelect.selectedIndex < 0) dirSelect.selectedIndex = 0;
-        }
         dirWrap.appendChild(dirLabel);
         dirWrap.appendChild(dirSelect);
         grid.appendChild(dirWrap);
 
         var delta = el("div", "delta-row");
         [
-          ["Today", "m-status-quo", "e.g. 2", "status_quo"],
-          ["Target", "m-target", "e.g. >5", "target"],
-          ["Deadline", "m-deadline", "e.g. within 7 days", "deadline"]
+          ["Today", "m-status-quo", "e.g. 2"],
+          ["Target", "m-target", "e.g. >5"],
+          ["Deadline", "m-deadline", "e.g. within 7 days"]
         ].forEach(function (spec) {
           var w = el("div");
           w.appendChild(el("label", "sub-label", spec[0]));
@@ -1666,7 +1716,6 @@
           input.maxLength = 80;
           input.className = spec[1];
           input.placeholder = spec[2];
-          if (prefill) input.value = prefill[spec[3]] || "";
           w.appendChild(input);
           delta.appendChild(w);
         });
@@ -1686,9 +1735,34 @@
         });
       }
 
+      /* Wrapped, not passed directly: a listener would hand addMetricRow the
+         click MouseEvent as its first argument. */
       addBtn.addEventListener("click", function () { addMetricRow(); });
-      addMetricRow(EXAMPLE.metric);
-      document.getElementById("priority").value = EXAMPLE.priority;
+      addMetricRow();
+
+      /* The demo opens as one field. The metric and consent blocks reveal as
+         soon as a priority is being typed, so the interaction and "Book a demo"
+         both sit above the fold on a phone (J5.60) and the first-glance scope
+         matches the consideration set (J5.41). Nothing is ever pre-filled: the
+         run executes on what the visitor types (PRD 2 R20, J5.44, J5.45). */
+
+      var deferredFields = document.getElementById("deferred-fields");
+      var priorityEl = document.getElementById("priority");
+
+      function revealDeferredFields() {
+        deferredFields.classList.add("revealed");
+      }
+
+      priorityEl.addEventListener("input", function () {
+        if (priorityEl.value.trim().length > 0) revealDeferredFields();
+      });
+      /* Text restored by the browser after a reload arrives without an input
+         event - and Firefox restores it around `load`, after this script runs. */
+      function revealIfFilled() {
+        if (priorityEl.value.trim().length > 0) revealDeferredFields();
+      }
+      revealIfFilled();
+      window.addEventListener("pageshow", revealIfFilled);
 
       /* ---------- Validation + submit ---------- */
 
@@ -1722,6 +1796,9 @@
       function showFormError(msg) {
         formError.textContent = msg;
         formError.classList.add("visible");
+        /* On a phone the message can sit right at the fold, so a press would look
+           like nothing happened. `nearest` is a no-op when it is already in view. */
+        formError.scrollIntoView({ behavior: REDUCED_MOTION ? "auto" : "smooth", block: "nearest" });
       }
 
       function clearFormError() {
@@ -1970,6 +2047,10 @@
       form.addEventListener("submit", function (e) {
         e.preventDefault();
         clearFormError();
+        /* Never validate against a field the visitor cannot see - but only once
+           the priority itself passes, or expanding the form would push the
+           priority's own error message off a phone screen. */
+        if (priorityEl.value.trim().length >= 10) revealDeferredFields();
         var read = readInput();
         if (read.error) { showFormError(read.error); return; }
 
