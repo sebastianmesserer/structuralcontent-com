@@ -1615,7 +1615,7 @@
         : "https://sc-cascade.structuralcontent.workers.dev/v1/cascade";
 
       var MAX_METRICS = 3;
-      var STAGE_MS = 4000;
+      var STAGE_MS = 4500;
 
       /* Prefilled example, so the demo can be run without typing. */
       var EXAMPLE = {
@@ -1848,15 +1848,19 @@
         return String(s).replace(/\.\s*$/, "");
       }
 
+      // Ends a sentence with a period unless it already carries terminal punctuation.
+      function endSentence(s) {
+        var t = String(s).trim();
+        return /[.!?\u2026]$/.test(t) ? t : t + ".";
+      }
+
       // The contrast the demo exists to show: the request a team usually works
       // from, then the problem statement the installed product surfaces instead.
       function problemCard(f) {
         var card = el("article", "jobf");
         if (f.usual) {
           card.appendChild(el("span", "usual-label", "Usual request"));
-          var usual = String(f.usual).trim();
-          if (!/[.!?\u2026]$/.test(usual)) usual += ".";
-          card.appendChild(el("p", "usual-text", "\u201C" + usual + "\u201D"));
+          card.appendChild(el("p", "usual-text", "\u201C" + endSentence(f.usual) + "\u201D"));
           var vs = el("div", "vs", "vs.");
           vs.setAttribute("aria-hidden", "true");
           card.appendChild(vs);
@@ -1910,8 +1914,8 @@
           body.appendChild(el("span", "db-label", label));
           body.appendChild(node);
         }
-        if (d.objective) block("Objective", el("p", null, stripDot(d.objective) + "."));
-        if (d.audience_moment) block("Audience moment", el("p", null, stripDot(d.audience_moment) + "."));
+        if (d.objective) block("Objective", el("p", null, endSentence(d.objective)));
+        if (d.audience_moment) block("Audience moment", el("p", null, endSentence(d.audience_moment)));
         var msgs = Array.isArray(d.messaging) ? d.messaging.filter(Boolean) : [];
         if (msgs.length) {
           var ul = document.createElement("ul");
@@ -1953,6 +1957,7 @@
       function renderCascade(data) {
         results.textContent = "";
         revealCounter = 0;
+        if (!data || !Array.isArray(data.metrics)) data = { priority: "", metrics: [] };
 
         results.appendChild(revealItem(el("h3", "results-title", "Your priority, served by content.")));
 
@@ -1991,56 +1996,54 @@
           return;
         }
 
-        if (teams.length) {
-          var win = revealItem(el("div", "app-window"));
+        var win = revealItem(el("div", "app-window"));
 
-          var bar = el("div", "aw-titlebar");
-          var dots = el("span", "aw-dots");
-          dots.setAttribute("aria-hidden", "true");
-          for (var d = 0; d < 3; d++) dots.appendChild(document.createElement("i"));
-          bar.appendChild(dots);
-          bar.appendChild(el("span", "aw-title", "Structural Content"));
-          bar.appendChild(el("span", "aw-badge", "Simulated preview"));
-          win.appendChild(bar);
+        var bar = el("div", "aw-titlebar");
+        var dots = el("span", "aw-dots");
+        dots.setAttribute("aria-hidden", "true");
+        for (var d = 0; d < 3; d++) dots.appendChild(document.createElement("i"));
+        bar.appendChild(dots);
+        bar.appendChild(el("span", "aw-title", "Structural Content"));
+        bar.appendChild(el("span", "aw-badge", "Simulated preview"));
+        win.appendChild(bar);
 
-          // Two lanes on one grid: problems (col 1) -> arrows (col 2) -> board panel (col 3).
-          var briefCount = teams.reduce(function (n, team) { return n + team.findings.length; }, 0);
-          var totalRows = 1 + teams.length + briefCount + 1; // captions + team headers + pairs + bottom pad
-          var flow = el("div", "flow");
-          flow.style.gridTemplateRows = "repeat(" + totalRows + ", auto)";
+        // Two lanes on one grid: problems (col 1) -> arrows (col 2) -> board panel (col 3).
+        var briefCount = teams.reduce(function (n, team) { return n + team.findings.length; }, 0);
+        var totalRows = 1 + teams.length + briefCount + 1; // captions + team headers + pairs + bottom pad
+        var flow = el("div", "flow");
+        flow.style.gridTemplateRows = "repeat(" + totalRows + ", auto)";
 
-          // Recessed board panel behind column 3.
-          flow.appendChild(place(el("div", "board-bg"), "1 / " + (totalRows + 1), 3));
+        // Recessed board panel behind column 3.
+        flow.appendChild(place(el("div", "board-bg"), "1 / " + (totalRows + 1), 3));
 
-          flow.appendChild(place(el("span", "lane-cap", "Problem statements"), 1, 1));
-          var bhead = place(el("div", "board-head"), 1, 3);
-          bhead.appendChild(el("span", "bh-title", "Campaign briefs"));
-          bhead.appendChild(el("span", "bh-count", briefCount + (briefCount === 1 ? " brief" : " briefs")));
-          flow.appendChild(bhead);
+        flow.appendChild(place(el("span", "lane-cap", "Problem statements"), 1, 1));
+        var bhead = place(el("div", "board-head"), 1, 3);
+        bhead.appendChild(el("span", "bh-title", "Campaign briefs"));
+        bhead.appendChild(el("span", "bh-count", briefCount + (briefCount === 1 ? " brief" : " briefs")));
+        flow.appendChild(bhead);
 
-          var row = 2;
-          var briefNum = 0;
-          teams.forEach(function (team) {
-            var tr = place(el("div", "team-row"), row, 1);
-            tr.appendChild(el("span", "fn-pill " + pillClass(team.fn), team.fn));
-            flow.appendChild(tr);
+        var row = 2;
+        var briefNum = 0;
+        teams.forEach(function (team) {
+          var tr = place(el("div", "team-row"), row, 1);
+          tr.appendChild(el("span", "fn-pill " + pillClass(team.fn), team.fn));
+          flow.appendChild(tr);
+          row += 1;
+          team.findings.forEach(function (f) {
+            briefNum += 1;
+            flow.appendChild(place(revealItem(problemCard(f)), row, 1));
+            flow.appendChild(place(revealItem(arrowEl()), row, 2));
+            var cell = place(el("div", "ticket-cell"), row, 3);
+            cell.appendChild(revealItem(briefCard(f.brief || {}, "SC-" + briefNum)));
+            flow.appendChild(cell);
             row += 1;
-            team.findings.forEach(function (f) {
-              briefNum += 1;
-              flow.appendChild(place(revealItem(problemCard(f)), row, 1));
-              flow.appendChild(place(revealItem(arrowEl()), row, 2));
-              var cell = place(el("div", "ticket-cell"), row, 3);
-              cell.appendChild(revealItem(briefCard(f.brief || {}, "SC-" + briefNum)));
-              flow.appendChild(cell);
-              row += 1;
-            });
           });
-          flow.appendChild(place(el("div", "board-pad"), row, 3));
+        });
+        flow.appendChild(place(el("div", "board-pad"), row, 3));
 
-          win.appendChild(flow);
-          win.appendChild(el("div", "aw-footer", "Generated from what you typed – figures are illustrative. Installed, the system reads your real goals and live systems."));
-          results.appendChild(win);
-        }
+        win.appendChild(flow);
+        win.appendChild(el("div", "aw-footer", "Generated from what you typed – figures are illustrative. Installed, the system reads your real goals and live systems."));
+        results.appendChild(win);
 
         results.classList.add("visible");
         closing.classList.add("visible");
@@ -2105,7 +2108,15 @@
               });
               return;
             }
-            finishPipeline(function () { renderCascade(r.body); });
+            finishPipeline(function () {
+              try {
+                renderCascade(r.body);
+              } catch (e) {
+                resetOutput();
+                form.style.display = "";
+                showNotice("The system returned something this page could not display – please try again.");
+              }
+            });
           })
           .catch(function (err) {
             clearTimeout(timeout);

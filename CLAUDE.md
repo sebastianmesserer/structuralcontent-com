@@ -48,10 +48,10 @@ The worker is **deployed and live** at `https://sc-cascade.structuralcontent.wor
 **Site and worker have no version handshake.** When a change alters the cascade
 JSON shape, deploy the worker first (`wrangler deploy`) and merge the site PR
 immediately after; Pages redeploys in ~1 min. In between, the live demo shows a
-"returned no campaign briefs" notice rather than a board. Check `npx wrangler whoami`
-before deploying: it must resolve to the account that owns `sc-cascade` and the KV
-namespaces, never to an empty account (deploying there silently creates a second
-worker).
+"returned no campaign briefs" notice rather than a board. `account_id` is pinned in
+`wrangler.toml` to the account that owns `sc-cascade` and the KV namespaces, so a
+`wrangler login` that resolves to another account fails the deploy instead of silently
+creating a second worker; if it fails, log in again and pick the right account.
 
 The worker exposes a single endpoint: `POST /v1/cascade`. It validates a
 `{ priority, metrics[], consent }` body, calls the Anthropic API with a

@@ -290,6 +290,11 @@ export default {
       }
 
       const cascade = truncateCascade(JSON.parse((textBlock as any).text));
+      const briefCount = (cascade.metrics ?? []).reduce(
+        (n: number, m: any) =>
+          n + (m.owners ?? []).reduce((k: number, o: any) => k + (o.findings ?? []).length, 0),
+        0,
+      );
       console.log(
         JSON.stringify({
           request_id: (response as any)._request_id ?? null,
@@ -297,12 +302,13 @@ export default {
           usage: response.usage,
           metrics: input.metrics.length,
           refused: Boolean(cascade.refusal),
+          briefs: briefCount,
           consent: input.consent,
         }),
       );
 
       // Consented research storage — best-effort, never blocks the response.
-      if (input.consent && !cascade.refusal && env.RESEARCH) {
+      if (input.consent && !cascade.refusal && briefCount > 0 && env.RESEARCH) {
         const record = JSON.stringify({
           ts: new Date().toISOString(),
           input: modelInput,
@@ -317,7 +323,8 @@ export default {
       }
 
       // Count this completed run toward the per-IP cap (best-effort, non-blocking).
-      if (env.USAGE && ip !== "unknown") {
+      // A run with no briefs shows the visitor a "try again" notice, so it is free.
+      if (briefCount > 0 && env.USAGE && ip !== "unknown") {
         ctx.waitUntil(incrementUsage(env, ip));
       }
 
