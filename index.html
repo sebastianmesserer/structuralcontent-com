@@ -1279,12 +1279,10 @@
         <!-- Pipeline loading state -->
         <div class="pipeline" id="pipeline" aria-live="polite">
           <ol>
-            <li><span class="dot"></span><span class="stage-text"><span class="stage-title">Reading your priority</span><span class="stage-sub">The installed system reads these from your planning documents, goal systems, and other company context.</span></span></li>
-            <li><span class="dot"></span><span class="stage-text"><span class="stage-title">Deriving the metrics under pressure</span><span class="stage-sub">The required change, target state, and deadline.</span></span></li>
-            <li><span class="dot"></span><span class="stage-text"><span class="stage-title">Identifying owner teams</span><span class="stage-sub">From CRM data, project boards, and org context.</span></span></li>
-            <li><span class="dot"></span><span class="stage-text"><span class="stage-title">Pinpointing the problem in your systems</span><span class="stage-sub">Which segment, which stage, and what CRM notes, support tickets, and usage data say.</span></span></li>
-            <li><span class="dot"></span><span class="stage-text"><span class="stage-title">Writing campaign briefs</span><span class="stage-sub">What to make, for whom, to move which metric by when.</span></span></li>
-            <li><span class="dot"></span><span class="stage-text"><span class="stage-title">Routing them to the content team</span><span class="stage-sub">Organized for review, refinement, and action.</span></span></li>
+            <li><span class="dot"></span><span class="stage-text"><span class="stage-title">Your priority</span><span class="stage-sub">The business priority and the metric under pressure. Installed, read from your goal systems.</span></span></li>
+            <li><span class="dot"></span><span class="stage-text"><span class="stage-title">Who must act</span><span class="stage-sub">The people who have to do something for the metric to move.</span></span></li>
+            <li><span class="dot"></span><span class="stage-text"><span class="stage-title">What stops them</span><span class="stage-sub">Where they stall and why, from CRM notes, support tickets, and usage data.</span></span></li>
+            <li><span class="dot"></span><span class="stage-text"><span class="stage-title">The campaign brief</span><span class="stage-sub">One brief per gap: what to make, for whom, to move which metric by when.</span></span></li>
           </ol>
           <p class="pipeline-note">What the demo does once, the installed system does continuously across priorities.</p>
         </div>
@@ -1615,17 +1613,17 @@
         : "https://sc-cascade.structuralcontent.workers.dev/v1/cascade";
 
       var MAX_METRICS = 3;
-      var STAGE_MS = 4500;
+      var STAGE_MS = 6000;
 
       /* Prefilled example, so the demo can be run without typing. */
       var EXAMPLE = {
-        priority: "Fill 12 engineering roles in our new Lisbon office by the end of Q4 without lowering the bar.",
+        priority: "Increase demand to match increased sales team capacity as we continue to hire",
         metric: {
-          name: "offer acceptance rate",
+          name: "Monthly Marketing-Qualified Leads",
           direction: "increase",
-          status_quo: "48%",
-          target: ">75%",
-          deadline: "by end of Q4"
+          status_quo: "150",
+          target: "350",
+          deadline: "by end of Q1"
         }
       };
 

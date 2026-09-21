@@ -269,6 +269,9 @@ export default {
         ],
         output_config: {
           format: { type: "json_schema", schema: CASCADE_SCHEMA },
+          // Medium effort keeps adaptive thinking from running the demo past ~30 s;
+          // measured 21 Sep 2026: high effort was bimodal (26-27 s or 45-48 s).
+          effort: "medium",
         },
         // Prospect input is data, never instructions — it goes only in the user turn.
         messages: [{ role: "user", content: JSON.stringify(modelInput) }],
