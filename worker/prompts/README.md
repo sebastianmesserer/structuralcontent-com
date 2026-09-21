@@ -22,6 +22,14 @@ npx wrangler deploy
 
 There is no separate secret push. `wrangler deploy` fails if the file is missing.
 
+Before the prompt was bundled (until Jun 2026) it was pushed as a `SYSTEM_PROMPT`
+Worker secret. That secret is dead code now and may still sit in the live Worker's
+environment; delete it once from the correct account:
+
+```bash
+npx wrangler secret delete SYSTEM_PROMPT
+```
+
 ## Local dev
 
 `wrangler dev` bundles the prompt the same way. `worker/.dev.vars` (also gitignored)

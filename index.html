@@ -1767,7 +1767,9 @@
         var card = el("article", "jobf");
         if (f.usual) {
           card.appendChild(el("span", "usual-label", "Usual request"));
-          card.appendChild(el("p", "usual-text", "\u201C" + stripDot(f.usual) + ".\u201D"));
+          var usual = String(f.usual).trim();
+          if (!/[.!?\u2026]$/.test(usual)) usual += ".";
+          card.appendChild(el("p", "usual-text", "\u201C" + usual + "\u201D"));
         }
         var trace = el("p", "card-trace");
         trace.appendChild(el("span", "tr-label", "Found in: "));
@@ -1842,6 +1844,16 @@
             (owner.findings || []).forEach(function (f) { entry.findings.push(f); });
           });
         });
+        teams = teams.filter(function (team) { return team.findings.length > 0; });
+
+        // Nothing to show (e.g. a response in an unexpected shape) reads as a
+        // clear notice rather than an empty simulated product.
+        if (!teams.length) {
+          results.textContent = "";
+          form.style.display = "";
+          showNotice("The system returned no campaign briefs for this run – please try again.");
+          return;
+        }
 
         if (teams.length) {
           var win = revealItem(el("div", "app-window"));

@@ -45,6 +45,14 @@ wrangler deploy   # production — bundles prompts/system-prompt.md into the scr
 The worker is **deployed and live** at `https://sc-cascade.structuralcontent.workers.dev`
 (`POST /v1/cascade`), and `index.html` points at it.
 
+**Site and worker have no version handshake.** When a change alters the cascade
+JSON shape, deploy the worker first (`wrangler deploy`) and merge the site PR
+immediately after; Pages redeploys in ~1 min. In between, the live demo shows a
+"returned no campaign briefs" notice rather than a board. Check `npx wrangler whoami`
+before deploying: it must resolve to the account that owns `sc-cascade` and the KV
+namespaces, never to an empty account (deploying there silently creates a second
+worker).
+
 The worker exposes a single endpoint: `POST /v1/cascade`. It validates a
 `{ priority, metrics[], consent }` body, calls the Anthropic API with a
 JSON-schema structured output, and returns a "cascade" (priority → metrics →
