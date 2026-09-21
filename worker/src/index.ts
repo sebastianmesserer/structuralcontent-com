@@ -140,14 +140,29 @@ function validate(raw: unknown): { input?: CascadeInput; error?: string } {
   };
 }
 
-// Depth rule backstop: the prompt enforces 1-2 owners and 1-2 findings per owner;
-// structured outputs can't express minItems/maxItems, so truncate any overshoot here.
+// Depth rule backstop: the prompt enforces 1-2 owners, 1-2 findings per owner, and
+// 2-3 messaging lines / 2-4 pieces per brief; structured outputs can't express
+// minItems/maxItems, so truncate any overshoot here.
 function truncateCascade(cascade: any): any {
   cascade.metrics = (cascade.metrics ?? []).slice(0, 3).map((metric: any) => ({
     ...metric,
     owners: (metric.owners ?? []).slice(0, 2).map((owner: any) => ({
       ...owner,
-      findings: (owner.findings ?? []).slice(0, 2),
+      findings: (owner.findings ?? []).slice(0, 2).map((finding: any) => {
+        const detail = finding?.brief?.detail;
+        if (!detail) return finding;
+        return {
+          ...finding,
+          brief: {
+            ...finding.brief,
+            detail: {
+              ...detail,
+              messaging: (detail.messaging ?? []).slice(0, 3),
+              pieces: (detail.pieces ?? []).slice(0, 4),
+            },
+          },
+        };
+      }),
     })),
   }));
   return cascade;

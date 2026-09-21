@@ -77,7 +77,8 @@ answers it). Notable behaviors in `src/index.ts`:
 
 Structured outputs require `additionalProperties: false` on every object and do
 **not** support `minItems`/`maxItems`. So depth bounds (1–3 metrics, 1–2 owners,
-1–2 findings per owner) are enforced in the **system prompt**, then defensively
+1–2 findings per owner, 2–3 messaging lines and 2–4 pieces per expanded brief) are
+enforced in the **system prompt**, then defensively
 re-truncated by `truncateCascade()` in `src/index.ts`. If you change the depth
 rules, update all three: prompt, `truncateCascade`, and any UI assumptions.
 

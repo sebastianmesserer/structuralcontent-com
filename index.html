@@ -786,9 +786,7 @@
       border-radius: 12px;
       padding: 16px 18px;
       box-shadow: var(--shadow);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+      align-self: center; /* hugs its content when an opened brief makes the row taller */
     }
     .card-trace {
       font-size: 0.68rem;
@@ -796,7 +794,7 @@
       letter-spacing: 0.07em;
       text-transform: uppercase;
       color: var(--accent);
-      margin: 0 0 10px;
+      margin: 10px 0 0;
     }
     .card-trace .tr-label { color: var(--muted); }
     .jobf .usual-label {
@@ -813,9 +811,34 @@
       line-height: 1.45;
       color: var(--charcoal-soft);
       font-style: italic;
-      margin: 0 0 12px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--line);
+      margin: 0;
+    }
+    .jobf .vs {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 12px 0;
+      font-size: 0.64rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .jobf .vs::before,
+    .jobf .vs::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+    .jobf .sc-label {
+      display: block;
+      font-size: 0.66rem;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      margin: 0 0 3px;
     }
     .jobf .job-text { font-size: 0.95rem; line-height: 1.5; margin: 0; color: var(--charcoal); }
 
@@ -879,6 +902,70 @@
       color: #9a948a;
     }
     .ticket .ticket-fields dd { margin: 0; color: #c9c4ba; }
+    .ticket .brief-detail {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .ticket .brief-detail summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.72rem;
+      color: #b7b1a6;
+      padding: 7px 10px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.035);
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+    .ticket .brief-detail summary:hover {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: rgba(255, 255, 255, 0.24);
+    }
+    .ticket .brief-detail summary::-webkit-details-marker { display: none; }
+    .ticket .brief-detail .detail-label {
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 0.66rem;
+      color: #9a948a;
+    }
+    .ticket .brief-detail .detail-cue {
+      margin-left: auto;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+    .ticket .brief-detail .detail-cue::after { content: "Open brief \25BE"; }
+    .ticket .brief-detail[open] .detail-cue::after { content: "Close brief \25B4"; }
+    .ticket .brief-detail .detail-body {
+      margin-top: 10px;
+      padding-left: 11px;
+      border-left: 2px solid var(--accent);
+      font-size: 0.8rem;
+      line-height: 1.5;
+      color: #c9c4ba;
+    }
+    .ticket .detail-body .db-label {
+      display: block;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 0.64rem;
+      color: #9a948a;
+      margin: 10px 0 2px;
+    }
+    .ticket .detail-body .db-label:first-child { margin-top: 0; }
+    .ticket .detail-body p { margin: 0; color: #c9c4ba; }
+    .ticket .detail-body ul,
+    .ticket .detail-body ol { margin: 0; padding-left: 18px; }
+    .ticket .detail-body li { margin: 0 0 2px; }
+    .ticket .detail-body .db-where { color: #9a948a; }
 
     /* Staged reveal */
     @media (prefers-reduced-motion: no-preference) {
@@ -1770,12 +1857,16 @@
           var usual = String(f.usual).trim();
           if (!/[.!?\u2026]$/.test(usual)) usual += ".";
           card.appendChild(el("p", "usual-text", "\u201C" + usual + "\u201D"));
+          var vs = el("div", "vs", "vs.");
+          vs.setAttribute("aria-hidden", "true");
+          card.appendChild(vs);
         }
+        card.appendChild(el("span", "sc-label", "Structural Content"));
+        card.appendChild(el("p", "job-text", f.problem || ""));
         var trace = el("p", "card-trace");
         trace.appendChild(el("span", "tr-label", "Found in: "));
         trace.appendChild(document.createTextNode(f.trace || "Live systems"));
         card.appendChild(trace);
-        card.appendChild(el("p", "job-text", f.problem || ""));
         return card;
       }
 
@@ -1797,7 +1888,52 @@
           fields.appendChild(el("dd", null, stripDot(f[1])));
         });
         if (fields.children.length) card.appendChild(fields);
+        var body = briefDetail(b.detail);
+        if (body) {
+          var detail = el("details", "brief-detail");
+          var sum = document.createElement("summary");
+          sum.appendChild(el("span", "detail-label", "Full brief"));
+          sum.appendChild(el("span", "detail-cue"));
+          detail.appendChild(sum);
+          detail.appendChild(body);
+          card.appendChild(detail);
+        }
         return card;
+      }
+
+      // The expanded brief: a spec the content team executes, never copy.
+      // Returns null when there is nothing to show, so thin responses keep the compact card.
+      function briefDetail(d) {
+        if (!d || typeof d !== "object") return null;
+        var body = el("div", "detail-body");
+        function block(label, node) {
+          body.appendChild(el("span", "db-label", label));
+          body.appendChild(node);
+        }
+        if (d.objective) block("Objective", el("p", null, stripDot(d.objective) + "."));
+        if (d.audience_moment) block("Audience moment", el("p", null, stripDot(d.audience_moment) + "."));
+        var msgs = Array.isArray(d.messaging) ? d.messaging.filter(Boolean) : [];
+        if (msgs.length) {
+          var ul = document.createElement("ul");
+          msgs.forEach(function (m) { ul.appendChild(el("li", null, stripDot(m))); });
+          block("Messaging", ul);
+        }
+        var pieces = Array.isArray(d.pieces) ? d.pieces.filter(function (p) { return p && p.name; }) : [];
+        if (pieces.length) {
+          var ol = document.createElement("ol");
+          pieces.forEach(function (p) {
+            var li = el("li", null, stripDot(p.name));
+            var where = [p.where, p.when].filter(Boolean).map(stripDot).join(" \u00B7 ");
+            if (where) li.appendChild(el("span", "db-where", " \u00B7 " + where));
+            ol.appendChild(li);
+          });
+          block("Pieces", ol);
+        }
+        if (d.effort && d.effort.size) {
+          var effort = d.effort.size + (d.effort.note ? " \u00B7 " + stripDot(d.effort.note) : "");
+          block("Effort", el("p", null, effort));
+        }
+        return body.children.length ? body : null;
       }
 
       function arrowEl() {
