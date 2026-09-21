@@ -1613,7 +1613,7 @@
         : "https://sc-cascade.structuralcontent.workers.dev/v1/cascade";
 
       var MAX_METRICS = 3;
-      var STAGE_MS = 6000;
+      var STAGE_MS = 7000;
 
       /* Prefilled example, so the demo can be run without typing. */
       var EXAMPLE = {
@@ -1990,7 +1990,7 @@
         if (!teams.length) {
           results.textContent = "";
           form.style.display = "";
-          showNotice("The system returned no campaign briefs for this run – please try again.");
+          showNotice("The system returned no campaign briefs for this run – please reload the page and try again.");
           return;
         }
 

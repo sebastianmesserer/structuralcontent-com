@@ -46,12 +46,13 @@ const MAX_BODY_BYTES = 4096;
 // (The RATE_LIMITER binding only stops bursts; its window maxes out at 60s.)
 const USAGE_CAP = 10;
 const USAGE_WINDOW_SEC = 30 * 24 * 60 * 60; // resets 30 days after an IP's first run
-const LOOPBACK_IPS = ["127.0.0.1", "::1"];
+const LOOPBACK_IPS = ["127.0.0.1", "::1", "::ffff:127.0.0.1"];
 
 function isExempt(env: Env, ip: string): boolean {
-  if (LOOPBACK_IPS.includes(ip)) return true;
-  const list = (env.EXEMPT_IPS ?? "").split(",").map((s) => s.trim()).filter(Boolean);
-  return list.includes(ip);
+  const needle = ip.trim().toLowerCase();
+  if (LOOPBACK_IPS.includes(needle)) return true;
+  const list = (env.EXEMPT_IPS ?? "").split(",").map((s) => s.trim().toLowerCase()).filter(Boolean);
+  return list.includes(needle);
 }
 const LIMITS = {
   priority: { min: 10, max: 300 },
@@ -258,7 +259,9 @@ export default {
     try {
       const response = await client.messages.create({
         model: env.MODEL,
-        max_tokens: 8000,
+        // Thinking tokens share this budget with the JSON; 12 briefs with detail plus
+        // medium-effort thinking fit comfortably, 8000 did not leave headroom.
+        max_tokens: 16000,
         thinking: { type: "adaptive" },
         system: [
           {
@@ -278,6 +281,7 @@ export default {
       } as any);
 
       if (response.stop_reason === "refusal") {
+        if (!exempt && env.USAGE && ip !== "unknown") ctx.waitUntil(incrementUsage(env, ip));
         return jsonResponse(
           {
             refusal:
@@ -292,7 +296,7 @@ export default {
       if (response.stop_reason === "max_tokens") {
         return errorResponse(
           "too_long",
-          "That cascade ran long — try again with fewer metrics.",
+          "That cascade ran long — please try again.",
           502,
           origin,
         );
@@ -322,7 +326,7 @@ export default {
       );
 
       // Consented research storage — best-effort, never blocks the response.
-      if (input.consent && !cascade.refusal && briefCount > 0 && env.RESEARCH) {
+      if (input.consent && !cascade.refusal && env.RESEARCH) {
         const record = JSON.stringify({
           ts: new Date().toISOString(),
           input: modelInput,
@@ -337,8 +341,9 @@ export default {
       }
 
       // Count this completed run toward the per-IP cap (best-effort, non-blocking).
-      // A run with no briefs shows the visitor a "try again" notice, so it is free.
-      if (!exempt && briefCount > 0 && env.USAGE && ip !== "unknown") {
+      // Every call that reached the model counts, briefs or not: the cap bounds spend,
+      // and an input that reliably yields an empty cascade must not be a free call.
+      if (!exempt && env.USAGE && ip !== "unknown") {
         ctx.waitUntil(incrementUsage(env, ip));
       }
 
