@@ -45,10 +45,12 @@ wrangler deploy   # production — bundles prompts/system-prompt.md into the scr
 The worker is **deployed and live** at `https://sc-cascade.structuralcontent.workers.dev`
 (`POST /v1/cascade`), and `index.html` points at it.
 
-**Site and worker have no version handshake.** When a change alters the cascade
-JSON shape, deploy the worker first (`wrangler deploy`) and merge the site PR
-immediately after; Pages redeploys in ~1 min. In between, the live demo shows a
-"returned no campaign briefs" notice rather than a board. `account_id` is pinned in
+**Site and worker are deployed separately.** The worker tags every cascade with
+`schema: "cascade-v2"` and the page refuses any other shape with a "this page is out
+of date – reload" notice. When a change alters the shape: **merge the site PR first,
+wait for Pages to go live (~1 min), then `wrangler deploy`**. In that order the window
+shows the reload notice; the reverse order would show the old page an empty board.
+Bump the shape tag on both sides together. `account_id` is pinned in
 `wrangler.toml` to the account that owns `sc-cascade` and the KV namespaces, so a
 `wrangler login` that resolves to another account fails the deploy instead of silently
 creating a second worker; if it fails, log in again and pick the right account.
@@ -67,7 +69,9 @@ answers it). Notable behaviors in `src/index.ts`:
   the `USAGE` KV namespace, keyed by IP. Loopback (wrangler dev) is always exempt
   from both; the optional `EXEMPT_IPS` Worker secret (comma-separated) exempts
   Sebastian's own IPs in production — set it with `npx wrangler secret put
-  EXEMPT_IPS`, never write an IP into the repo.
+  EXEMPT_IPS`, never write an IP into the repo. Compare is by exact string, so paste
+  the address exactly as Cloudflare reports it (the `ip=` line of
+  `https://www.cloudflare.com/cdn-cgi/trace`), not a hand-typed IPv6 form.
 - **Prospect input is data, never instructions** — it goes only in the user
   turn; the system prompt is the only instruction source.
 - **Consented research storage**: when `consent === true`, the input + cascade

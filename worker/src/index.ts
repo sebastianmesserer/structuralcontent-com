@@ -179,6 +179,17 @@ function truncateCascade(cascade: any): any {
   return cascade;
 }
 
+// The response shape the page expects; the page refuses anything else with a
+// "this page is out of date" notice, so a site/worker deploy skew is explicit.
+const CASCADE_SHAPE = "cascade-v2";
+
+// Every call that reaches the model counts toward the per-IP cap — refusals,
+// truncations and unparsable output included — because the cap bounds spend.
+function countRun(env: Env, ctx: { waitUntil(p: Promise<unknown>): void }, ip: string, exempt: boolean): void {
+  if (exempt || !env.USAGE || ip === "unknown") return;
+  ctx.waitUntil(incrementUsage(env, ip));
+}
+
 // Best-effort per-IP run counter. KV isn't atomic, but the burst limiter caps
 // per-IP concurrency, so a rare off-by-one under a race is acceptable here.
 // Uses an absolute `expiration` so the 30-day window stays anchored to the
@@ -280,8 +291,10 @@ export default {
         messages: [{ role: "user", content: JSON.stringify(modelInput) }],
       } as any);
 
+      // The model has been paid for from here on, whatever comes back.
+      countRun(env, ctx, ip, exempt);
+
       if (response.stop_reason === "refusal") {
-        if (!exempt && env.USAGE && ip !== "unknown") ctx.waitUntil(incrementUsage(env, ip));
         return jsonResponse(
           {
             refusal:
@@ -296,7 +309,7 @@ export default {
       if (response.stop_reason === "max_tokens") {
         return errorResponse(
           "too_long",
-          "That cascade ran long — please try again.",
+          "That cascade ran long — please try again, with fewer metrics if you entered several.",
           502,
           origin,
         );
@@ -308,6 +321,7 @@ export default {
       }
 
       const cascade = truncateCascade(JSON.parse((textBlock as any).text));
+      cascade.schema = CASCADE_SHAPE;
       const briefCount = (cascade.metrics ?? []).reduce(
         (n: number, m: any) =>
           n + (m.owners ?? []).reduce((k: number, o: any) => k + (o.findings ?? []).length, 0),
@@ -338,13 +352,6 @@ export default {
             expirationTtl: 31536000, // 1 year
           }).catch((e) => console.log("research put failed:", e instanceof Error ? e.message : String(e))),
         );
-      }
-
-      // Count this completed run toward the per-IP cap (best-effort, non-blocking).
-      // Every call that reached the model counts, briefs or not: the cap bounds spend,
-      // and an input that reliably yields an empty cascade must not be a free call.
-      if (!exempt && env.USAGE && ip !== "unknown") {
-        ctx.waitUntil(incrementUsage(env, ip));
       }
 
       return jsonResponse(cascade, 200, origin);

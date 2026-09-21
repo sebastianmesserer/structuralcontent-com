@@ -1955,7 +1955,12 @@
       function renderCascade(data) {
         results.textContent = "";
         revealCounter = 0;
-        if (!data || !Array.isArray(data.metrics)) data = { priority: "", metrics: [] };
+        // A response in another shape means this page and the worker are out of step.
+        if (!data || data.schema !== "cascade-v2") {
+          form.style.display = "";
+          showNotice("This page is out of date – please reload it and run again.");
+          return;
+        }
 
         results.appendChild(revealItem(el("h3", "results-title", "Your priority, served by content.")));
 
@@ -1990,7 +1995,7 @@
         if (!teams.length) {
           results.textContent = "";
           form.style.display = "";
-          showNotice("The system returned no campaign briefs for this run – please reload the page and try again.");
+          showNotice("The system returned no campaign briefs for this run – please try again.");
           return;
         }
 
@@ -2110,6 +2115,7 @@
               try {
                 renderCascade(r.body);
               } catch (e) {
+                console.error("renderCascade failed", e);
                 resetOutput();
                 form.style.display = "";
                 showNotice("The system returned something this page could not display – please try again.");
