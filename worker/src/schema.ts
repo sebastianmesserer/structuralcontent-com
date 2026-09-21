@@ -1,7 +1,7 @@
 // JSON schema for the cascade response (structured outputs).
 // Constraint notes: structured outputs require additionalProperties:false on every
 // object and every field listed in required; minItems/maxItems are unsupported,
-// so depth bounds (1-3 metrics, 1-2 owners, 2-3 jobs) live in the system prompt
+// so depth bounds (1-3 metrics, 1-2 owners, 1-2 findings) live in the system prompt
 // and are defensively truncated in index.ts.
 
 export const CASCADE_SCHEMA = {
@@ -36,59 +36,59 @@ export const CASCADE_SCHEMA = {
             items: {
               type: "object",
               additionalProperties: false,
-              required: ["function", "jobs"],
+              required: ["function", "findings"],
               properties: {
                 function: { type: "string" },
-                jobs: {
+                findings: {
                   type: "array",
                   items: {
                     type: "object",
                     additionalProperties: false,
-                    required: ["trace", "job", "ticket"],
+                    required: ["trace", "usual", "problem", "brief"],
                     properties: {
                       trace: {
                         type: "string",
                         description:
-                          "'System · short context' — the single system a live installation would most plausibly find this job in, e.g. 'CRM · Q3 renewal pipeline', 'Slack · #customer-success', 'Asana · hiring board'.",
+                          "'System · short context' — the single system a live installation would most plausibly find this problem in, e.g. 'CRM · paid-search leads', 'Support · onboarding queue', 'ATS · offer stage'.",
                       },
-                      job: { type: "string" },
-                      ticket: {
+                      usual: {
+                        type: "string",
+                        description:
+                          "The request a team would usually work from today for this problem — generic, in the owning team's own words, at most 12 words, no numbers, e.g. 'We need to improve our employer brand.'",
+                      },
+                      problem: {
+                        type: "string",
+                        description:
+                          "The problem statement: 1-2 sentences, at most 45 words. Segment + funnel stage, the observed gap versus target or benchmark (with figures), and the cause as the named system records it. Describes a business gap, never missing content.",
+                      },
+                      brief: {
                         type: "object",
                         additionalProperties: false,
-                        required: [
-                          "title",
-                          "summary",
-                          "draft",
-                          "audience",
-                          "moves",
-                          "routed_to",
-                          "measure",
-                          "deadline",
-                        ],
+                        required: ["title", "campaign", "audience", "target", "impact"],
                         properties: {
-                          title: { type: "string" },
-                          summary: {
+                          title: {
                             type: "string",
-                            description:
-                              "What the content actually is — the concrete artifact, one line of at most 14 plain words.",
+                            description: "Imperative campaign name, at most 60 characters.",
                           },
-                          draft: {
+                          campaign: {
                             type: "string",
                             description:
-                              "An AI-generated first-draft (v1) of the content itself, ready for the content team to edit. For text formats: the actual usable copy (~60-90 words). For rich-media formats (video, podcast): a tight outline/script ending in a generic handoff line, e.g. '→ Hand off to your video-generation tool.' Line breaks allowed.",
+                              "What gets made and where it goes — the concrete package and its placement, at most 14 plain words, e.g. 'Pricing explainer + \"What is included\" guide, placed in the paid-search path'.",
                           },
                           audience: {
                             type: "string",
-                            description: "Who this content must move — at most 8 plain words, no channel.",
+                            description: "The segment this campaign must move — at most 10 plain words, no channel.",
                           },
-                          moves: {
+                          target: {
                             type: "string",
                             description:
-                              "The required audience change as 'current state → required end-state', plain client-facing words.",
+                              "The campaign's own metric move as a delta with a timeframe, e.g. 'Opportunity conversion 5% → 10% by Q1'.",
                           },
-                          routed_to: { type: "string" },
-                          measure: { type: "string" },
-                          deadline: { type: "string" },
+                          impact: {
+                            type: "string",
+                            description:
+                              "The business-outcome tie, at most 10 words, e.g. '+300 qualified leads to pipeline', '€30k ARR recovered'.",
+                          },
                         },
                       },
                     },

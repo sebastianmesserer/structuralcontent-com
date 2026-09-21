@@ -738,10 +738,10 @@
       color: var(--muted);
     }
 
-    /* Two lanes inside the window: jobs (left) -> arrows -> inset board panel (right) */
+    /* Two lanes inside the window: problems (left) -> arrows -> inset board panel (right) */
     .flow {
       display: grid;
-      grid-template-columns: 1fr 44px 1.15fr;
+      grid-template-columns: 1.15fr 44px 1fr;
       row-gap: 14px;
       padding: 18px;
       align-items: stretch;
@@ -799,6 +799,24 @@
       margin: 0 0 10px;
     }
     .card-trace .tr-label { color: var(--muted); }
+    .jobf .usual-label {
+      display: block;
+      font-size: 0.66rem;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 3px;
+    }
+    .jobf .usual-text {
+      font-size: 0.86rem;
+      line-height: 1.45;
+      color: var(--charcoal-soft);
+      font-style: italic;
+      margin: 0 0 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--line);
+    }
     .jobf .job-text { font-size: 0.95rem; line-height: 1.5; margin: 0; color: var(--charcoal); }
 
     .arrow {
@@ -861,65 +879,6 @@
       color: #9a948a;
     }
     .ticket .ticket-fields dd { margin: 0; color: #c9c4ba; }
-    .ticket .ticket-draft {
-      margin-top: 12px;
-      padding-top: 10px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-    }
-    .ticket .ticket-draft summary {
-      list-style: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.72rem;
-      color: #b7b1a6;
-      padding: 7px 10px;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.035);
-      transition: background 0.15s ease, border-color 0.15s ease;
-    }
-    .ticket .ticket-draft summary:hover {
-      background: rgba(255, 255, 255, 0.07);
-      border-color: rgba(255, 255, 255, 0.24);
-    }
-    .ticket .ticket-draft summary::-webkit-details-marker { display: none; }
-    .ticket .ticket-draft .draft-cue {
-      margin-left: auto;
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      color: var(--accent);
-      white-space: nowrap;
-    }
-    .ticket .ticket-draft .draft-cue::after { content: "Read draft \25BE"; }
-    .ticket .ticket-draft[open] .draft-cue::after { content: "Hide draft \25B4"; }
-    .ticket .ticket-draft .draft-label {
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      font-size: 0.66rem;
-      color: #9a948a;
-    }
-    .ticket .ticket-draft .draft-tag {
-      font-size: 0.6rem;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
-      color: #8f8a80;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 999px;
-      padding: 1px 7px;
-    }
-    .ticket .ticket-draft .draft-body {
-      white-space: pre-wrap;
-      margin-top: 9px;
-      padding-left: 11px;
-      border-left: 2px solid var(--accent);
-      font-size: 0.8rem;
-      line-height: 1.55;
-      color: #c9c4ba;
-    }
 
     /* Staged reveal */
     @media (prefers-reduced-motion: no-preference) {
@@ -1200,8 +1159,8 @@
       <div class="wrap">
         <div class="section-head measure">
           <p class="eyebrow">Try it yourself</p>
-          <h2 id="demo-h">See how a business priority becomes a content ticket.</h2>
-          <p class="support">Enter what is important to your company today. See how content could help.</p>
+          <h2 id="demo-h">See how a business priority becomes a campaign brief.</h2>
+          <p class="support">Enter what is important to your company today. See which problems surface, and what content would move them.</p>
         </div>
 
         <form id="cascade-form" novalidate>
@@ -1236,9 +1195,8 @@
             <li><span class="dot"></span><span class="stage-text"><span class="stage-title">Reading your priority</span><span class="stage-sub">The installed system reads these from your planning documents, goal systems, and other company context.</span></span></li>
             <li><span class="dot"></span><span class="stage-text"><span class="stage-title">Deriving the metrics under pressure</span><span class="stage-sub">The required change, target state, and deadline.</span></span></li>
             <li><span class="dot"></span><span class="stage-text"><span class="stage-title">Identifying owner teams</span><span class="stage-sub">From CRM data, project boards, and org context.</span></span></li>
-            <li><span class="dot"></span><span class="stage-text"><span class="stage-title">Detecting work already in motion</span><span class="stage-sub">Across Slack, Asana, support queues, and product usage.</span></span></li>
-            <li><span class="dot"></span><span class="stage-text"><span class="stage-title">Generating content tickets</span><span class="stage-sub">Each tied to the priority, metric, team, and deadline.</span></span></li>
-            <li><span class="dot"></span><span class="stage-text"><span class="stage-title">Drafting a first version of each piece</span><span class="stage-sub">A context-rich v1 the content team edits &ndash; or hands off to your preferred AI generation tools.</span></span></li>
+            <li><span class="dot"></span><span class="stage-text"><span class="stage-title">Pinpointing the problem in your systems</span><span class="stage-sub">Which segment, which stage, and what CRM notes, support tickets, and usage data say.</span></span></li>
+            <li><span class="dot"></span><span class="stage-text"><span class="stage-title">Writing campaign briefs</span><span class="stage-sub">What to make, for whom, to move which metric by when.</span></span></li>
             <li><span class="dot"></span><span class="stage-text"><span class="stage-title">Routing them to the content team</span><span class="stage-sub">Organized for review, refinement, and action.</span></span></li>
           </ol>
           <p class="pipeline-note">What the demo does once, the installed system does continuously across priorities.</p>
@@ -1570,7 +1528,7 @@
         : "https://sc-cascade.structuralcontent.workers.dev/v1/cascade";
 
       var MAX_METRICS = 3;
-      var STAGE_MS = 5500;
+      var STAGE_MS = 4000;
 
       /* Prefilled example, so the demo can be run without typing. */
       var EXAMPLE = {
@@ -1803,44 +1761,40 @@
         return String(s).replace(/\.\s*$/, "");
       }
 
-      function jobCard(job) {
+      // The contrast the demo exists to show: the request a team usually works
+      // from, then the problem statement the installed product surfaces instead.
+      function problemCard(f) {
         var card = el("article", "jobf");
+        if (f.usual) {
+          card.appendChild(el("span", "usual-label", "Usual request"));
+          card.appendChild(el("p", "usual-text", "\u201C" + stripDot(f.usual) + ".\u201D"));
+        }
         var trace = el("p", "card-trace");
         trace.appendChild(el("span", "tr-label", "Found in: "));
-        trace.appendChild(document.createTextNode(job.trace || "Live work traces"));
+        trace.appendChild(document.createTextNode(f.trace || "Live systems"));
         card.appendChild(trace);
-        card.appendChild(el("p", "job-text", job.job));
+        card.appendChild(el("p", "job-text", f.problem || ""));
         return card;
       }
 
-      // Compact but self-justifying: title answers "what", the three fields
-      // answer "for whom / to move what / by when". Full ticket stays backend-side.
-      function ticketCard(t, key) {
+      // Compact but self-justifying: title + campaign answer "what gets made",
+      // the three fields answer "for whom / to move what by when / contributing what".
+      function briefCard(b, key) {
         var card = el("article", "ticket");
         card.appendChild(el("span", "ticket-key", key));
-        card.appendChild(el("h3", "ticket-title", t.title || ""));
-        if (t.summary) card.appendChild(el("p", "ticket-what", stripDot(t.summary)));
+        card.appendChild(el("h3", "ticket-title", b.title || ""));
+        if (b.campaign) card.appendChild(el("p", "ticket-what", stripDot(b.campaign)));
         var fields = el("dl", "ticket-fields");
         [
-          ["Audience", t.audience],
-          ["Moves", t.moves],
-          ["By", t.deadline]
+          ["For", b.audience],
+          ["Target", b.target],
+          ["Impact", b.impact]
         ].forEach(function (f) {
           if (!f[1]) return;
           fields.appendChild(el("dt", null, f[0]));
           fields.appendChild(el("dd", null, stripDot(f[1])));
         });
         if (fields.children.length) card.appendChild(fields);
-        if (t.draft) {
-          var draft = el("details", "ticket-draft");
-          var sum = document.createElement("summary");
-          sum.appendChild(el("span", "draft-label", "AI first draft"));
-          sum.appendChild(el("span", "draft-tag", "v1 · editable"));
-          sum.appendChild(el("span", "draft-cue"));
-          draft.appendChild(sum);
-          draft.appendChild(el("div", "draft-body", t.draft));
-          card.appendChild(draft);
-        }
         return card;
       }
 
@@ -1876,7 +1830,7 @@
           results.appendChild(pressure);
         });
 
-        // One board column per unique team, jobs pooled across metrics.
+        // One board column per unique team, findings pooled across metrics.
         var teams = [];
         data.metrics.forEach(function (metric) {
           (metric.owners || []).forEach(function (owner) {
@@ -1884,8 +1838,8 @@
             for (var i = 0; i < teams.length; i++) {
               if (teams[i].fn === owner.function) entry = teams[i];
             }
-            if (!entry) { entry = { fn: owner.function, jobs: [] }; teams.push(entry); }
-            (owner.jobs || []).forEach(function (job) { entry.jobs.push(job); });
+            if (!entry) { entry = { fn: owner.function, findings: [] }; teams.push(entry); }
+            (owner.findings || []).forEach(function (f) { entry.findings.push(f); });
           });
         });
 
@@ -1901,34 +1855,34 @@
           bar.appendChild(el("span", "aw-badge", "Simulated preview"));
           win.appendChild(bar);
 
-          // Two lanes on one grid: jobs (col 1) -> arrows (col 2) -> board panel (col 3).
-          var jobCount = teams.reduce(function (n, team) { return n + team.jobs.length; }, 0);
-          var totalRows = 1 + teams.length + jobCount + 1; // captions + team headers + pairs + bottom pad
+          // Two lanes on one grid: problems (col 1) -> arrows (col 2) -> board panel (col 3).
+          var briefCount = teams.reduce(function (n, team) { return n + team.findings.length; }, 0);
+          var totalRows = 1 + teams.length + briefCount + 1; // captions + team headers + pairs + bottom pad
           var flow = el("div", "flow");
           flow.style.gridTemplateRows = "repeat(" + totalRows + ", auto)";
 
           // Recessed board panel behind column 3.
           flow.appendChild(place(el("div", "board-bg"), "1 / " + (totalRows + 1), 3));
 
-          flow.appendChild(place(el("span", "lane-cap", "Work in motion"), 1, 1));
+          flow.appendChild(place(el("span", "lane-cap", "Problem statements"), 1, 1));
           var bhead = place(el("div", "board-head"), 1, 3);
-          bhead.appendChild(el("span", "bh-title", "Content team board"));
-          bhead.appendChild(el("span", "bh-count", jobCount + (jobCount === 1 ? " ticket" : " tickets")));
+          bhead.appendChild(el("span", "bh-title", "Campaign briefs"));
+          bhead.appendChild(el("span", "bh-count", briefCount + (briefCount === 1 ? " brief" : " briefs")));
           flow.appendChild(bhead);
 
           var row = 2;
-          var ticketNum = 0;
+          var briefNum = 0;
           teams.forEach(function (team) {
             var tr = place(el("div", "team-row"), row, 1);
             tr.appendChild(el("span", "fn-pill " + pillClass(team.fn), team.fn));
             flow.appendChild(tr);
             row += 1;
-            team.jobs.forEach(function (job) {
-              ticketNum += 1;
-              flow.appendChild(place(revealItem(jobCard(job)), row, 1));
+            team.findings.forEach(function (f) {
+              briefNum += 1;
+              flow.appendChild(place(revealItem(problemCard(f)), row, 1));
               flow.appendChild(place(revealItem(arrowEl()), row, 2));
               var cell = place(el("div", "ticket-cell"), row, 3);
-              cell.appendChild(revealItem(ticketCard(job.ticket || {}, "SC-" + ticketNum)));
+              cell.appendChild(revealItem(briefCard(f.brief || {}, "SC-" + briefNum)));
               flow.appendChild(cell);
               row += 1;
             });
@@ -1936,7 +1890,7 @@
           flow.appendChild(place(el("div", "board-pad"), row, 3));
 
           win.appendChild(flow);
-          win.appendChild(el("div", "aw-footer", "Generated from what you typed – each ticket carries an editable AI first draft. Installed, the system reads your real goals and live systems."));
+          win.appendChild(el("div", "aw-footer", "Generated from what you typed – figures are illustrative. Installed, the system reads your real goals and live systems."));
           results.appendChild(win);
         }
 

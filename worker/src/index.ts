@@ -1,8 +1,8 @@
 // sc-cascade — Cloudflare Worker proxy for the Structural Content cascade demo.
 // Holds the API key as a Worker secret. The system prompt is bundled into the
 // Worker at deploy time from the gitignored prompts/system-prompt.md — it exceeds
-// the 5.1 kB Worker-secret limit, so it can't be a secret. The page at
-// structuralcontent.com/cascade.html is the only intended caller.
+// the 5.1 kB Worker-secret limit, so it can't be a secret. The demo section of
+// structuralcontent.com (index.html#demo) is the only intended caller.
 
 import Anthropic, { APIError, RateLimitError } from "@anthropic-ai/sdk";
 import { CASCADE_SCHEMA } from "./schema";
@@ -140,14 +140,14 @@ function validate(raw: unknown): { input?: CascadeInput; error?: string } {
   };
 }
 
-// Depth rule backstop: the prompt enforces 1-2 owners and 2-3 jobs; structured
-// outputs can't express minItems/maxItems, so truncate any overshoot here.
+// Depth rule backstop: the prompt enforces 1-2 owners and 1-2 findings per owner;
+// structured outputs can't express minItems/maxItems, so truncate any overshoot here.
 function truncateCascade(cascade: any): any {
   cascade.metrics = (cascade.metrics ?? []).slice(0, 3).map((metric: any) => ({
     ...metric,
     owners: (metric.owners ?? []).slice(0, 2).map((owner: any) => ({
       ...owner,
-      jobs: (owner.jobs ?? []).slice(0, 3),
+      findings: (owner.findings ?? []).slice(0, 2),
     })),
   }));
   return cascade;
@@ -252,7 +252,7 @@ export default {
         return jsonResponse(
           {
             refusal:
-              "This tool turns business priorities into content tickets – give it a real strategic priority and a metric under pressure, and it will show you the cascade.",
+              "This tool turns business priorities into campaign briefs – give it a real strategic priority and a metric under pressure, and it will show you the cascade.",
             priority: input.priority,
             metrics: [],
           },

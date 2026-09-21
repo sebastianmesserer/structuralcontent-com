@@ -48,7 +48,8 @@ The worker is **deployed and live** at `https://sc-cascade.structuralcontent.wor
 The worker exposes a single endpoint: `POST /v1/cascade`. It validates a
 `{ priority, metrics[], consent }` body, calls the Anthropic API with a
 JSON-schema structured output, and returns a "cascade" (priority → metrics →
-owner functions → content-job tickets). Notable behaviors in `src/index.ts`:
+owner functions → findings, each a problem statement plus the campaign brief that
+answers it). Notable behaviors in `src/index.ts`:
 
 - **CORS allowlist** (`ALLOWED_ORIGINS`) — only the production domains and
   `localhost:8000` may call it. Update this list if origins change.
@@ -68,9 +69,9 @@ owner functions → content-job tickets). Notable behaviors in `src/index.ts`:
 
 Structured outputs require `additionalProperties: false` on every object and do
 **not** support `minItems`/`maxItems`. So depth bounds (1–3 metrics, 1–2 owners,
-2–3 jobs) are enforced in the **system prompt**, then defensively re-truncated by
-`truncateCascade()` in `src/index.ts`. If you change the depth rules, update all
-three: prompt, `truncateCascade`, and any UI assumptions.
+1–2 findings per owner) are enforced in the **system prompt**, then defensively
+re-truncated by `truncateCascade()` in `src/index.ts`. If you change the depth
+rules, update all three: prompt, `truncateCascade`, and any UI assumptions.
 
 ## Secrets and gitignored IP (the repo is PUBLIC)
 
