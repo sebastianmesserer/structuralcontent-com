@@ -1,5 +1,9 @@
 name = "sc-cascade"
 main = "src/index.ts"
+# The Cloudflare account that owns sc-cascade and the RESEARCH/USAGE KV namespaces.
+# Pinned so a wrangler login that resolves to a different account fails loudly instead
+# of silently deploying a second, parallel worker.
+account_id = "86d8cfd4499299c91a61fa2a9142a683"
 compatibility_date = "2026-06-01"
 compatibility_flags = ["nodejs_compat"]
 
@@ -16,7 +20,7 @@ MODEL = "claude-opus-4-8"
 
 # Secrets (set once via wrangler, never in this file):
 #   npx wrangler secret put ANTHROPIC_API_KEY
-#   npx wrangler secret put SYSTEM_PROMPT < prompts/system-prompt.md
+#   npx wrangler secret put EXEMPT_IPS        # optional: comma-separated IPs exempt from the demo limits
 
 [[unsafe.bindings]]
 name = "RATE_LIMITER"

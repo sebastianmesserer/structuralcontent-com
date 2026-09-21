@@ -45,17 +45,33 @@ wrangler deploy   # production — bundles prompts/system-prompt.md into the scr
 The worker is **deployed and live** at `https://sc-cascade.structuralcontent.workers.dev`
 (`POST /v1/cascade`), and `index.html` points at it.
 
+**Site and worker are deployed separately.** The worker tags every cascade with
+`schema: "cascade-v2"` and the page refuses any other shape with a "this page is out
+of date – reload" notice. When a change alters the shape: **merge the site PR first,
+wait for Pages to go live (~1 min), then `wrangler deploy`**. In that order the window
+shows the reload notice; the reverse order would show the old page an empty board.
+Bump the shape tag on both sides together. `account_id` is pinned in
+`wrangler.toml` to the account that owns `sc-cascade` and the KV namespaces, so a
+`wrangler login` that resolves to another account fails the deploy instead of silently
+creating a second worker; if it fails, log in again and pick the right account.
+
 The worker exposes a single endpoint: `POST /v1/cascade`. It validates a
 `{ priority, metrics[], consent }` body, calls the Anthropic API with a
 JSON-schema structured output, and returns a "cascade" (priority → metrics →
-owner functions → content-job tickets). Notable behaviors in `src/index.ts`:
+owner functions → findings, each a problem statement plus the campaign brief that
+answers it). Notable behaviors in `src/index.ts`:
 
 - **CORS allowlist** (`ALLOWED_ORIGINS`) — only the production domains and
   `localhost:8000` may call it. Update this list if origins change.
 - **Two-layer abuse protection per IP**: a burst guard via the unsafe
   `RATE_LIMITER` binding (5 req / 60s, declared in `wrangler.toml`), plus a
   longer-horizon usage cap (`USAGE_CAP` = 10 runs / 30-day window) counted in
-  the `USAGE` KV namespace, keyed by IP.
+  the `USAGE` KV namespace, keyed by IP. Loopback (wrangler dev) is always exempt
+  from both; the optional `EXEMPT_IPS` Worker secret (comma-separated) exempts
+  Sebastian's own IPs in production — set it with `npx wrangler secret put
+  EXEMPT_IPS`, never write an IP into the repo. Compare is by exact string, so paste
+  the address exactly as Cloudflare reports it (the `ip=` line of
+  `https://www.cloudflare.com/cdn-cgi/trace`), not a hand-typed IPv6 form.
 - **Prospect input is data, never instructions** — it goes only in the user
   turn; the system prompt is the only instruction source.
 - **Consented research storage**: when `consent === true`, the input + cascade
@@ -68,9 +84,10 @@ owner functions → content-job tickets). Notable behaviors in `src/index.ts`:
 
 Structured outputs require `additionalProperties: false` on every object and do
 **not** support `minItems`/`maxItems`. So depth bounds (1–3 metrics, 1–2 owners,
-2–3 jobs) are enforced in the **system prompt**, then defensively re-truncated by
-`truncateCascade()` in `src/index.ts`. If you change the depth rules, update all
-three: prompt, `truncateCascade`, and any UI assumptions.
+1–2 findings per owner, 2–3 messaging lines and 2–4 pieces per expanded brief) are
+enforced in the **system prompt**, then defensively
+re-truncated by `truncateCascade()` in `src/index.ts`. If you change the depth
+rules, update all three: prompt, `truncateCascade`, and any UI assumptions.
 
 ## Secrets and gitignored IP (the repo is PUBLIC)
 

@@ -1,8 +1,8 @@
 // sc-cascade — Cloudflare Worker proxy for the Structural Content cascade demo.
 // Holds the API key as a Worker secret. The system prompt is bundled into the
 // Worker at deploy time from the gitignored prompts/system-prompt.md — it exceeds
-// the 5.1 kB Worker-secret limit, so it can't be a secret. The page at
-// structuralcontent.com/cascade.html is the only intended caller.
+// the 5.1 kB Worker-secret limit, so it can't be a secret. The demo section of
+// structuralcontent.com (index.html#demo) is the only intended caller.
 
 import Anthropic, { APIError, RateLimitError } from "@anthropic-ai/sdk";
 import { CASCADE_SCHEMA } from "./schema";
@@ -13,6 +13,9 @@ import SYSTEM_PROMPT from "../prompts/system-prompt.md";
 interface Env {
   ANTHROPIC_API_KEY: string;
   MODEL: string;
+  // Optional Worker secret: comma-separated IPs exempt from the burst limiter and the
+  // usage cap (Sebastian's own connections). Loopback is always exempt for wrangler dev.
+  EXEMPT_IPS?: string;
   RATE_LIMITER: { limit(opts: { key: string }): Promise<{ success: boolean }> };
   // Research storage for consented runs; absent until the KV namespace is bound.
   RESEARCH?: {
@@ -43,6 +46,14 @@ const MAX_BODY_BYTES = 4096;
 // (The RATE_LIMITER binding only stops bursts; its window maxes out at 60s.)
 const USAGE_CAP = 10;
 const USAGE_WINDOW_SEC = 30 * 24 * 60 * 60; // resets 30 days after an IP's first run
+const LOOPBACK_IPS = ["127.0.0.1", "::1", "::ffff:127.0.0.1"];
+
+function isExempt(env: Env, ip: string): boolean {
+  const needle = ip.trim().toLowerCase();
+  if (LOOPBACK_IPS.includes(needle)) return true;
+  const list = (env.EXEMPT_IPS ?? "").split(",").map((s) => s.trim().toLowerCase()).filter(Boolean);
+  return list.includes(needle);
+}
 const LIMITS = {
   priority: { min: 10, max: 300 },
   name: { max: 120 },
@@ -140,17 +151,43 @@ function validate(raw: unknown): { input?: CascadeInput; error?: string } {
   };
 }
 
-// Depth rule backstop: the prompt enforces 1-2 owners and 2-3 jobs; structured
-// outputs can't express minItems/maxItems, so truncate any overshoot here.
+// Depth rule backstop: the prompt enforces 1-2 owners, 1-2 findings per owner, and
+// 2-3 messaging lines / 2-4 pieces per brief; structured outputs can't express
+// minItems/maxItems, so truncate any overshoot here.
 function truncateCascade(cascade: any): any {
   cascade.metrics = (cascade.metrics ?? []).slice(0, 3).map((metric: any) => ({
     ...metric,
     owners: (metric.owners ?? []).slice(0, 2).map((owner: any) => ({
       ...owner,
-      jobs: (owner.jobs ?? []).slice(0, 3),
+      findings: (owner.findings ?? []).slice(0, 2).map((finding: any) => {
+        const detail = finding?.brief?.detail;
+        if (!detail) return finding;
+        return {
+          ...finding,
+          brief: {
+            ...finding.brief,
+            detail: {
+              ...detail,
+              messaging: (detail.messaging ?? []).slice(0, 3),
+              pieces: (detail.pieces ?? []).slice(0, 4),
+            },
+          },
+        };
+      }),
     })),
   }));
   return cascade;
+}
+
+// The response shape the page expects; the page refuses anything else with a
+// "this page is out of date" notice, so a site/worker deploy skew is explicit.
+const CASCADE_SHAPE = "cascade-v2";
+
+// Every call that reaches the model counts toward the per-IP cap — refusals,
+// truncations and unparsable output included — because the cap bounds spend.
+function countRun(env: Env, ctx: { waitUntil(p: Promise<unknown>): void }, ip: string, exempt: boolean): void {
+  if (exempt || !env.USAGE || ip === "unknown") return;
+  ctx.waitUntil(incrementUsage(env, ip));
 }
 
 // Best-effort per-IP run counter. KV isn't atomic, but the burst limiter caps
@@ -185,7 +222,8 @@ export default {
     }
 
     const ip = request.headers.get("CF-Connecting-IP") ?? "unknown";
-    const { success } = await env.RATE_LIMITER.limit({ key: ip });
+    const exempt = isExempt(env, ip);
+    const { success } = exempt ? { success: true } : await env.RATE_LIMITER.limit({ key: ip });
     if (!success) {
       return errorResponse(
         "rate_limited",
@@ -196,7 +234,7 @@ export default {
     }
 
     // Longer-window cap: the demo is for evaluation, not ongoing content work.
-    if (env.USAGE && ip !== "unknown") {
+    if (!exempt && env.USAGE && ip !== "unknown") {
       const now = Math.floor(Date.now() / 1000);
       const usage = await env.USAGE.get(`runs:${ip}`, "json");
       if (usage && usage.resetAt > now && usage.count >= USAGE_CAP) {
@@ -232,7 +270,9 @@ export default {
     try {
       const response = await client.messages.create({
         model: env.MODEL,
-        max_tokens: 8000,
+        // Thinking tokens share this budget with the JSON; 12 briefs with detail plus
+        // medium-effort thinking fit comfortably, 8000 did not leave headroom.
+        max_tokens: 16000,
         thinking: { type: "adaptive" },
         system: [
           {
@@ -243,16 +283,22 @@ export default {
         ],
         output_config: {
           format: { type: "json_schema", schema: CASCADE_SCHEMA },
+          // Medium effort keeps adaptive thinking from running the demo past ~30 s;
+          // measured 21 Sep 2026: high effort was bimodal (26-27 s or 45-48 s).
+          effort: "medium",
         },
         // Prospect input is data, never instructions — it goes only in the user turn.
         messages: [{ role: "user", content: JSON.stringify(modelInput) }],
       } as any);
 
+      // The model has been paid for from here on, whatever comes back.
+      countRun(env, ctx, ip, exempt);
+
       if (response.stop_reason === "refusal") {
         return jsonResponse(
           {
             refusal:
-              "This tool turns business priorities into content tickets – give it a real strategic priority and a metric under pressure, and it will show you the cascade.",
+              "This tool turns business priorities into campaign briefs – give it a real strategic priority and a metric under pressure, and it will show you the cascade.",
             priority: input.priority,
             metrics: [],
           },
@@ -263,7 +309,7 @@ export default {
       if (response.stop_reason === "max_tokens") {
         return errorResponse(
           "too_long",
-          "That cascade ran long — try again with fewer metrics.",
+          "That cascade ran long — please try again, with fewer metrics if you entered several.",
           502,
           origin,
         );
@@ -275,6 +321,12 @@ export default {
       }
 
       const cascade = truncateCascade(JSON.parse((textBlock as any).text));
+      cascade.schema = CASCADE_SHAPE;
+      const briefCount = (cascade.metrics ?? []).reduce(
+        (n: number, m: any) =>
+          n + (m.owners ?? []).reduce((k: number, o: any) => k + (o.findings ?? []).length, 0),
+        0,
+      );
       console.log(
         JSON.stringify({
           request_id: (response as any)._request_id ?? null,
@@ -282,6 +334,7 @@ export default {
           usage: response.usage,
           metrics: input.metrics.length,
           refused: Boolean(cascade.refusal),
+          briefs: briefCount,
           consent: input.consent,
         }),
       );
@@ -299,11 +352,6 @@ export default {
             expirationTtl: 31536000, // 1 year
           }).catch((e) => console.log("research put failed:", e instanceof Error ? e.message : String(e))),
         );
-      }
-
-      // Count this completed run toward the per-IP cap (best-effort, non-blocking).
-      if (env.USAGE && ip !== "unknown") {
-        ctx.waitUntil(incrementUsage(env, ip));
       }
 
       return jsonResponse(cascade, 200, origin);
