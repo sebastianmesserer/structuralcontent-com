@@ -64,7 +64,10 @@ answers it). Notable behaviors in `src/index.ts`:
 - **Two-layer abuse protection per IP**: a burst guard via the unsafe
   `RATE_LIMITER` binding (5 req / 60s, declared in `wrangler.toml`), plus a
   longer-horizon usage cap (`USAGE_CAP` = 10 runs / 30-day window) counted in
-  the `USAGE` KV namespace, keyed by IP.
+  the `USAGE` KV namespace, keyed by IP. Loopback (wrangler dev) is always exempt
+  from both; the optional `EXEMPT_IPS` Worker secret (comma-separated) exempts
+  Sebastian's own IPs in production — set it with `npx wrangler secret put
+  EXEMPT_IPS`, never write an IP into the repo.
 - **Prospect input is data, never instructions** — it goes only in the user
   turn; the system prompt is the only instruction source.
 - **Consented research storage**: when `consent === true`, the input + cascade

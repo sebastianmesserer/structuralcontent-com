@@ -13,6 +13,9 @@ import SYSTEM_PROMPT from "../prompts/system-prompt.md";
 interface Env {
   ANTHROPIC_API_KEY: string;
   MODEL: string;
+  // Optional Worker secret: comma-separated IPs exempt from the burst limiter and the
+  // usage cap (Sebastian's own connections). Loopback is always exempt for wrangler dev.
+  EXEMPT_IPS?: string;
   RATE_LIMITER: { limit(opts: { key: string }): Promise<{ success: boolean }> };
   // Research storage for consented runs; absent until the KV namespace is bound.
   RESEARCH?: {
@@ -43,6 +46,13 @@ const MAX_BODY_BYTES = 4096;
 // (The RATE_LIMITER binding only stops bursts; its window maxes out at 60s.)
 const USAGE_CAP = 10;
 const USAGE_WINDOW_SEC = 30 * 24 * 60 * 60; // resets 30 days after an IP's first run
+const LOOPBACK_IPS = ["127.0.0.1", "::1"];
+
+function isExempt(env: Env, ip: string): boolean {
+  if (LOOPBACK_IPS.includes(ip)) return true;
+  const list = (env.EXEMPT_IPS ?? "").split(",").map((s) => s.trim()).filter(Boolean);
+  return list.includes(ip);
+}
 const LIMITS = {
   priority: { min: 10, max: 300 },
   name: { max: 120 },
@@ -200,7 +210,8 @@ export default {
     }
 
     const ip = request.headers.get("CF-Connecting-IP") ?? "unknown";
-    const { success } = await env.RATE_LIMITER.limit({ key: ip });
+    const exempt = isExempt(env, ip);
+    const { success } = exempt ? { success: true } : await env.RATE_LIMITER.limit({ key: ip });
     if (!success) {
       return errorResponse(
         "rate_limited",
@@ -211,7 +222,7 @@ export default {
     }
 
     // Longer-window cap: the demo is for evaluation, not ongoing content work.
-    if (env.USAGE && ip !== "unknown") {
+    if (!exempt && env.USAGE && ip !== "unknown") {
       const now = Math.floor(Date.now() / 1000);
       const usage = await env.USAGE.get(`runs:${ip}`, "json");
       if (usage && usage.resetAt > now && usage.count >= USAGE_CAP) {
@@ -324,7 +335,7 @@ export default {
 
       // Count this completed run toward the per-IP cap (best-effort, non-blocking).
       // A run with no briefs shows the visitor a "try again" notice, so it is free.
-      if (briefCount > 0 && env.USAGE && ip !== "unknown") {
+      if (!exempt && briefCount > 0 && env.USAGE && ip !== "unknown") {
         ctx.waitUntil(incrementUsage(env, ip));
       }
 

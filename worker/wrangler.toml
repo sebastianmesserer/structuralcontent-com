@@ -18,8 +18,9 @@ rules = [
 # Quality default. Cheaper/faster alternative: "claude-sonnet-4-6" (one-line switch, redeploy).
 MODEL = "claude-opus-4-8"
 
-# Secret (set once via wrangler, never in this file):
+# Secrets (set once via wrangler, never in this file):
 #   npx wrangler secret put ANTHROPIC_API_KEY
+#   npx wrangler secret put EXEMPT_IPS        # optional: comma-separated IPs exempt from the demo limits
 
 [[unsafe.bindings]]
 name = "RATE_LIMITER"
