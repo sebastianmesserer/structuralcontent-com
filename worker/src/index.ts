@@ -1,8 +1,9 @@
 // sc-cascade — Cloudflare Worker proxy for the Structural Content cascade demo.
 // Calls Claude on Amazon Bedrock with IAM keys held as Worker secrets. The system
 // prompt is bundled into the Worker at deploy time from the gitignored
-// prompts/system-prompt.md — it exceeds the 5.1 kB Worker-secret limit, so it can't be a secret. The demo section of
-// structuralcontent.com (index.html#demo) is the only intended caller.
+// prompts/system-prompt.md — it exceeds the 5.1 kB Worker-secret limit, so it can't
+// be a secret. The demo section of structuralcontent.com (index.html#demo) is the
+// only intended caller.
 
 import { BedrockError, bedrockInvoke, type BedrockMessage } from "./bedrock";
 import { CASCADE_SCHEMA } from "./schema";

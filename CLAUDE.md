@@ -58,8 +58,8 @@ creating a second worker; if it fails, log in again and pick the right account.
 The worker exposes a single endpoint: `POST /v1/cascade`. It validates a
 `{ priority, metrics[], consent }` body, calls Claude on Bedrock (paid
 from AWS credits, no Anthropic API spend) with a JSON-schema structured output, and
-returns a "cascade" (priority → metrics → owner functions → findings, each a problem statement plus the campaign brief that
-answers it). Notable behaviors in `src/index.ts`:
+returns a "cascade" (priority → metrics → owner functions → findings, each a problem
+statement plus the campaign brief that answers it). Notable behaviors in `src/index.ts`:
 
 - **CORS allowlist** (`ALLOWED_ORIGINS`) — only the production domains and
   `localhost:8000` may call it. Update this list if origins change.
@@ -110,8 +110,8 @@ Never commit these — they're gitignored and must stay that way:
   prompt is inlined into the script bundle (which Cloudflare does not serve
   publicly). There is no separate secret push.
 - `worker/.dev.vars` — local `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` /
-  `AWS_REGION` for `wrangler dev` (the prompt is bundled, so it's no longer needed here). Wrangler does **not** hot-reload it;
-  restart dev after editing.
+  `AWS_REGION` for `wrangler dev` (the prompt is bundled, so it's no longer needed
+  here). Wrangler does **not** hot-reload it; restart dev after editing.
 - `References/` — strategy/positioning docs. Never publish.
 
 ## Current state of the demo
