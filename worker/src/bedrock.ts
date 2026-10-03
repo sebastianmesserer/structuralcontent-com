@@ -37,6 +37,10 @@ export async function bedrockInvoke(env: BedrockEnv, body: Record<string, unknow
     secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
     service: "bedrock",
     region: env.AWS_REGION,
+    // aws4fetch re-sends on 429/5xx up to 10 times by default; each re-send is a paid
+    // generation that can push the visitor past the page's 180 s abort. Failures
+    // surface to the caller as errors instead.
+    retries: 0,
   });
   const url = `https://bedrock-runtime.${env.AWS_REGION}.amazonaws.com/model/${encodeURIComponent(env.MODEL)}/invoke`;
   const res = await aws.fetch(url, {
