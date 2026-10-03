@@ -9,7 +9,7 @@ Sebastian's machine at `worker/prompts/system-prompt.md`.
 
 The prompt is **bundled into the Worker at deploy time** as a Text module: the
 `rules` block in `wrangler.toml` plus `import SYSTEM_PROMPT from
-"../prompts/system-prompt.md"` in `src/index.ts`. At ~10 kB it exceeds Cloudflare's
+"../prompts/system-prompt.md"` in `src/index.ts`. At ~18 kB it exceeds Cloudflare's
 5.1 kB Worker-secret limit, so it cannot be a secret. Cloudflare does not serve the
 script bundle publicly.
 
@@ -33,18 +33,21 @@ npx wrangler secret delete SYSTEM_PROMPT
 ## Local dev
 
 `wrangler dev` bundles the prompt the same way. `worker/.dev.vars` (also gitignored)
-only needs the API key:
+only needs the AWS credentials (the prompt is bundled, not read from here):
 
 ```
-ANTHROPIC_API_KEY=sk-ant-...
+AWS_ACCESS_KEY_ID=AKIA...
+AWS_SECRET_ACCESS_KEY=...
+AWS_REGION=eu-west-1   # source region for the global inference profile
 ```
 
 Wrangler does not hot-reload `.dev.vars`; restart `wrangler dev` after editing it.
 
 ## Model
 
-`MODEL` is a plain var in `wrangler.toml` — default `claude-opus-4-8` (quality
-demo). Switch to `claude-sonnet-4-6` there for lower cost/latency, then
+`MODEL` is a plain var in `wrangler.toml` — default `global.anthropic.claude-opus-4-6-v1`
+(Bedrock global inference profile; the newest model with structured outputs on Bedrock,
+see CLAUDE.md). Switch to another structured-output-capable profile there for lower cost/latency, then
 `npx wrangler deploy`.
 
 ## Research storage (consented runs)

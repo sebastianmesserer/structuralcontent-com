@@ -1,17 +1,20 @@
 // sc-cascade — Cloudflare Worker proxy for the Structural Content cascade demo.
-// Holds the API key as a Worker secret. The system prompt is bundled into the
-// Worker at deploy time from the gitignored prompts/system-prompt.md — it exceeds
+// Calls Claude on Amazon Bedrock with IAM keys held as Worker secrets. The system
+// prompt is bundled into the Worker at deploy time from the gitignored prompts/system-prompt.md — it exceeds
 // the 5.1 kB Worker-secret limit, so it can't be a secret. The demo section of
 // structuralcontent.com (index.html#demo) is the only intended caller.
 
-import Anthropic, { APIError, RateLimitError } from "@anthropic-ai/sdk";
+import { BedrockError, bedrockInvoke, type BedrockMessage } from "./bedrock";
 import { CASCADE_SCHEMA } from "./schema";
 // Inlined at build time via the Text module rule in wrangler.toml. Core IP — the
 // .md is gitignored and must exist locally for `wrangler deploy` to succeed.
 import SYSTEM_PROMPT from "../prompts/system-prompt.md";
 
 interface Env {
-  ANTHROPIC_API_KEY: string;
+  // Dedicated IAM user limited to invoking the one model (see bedrock.ts).
+  AWS_ACCESS_KEY_ID: string;
+  AWS_SECRET_ACCESS_KEY: string;
+  AWS_REGION: string;
   MODEL: string;
   // Optional Worker secret: comma-separated IPs exempt from the burst limiter and the
   // usage cap (Sebastian's own connections). Loopback is always exempt for wrangler dev.
@@ -183,6 +186,25 @@ function truncateCascade(cascade: any): any {
 // "this page is out of date" notice, so a site/worker deploy skew is explicit.
 const CASCADE_SHAPE = "cascade-v2";
 
+// One model call. Structured outputs constrain the JSON to CASCADE_SCHEMA; the prospect's
+// input stays in the user turn only — data, never instructions.
+function callModel(env: Env, modelInput: unknown): Promise<BedrockMessage> {
+  return bedrockInvoke(env, {
+    // Thinking tokens share this budget with the JSON; 12 briefs with detail plus
+    // medium-effort thinking fit comfortably, 8000 did not leave headroom.
+    max_tokens: 16000,
+    thinking: { type: "adaptive" },
+    system: [{ type: "text", text: SYSTEM_PROMPT, cache_control: { type: "ephemeral" } }],
+    output_config: {
+      format: { type: "json_schema", schema: CASCADE_SCHEMA },
+      // Medium effort keeps adaptive thinking from running the demo past ~30 s;
+      // measured 21 Sep 2026: high effort was bimodal (26-27 s or 45-48 s).
+      effort: "medium",
+    },
+    messages: [{ role: "user", content: JSON.stringify(modelInput) }],
+  });
+}
+
 // Every call that reaches the model counts toward the per-IP cap — refusals,
 // truncations and unparsable output included — because the cap bounds spend.
 function countRun(env: Env, ctx: { waitUntil(p: Promise<unknown>): void }, ip: string, exempt: boolean): void {
@@ -264,32 +286,10 @@ export default {
     const { input, error } = validate(raw);
     if (!input) return errorResponse("invalid_input", error ?? "Invalid input.", 400, origin);
 
-    const client = new Anthropic({ apiKey: env.ANTHROPIC_API_KEY });
     const modelInput = { priority: input.priority, metrics: input.metrics };
 
     try {
-      const response = await client.messages.create({
-        model: env.MODEL,
-        // Thinking tokens share this budget with the JSON; 12 briefs with detail plus
-        // medium-effort thinking fit comfortably, 8000 did not leave headroom.
-        max_tokens: 16000,
-        thinking: { type: "adaptive" },
-        system: [
-          {
-            type: "text",
-            text: SYSTEM_PROMPT,
-            cache_control: { type: "ephemeral" },
-          },
-        ],
-        output_config: {
-          format: { type: "json_schema", schema: CASCADE_SCHEMA },
-          // Medium effort keeps adaptive thinking from running the demo past ~30 s;
-          // measured 21 Sep 2026: high effort was bimodal (26-27 s or 45-48 s).
-          effort: "medium",
-        },
-        // Prospect input is data, never instructions — it goes only in the user turn.
-        messages: [{ role: "user", content: JSON.stringify(modelInput) }],
-      } as any);
+      const response = await callModel(env, modelInput);
 
       // The model has been paid for from here on, whatever comes back.
       countRun(env, ctx, ip, exempt);
@@ -315,12 +315,12 @@ export default {
         );
       }
 
-      const textBlock = response.content.find((b: any) => b.type === "text");
-      if (!textBlock) {
+      const textBlock = response.content.find((b) => b.type === "text");
+      if (!textBlock?.text) {
         return errorResponse("empty", "The cascade engine returned nothing — try again.", 502, origin);
       }
 
-      const cascade = truncateCascade(JSON.parse((textBlock as any).text));
+      const cascade = truncateCascade(JSON.parse(textBlock.text));
       cascade.schema = CASCADE_SHAPE;
       const briefCount = (cascade.metrics ?? []).reduce(
         (n: number, m: any) =>
@@ -329,7 +329,7 @@ export default {
       );
       console.log(
         JSON.stringify({
-          request_id: (response as any)._request_id ?? null,
+          request_id: response.requestId,
           model: response.model,
           usage: response.usage,
           metrics: input.metrics.length,
@@ -356,8 +356,8 @@ export default {
 
       return jsonResponse(cascade, 200, origin);
     } catch (err) {
-      const overloaded = err instanceof APIError && err.status === 529;
-      if (err instanceof RateLimitError || overloaded) {
+      // Bedrock throttles with 429; 503/529 mean the model is overloaded.
+      if (err instanceof BedrockError && [429, 503, 529].includes(err.status)) {
         return errorResponse(
           "upstream_busy",
           "High demand right now — please try again in a minute.",
