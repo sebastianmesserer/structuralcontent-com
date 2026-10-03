@@ -1,7 +1,7 @@
 // sc-cascade — Cloudflare Worker proxy for the Structural Content cascade demo.
 // Calls Claude on Amazon Bedrock with IAM keys held as Worker secrets. The system
-// prompt is bundled into the Worker at deploy time from the gitignored prompts/system-prompt.md — it exceeds
-// the 5.1 kB Worker-secret limit, so it can't be a secret. The demo section of
+// prompt is bundled into the Worker at deploy time from the gitignored
+// prompts/system-prompt.md — it exceeds the 5.1 kB Worker-secret limit, so it can't be a secret. The demo section of
 // structuralcontent.com (index.html#demo) is the only intended caller.
 
 import { BedrockError, bedrockInvoke, type BedrockMessage } from "./bedrock";
@@ -197,8 +197,8 @@ function callModel(env: Env, modelInput: unknown): Promise<BedrockMessage> {
     system: [{ type: "text", text: SYSTEM_PROMPT, cache_control: { type: "ephemeral" } }],
     output_config: {
       format: { type: "json_schema", schema: CASCADE_SCHEMA },
-      // Medium effort keeps adaptive thinking from running the demo past ~30 s;
-      // measured 21 Sep 2026: high effort was bimodal (26-27 s or 45-48 s).
+      // Medium effort bounds adaptive thinking. Measured on Opus 4.6 via Bedrock,
+      // 3 Oct 2026: median ~44 s, max 74 s (on 4.8, high effort was bimodal 26-48 s).
       effort: "medium",
     },
     messages: [{ role: "user", content: JSON.stringify(modelInput) }],
@@ -356,8 +356,8 @@ export default {
 
       return jsonResponse(cascade, 200, origin);
     } catch (err) {
-      // Bedrock throttles with 429; 503/529 mean the model is overloaded.
-      if (err instanceof BedrockError && [429, 503, 529].includes(err.status)) {
+      // Bedrock throttles with 429 and reports an unavailable model with 503.
+      if (err instanceof BedrockError && [429, 503].includes(err.status)) {
         return errorResponse(
           "upstream_busy",
           "High demand right now — please try again in a minute.",
