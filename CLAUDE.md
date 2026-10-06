@@ -15,7 +15,7 @@ deployables in one repo:
   processing. (`examples-anim-preview.html` is gitignored local scratch, not
   part of the deployed site.)
 - **The worker** (`worker/`): a Cloudflare Worker that proxies the cascade demo
-  to the Anthropic API, holding the API key as a Worker secret and the system
+  to Claude on Amazon Bedrock, holding the AWS keys as Worker secrets and the system
   prompt as a bundled Text module (see "Secrets and gitignored IP" below).
 
 There is no build, lint, or test tooling for the static site — edit the HTML
@@ -38,7 +38,7 @@ the `structuralcontent-deploy` memory.
 ```bash
 cd worker
 npm install
-wrangler dev      # local; reads ANTHROPIC_API_KEY from worker/.dev.vars (gitignored)
+wrangler dev      # local; reads the AWS keys from worker/.dev.vars (gitignored)
 wrangler deploy   # production — bundles prompts/system-prompt.md into the script
 ```
 
@@ -56,10 +56,10 @@ Bump the shape tag on both sides together. `account_id` is pinned in
 creating a second worker; if it fails, log in again and pick the right account.
 
 The worker exposes a single endpoint: `POST /v1/cascade`. It validates a
-`{ priority, metrics[], consent }` body, calls the Anthropic API with a
-JSON-schema structured output, and returns a "cascade" (priority → metrics →
-owner functions → findings, each a problem statement plus the campaign brief that
-answers it). Notable behaviors in `src/index.ts`:
+`{ priority, metrics[], consent }` body, calls Claude on Bedrock (paid
+from AWS credits, no Anthropic API spend) with a JSON-schema structured output, and
+returns a "cascade" (priority → metrics → owner functions → findings, each a problem
+statement plus the campaign brief that answers it). Notable behaviors in `src/index.ts`:
 
 - **CORS allowlist** (`ALLOWED_ORIGINS`) — only the production domains and
   `localhost:8000` may call it. Update this list if origins change.
@@ -77,8 +77,17 @@ answers it). Notable behaviors in `src/index.ts`:
 - **Consented research storage**: when `consent === true`, the input + cascade
   are written to the `RESEARCH` KV namespace (1-year TTL), best-effort via
   `ctx.waitUntil` so it never blocks the response.
-- `MODEL` is a plain var in `wrangler.toml` (default `claude-opus-4-8`; switch to
-  `claude-sonnet-4-6` for lower cost/latency, then redeploy).
+- `MODEL` is a plain var in `wrangler.toml` (default
+  `global.anthropic.claude-opus-4-6-v1`, a Bedrock global inference profile). **Why Opus
+  4.6, not 4.8:** structured outputs on Bedrock exist only on the legacy InvokeModel
+  endpoint, and only up to Opus 4.6; the newer Messages-API endpoint (Opus 4.7+) rejects
+  `output_config.format` (tested 3 Oct 2026), and free-text JSON there came back malformed
+  in 18 of 20 runs. Move to a newer model once that endpoint supports structured outputs
+  (or via Claude Platform on AWS). No repair/retry layers: an invalid response is an error.
+- **Bedrock auth**: SigV4 via `aws4fetch` (`src/bedrock.ts`) with a dedicated IAM user's
+  keys, `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` Worker secrets (policy:
+  `bedrock:InvokeModel` on that one profile/model). `AWS_REGION` is the source region.
+  Bedrock bearer tokens expire within 12 h, so they are not used.
 
 ### Schema constraint (important)
 
@@ -96,13 +105,13 @@ Never commit these — they're gitignored and must stay that way:
 - `worker/prompts/system-prompt.md` — the cascade system prompt (core IP). Lives
   only on Sebastian's machine; it's **bundled into the Worker at deploy time** as a
   Text module (the `rules` block in `wrangler.toml` + the `import SYSTEM_PROMPT`
-  line in `src/index.ts`), because at ~10 kB it exceeds Cloudflare's 5.1 kB
+  line in `src/index.ts`), because at ~18 kB it exceeds Cloudflare's 5.1 kB
   Worker-secret limit. To change it: edit the file and `wrangler deploy` — the
   prompt is inlined into the script bundle (which Cloudflare does not serve
   publicly). There is no separate secret push.
-- `worker/.dev.vars` — local `ANTHROPIC_API_KEY` for `wrangler dev` (the prompt is
-  bundled, so it's no longer needed here). Wrangler does **not** hot-reload it;
-  restart dev after editing.
+- `worker/.dev.vars` — local `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` /
+  `AWS_REGION` for `wrangler dev` (the prompt is bundled, so it's no longer needed
+  here). Wrangler does **not** hot-reload it; restart dev after editing.
 - `References/` — strategy/positioning docs. Never publish.
 
 ## Current state of the demo
