@@ -86,9 +86,6 @@ interface CascadeInput {
   priority: string;
   metrics: MetricInput[];
   consent: boolean;
-  // The response shape the page expects (e.g. "cascade-v3"); checked before any model
-  // call so a stale page is refused for free. Absent from pages built before 6 Oct 2026.
-  shape: string | null;
   // Whether the visitor ran the prefilled example unchanged or typed their own input;
   // stored with consented research records so the canned example is not mistaken
   // for a prospect's priority.
@@ -160,16 +157,11 @@ function validate(raw: unknown): { input?: CascadeInput; error?: string } {
     });
   }
 
-  const shape = body.shape;
-  if (shape !== undefined && (typeof shape !== "string" || shape.length > 40))
-    return { error: "Invalid shape." };
-
   return {
     input: {
       priority: priority.trim(),
       metrics: cleaned,
       consent: body.consent === true,
-      shape: typeof shape === "string" ? shape : null,
       source: body.source === "example" ? "example" : "typed",
     },
   };
@@ -385,15 +377,18 @@ export default {
       return errorResponse("bad_json", "Request body must be valid JSON.", 400, origin);
     }
 
-    const { input, error } = validate(raw);
-    if (!input) return errorResponse("invalid_input", error ?? "Invalid input.", 400, origin);
-
-    // Shape handshake: a page that expects another response shape is refused before
+    // Shape handshake, first thing after parsing: a page that expects another response
+    // shape is refused before validation (its input contract may differ too) and before
     // the model is called, so a stale page costs nothing and shows the reload notice.
+    // `shape` is absent from pages built before 6 Oct 2026; they keep their own check.
     const shape = route === "cascade" ? CASCADE_SHAPE : BRIEF_SHAPE;
-    if (input.shape && input.shape !== shape) {
+    const wanted = typeof raw === "object" && raw !== null ? (raw as Record<string, unknown>).shape : undefined;
+    if (wanted !== undefined && wanted !== null && wanted !== shape) {
       return errorResponse("out_of_date", "This page is out of date – please reload it and run again.", 409, origin);
     }
+
+    const { input, error } = validate(raw);
+    if (!input) return errorResponse("invalid_input", error ?? "Invalid input.", 400, origin);
 
     const opportunity = (raw as Record<string, unknown>).opportunity;
     if (route === "brief" && !checkShape(OPPORTUNITY_SCHEMA, opportunity)) {
