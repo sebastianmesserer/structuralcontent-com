@@ -7,9 +7,9 @@ account_id = "86d8cfd4499299c91a61fa2a9142a683"
 compatibility_date = "2026-06-01"
 compatibility_flags = ["nodejs_compat"]
 
-# Inline prompts/system-prompt.md (core IP, gitignored) into the Worker bundle as a
+# Inline prompts/*.md (core IP, gitignored) into the Worker bundle as a
 # Text module — the prompt exceeds the 5.1 kB Worker-secret limit, so it can't be a
-# secret. `import SYSTEM_PROMPT from "../prompts/system-prompt.md"` in src/index.ts.
+# secret. See the `import … from "../prompts/*.md"` lines in src/index.ts.
 rules = [
   { type = "Text", globs = ["**/*.md"], fallthrough = true }
 ]

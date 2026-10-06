@@ -666,23 +666,6 @@
     }
     .metric-pressure .mp-text { font-size: 1.05rem; color: var(--charcoal); }
 
-    .fn-pill {
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      padding: 4px 9px;
-      border-radius: 6px;
-      white-space: nowrap;
-      font-family: var(--sans);
-    }
-    .fn-sales     { background: #F3E2C7; color: #7a5a1e; }
-    .fn-product   { background: #F4EDCB; color: #6f6420; }
-    .fn-community { background: #D6E8E2; color: #1d524a; }
-    .fn-cs        { background: #DBE9D8; color: #38612f; }
-    .fn-marketing { background: #F0DDD2; color: #8a4b2e; }
-    .fn-neutral   { background: #E8E4DA; color: #57524a; }
-
     /* ---------- Demo: simulated product window ---------- */
     .app-window {
       background: var(--stone-card);
@@ -738,10 +721,10 @@
       color: var(--muted);
     }
 
-    /* Two lanes inside the window: problems (left) -> arrows -> inset board panel (right) */
+    /* Lanes inside the window: problems -> arrows -> inset board panel */
     .flow {
       display: grid;
-      grid-template-columns: 1.15fr 44px 1fr;
+      grid-template-columns: 1fr 44px 1.3fr;
       row-gap: 14px;
       padding: 18px;
       align-items: stretch;
@@ -778,7 +761,6 @@
     }
     .board-head .bh-count { font-size: 0.75rem; color: var(--muted); flex: none; }
     .board-pad { z-index: 1; height: 4px; }
-    .team-row { align-self: end; padding: 6px 2px 0; }
 
     .jobf {
       background: var(--stone-card);
@@ -840,7 +822,14 @@
       color: var(--charcoal);
       margin: 0 0 3px;
     }
-    .jobf .job-text { font-size: 0.95rem; line-height: 1.5; margin: 0; color: var(--charcoal); }
+    /* Same treatment as the usual request, so the two read as a symmetric pair of quotes. */
+    .jobf .job-text {
+      font-size: 0.86rem;
+      line-height: 1.45;
+      font-style: italic;
+      margin: 0;
+      color: var(--charcoal);
+    }
 
     .arrow {
       align-self: center;
@@ -978,19 +967,95 @@
     }
 
     @media (max-width: 760px) {
-      .fn-pill { white-space: normal; line-height: 1.5; }
       /* Lanes collapse: block flow ignores the inline grid placements. */
       .flow { display: block; padding: 14px; }
       .board-bg, .board-pad { display: none; }
       .lane-cap { display: block; padding: 0 0 4px; }
       .board-head { padding: 0 0 12px; }
-      .team-row { padding: 8px 0 10px; }
       .jobf { margin-bottom: 10px; }
       .arrow { display: block; text-align: center; margin: 0 0 10px; }
       .arrow .right { display: none; }
       .arrow .down { display: inline; }
       .ticket-cell { padding: 0; margin-bottom: 18px; }
       .ticket { height: auto; }
+    }
+
+
+    /* Streaming, sections under the board, and the full brief loading state */
+    .rank-pending {
+      margin: 0 18px 16px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      animation: subpulse 1.6s ease-in-out infinite;
+    }
+    .rank-extras { padding: 0 18px 4px; }
+    .rank-extras .db-label {
+      display: block;
+      font-size: 0.66rem;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 4px;
+    }
+    .below-line {
+      border-top: 1px solid var(--line);
+      padding: 14px 0 4px;
+      font-size: 0.86rem;
+      color: var(--charcoal-soft);
+    }
+    .below-line ul { margin: 0; padding-left: 18px; }
+    .below-line li { margin: 0 0 3px; }
+    .below-line .bl-meta { color: var(--muted); }
+    .ticket .detail-body .bb-title { font-family: var(--serif); font-size: 0.98rem; color: #F4F1EB; margin: 0 0 2px; }
+    .ticket .detail-body li strong { color: #F4F1EB; font-weight: 600; }
+    .ticket .detail-body .brief-loading { margin: 0; color: #b7b1a6; animation: subpulse 1.6s ease-in-out infinite; }
+    .ticket .detail-body .brief-error { color: #e9b8a8; }
+    .ticket .detail-body .brief-retry {
+      margin-top: 8px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 0.72rem;
+      color: #F4F1EB;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 6px;
+      padding: 5px 10px;
+    }
+
+    /* Horizontal ticket: the brief on the left, its lift on the stated metric on the right. */
+    .ticket .ticket-main {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      column-gap: 18px;
+      align-items: center;
+    }
+    .ticket .ticket-lift {
+      min-width: 112px;
+      padding-left: 18px;
+      border-left: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    .ticket .lift-value {
+      display: block;
+      font-family: var(--serif);
+      font-size: clamp(2rem, 3.2vw, 2.6rem);
+      font-weight: 600;
+      line-height: 1;
+      color: #8fd0c2;
+    }
+    .ticket .lift-unit { display: block; margin-top: 6px; font-size: 0.8rem; font-weight: 600; color: #F4F1EB; }
+    .ticket .lift-context { display: block; margin-top: 3px; font-size: 0.72rem; line-height: 1.4; color: #9a948a; }
+    @media (max-width: 760px) {
+      /* The lift moves under the brief as a band. */
+      .ticket .ticket-main { grid-template-columns: 1fr; }
+      .ticket .ticket-lift {
+        min-width: 0;
+        margin-top: 12px;
+        padding: 12px 0 0;
+        border-left: 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+      }
+      .ticket .lift-value { font-size: 2rem; }
     }
 
     /* ---------- Demo: refusal / error ---------- */
@@ -1611,6 +1676,7 @@
       var API = IS_LOCAL
         ? "http://localhost:8787/v1/cascade"
         : "https://sc-cascade.structuralcontent.workers.dev/v1/cascade";
+      var BRIEF_API = API.replace("/v1/cascade", "/v1/brief");
 
       var MAX_METRICS = 3;
       var STAGE_MS = 7000;
@@ -1815,22 +1881,55 @@
         pipeline.classList.remove("visible");
       }
 
-      /* ---------- Rendering ---------- */
+      /* ---------- Streaming ---------- */
 
-      var PILL_MAP = [
-        [/sales|revops|revenue/i, "fn-sales"],
-        [/marketing|demand|growth|brand/i, "fn-marketing"],
-        [/product/i, "fn-product"],
-        [/community|devrel|advoca/i, "fn-community"],
-        [/success|support|cs\b|service/i, "fn-cs"]
-      ];
-
-      function pillClass(fn) {
-        for (var i = 0; i < PILL_MAP.length; i++) {
-          if (PILL_MAP[i][0].test(fn)) return PILL_MAP[i][1];
-        }
-        return "fn-neutral";
+      // The worker streams NDJSON: {type:"start", schema}, then {type:"item"} for each
+      // finished list entry and {type:"field"} for each finished top-level field, then
+      // {type:"done", body} (the whole answer) or {type:"error", error}. Each event is
+      // handed to onEvent as it arrives, so finished cards render while the rest is
+      // still being generated.
+      function streamPost(url, payload, onEvent, signal) {
+        return fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+          signal: signal
+        }).then(function (res) {
+          if (!res.ok || !res.body) {
+            return res.json().then(
+              function (body) {
+                throw new Error((body && body.error && body.error.message) || "The system hiccuped – please try again.");
+              },
+              function () { throw new Error("The system hiccuped – please try again."); }
+            );
+          }
+          var reader = res.body.getReader();
+          var decoder = new TextDecoder();
+          var buffer = "";
+          var finished = false;
+          function pump() {
+            return reader.read().then(function (chunk) {
+              if (chunk.value) buffer += decoder.decode(chunk.value, { stream: true });
+              var lines = buffer.split("\n");
+              buffer = lines.pop();
+              lines.forEach(function (line) {
+                if (!line.trim()) return;
+                var event = JSON.parse(line);
+                if (event.type === "done" || event.type === "error") finished = true;
+                onEvent(event);
+              });
+              if (chunk.done) {
+                if (!finished) throw new Error("The connection dropped – please try again.");
+                return;
+              }
+              return pump();
+            });
+          }
+          return pump();
+        });
       }
+
+      /* ---------- Rendering ---------- */
 
       var revealCounter = 0;
 
@@ -1842,6 +1941,17 @@
         return node;
       }
 
+      // Reveal everything rendered so far that has not been revealed yet.
+      function revealPending() {
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            results.querySelectorAll(".reveal-item:not(.revealed)").forEach(function (n) {
+              n.classList.add("revealed");
+            });
+          });
+        });
+      }
+
       function stripDot(s) {
         return String(s).replace(/\.\s*$/, "");
       }
@@ -1849,93 +1959,161 @@
       // Ends a sentence with a period unless it already carries terminal punctuation.
       function endSentence(s) {
         var t = String(s).trim();
-        return /[.!?\u2026]$/.test(t) ? t : t + ".";
+        return /[.!?…]$/.test(t) ? t : t + ".";
       }
 
-      // The contrast the demo exists to show: the request a team usually works
-      // from, then the problem statement the installed product surfaces instead.
-      function problemCard(f) {
+      // The contrast the demo exists to show, as a pair of quotes: the request a team
+      // usually works from, then what the installed product finds instead.
+      function problemCard(o) {
         var card = el("article", "jobf");
-        if (f.usual) {
+        if (o.usual) {
           card.appendChild(el("span", "usual-label", "Usual request"));
-          card.appendChild(el("p", "usual-text", "\u201C" + endSentence(f.usual) + "\u201D"));
+          card.appendChild(el("p", "usual-text", "“" + endSentence(o.usual) + "”"));
           var vs = el("div", "vs", "vs.");
           vs.setAttribute("aria-hidden", "true");
           card.appendChild(vs);
         }
-        card.appendChild(el("span", "sc-label", "Structural Content"));
-        card.appendChild(el("p", "job-text", f.problem || ""));
-        var trace = el("p", "card-trace");
-        trace.appendChild(el("span", "tr-label", "Found in: "));
-        trace.appendChild(document.createTextNode(f.trace || "Live systems"));
-        card.appendChild(trace);
+        card.appendChild(el("span", "sc-label", "Structural Content finds"));
+        card.appendChild(el("p", "job-text", "“" + endSentence(o.finding || "") + "”"));
         return card;
       }
 
       // Compact but self-justifying: title + campaign answer "what gets made",
       // the three fields answer "for whom / to move what by when / contributing what".
-      function briefCard(b, key) {
+      // The full brief is generated only when the visitor opens it.
+      function briefCard(o, key) {
+        var b = o.brief || {};
         var card = el("article", "ticket");
-        card.appendChild(el("span", "ticket-key", key));
-        card.appendChild(el("h3", "ticket-title", b.title || ""));
-        if (b.campaign) card.appendChild(el("p", "ticket-what", stripDot(b.campaign)));
+        var main = el("div", "ticket-main");
+        var left = el("div", "ticket-body");
+        left.appendChild(el("span", "ticket-key", key));
+        left.appendChild(el("h3", "ticket-title", b.title || ""));
+        if (b.campaign) left.appendChild(el("p", "ticket-what", stripDot(b.campaign)));
         var fields = el("dl", "ticket-fields");
         [
           ["For", b.audience],
-          ["Target", b.target],
-          ["Impact", b.impact]
+          ["Target", b.target]
         ].forEach(function (f) {
           if (!f[1]) return;
           fields.appendChild(el("dt", null, f[0]));
           fields.appendChild(el("dd", null, stripDot(f[1])));
         });
-        if (fields.children.length) card.appendChild(fields);
-        var body = briefDetail(b.detail);
-        if (body) {
-          var detail = el("details", "brief-detail");
-          var sum = document.createElement("summary");
-          sum.appendChild(el("span", "detail-label", "Full brief"));
-          sum.appendChild(el("span", "detail-cue"));
-          detail.appendChild(sum);
-          detail.appendChild(body);
-          card.appendChild(detail);
+        if (fields.children.length) left.appendChild(fields);
+        main.appendChild(left);
+        // The campaign's lift on the stated metric: the ticket's business-outcome tie.
+        var l = o.lift || {};
+        if (l.value) {
+          var lift = el("div", "ticket-lift");
+          lift.appendChild(el("span", "lift-value", l.value));
+          if (l.unit) lift.appendChild(el("span", "lift-unit", l.unit));
+          if (l.context) lift.appendChild(el("span", "lift-context", stripDot(l.context)));
+          main.appendChild(lift);
         }
+        card.appendChild(main);
+
+        var detail = el("details", "brief-detail");
+        var sum = document.createElement("summary");
+        sum.appendChild(el("span", "detail-label", "Full brief"));
+        sum.appendChild(el("span", "detail-cue"));
+        detail.appendChild(sum);
+        var body = el("div", "detail-body");
+        detail.appendChild(body);
+        card.appendChild(detail);
+        var loaded = false;
+        var loading = false;
+        function load() {
+          loading = true;
+          loadBrief(o, body, function (ok) { loading = false; loaded = ok; });
+        }
+        detail.addEventListener("toggle", function () {
+          if (detail.open && !loaded && !loading) load();
+        });
+        body.addEventListener("click", function (e) {
+          if (e.target.classList.contains("brief-retry")) load();
+        });
         return card;
       }
 
-      // The expanded brief: a spec the content team executes, never copy.
-      // Returns null when there is nothing to show, so thin responses keep the compact card.
-      function briefDetail(d) {
-        if (!d || typeof d !== "object") return null;
-        var body = el("div", "detail-body");
-        function block(label, node) {
-          body.appendChild(el("span", "db-label", label));
-          body.appendChild(node);
+      function loadBrief(o, body, done) {
+        body.textContent = "";
+        var view = briefView(body);
+        var loadingLine = el("p", "brief-loading", "Generating full brief…");
+        body.appendChild(loadingLine);
+        var controller = new AbortController();
+        var timeout = setTimeout(function () { controller.abort(); }, 120000);
+        var payload = { priority: lastInput.priority, metrics: lastInput.metrics, opportunity: o, consent: lastInput.consent };
+        var finished = false;
+        function fail(msg) {
+          if (finished) return;
+          finished = true;
+          clearTimeout(timeout);
+          body.textContent = "";
+          body.appendChild(el("p", "brief-error", msg));
+          var retry = el("button", "brief-retry", "Try again");
+          retry.type = "button";
+          body.appendChild(retry);
+          done(false);
         }
-        if (d.objective) block("Objective", el("p", null, endSentence(d.objective)));
-        if (d.audience_moment) block("Audience moment", el("p", null, endSentence(d.audience_moment)));
-        var msgs = Array.isArray(d.messaging) ? d.messaging.filter(Boolean) : [];
-        if (msgs.length) {
-          var ul = document.createElement("ul");
-          msgs.forEach(function (m) { ul.appendChild(el("li", null, stripDot(m))); });
-          block("Messaging", ul);
+        streamPost(BRIEF_API, payload, function (event) {
+          if (event.type === "start" && event.schema !== "brief-v1") {
+            throw new Error("This page is out of date – please reload it and run again.");
+          }
+          if (event.type === "field") view.field(event.key, event.value, loadingLine);
+          if (event.type === "item" && event.key === "pieces") view.piece(event.value, loadingLine);
+          if (event.type === "error") fail(event.error.message);
+          if (event.type === "done") {
+            if (event.body.refusal) { fail(event.body.refusal); return; }
+            finished = true;
+            clearTimeout(timeout);
+            loadingLine.remove();
+            done(true);
+          }
+        }, controller.signal).catch(function (err) {
+          fail(err.name === "AbortError" ? "That brief took too long – please try again." : err.message);
+        });
+      }
+
+      // Renders the full brief section by section as its fields arrive. The ticket
+      // already shows the title, target and audience, so those are not repeated.
+      function briefView(body) {
+        var piecesList = null;
+        function block(label, node, before) {
+          body.insertBefore(el("span", "db-label", label), before);
+          body.insertBefore(node, before);
         }
-        var pieces = Array.isArray(d.pieces) ? d.pieces.filter(function (p) { return p && p.name; }) : [];
-        if (pieces.length) {
-          var ol = document.createElement("ol");
-          pieces.forEach(function (p) {
-            var li = el("li", null, stripDot(p.name));
-            var where = [p.where, p.when].filter(Boolean).map(stripDot).join(" \u00B7 ");
-            if (where) li.appendChild(el("span", "db-where", " \u00B7 " + where));
-            ol.appendChild(li);
-          });
-          block("Pieces", ol);
+        function list(items, ordered) {
+          var l = document.createElement(ordered ? "ol" : "ul");
+          items.forEach(function (t) { l.appendChild(el("li", null, stripDot(t))); });
+          return l;
         }
-        if (d.effort && d.effort.size) {
-          var effort = d.effort.size + (d.effort.note ? " \u00B7 " + stripDot(d.effort.note) : "");
-          block("Effort", el("p", null, effort));
-        }
-        return body.children.length ? body : null;
+        return {
+          field: function (key, v, before) {
+            if (key === "problem" && v && v.current_state) {
+              block("Problem", el("p", null, endSentence(v.current_state)), before);
+              var ev = (v.evidence || []).map(function (e) { return e.pointer + " — " + stripDot(e.finding); });
+              if (ev.length) block("Evidence", list(ev), before);
+            }
+            if (key === "contribution" && v) block("Contribution", el("p", null, endSentence(v)), before);
+            if (key === "target_queries" && v && v.length) block("Search queries to win", list(v), before);
+            if (key === "ai_questions" && v && v.length) block("AI-answer questions to win", list(v), before);
+            if (key === "success_measure" && v) block("Success measure", el("p", null, endSentence(v)), before);
+            if (key === "effort" && v && v.size) block("Effort", el("p", null, v.size + (v.note ? " · " + stripDot(v.note) : "")), before);
+            if (key === "dependencies" && v && v.length) block("Dependencies", list(v), before);
+          },
+          piece: function (pc, before) {
+            if (!piecesList) {
+              piecesList = document.createElement("ol");
+              block("Pieces", piecesList, before);
+            }
+            var li = el("li");
+            li.appendChild(el("strong", null, stripDot(pc.title)));
+            var where = [pc.format, pc.channel].filter(Boolean).map(stripDot).join(" · ");
+            if (where) li.appendChild(el("span", "db-where", " · " + where));
+            if (pc.headline) li.appendChild(el("p", null, endSentence(pc.headline)));
+            if (pc.establishes && pc.establishes.length) li.appendChild(list(pc.establishes));
+            piecesList.appendChild(li);
+          }
+        };
       }
 
       function arrowEl() {
@@ -1952,55 +2130,24 @@
         return node;
       }
 
-      function renderCascade(data) {
+      // Builds the simulated product window and returns the hooks the stream fills.
+      function startResults(fields) {
         results.textContent = "";
         revealCounter = 0;
-        // A response in another shape means this page and the worker are out of step.
-        if (!data || data.schema !== "cascade-v2") {
-          form.style.display = "";
-          showNotice("This page is out of date – please reload it and run again.");
-          return;
-        }
-
         results.appendChild(revealItem(el("h3", "results-title", "Your priority, served by content.")));
 
         var echo = revealItem(el("div", "priority-echo"));
         echo.appendChild(el("span", "echo-label", "Strategic priority"));
-        echo.appendChild(el("div", "echo-text", data.priority));
+        echo.appendChild(el("div", "echo-text", fields.priority || lastInput.priority));
         results.appendChild(echo);
-
-        data.metrics.forEach(function (metric) {
+        (fields.required_changes || []).forEach(function (rc) {
           var pressure = revealItem(el("div", "metric-pressure"));
           pressure.appendChild(el("span", "mp-label", "Metric under pressure"));
-          pressure.appendChild(el("div", "mp-text", metric.required_change));
+          pressure.appendChild(el("div", "mp-text", rc));
           results.appendChild(pressure);
         });
 
-        // One board column per unique team, findings pooled across metrics.
-        var teams = [];
-        data.metrics.forEach(function (metric) {
-          (metric.owners || []).forEach(function (owner) {
-            var entry = null;
-            for (var i = 0; i < teams.length; i++) {
-              if (teams[i].fn === owner.function) entry = teams[i];
-            }
-            if (!entry) { entry = { fn: owner.function, findings: [] }; teams.push(entry); }
-            (owner.findings || []).forEach(function (f) { entry.findings.push(f); });
-          });
-        });
-        teams = teams.filter(function (team) { return team.findings.length > 0; });
-
-        // Nothing to show (e.g. a response in an unexpected shape) reads as a
-        // clear notice rather than an empty simulated product.
-        if (!teams.length) {
-          results.textContent = "";
-          form.style.display = "";
-          showNotice("The system returned no campaign briefs for this run – please try again.");
-          return;
-        }
-
         var win = revealItem(el("div", "app-window"));
-
         var bar = el("div", "aw-titlebar");
         var dots = el("span", "aw-dots");
         dots.setAttribute("aria-hidden", "true");
@@ -2010,55 +2157,65 @@
         bar.appendChild(el("span", "aw-badge", "Simulated preview"));
         win.appendChild(bar);
 
-        // Two lanes on one grid: problems (col 1) -> arrows (col 2) -> board panel (col 3).
-        var briefCount = teams.reduce(function (n, team) { return n + team.findings.length; }, 0);
-        var totalRows = 1 + teams.length + briefCount + 1; // captions + team headers + pairs + bottom pad
+        // Lanes on one grid: problems (col 1) -> arrows (col 2) -> board panel (col 3)
+        // -> expected lift (col 4). Rows are placed as opportunities stream in, and the
+        // recessed board panel grows with them.
         var flow = el("div", "flow");
-        flow.style.gridTemplateRows = "repeat(" + totalRows + ", auto)";
-
-        // Recessed board panel behind column 3.
-        flow.appendChild(place(el("div", "board-bg"), "1 / " + (totalRows + 1), 3));
-
+        var boardBg = el("div", "board-bg");
+        flow.appendChild(place(boardBg, "1 / 3", 3));
         flow.appendChild(place(el("span", "lane-cap", "Problem statements"), 1, 1));
         var bhead = place(el("div", "board-head"), 1, 3);
         bhead.appendChild(el("span", "bh-title", "Campaign briefs"));
-        bhead.appendChild(el("span", "bh-count", briefCount + (briefCount === 1 ? " brief" : " briefs")));
+        var count = el("span", "bh-count", "");
+        bhead.appendChild(count);
         flow.appendChild(bhead);
-
-        var row = 2;
-        var briefNum = 0;
-        teams.forEach(function (team) {
-          var tr = place(el("div", "team-row"), row, 1);
-          tr.appendChild(el("span", "fn-pill " + pillClass(team.fn), team.fn));
-          flow.appendChild(tr);
-          row += 1;
-          team.findings.forEach(function (f) {
-            briefNum += 1;
-            flow.appendChild(place(revealItem(problemCard(f)), row, 1));
-            flow.appendChild(place(revealItem(arrowEl()), row, 2));
-            var cell = place(el("div", "ticket-cell"), row, 3);
-            cell.appendChild(revealItem(briefCard(f.brief || {}, "SC-" + briefNum)));
-            flow.appendChild(cell);
-            row += 1;
-          });
-        });
-        flow.appendChild(place(el("div", "board-pad"), row, 3));
-
+        var pad = el("div", "board-pad");
+        flow.appendChild(pad);
         win.appendChild(flow);
+
+        var pending = el("p", "rank-pending", "Finding the next opportunity…");
+        win.appendChild(pending);
+        var extras = el("div", "rank-extras");
+        win.appendChild(extras);
         win.appendChild(el("div", "aw-footer", "Generated from what you typed – figures are illustrative. Installed, the system reads your real goals and live systems."));
         results.appendChild(win);
-
         results.classList.add("visible");
-        closing.classList.add("visible");
+        revealPending();
 
-        // Trigger the staged reveal on the next frame.
-        requestAnimationFrame(function () {
-          requestAnimationFrame(function () {
-            results.querySelectorAll(".reveal-item").forEach(function (n) {
-              n.classList.add("revealed");
-            });
-          });
-        });
+        var shown = 0;
+        return {
+          opportunity: function (o) {
+            shown += 1;
+            var row = shown + 1;
+            flow.appendChild(place(revealItem(problemCard(o)), row, 1));
+            flow.appendChild(place(revealItem(arrowEl()), row, 2));
+            var cell = place(el("div", "ticket-cell"), row, 3);
+            cell.appendChild(revealItem(briefCard(o, "SC-" + shown)));
+            flow.appendChild(cell);
+            place(pad, row + 1, 3);
+            boardBg.style.gridRow = "1 / " + (row + 2);
+            count.textContent = shown + (shown === 1 ? " brief" : " briefs");
+            revealPending();
+          },
+          finish: function (body) {
+            pending.remove();
+            var below = (body.below_the_line || []).filter(function (b) { return b && b.title; });
+            if (below.length) {
+              var box = el("div", "below-line");
+              box.appendChild(el("span", "db-label", "Below the line"));
+              var ul = document.createElement("ul");
+              below.forEach(function (b) {
+                var li = el("li", null, stripDot(b.title));
+                li.appendChild(el("span", "bl-meta", " · " + [b.stake, b.confidence && b.confidence + " confidence"].filter(Boolean).join(" · ")));
+                ul.appendChild(li);
+              });
+              box.appendChild(ul);
+              extras.appendChild(revealItem(box));
+            }
+            closing.classList.add("visible");
+            revealPending();
+          }
+        };
       }
 
       /* ---------- State transitions ---------- */
@@ -2075,6 +2232,8 @@
         closing.classList.remove("visible");
       }
 
+      var lastInput = null;
+
       form.addEventListener("submit", function (e) {
         e.preventDefault();
         clearFormError();
@@ -2084,54 +2243,65 @@
         resetOutput();
         form.style.display = "none";
         startPipeline();
+        lastInput = read.input;
 
         var controller = new AbortController();
         var timeout = setTimeout(function () { controller.abort(); }, 180000);
+        var fields = {};
+        var view = null;
+        var queued = [];
+        var revealing = false;
 
-        fetch(API, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(read.input),
-          signal: controller.signal
-        })
-          .then(function (res) {
-            return res.json().then(function (body) { return { ok: res.ok, body: body }; });
-          })
-          .then(function (r) {
+        // The first finished card ends the loading animation; cards that arrive while
+        // it winds down are queued and rendered right after it.
+        function show(o) {
+          if (view) { view.opportunity(o); return; }
+          queued.push(o);
+          if (revealing) return;
+          revealing = true;
+          finishPipeline(function () {
+            view = startResults(fields);
+            queued.forEach(function (q) { view.opportunity(q); });
+            queued = [];
+            if (fields.__done) view.finish(fields.__done);
+          });
+        }
+
+        function fail(msg) {
+          clearTimeout(timeout);
+          controller.abort();
+          hidePipeline();
+          resetOutput();
+          form.style.display = "";
+          showNotice(msg);
+        }
+
+        streamPost(API, read.input, function (event) {
+          if (event.type === "start" && event.schema !== "cascade-v3") {
+            fail("This page is out of date – please reload it and run again.");
+            return;
+          }
+          if (event.type === "field") fields[event.key] = event.value;
+          if (event.type === "item" && event.key === "opportunities") show(event.value);
+          if (event.type === "error") fail(event.error.message);
+          if (event.type === "done") {
             clearTimeout(timeout);
-            if (!r.ok) {
-              var msg = (r.body && r.body.error && r.body.error.message) ||
-                "The system hiccuped – please try again.";
-              throw new Error(msg);
-            }
-            if (r.body.refusal) {
-              finishPipeline(function () {
-                form.style.display = "";
-                showNotice(r.body.refusal);
-              });
+            var body = event.body;
+            if (body.refusal) { fail(body.refusal); return; }
+            if (!body.opportunities || !body.opportunities.length) {
+              fail("The system returned no opportunities for this run – please try again.");
               return;
             }
-            finishPipeline(function () {
-              try {
-                renderCascade(r.body);
-              } catch (e) {
-                console.error("renderCascade failed", e);
-                resetOutput();
-                form.style.display = "";
-                showNotice("The system returned something this page could not display – please try again.");
-              }
-            });
-          })
-          .catch(function (err) {
-            clearTimeout(timeout);
-            hidePipeline();
-            form.style.display = "";
-            showNotice(
-              err.name === "AbortError"
-                ? "That run took too long – please try again."
-                : err.message
-            );
-          });
+            if (view) view.finish(body);
+            else fields.__done = body;
+          }
+        }, controller.signal).catch(function (err) {
+          if (err.name === "AbortError" && !notice.classList.contains("visible")) {
+            fail("That run took too long – please try again.");
+          } else if (err.name !== "AbortError") {
+            fail(err.message);
+          }
+        });
       });
 
       document.getElementById("run-again").addEventListener("click", function () {

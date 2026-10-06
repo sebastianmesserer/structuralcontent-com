@@ -1,15 +1,20 @@
 // sc-cascade — Cloudflare Worker proxy for the Structural Content cascade demo.
-// Calls Claude on Amazon Bedrock with IAM keys held as Worker secrets. The system
-// prompt is bundled into the Worker at deploy time from the gitignored
-// prompts/system-prompt.md — it exceeds the 5.1 kB Worker-secret limit, so it can't
-// be a secret. The demo section of structuralcontent.com (index.html#demo) is the
-// only intended caller.
+// Calls Claude on Amazon Bedrock with IAM keys held as Worker secrets. Two routes:
+//   POST /v1/cascade — the ranked diagnosis (fast, compact), shape `cascade-v3`
+//   POST /v1/brief   — the full campaign brief for ONE opportunity, generated only
+//                      when the visitor opens it, shape `brief-v1`
+// Both prompts are bundled into the Worker at deploy time from the gitignored
+// prompts/*.md — they exceed the 5.1 kB Worker-secret limit, so they can't be
+// secrets. The demo section of structuralcontent.com (index.html#demo) is the only
+// intended caller.
 
-import { BedrockError, bedrockInvoke, type BedrockMessage } from "./bedrock";
-import { CASCADE_SCHEMA } from "./schema";
+import { BedrockError, bedrockStream } from "./bedrock";
+import { JsonEvents } from "./jsonstream";
+import { BRIEF_SCHEMA, DIAGNOSIS_SCHEMA, OPPORTUNITY_SCHEMA } from "./schema";
 // Inlined at build time via the Text module rule in wrangler.toml. Core IP — the
-// .md is gitignored and must exist locally for `wrangler deploy` to succeed.
+// .md files are gitignored and must exist locally for `wrangler deploy` to succeed.
 import SYSTEM_PROMPT from "../prompts/system-prompt.md";
+import BRIEF_PROMPT from "../prompts/brief-prompt.md";
 
 interface Env {
   // Dedicated IAM user limited to invoking the one model (see bedrock.ts).
@@ -45,10 +50,12 @@ const ALLOWED_ORIGINS = [
 ];
 
 const DIRECTIONS = ["increase", "maintain", "decrease"];
-const MAX_BODY_BYTES = 4096;
-// Longer-window per-IP cap so the demo can't be used as an ongoing work tool.
+// The brief request carries an opportunity back from the page, so it may be larger.
+const MAX_BODY_BYTES = { cascade: 4096, brief: 12288 };
+// Longer-window per-IP caps so the demo can't be used as an ongoing work tool.
 // (The RATE_LIMITER binding only stops bursts; its window maxes out at 60s.)
-const USAGE_CAP = 10;
+// Briefs have their own counter so opening briefs never eats the run allowance.
+const USAGE_CAP = { cascade: 10, brief: 30 };
 const USAGE_WINDOW_SEC = 30 * 24 * 60 * 60; // resets 30 days after an IP's first run
 const LOOPBACK_IPS = ["127.0.0.1", "::1", "::ffff:127.0.0.1"];
 
@@ -155,78 +162,124 @@ function validate(raw: unknown): { input?: CascadeInput; error?: string } {
   };
 }
 
-// Depth rule backstop: the prompt enforces 1-2 owners, 1-2 findings per owner, and
-// 2-3 messaging lines / 2-4 pieces per brief; structured outputs can't express
-// minItems/maxItems, so truncate any overshoot here.
-function truncateCascade(cascade: any): any {
-  cascade.metrics = (cascade.metrics ?? []).slice(0, 3).map((metric: any) => ({
-    ...metric,
-    owners: (metric.owners ?? []).slice(0, 2).map((owner: any) => ({
-      ...owner,
-      findings: (owner.findings ?? []).slice(0, 2).map((finding: any) => {
-        const detail = finding?.brief?.detail;
-        if (!detail) return finding;
-        return {
-          ...finding,
-          brief: {
-            ...finding.brief,
-            detail: {
-              ...detail,
-              messaging: (detail.messaging ?? []).slice(0, 3),
-              pieces: (detail.pieces ?? []).slice(0, 4),
-            },
-          },
-        };
-      }),
-    })),
-  }));
-  return cascade;
+// A string field the page sends back inside an opportunity: never longer than this.
+const MAX_FIELD_CHARS = 600;
+
+// Shape check for an opportunity the page sends back to /v1/brief. It is the
+// diagnosis call's own output, so it must match OPPORTUNITY_SCHEMA exactly: closed
+// objects, every field present, enums respected, strings short. Anything else is
+// rejected as invalid input — the model only ever sees a well-formed opportunity.
+function checkShape(schema: any, value: unknown): boolean {
+  if (schema.enum) return schema.enum.includes(value);
+  if (schema.type === "string") return typeof value === "string" && value.length <= MAX_FIELD_CHARS;
+  if (schema.type === "object") {
+    if (typeof value !== "object" || value === null || Array.isArray(value)) return false;
+    const obj = value as Record<string, unknown>;
+    const keys = Object.keys(obj);
+    if (keys.length !== schema.required.length) return false;
+    return schema.required.every((k: string) => k in obj && checkShape(schema.properties[k], obj[k]));
+  }
+  return false;
 }
 
-// The response shape the page expects; the page refuses anything else with a
-// "this page is out of date" notice, so a site/worker deploy skew is explicit.
-const CASCADE_SHAPE = "cascade-v2";
+// Length backstop: the prompts set 3 opportunities, 2-3 below the line, 2-3 pieces
+// and so on; structured outputs can't express minItems/maxItems, so truncate any
+// overshoot here.
+function truncateDiagnosis(d: any): any {
+  d.required_changes = (d.required_changes ?? []).slice(0, 3);
+  d.opportunities = (d.opportunities ?? []).slice(0, 3);
+  d.below_the_line = (d.below_the_line ?? []).slice(0, 3);
+  return d;
+}
 
-// One model call. Structured outputs constrain the JSON to CASCADE_SCHEMA; the prospect's
-// input stays in the user turn only — data, never instructions.
-function callModel(env: Env, modelInput: unknown): Promise<BedrockMessage> {
-  return bedrockInvoke(env, {
-    // Thinking tokens share this budget with the JSON; 12 briefs with detail plus
-    // medium-effort thinking fit comfortably, 8000 did not leave headroom.
-    max_tokens: 16000,
-    thinking: { type: "adaptive" },
-    system: [{ type: "text", text: SYSTEM_PROMPT, cache_control: { type: "ephemeral" } }],
-    output_config: {
-      format: { type: "json_schema", schema: CASCADE_SCHEMA },
-      // Medium effort bounds adaptive thinking. Measured on Opus 4.6 via Bedrock,
-      // 3 Oct 2026: median ~44 s, max 74 s (on 4.8, high effort was bimodal 26-48 s).
-      effort: "medium",
-    },
+function truncateBrief(b: any): any {
+  b.problem = { ...b.problem, evidence: (b.problem?.evidence ?? []).slice(0, 3) };
+  b.target_queries = (b.target_queries ?? []).slice(0, 4);
+  b.ai_questions = (b.ai_questions ?? []).slice(0, 3);
+  b.pieces = (b.pieces ?? []).slice(0, 3).map((p: any) => ({ ...p, establishes: (p.establishes ?? []).slice(0, 4) }));
+  b.dependencies = (b.dependencies ?? []).slice(0, 3);
+  return b;
+}
+
+// The response shapes the page expects; the page refuses anything else with a
+// "this page is out of date" notice, so a site/worker deploy skew is explicit.
+const CASCADE_SHAPE = "cascade-v3";
+const BRIEF_SHAPE = "brief-v1";
+
+type Route = "cascade" | "brief";
+
+// One model call. Structured outputs constrain the JSON to the route's schema; the
+// prospect's input stays in the user turn only — data, never instructions.
+const CALLS: Record<Route, { system: string; schema: unknown; max_tokens: number }> = {
+  cascade: { system: SYSTEM_PROMPT, schema: DIAGNOSIS_SCHEMA, max_tokens: 6000 },
+  brief: { system: BRIEF_PROMPT, schema: BRIEF_SCHEMA, max_tokens: 6000 },
+};
+
+function streamModel(env: Env, route: Route, modelInput: unknown) {
+  const call = CALLS[route];
+  return bedrockStream(env, {
+    max_tokens: call.max_tokens,
+    system: [{ type: "text", text: call.system, cache_control: { type: "ephemeral" } }],
+    output_config: { format: { type: "json_schema", schema: call.schema } },
     messages: [{ role: "user", content: JSON.stringify(modelInput) }],
   });
 }
 
 // Every call that reaches the model counts toward the per-IP cap — refusals,
 // truncations and unparsable output included — because the cap bounds spend.
-function countRun(env: Env, ctx: { waitUntil(p: Promise<unknown>): void }, ip: string, exempt: boolean): void {
+function countRun(
+  env: Env,
+  ctx: { waitUntil(p: Promise<unknown>): void },
+  route: Route,
+  ip: string,
+  exempt: boolean,
+): void {
   if (exempt || !env.USAGE || ip === "unknown") return;
-  ctx.waitUntil(incrementUsage(env, ip));
+  ctx.waitUntil(incrementUsage(env, usageKey(route, ip)));
 }
 
-// Best-effort per-IP run counter. KV isn't atomic, but the burst limiter caps
-// per-IP concurrency, so a rare off-by-one under a race is acceptable here.
-// Uses an absolute `expiration` so the 30-day window stays anchored to the
-// first run rather than sliding forward on every increment.
-async function incrementUsage(env: Env, ip: string): Promise<void> {
+function usageKey(route: Route, ip: string): string {
+  return route === "cascade" ? `runs:${ip}` : `briefs:${ip}`;
+}
+
+// Best-effort per-IP counter. KV isn't atomic, but the burst limiter caps per-IP
+// concurrency, so a rare off-by-one under a race is acceptable here. Uses an
+// absolute `expiration` so the 30-day window stays anchored to the first call
+// rather than sliding forward on every increment.
+async function incrementUsage(env: Env, key: string): Promise<void> {
   if (!env.USAGE) return;
   const now = Math.floor(Date.now() / 1000);
-  const key = `runs:${ip}`;
   const existing = await env.USAGE.get(key, "json");
   const record: UsageRecord =
     existing && existing.resetAt - now > 60
       ? { count: existing.count + 1, resetAt: existing.resetAt }
       : { count: 1, resetAt: now + USAGE_WINDOW_SEC };
   await env.USAGE.put(key, JSON.stringify(record), { expiration: record.resetAt });
+}
+
+function storeResearch(
+  env: Env,
+  ctx: { waitUntil(p: Promise<unknown>): void },
+  route: Route,
+  record: Record<string, unknown>,
+): void {
+  if (!env.RESEARCH) return;
+  ctx.waitUntil(
+    env.RESEARCH.put(
+      `${route === "cascade" ? "run" : "brief"}:${Date.now()}:${crypto.randomUUID()}`,
+      JSON.stringify({ ts: new Date().toISOString(), ...record }),
+      { expirationTtl: 31536000 }, // 1 year
+    ).catch((e) => console.log("research put failed:", e instanceof Error ? e.message : String(e))),
+  );
+}
+
+function upstreamError(err: unknown, route: Route, origin: string | null): Response {
+  // Bedrock throttles with 429 and reports an unavailable model with 503.
+  if (err instanceof BedrockError && [429, 503].includes(err.status)) {
+    return errorResponse("upstream_busy", "High demand right now — please try again in a minute.", 429, origin);
+  }
+  console.log(`${route} error:`, err instanceof Error ? err.message : String(err));
+  return errorResponse("engine_error", "The engine hiccuped — please try again.", 502, origin);
 }
 
 export default {
@@ -237,7 +290,9 @@ export default {
     if (request.method === "OPTIONS") {
       return new Response(null, { status: 204, headers: corsHeaders(origin) });
     }
-    if (request.method !== "POST" || url.pathname !== "/v1/cascade") {
+    const route: Route | null =
+      url.pathname === "/v1/cascade" ? "cascade" : url.pathname === "/v1/brief" ? "brief" : null;
+    if (request.method !== "POST" || !route) {
       return errorResponse("not_found", "Not found.", 404, origin);
     }
     if (origin && !ALLOWED_ORIGINS.includes(origin)) {
@@ -259,8 +314,8 @@ export default {
     // Longer-window cap: the demo is for evaluation, not ongoing content work.
     if (!exempt && env.USAGE && ip !== "unknown") {
       const now = Math.floor(Date.now() / 1000);
-      const usage = await env.USAGE.get(`runs:${ip}`, "json");
-      if (usage && usage.resetAt > now && usage.count >= USAGE_CAP) {
+      const usage = await env.USAGE.get(usageKey(route, ip), "json");
+      if (usage && usage.resetAt > now && usage.count >= USAGE_CAP[route]) {
         return errorResponse(
           "usage_limited",
           "You've reached this demo's limit. The full Structural Content system runs continuously on your own stack — get in touch to see it on your real priorities.",
@@ -270,15 +325,16 @@ export default {
       }
     }
 
+    const maxBytes = MAX_BODY_BYTES[route];
     const contentLength = Number(request.headers.get("Content-Length") ?? "0");
-    if (contentLength > MAX_BODY_BYTES) {
+    if (contentLength > maxBytes) {
       return errorResponse("too_large", "Request too large.", 400, origin);
     }
 
     let raw: unknown;
     try {
       const text = await request.text();
-      if (text.length > MAX_BODY_BYTES) return errorResponse("too_large", "Request too large.", 400, origin);
+      if (text.length > maxBytes) return errorResponse("too_large", "Request too large.", 400, origin);
       raw = JSON.parse(text);
     } catch {
       return errorResponse("bad_json", "Request body must be valid JSON.", 400, origin);
@@ -287,92 +343,121 @@ export default {
     const { input, error } = validate(raw);
     if (!input) return errorResponse("invalid_input", error ?? "Invalid input.", 400, origin);
 
-    const modelInput = { priority: input.priority, metrics: input.metrics };
-
-    try {
-      const response = await callModel(env, modelInput);
-
-      // The model has been paid for from here on, whatever comes back.
-      countRun(env, ctx, ip, exempt);
-
-      if (response.stop_reason === "refusal") {
-        return jsonResponse(
-          {
-            refusal:
-              "This tool turns business priorities into campaign briefs – give it a real strategic priority and a metric under pressure, and it will show you the cascade.",
-            priority: input.priority,
-            metrics: [],
-          },
-          200,
-          origin,
-        );
-      }
-      if (response.stop_reason === "max_tokens") {
-        return errorResponse(
-          "too_long",
-          "That cascade ran long — please try again, with fewer metrics if you entered several.",
-          502,
-          origin,
-        );
-      }
-
-      const textBlock = response.content.find((b) => b.type === "text");
-      if (!textBlock?.text) {
-        return errorResponse("empty", "The cascade engine returned nothing — try again.", 502, origin);
-      }
-
-      const cascade = truncateCascade(JSON.parse(textBlock.text));
-      cascade.schema = CASCADE_SHAPE;
-      const briefCount = (cascade.metrics ?? []).reduce(
-        (n: number, m: any) =>
-          n + (m.owners ?? []).reduce((k: number, o: any) => k + (o.findings ?? []).length, 0),
-        0,
-      );
-      console.log(
-        JSON.stringify({
-          request_id: response.requestId,
-          model: response.model,
-          usage: response.usage,
-          metrics: input.metrics.length,
-          refused: Boolean(cascade.refusal),
-          briefs: briefCount,
-          consent: input.consent,
-        }),
-      );
-
-      // Consented research storage — best-effort, never blocks the response.
-      if (input.consent && !cascade.refusal && env.RESEARCH) {
-        const record = JSON.stringify({
-          ts: new Date().toISOString(),
-          input: modelInput,
-          cascade,
-          model: response.model,
-        });
-        ctx.waitUntil(
-          env.RESEARCH.put(`run:${Date.now()}:${crypto.randomUUID()}`, record, {
-            expirationTtl: 31536000, // 1 year
-          }).catch((e) => console.log("research put failed:", e instanceof Error ? e.message : String(e))),
-        );
-      }
-
-      return jsonResponse(cascade, 200, origin);
-    } catch (err) {
-      // Bedrock throttles with 429 and reports an unavailable model with 503.
-      if (err instanceof BedrockError && [429, 503].includes(err.status)) {
-        return errorResponse(
-          "upstream_busy",
-          "High demand right now — please try again in a minute.",
-          429,
-          origin,
-        );
-      }
-      console.log("cascade error:", err instanceof Error ? err.message : String(err));
-      return errorResponse(
-        "engine_error",
-        "The cascade engine hiccuped — please try again.",
-        502,
-        origin,
-      );
+    const opportunity = (raw as Record<string, unknown>).opportunity;
+    if (route === "brief" && !checkShape(OPPORTUNITY_SCHEMA, opportunity)) {
+      return errorResponse("invalid_input", "That opportunity can't be expanded — run the demo again.", 400, origin);
     }
+
+    const modelInput =
+      route === "cascade"
+        ? { priority: input.priority, metrics: input.metrics }
+        : { priority: input.priority, metrics: input.metrics, opportunity };
+
+    // Bedrock refusing the request (throttled, misconfigured) is known before any
+    // byte is streamed, so it still gets a normal HTTP error.
+    const started = Date.now();
+    let upstream: Awaited<ReturnType<typeof streamModel>>;
+    try {
+      upstream = await streamModel(env, route, modelInput);
+    } catch (err) {
+      return upstreamError(err, route, origin);
+    }
+
+    // From here the answer streams to the page as NDJSON, one event per line:
+    //   {type:"start", schema}            — first, so the page can check the shape
+    //   {type:"item", key, index, value}  — a finished card (or list entry)
+    //   {type:"field", key, value}        — a finished top-level field
+    //   {type:"done", body}               — the whole answer, strictly parsed
+    //   {type:"error", error:{code,message}}
+    const shape = route === "cascade" ? CASCADE_SHAPE : BRIEF_SHAPE;
+    const encoder = new TextEncoder();
+    const out = new ReadableStream<Uint8Array>({
+      async start(controller) {
+        const send = (event: unknown) => controller.enqueue(encoder.encode(JSON.stringify(event) + "\n"));
+        const fail = (code: string, message: string) => send({ type: "error", error: { code, message } });
+        send({ type: "start", schema: shape });
+
+        // The model has been paid for from here on, whatever comes back.
+        countRun(env, ctx, route, ip, exempt);
+
+        const json = new JsonEvents();
+        let text = "";
+        let stop: string | null = null;
+        let usage: unknown = null;
+        let model: string | null = null;
+        try {
+          for await (const ev of upstream.events) {
+            if (ev.type === "message_start") {
+              model = ev.message?.model ?? null;
+              usage = ev.message?.usage ?? null;
+            } else if (ev.type === "content_block_delta" && ev.delta?.type === "text_delta") {
+              text += ev.delta.text;
+              for (const part of json.push(ev.delta.text)) send(part);
+            } else if (ev.type === "message_delta") {
+              stop = ev.delta?.stop_reason ?? stop;
+              usage = { ...(usage as object), ...ev.usage };
+            }
+          }
+
+          if (stop === "refusal") {
+            const refusal =
+              route === "cascade"
+                ? "This tool turns business priorities into ranked content opportunities — give it a real strategic priority and a metric under pressure, and it will show you what it finds."
+                : "This brief can only be written for a real business opportunity — run the demo with a real priority and metric.";
+            send({ type: "done", body: { schema: shape, refusal } });
+          } else if (stop === "max_tokens") {
+            fail(
+              "too_long",
+              route === "cascade"
+                ? "That diagnosis ran long — please try again, with fewer metrics if you entered several."
+                : "That brief ran long — please try again.",
+            );
+          } else if (!text) {
+            fail("empty", "The engine returned nothing — try again.");
+          } else {
+            const parsed = JSON.parse(text);
+            const body =
+              route === "cascade"
+                ? { ...truncateDiagnosis(parsed), schema: shape }
+                : { ...truncateBrief(parsed), schema: shape };
+            send({ type: "done", body });
+            console.log(
+              JSON.stringify({
+                route,
+                request_id: upstream.requestId,
+                model,
+                ms: Date.now() - started,
+                usage,
+                metrics: input.metrics.length,
+                refused: Boolean(body.refusal),
+                items: route === "cascade" ? body.opportunities.length : body.pieces.length,
+                consent: input.consent,
+              }),
+            );
+            // Consented research storage — best-effort, never blocks the response.
+            if (input.consent && !body.refusal) {
+              storeResearch(env, ctx, route, { input: modelInput, output: body, model });
+            }
+          }
+        } catch (err) {
+          console.log(`${route} stream error:`, err instanceof Error ? err.message : String(err));
+          const busy = err instanceof BedrockError && [429, 503].includes(err.status);
+          fail(
+            busy ? "upstream_busy" : "engine_error",
+            busy ? "High demand right now — please try again in a minute." : "The engine hiccuped — please try again.",
+          );
+        }
+        controller.close();
+      },
+    });
+
+    return new Response(out, {
+      status: 200,
+      headers: {
+        "Content-Type": "application/x-ndjson",
+        "Cache-Control": "no-store",
+        ...corsHeaders(origin),
+      },
+    });
   },
 };
