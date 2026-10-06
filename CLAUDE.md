@@ -114,8 +114,8 @@ still generating. Measured 5 Oct 2026, warm: first card ~9 s, all three ~22 s, d
 Structured outputs require `additionalProperties: false` on every object and do
 **not** support `minItems`/`maxItems`. So list lengths (3 opportunities, 2–3 below
 the line, 2–3 brief pieces, 2–4 queries, …) are set in the **prompts**, then
-defensively re-truncated by `truncateDiagnosis()` / `truncateBrief()` in
-`src/index.ts`. If you change them, update all three: prompt, truncation, and any UI
+defensively capped in one table, `LIST_LIMITS` in `src/index.ts`, which every
+streamed event and the final body pass through. If you change them, update all three: prompt, truncation, and any UI
 assumptions.
 
 ## Secrets and gitignored IP (the repo is PUBLIC)

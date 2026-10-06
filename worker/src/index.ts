@@ -162,16 +162,14 @@ function validate(raw: unknown): { input?: CascadeInput; error?: string } {
   };
 }
 
-// A string field the page sends back inside an opportunity: never longer than this.
-const MAX_FIELD_CHARS = 600;
-
 // Shape check for an opportunity the page sends back to /v1/brief. It is the
 // diagnosis call's own output, so it must match OPPORTUNITY_SCHEMA exactly: closed
-// objects, every field present, enums respected, strings short. Anything else is
-// rejected as invalid input — the model only ever sees a well-formed opportunity.
+// objects, every field present, enums respected. Size is bounded by the request's
+// byte cap (MAX_BODY_BYTES.brief), not per field — the diagnosis call holds no field
+// to a character limit, so a per-field cap could reject a valid opportunity.
 function checkShape(schema: any, value: unknown): boolean {
   if (schema.enum) return schema.enum.includes(value);
-  if (schema.type === "string") return typeof value === "string" && value.length <= MAX_FIELD_CHARS;
+  if (schema.type === "string") return typeof value === "string";
   if (schema.type === "object") {
     if (typeof value !== "object" || value === null || Array.isArray(value)) return false;
     const obj = value as Record<string, unknown>;
@@ -182,23 +180,46 @@ function checkShape(schema: any, value: unknown): boolean {
   return false;
 }
 
-// Length backstop: the prompts set 3 opportunities, 2-3 below the line, 2-3 pieces
-// and so on; structured outputs can't express minItems/maxItems, so truncate any
-// overshoot here.
-function truncateDiagnosis(d: any): any {
-  d.required_changes = (d.required_changes ?? []).slice(0, 3);
-  d.opportunities = (d.opportunities ?? []).slice(0, 3);
-  d.below_the_line = (d.below_the_line ?? []).slice(0, 3);
-  return d;
+// Length backstop, in ONE table: the prompts set these list lengths, but structured
+// outputs can't express minItems/maxItems, so every streamed event and the final body
+// pass through limitItem / limitField / limitBody. The page renders streamed events
+// directly, so a cap applied only to the final body would not reach it.
+const LIST_LIMITS: Record<Route, Record<string, number>> = {
+  cascade: { required_changes: 3, opportunities: 3, below_the_line: 3 },
+  brief: { target_queries: 4, ai_questions: 3, pieces: 3, dependencies: 3 },
+};
+
+// Lists nested inside one element or field value.
+function limitNested(route: Route, key: string, value: any): any {
+  if (route === "brief" && key === "pieces" && value && typeof value === "object") {
+    return { ...value, establishes: (value.establishes ?? []).slice(0, 4) };
+  }
+  if (route === "brief" && key === "problem" && value && typeof value === "object") {
+    return { ...value, evidence: (value.evidence ?? []).slice(0, 3) };
+  }
+  return value;
 }
 
-function truncateBrief(b: any): any {
-  b.problem = { ...b.problem, evidence: (b.problem?.evidence ?? []).slice(0, 3) };
-  b.target_queries = (b.target_queries ?? []).slice(0, 4);
-  b.ai_questions = (b.ai_questions ?? []).slice(0, 3);
-  b.pieces = (b.pieces ?? []).slice(0, 3).map((p: any) => ({ ...p, establishes: (p.establishes ?? []).slice(0, 4) }));
-  b.dependencies = (b.dependencies ?? []).slice(0, 3);
-  return b;
+// An element of a root-level list: dropped past the list's limit, nested lists capped.
+function limitItem(route: Route, key: string, index: number, value: unknown): unknown | undefined {
+  const max = LIST_LIMITS[route][key];
+  if (max !== undefined && index >= max) return undefined;
+  return limitNested(route, key, value);
+}
+
+// A complete root-level field: lists cut to their limit, nested lists capped.
+function limitField(route: Route, key: string, value: unknown): unknown {
+  const max = LIST_LIMITS[route][key];
+  if (max !== undefined && Array.isArray(value)) {
+    return value.slice(0, max).map((v) => limitNested(route, key, v));
+  }
+  return limitNested(route, key, value);
+}
+
+function limitBody(route: Route, body: Record<string, unknown>): Record<string, any> {
+  const out: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(body)) out[key] = limitField(route, key, value);
+  return out;
 }
 
 // The response shapes the page expects; the page refuses anything else with a
@@ -392,7 +413,14 @@ export default {
               usage = ev.message?.usage ?? null;
             } else if (ev.type === "content_block_delta" && ev.delta?.type === "text_delta") {
               text += ev.delta.text;
-              for (const part of json.push(ev.delta.text)) send(part);
+              for (const part of json.push(ev.delta.text)) {
+                if (part.type === "item") {
+                  const value = limitItem(route, part.key, part.index, part.value);
+                  if (value !== undefined) send({ ...part, value });
+                } else {
+                  send({ ...part, value: limitField(route, part.key, part.value) });
+                }
+              }
             } else if (ev.type === "message_delta") {
               stop = ev.delta?.stop_reason ?? stop;
               usage = { ...(usage as object), ...ev.usage };
@@ -416,10 +444,7 @@ export default {
             fail("empty", "The engine returned nothing — try again.");
           } else {
             const parsed = JSON.parse(text);
-            const body =
-              route === "cascade"
-                ? { ...truncateDiagnosis(parsed), schema: shape }
-                : { ...truncateBrief(parsed), schema: shape };
+            const body: Record<string, any> = { ...limitBody(route, parsed), schema: shape };
             send({ type: "done", body });
             console.log(
               JSON.stringify({
@@ -434,8 +459,10 @@ export default {
                 consent: input.consent,
               }),
             );
-            // Consented research storage — best-effort, never blocks the response.
-            if (input.consent && !body.refusal) {
+            // Consented research storage — best-effort, never blocks the response. Runs
+            // only: the consent text and privacy notice cover the submission and its
+            // generated result, not the briefs opened afterwards.
+            if (route === "cascade" && input.consent && !body.refusal) {
               storeResearch(env, ctx, route, { input: modelInput, output: body, model });
             }
           }

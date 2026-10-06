@@ -1907,17 +1907,21 @@
           var decoder = new TextDecoder();
           var buffer = "";
           var finished = false;
+          function handle(line) {
+            if (!line.trim()) return;
+            var event = JSON.parse(line);
+            // A body with no event type is a worker from before streaming (one JSON
+            // object, no trailing newline): this page and the worker are out of step.
+            if (!event || !event.type) event = { type: "legacy" };
+            if (event.type === "done" || event.type === "error" || event.type === "legacy") finished = true;
+            onEvent(event);
+          }
           function pump() {
             return reader.read().then(function (chunk) {
               if (chunk.value) buffer += decoder.decode(chunk.value, { stream: true });
               var lines = buffer.split("\n");
-              buffer = lines.pop();
-              lines.forEach(function (line) {
-                if (!line.trim()) return;
-                var event = JSON.parse(line);
-                if (event.type === "done" || event.type === "error") finished = true;
-                onEvent(event);
-              });
+              buffer = chunk.done ? "" : lines.pop();
+              lines.forEach(handle);
               if (chunk.done) {
                 if (!finished) throw new Error("The connection dropped – please try again.");
                 return;
@@ -2055,9 +2059,12 @@
           done(false);
         }
         streamPost(BRIEF_API, payload, function (event) {
-          if (event.type === "start" && event.schema !== "brief-v1") {
-            throw new Error("This page is out of date – please reload it and run again.");
+          if (event.type === "legacy" || (event.type === "start" && event.schema !== "brief-v1")) {
+            fail("This page is out of date – please reload it and run again.");
+            controller.abort();
+            return;
           }
+          if (finished) return;
           if (event.type === "field") view.field(event.key, event.value, loadingLine);
           if (event.type === "item" && event.key === "pieces") view.piece(event.value, loadingLine);
           if (event.type === "error") fail(event.error.message);
@@ -2251,15 +2258,18 @@
         var view = null;
         var queued = [];
         var revealing = false;
+        var failed = false; // terminal: once set, nothing later renders over the notice
 
         // The first finished card ends the loading animation; cards that arrive while
         // it winds down are queued and rendered right after it.
         function show(o) {
+          if (failed) return;
           if (view) { view.opportunity(o); return; }
           queued.push(o);
           if (revealing) return;
           revealing = true;
           finishPipeline(function () {
+            if (failed) return;
             view = startResults(fields);
             queued.forEach(function (q) { view.opportunity(q); });
             queued = [];
@@ -2268,6 +2278,8 @@
         }
 
         function fail(msg) {
+          if (failed) return;
+          failed = true;
           clearTimeout(timeout);
           controller.abort();
           hidePipeline();
@@ -2277,7 +2289,8 @@
         }
 
         streamPost(API, read.input, function (event) {
-          if (event.type === "start" && event.schema !== "cascade-v3") {
+          if (failed) return;
+          if (event.type === "legacy" || (event.type === "start" && event.schema !== "cascade-v3")) {
             fail("This page is out of date – please reload it and run again.");
             return;
           }
@@ -2296,11 +2309,8 @@
             else fields.__done = body;
           }
         }, controller.signal).catch(function (err) {
-          if (err.name === "AbortError" && !notice.classList.contains("visible")) {
-            fail("That run took too long – please try again.");
-          } else if (err.name !== "AbortError") {
-            fail(err.message);
-          }
+          if (failed) return;
+          fail(err.name === "AbortError" ? "That run took too long – please try again." : err.message);
         });
       });
 
