@@ -479,7 +479,9 @@ export default {
           }
           // The visitor aborted: the loop ended early on a partial answer — not an error.
           if (cancelled) {
-            logRun("aborted");
+            // Output tokens arrive with the final message_delta, so an abort logs input
+            // usage only — Bedrock still bills what was generated before the cancel.
+            logRun("aborted", { usage_partial: true });
             return;
           }
 
@@ -512,7 +514,13 @@ export default {
             // only: the consent text and privacy notice cover the submission and its
             // generated result, not the briefs opened afterwards.
             if (route === "cascade" && input.consent && !body.refusal) {
-              storeResearch(env, ctx, route, { input: modelInput, source: input.source, output: body, model });
+              storeResearch(env, ctx, route, {
+                input: modelInput,
+                source: input.source,
+                source_reported_by: "client", // the page's own comparison with its prefill
+                output: body,
+                model,
+              });
             }
           }
         } catch (err) {

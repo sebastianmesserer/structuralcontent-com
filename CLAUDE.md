@@ -45,10 +45,13 @@ wrangler deploy   # production — bundles prompts/*.md into the script
 The worker is **deployed and live** at `https://sc-cascade.structuralcontent.workers.dev`
 (`POST /v1/cascade`, `POST /v1/brief`), and `index.html` points at it.
 
-**Site and worker are deployed separately.** The worker tags every answer with its
-shape (`cascade-v3` for the diagnosis, `brief-v1` for a brief, sent as the stream's
-first event) and the page refuses any other shape with a "this page is out
-of date – reload" notice. When a change alters the shape: **merge the site PR first,
+**Site and worker are deployed separately.** Shapes are checked both ways: the page
+sends the shape it expects as `shape` in every request body and the worker answers
+`409 out_of_date` **before validating or calling the model** when it differs; the worker
+also tags every answer with its shape (`cascade-v3` for the diagnosis, `brief-v1` for a
+brief, sent as the stream's first event) and the page refuses any other with a "this
+page is out of date – reload" notice. The tags live in one constant per side:
+`CASCADE_SHAPE` / `BRIEF_SHAPE` in `worker/src/index.ts` and in `index.html`. When a change alters the shape: **merge the site PR first,
 wait for Pages to go live (~1 min), then `wrangler deploy`**. In that order the window
 shows the reload notice; the reverse order would show the old page an empty board.
 Bump the shape tag on both sides together. `account_id` is pinned in

@@ -200,6 +200,7 @@
       --muted:        #6B665D;
       --accent:       #1F5E55;
       --accent-deep:  #184a43;
+      --lift-teal:    #8fd0c2; /* accent tint for text on the dark ticket */
       --line:         #E3DFD6;
       --line-strong:  #D2CDC1;
       --shadow:       0 1px 2px rgba(31,29,26,0.04), 0 8px 24px rgba(31,29,26,0.05);
@@ -927,7 +928,7 @@
       font-size: 0.68rem;
       font-weight: 600;
       letter-spacing: 0.02em;
-      color: #8fd0c2; /* the lift's teal: legible on the dark ticket */
+      color: var(--lift-teal); /* legible on the dark ticket */
       white-space: nowrap;
     }
     .ticket .brief-detail .detail-cue::after { content: "Open brief \25BE"; }
@@ -1041,7 +1042,7 @@
       font-size: clamp(2rem, 3.2vw, 2.6rem);
       font-weight: 600;
       line-height: 1;
-      color: #8fd0c2;
+      color: var(--lift-teal);
     }
     .ticket .lift-unit { display: block; margin-top: 6px; font-size: 0.8rem; font-weight: 600; color: #F4F1EB; }
     .ticket .lift-context { display: block; margin-top: 3px; font-size: 0.72rem; line-height: 1.4; color: #9a948a; }
@@ -1677,6 +1678,11 @@
         ? "http://localhost:8787/v1/cascade"
         : "https://sc-cascade.structuralcontent.workers.dev/v1/cascade";
       var BRIEF_API = API.replace("/v1/cascade", "/v1/brief");
+      // Response shapes this page understands. Sent with every request (the worker answers
+      // 409 out_of_date when they differ) and checked against each stream's start event.
+      // Bump together with CASCADE_SHAPE / BRIEF_SHAPE in worker/src/index.ts.
+      var CASCADE_SHAPE = "cascade-v3";
+      var BRIEF_SHAPE = "brief-v1";
 
       var MAX_METRICS = 3;
       var STAGE_MS = 7000;
@@ -2069,7 +2075,7 @@
         body.appendChild(loadingLine);
         var controller = new AbortController();
         var timeout = setTimeout(function () { controller.abort(); }, 120000);
-        var payload = { shape: "brief-v1", priority: lastInput.priority, metrics: lastInput.metrics, opportunity: o, consent: lastInput.consent, source: lastInput.source };
+        var payload = { shape: BRIEF_SHAPE, priority: lastInput.priority, metrics: lastInput.metrics, opportunity: o, consent: lastInput.consent, source: lastInput.source };
         var finished = false;
         function fail(msg, noRetry) {
           if (finished) return;
@@ -2086,7 +2092,7 @@
           done(false);
         }
         streamPost(BRIEF_API, payload, function (event) {
-          if (event.type === "legacy" || (event.type === "start" && event.schema !== "brief-v1")) {
+          if (event.type === "legacy" || (event.type === "start" && event.schema !== BRIEF_SHAPE)) {
             pageOutOfDate = true;
             fail("This page is out of date – please reload it and run again.", true);
             controller.abort();
@@ -2325,10 +2331,10 @@
           showNotice(msg);
         }
 
-        var payload = Object.assign({ shape: "cascade-v3" }, read.input);
+        var payload = Object.assign({ shape: CASCADE_SHAPE }, read.input);
         streamPost(API, payload, function (event) {
           if (failed || settled) return;
-          if (event.type === "legacy" || (event.type === "start" && event.schema !== "cascade-v3")) {
+          if (event.type === "legacy" || (event.type === "start" && event.schema !== CASCADE_SHAPE)) {
             fail("This page is out of date – please reload it and run again.");
             return;
           }
@@ -2350,6 +2356,8 @@
         }, controller.signal).catch(function (err) {
           if (failed) return;
           fail(err.name === "AbortError" ? "That run took too long – please try again." : err.message);
+          // Only a reload helps an out-of-date page; resubmitting would just spend the limits.
+          if (err.code === "out_of_date") form.style.display = "none";
         });
       });
 
