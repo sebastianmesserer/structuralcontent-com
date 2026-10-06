@@ -446,6 +446,8 @@ export default {
               usage = { ...(usage as object), ...ev.usage };
             }
           }
+          // The visitor aborted: the loop ended early on a partial answer — not an error.
+          if (cancelled) return;
 
           if (stop === "refusal") {
             const refusal =

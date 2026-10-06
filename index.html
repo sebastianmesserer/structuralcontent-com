@@ -2044,8 +2044,17 @@
         return card;
       }
 
+      // Set once a brief comes back in another shape: no further brief can succeed
+      // until reload, so none is requested (each would be a paid, refused generation).
+      var pageOutOfDate = false;
+
       function loadBrief(o, body, done) {
         body.textContent = "";
+        if (pageOutOfDate) {
+          body.appendChild(el("p", "brief-error", "This page is out of date – please reload it and run again."));
+          done(false);
+          return;
+        }
         var view = briefView(body);
         var loadingLine = el("p", "brief-loading", "Generating full brief…");
         body.appendChild(loadingLine);
@@ -2069,6 +2078,7 @@
         }
         streamPost(BRIEF_API, payload, function (event) {
           if (event.type === "legacy" || (event.type === "start" && event.schema !== "brief-v1")) {
+            pageOutOfDate = true;
             fail("This page is out of date – please reload it and run again.", true);
             controller.abort();
             return;
@@ -2200,9 +2210,11 @@
 
         var shown = 0;
         return {
-          opportunity: function (o) {
+          opportunity: function (o, streamed) {
             shown += 1;
-            revealCounter = 0; // each streamed row staggers on its own, without the earlier rows' delay
+            // A row streamed in later staggers on its own; rows queued during the
+            // wind-down continue the window's stagger.
+            if (streamed) revealCounter = 0;
             var row = shown + 1;
             flow.appendChild(place(revealItem(problemCard(o)), row, 1));
             flow.appendChild(place(revealItem(arrowEl()), row, 2));
@@ -2275,7 +2287,7 @@
         // it winds down are queued and rendered right after it.
         function show(o) {
           if (failed) return;
-          if (view) { view.opportunity(o); return; }
+          if (view) { view.opportunity(o, true); return; }
           queued.push(o);
           if (revealing) return;
           revealing = true;
