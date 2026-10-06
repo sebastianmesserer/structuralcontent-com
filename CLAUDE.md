@@ -52,8 +52,10 @@ also tags every answer with its shape (`cascade-v3` for the diagnosis, `brief-v1
 brief, sent as the stream's first event) and the page refuses any other with a "this
 page is out of date – reload" notice. The tags live in one constant per side:
 `CASCADE_SHAPE` / `BRIEF_SHAPE` in `worker/src/index.ts` and in `index.html`. When a change alters the shape: **merge the site PR first,
-wait for Pages to go live (~1 min), then `wrangler deploy`**. In that order the window
-shows the reload notice; the reverse order would show the old page an empty board.
+wait for Pages to go live (~1 min), then `wrangler deploy`** — and keep the gap short.
+With the handshake on both sides, either order shows a reload notice for the window
+(no paid generation, no broken board); site first means only visitors who load the new
+page early see it, and the next worker deploy clears it.
 Bump the shape tag on both sides together. `account_id` is pinned in
 `wrangler.toml` to the account that owns `sc-cascade` and the KV namespaces, so a
 `wrangler login` that resolves to another account fails the deploy instead of silently

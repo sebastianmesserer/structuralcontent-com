@@ -89,7 +89,7 @@ interface CascadeInput {
   // Whether the visitor ran the prefilled example unchanged or typed their own input;
   // stored with consented research records so the canned example is not mistaken
   // for a prospect's priority.
-  source: "example" | "typed";
+  source: "example" | "typed" | "unknown";
 }
 
 function corsHeaders(origin: string | null): Record<string, string> {
@@ -162,7 +162,8 @@ function validate(raw: unknown): { input?: CascadeInput; error?: string } {
       priority: priority.trim(),
       metrics: cleaned,
       consent: body.consent === true,
-      source: body.source === "example" ? "example" : "typed",
+      // "unknown" when the page sent nothing (a page cached from before 6 Oct 2026).
+      source: body.source === "example" ? "example" : body.source === "typed" ? "typed" : "unknown",
     },
   };
 }
@@ -457,6 +458,7 @@ export default {
         let stop: string | null = null;
         let usage: unknown = null;
         let model: string | null = null;
+        let sawFinalUsage = false; // output tokens arrive with the final message_delta
         try {
           for await (const ev of upstream.events) {
             if (ev.type === "message_start") {
@@ -473,6 +475,7 @@ export default {
                 }
               }
             } else if (ev.type === "message_delta") {
+              sawFinalUsage = true;
               stop = ev.delta?.stop_reason ?? stop;
               usage = { ...(usage as object), ...ev.usage };
             }
@@ -481,7 +484,7 @@ export default {
           if (cancelled) {
             // Output tokens arrive with the final message_delta, so an abort logs input
             // usage only — Bedrock still bills what was generated before the cancel.
-            logRun("aborted", { usage_partial: true });
+            logRun("aborted", { usage_partial: !sawFinalUsage });
             return;
           }
 
@@ -517,7 +520,8 @@ export default {
               storeResearch(env, ctx, route, {
                 input: modelInput,
                 source: input.source,
-                source_reported_by: "client", // the page's own comparison with its prefill
+                // the page's own comparison with its prefill, when it sent one
+                ...(input.source !== "unknown" ? { source_reported_by: "client" } : {}),
                 output: body,
                 model,
               });
