@@ -82,10 +82,18 @@ interface MetricInput {
   deadline: string;
 }
 
+const SOURCES = ["example", "typed"] as const;
+type Source = (typeof SOURCES)[number];
+
 interface CascadeInput {
   priority: string;
   metrics: MetricInput[];
   consent: boolean;
+  // Whether the visitor ran the prefilled example unchanged or typed their own input —
+  // the page's own report (it compares the submission with its prefill); "unknown"
+  // when the page sent nothing. Stored with consented research records so the canned
+  // example is not mistaken for a prospect's priority.
+  source: Source | "unknown";
 }
 
 function corsHeaders(origin: string | null): Record<string, string> {
@@ -158,6 +166,7 @@ function validate(raw: unknown): { input?: CascadeInput; error?: string } {
       priority: priority.trim(),
       metrics: cleaned,
       consent: body.consent === true,
+      source: SOURCES.includes(body.source as Source) ? (body.source as Source) : "unknown",
     },
   };
 }
@@ -372,6 +381,16 @@ export default {
       return errorResponse("bad_json", "Request body must be valid JSON.", 400, origin);
     }
 
+    // Shape handshake, first thing after parsing: a page that expects another response
+    // shape is refused before validation (its input contract may differ too) and before
+    // the model is called, so a stale page costs nothing and shows the reload notice.
+    // `shape` is absent from pages built before 6 Oct 2026; they keep their own check.
+    const shape = route === "cascade" ? CASCADE_SHAPE : BRIEF_SHAPE;
+    const wanted = typeof raw === "object" && raw !== null ? (raw as Record<string, unknown>).shape : undefined;
+    if (wanted !== undefined && wanted !== null && wanted !== shape) {
+      return errorResponse("out_of_date", "This page is out of date – please reload it and run again.", 409, origin);
+    }
+
     const { input, error } = validate(raw);
     if (!input) return errorResponse("invalid_input", error ?? "Invalid input.", 400, origin);
 
@@ -401,7 +420,6 @@ export default {
     //   {type:"field", key, value}        — a finished top-level field
     //   {type:"done", body}               — the whole answer, strictly parsed
     //   {type:"error", error:{code,message}}
-    const shape = route === "cascade" ? CASCADE_SHAPE : BRIEF_SHAPE;
     const encoder = new TextEncoder();
     let cancelled = false;
     const out = new ReadableStream<Uint8Array>({
@@ -421,11 +439,29 @@ export default {
         // The model has been paid for from here on, whatever comes back.
         countRun(env, ctx, route, ip, exempt);
 
-        const json = new JsonEvents();
         let text = "";
         let stop: string | null = null;
         let usage: unknown = null;
         let model: string | null = null;
+        let sawFinalUsage = false; // output tokens arrive with the final message_delta
+        // One log line per paid call, whatever the outcome, so spend and failures are
+        // both visible in the worker log.
+        const logRun = (outcome: string, extra: Record<string, unknown> = {}) =>
+          console.log(
+            JSON.stringify({
+              route,
+              outcome,
+              request_id: upstream.requestId,
+              model,
+              ms: Date.now() - started,
+              usage,
+              metrics: input.metrics.length,
+              consent: input.consent,
+              source: input.source,
+              ...extra,
+            }),
+          );
+        const json = new JsonEvents();
         try {
           for await (const ev of upstream.events) {
             if (ev.type === "message_start") {
@@ -442,12 +478,19 @@ export default {
                 }
               }
             } else if (ev.type === "message_delta") {
+              sawFinalUsage = true;
               stop = ev.delta?.stop_reason ?? stop;
               usage = { ...(usage as object), ...ev.usage };
             }
           }
           // The visitor aborted: the loop ended early on a partial answer — not an error.
-          if (cancelled) return;
+          if (cancelled) {
+            // Output tokens arrive with the final message_delta, so an abort usually logs
+            // input usage only (usage_partial says which); Bedrock still bills what was
+            // generated before the cancel.
+            logRun("aborted", { usage_partial: !sawFinalUsage });
+            return;
+          }
 
           if (stop === "refusal") {
             const refusal =
@@ -455,7 +498,9 @@ export default {
                 ? "This tool turns business priorities into ranked content opportunities — give it a real strategic priority and a metric under pressure, and it will show you what it finds."
                 : "This brief can only be written for a real business opportunity — run the demo with a real priority and metric.";
             send({ type: "done", body: { schema: shape, refusal } });
+            logRun("refusal");
           } else if (stop === "max_tokens") {
+            logRun("too_long");
             fail(
               "too_long",
               route === "cascade"
@@ -463,33 +508,29 @@ export default {
                 : "That brief ran long — please try again.",
             );
           } else if (!text) {
+            logRun("empty");
             fail("empty", "The engine returned nothing — try again.");
           } else {
             const parsed = JSON.parse(text);
             const body: Record<string, any> = { ...limitBody(route, parsed), schema: shape };
             send({ type: "done", body });
-            console.log(
-              JSON.stringify({
-                route,
-                request_id: upstream.requestId,
-                model,
-                ms: Date.now() - started,
-                usage,
-                metrics: input.metrics.length,
-                refused: Boolean(body.refusal),
-                items: route === "cascade" ? body.opportunities.length : body.pieces.length,
-                consent: input.consent,
-              }),
-            );
+            logRun(body.refusal ? "refusal" : "ok", {
+              items: route === "cascade" ? body.opportunities?.length : body.pieces?.length,
+            });
             // Consented research storage — best-effort, never blocks the response. Runs
             // only: the consent text and privacy notice cover the submission and its
             // generated result, not the briefs opened afterwards.
             if (route === "cascade" && input.consent && !body.refusal) {
-              storeResearch(env, ctx, route, { input: modelInput, output: body, model });
+              storeResearch(env, ctx, route, {
+                input: modelInput,
+                source: input.source,
+                output: body,
+                model,
+              });
             }
           }
         } catch (err) {
-          console.log(`${route} stream error:`, err instanceof Error ? err.message : String(err));
+          logRun("error", { error: err instanceof Error ? err.message : String(err) });
           const busy = err instanceof BedrockError && [429, 503].includes(err.status);
           fail(
             busy ? "upstream_busy" : "engine_error",
