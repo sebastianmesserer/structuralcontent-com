@@ -1,16 +1,20 @@
-# System prompt — not in this repo
+# Prompts — not in this repo
 
-The cascade system prompt (`system-prompt.md` in this directory) encodes the
-inference logic that turns a priority and its metrics into problem statements and
-campaign briefs. It is **gitignored** — this repo is public — and lives only on
-Sebastian's machine at `worker/prompts/system-prompt.md`.
+Two prompts live in this directory, both **gitignored** — this repo is public — and
+only on Sebastian's machine:
+
+- `system-prompt.md` — the diagnosis: turns a priority and its metrics into the
+  ranked opportunities (segment, gap, obstacle, stake, confidence) shown first.
+- `brief-prompt.md` — the full campaign brief for one opportunity, generated when the
+  visitor opens it.
 
 ## How it reaches production
 
-The prompt is **bundled into the Worker at deploy time** as a Text module: the
-`rules` block in `wrangler.toml` plus `import SYSTEM_PROMPT from
-"../prompts/system-prompt.md"` in `src/index.ts`. At ~18 kB it exceeds Cloudflare's
-5.1 kB Worker-secret limit, so it cannot be a secret. Cloudflare does not serve the
+Both are **bundled into the Worker at deploy time** as Text modules: the `rules`
+block in `wrangler.toml` plus the `import … from "../prompts/*.md"` lines in
+`src/index.ts`. The diagnosis prompt (~11 kB) exceeds Cloudflare's 5.1 kB
+Worker-secret limit, so it cannot be a secret; the brief prompt is bundled the same
+way so both change with one deploy. Cloudflare does not serve the
 script bundle publicly.
 
 To change it: edit the file, then
