@@ -82,14 +82,18 @@ interface MetricInput {
   deadline: string;
 }
 
+const SOURCES = ["example", "typed"] as const;
+type Source = (typeof SOURCES)[number];
+
 interface CascadeInput {
   priority: string;
   metrics: MetricInput[];
   consent: boolean;
-  // Whether the visitor ran the prefilled example unchanged or typed their own input;
-  // stored with consented research records so the canned example is not mistaken
-  // for a prospect's priority.
-  source: "example" | "typed" | "unknown";
+  // Whether the visitor ran the prefilled example unchanged or typed their own input —
+  // the page's own report (it compares the submission with its prefill); "unknown"
+  // when the page sent nothing. Stored with consented research records so the canned
+  // example is not mistaken for a prospect's priority.
+  source: Source | "unknown";
 }
 
 function corsHeaders(origin: string | null): Record<string, string> {
@@ -162,8 +166,7 @@ function validate(raw: unknown): { input?: CascadeInput; error?: string } {
       priority: priority.trim(),
       metrics: cleaned,
       consent: body.consent === true,
-      // "unknown" when the page sent nothing (a page cached from before 6 Oct 2026).
-      source: body.source === "example" ? "example" : body.source === "typed" ? "typed" : "unknown",
+      source: SOURCES.includes(body.source as Source) ? (body.source as Source) : "unknown",
     },
   };
 }
@@ -436,6 +439,11 @@ export default {
         // The model has been paid for from here on, whatever comes back.
         countRun(env, ctx, route, ip, exempt);
 
+        let text = "";
+        let stop: string | null = null;
+        let usage: unknown = null;
+        let model: string | null = null;
+        let sawFinalUsage = false; // output tokens arrive with the final message_delta
         // One log line per paid call, whatever the outcome, so spend and failures are
         // both visible in the worker log.
         const logRun = (outcome: string, extra: Record<string, unknown> = {}) =>
@@ -454,11 +462,6 @@ export default {
             }),
           );
         const json = new JsonEvents();
-        let text = "";
-        let stop: string | null = null;
-        let usage: unknown = null;
-        let model: string | null = null;
-        let sawFinalUsage = false; // output tokens arrive with the final message_delta
         try {
           for await (const ev of upstream.events) {
             if (ev.type === "message_start") {
@@ -482,8 +485,9 @@ export default {
           }
           // The visitor aborted: the loop ended early on a partial answer — not an error.
           if (cancelled) {
-            // Output tokens arrive with the final message_delta, so an abort logs input
-            // usage only — Bedrock still bills what was generated before the cancel.
+            // Output tokens arrive with the final message_delta, so an abort usually logs
+            // input usage only (usage_partial says which); Bedrock still bills what was
+            // generated before the cancel.
             logRun("aborted", { usage_partial: !sawFinalUsage });
             return;
           }
@@ -520,8 +524,6 @@ export default {
               storeResearch(env, ctx, route, {
                 input: modelInput,
                 source: input.source,
-                // the page's own comparison with its prefill, when it sent one
-                ...(input.source !== "unknown" ? { source_reported_by: "client" } : {}),
                 output: body,
                 model,
               });

@@ -2059,8 +2059,8 @@
         return card;
       }
 
-      // Set once a brief comes back in another shape: no further brief can succeed
-      // until reload, so none is requested (each would be a paid, refused generation).
+      // Set once a brief comes back out of date: no further brief can succeed until
+      // reload, so none is requested (each would be a pointless round-trip).
       var pageOutOfDate = false;
 
       function loadBrief(o, body, done) {
