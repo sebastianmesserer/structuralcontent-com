@@ -927,7 +927,7 @@
       font-size: 0.68rem;
       font-weight: 600;
       letter-spacing: 0.02em;
-      color: var(--accent);
+      color: #8fd0c2; /* the lift's teal: legible on the dark ticket */
       white-space: nowrap;
     }
     .ticket .brief-detail .detail-cue::after { content: "Open brief \25BE"; }
@@ -1819,11 +1819,18 @@
           });
         }
         if (!metrics.length) return { error: "Add at least one metric under pressure." };
+        // Research records note whether the visitor ran the prefilled example unchanged.
+        var m0 = metrics[0];
+        var untouched = priority === EXAMPLE.priority && metrics.length === 1 &&
+          m0.name === EXAMPLE.metric.name && m0.direction === EXAMPLE.metric.direction &&
+          m0.status_quo === EXAMPLE.metric.status_quo && m0.target === EXAMPLE.metric.target &&
+          m0.deadline === EXAMPLE.metric.deadline;
         return {
           input: {
             priority: priority,
             metrics: metrics,
-            consent: document.getElementById("consent").checked
+            consent: document.getElementById("consent").checked,
+            source: untouched ? "example" : "typed"
           }
         };
       }
@@ -1898,7 +1905,9 @@
           if (!res.ok || !res.body) {
             return res.json().then(
               function (body) {
-                throw new Error((body && body.error && body.error.message) || "The system hiccuped – please try again.");
+                var err = new Error((body && body.error && body.error.message) || "The system hiccuped – please try again.");
+                err.code = body && body.error && body.error.code;
+                throw err;
               },
               function () { throw new Error("The system hiccuped – please try again."); }
             );
@@ -2060,7 +2069,7 @@
         body.appendChild(loadingLine);
         var controller = new AbortController();
         var timeout = setTimeout(function () { controller.abort(); }, 120000);
-        var payload = { priority: lastInput.priority, metrics: lastInput.metrics, opportunity: o, consent: lastInput.consent };
+        var payload = { shape: "brief-v1", priority: lastInput.priority, metrics: lastInput.metrics, opportunity: o, consent: lastInput.consent, source: lastInput.source };
         var finished = false;
         function fail(msg, noRetry) {
           if (finished) return;
@@ -2095,6 +2104,11 @@
             done(true);
           }
         }, controller.signal).catch(function (err) {
+          if (err.code === "out_of_date") {
+            pageOutOfDate = true;
+            fail(err.message, true);
+            return;
+          }
           fail(err.name === "AbortError" ? "That brief took too long – please try again." : err.message);
         });
       }
@@ -2311,7 +2325,8 @@
           showNotice(msg);
         }
 
-        streamPost(API, read.input, function (event) {
+        var payload = Object.assign({ shape: "cascade-v3" }, read.input);
+        streamPost(API, payload, function (event) {
           if (failed || settled) return;
           if (event.type === "legacy" || (event.type === "start" && event.schema !== "cascade-v3")) {
             fail("This page is out of date – please reload it and run again.");

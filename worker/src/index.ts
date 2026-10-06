@@ -86,6 +86,13 @@ interface CascadeInput {
   priority: string;
   metrics: MetricInput[];
   consent: boolean;
+  // The response shape the page expects (e.g. "cascade-v3"); checked before any model
+  // call so a stale page is refused for free. Absent from pages built before 6 Oct 2026.
+  shape: string | null;
+  // Whether the visitor ran the prefilled example unchanged or typed their own input;
+  // stored with consented research records so the canned example is not mistaken
+  // for a prospect's priority.
+  source: "example" | "typed";
 }
 
 function corsHeaders(origin: string | null): Record<string, string> {
@@ -153,11 +160,17 @@ function validate(raw: unknown): { input?: CascadeInput; error?: string } {
     });
   }
 
+  const shape = body.shape;
+  if (shape !== undefined && (typeof shape !== "string" || shape.length > 40))
+    return { error: "Invalid shape." };
+
   return {
     input: {
       priority: priority.trim(),
       metrics: cleaned,
       consent: body.consent === true,
+      shape: typeof shape === "string" ? shape : null,
+      source: body.source === "example" ? "example" : "typed",
     },
   };
 }
@@ -375,6 +388,13 @@ export default {
     const { input, error } = validate(raw);
     if (!input) return errorResponse("invalid_input", error ?? "Invalid input.", 400, origin);
 
+    // Shape handshake: a page that expects another response shape is refused before
+    // the model is called, so a stale page costs nothing and shows the reload notice.
+    const shape = route === "cascade" ? CASCADE_SHAPE : BRIEF_SHAPE;
+    if (input.shape && input.shape !== shape) {
+      return errorResponse("out_of_date", "This page is out of date – please reload it and run again.", 409, origin);
+    }
+
     const opportunity = (raw as Record<string, unknown>).opportunity;
     if (route === "brief" && !checkShape(OPPORTUNITY_SCHEMA, opportunity)) {
       return errorResponse("invalid_input", "That opportunity can't be expanded — run the demo again.", 400, origin);
@@ -401,7 +421,6 @@ export default {
     //   {type:"field", key, value}        — a finished top-level field
     //   {type:"done", body}               — the whole answer, strictly parsed
     //   {type:"error", error:{code,message}}
-    const shape = route === "cascade" ? CASCADE_SHAPE : BRIEF_SHAPE;
     const encoder = new TextEncoder();
     let cancelled = false;
     const out = new ReadableStream<Uint8Array>({
@@ -421,6 +440,23 @@ export default {
         // The model has been paid for from here on, whatever comes back.
         countRun(env, ctx, route, ip, exempt);
 
+        // One log line per paid call, whatever the outcome, so spend and failures are
+        // both visible in the worker log.
+        const logRun = (outcome: string, extra: Record<string, unknown> = {}) =>
+          console.log(
+            JSON.stringify({
+              route,
+              outcome,
+              request_id: upstream.requestId,
+              model,
+              ms: Date.now() - started,
+              usage,
+              metrics: input.metrics.length,
+              consent: input.consent,
+              source: input.source,
+              ...extra,
+            }),
+          );
         const json = new JsonEvents();
         let text = "";
         let stop: string | null = null;
@@ -447,7 +483,10 @@ export default {
             }
           }
           // The visitor aborted: the loop ended early on a partial answer — not an error.
-          if (cancelled) return;
+          if (cancelled) {
+            logRun("aborted");
+            return;
+          }
 
           if (stop === "refusal") {
             const refusal =
@@ -455,7 +494,9 @@ export default {
                 ? "This tool turns business priorities into ranked content opportunities — give it a real strategic priority and a metric under pressure, and it will show you what it finds."
                 : "This brief can only be written for a real business opportunity — run the demo with a real priority and metric.";
             send({ type: "done", body: { schema: shape, refusal } });
+            logRun("refusal");
           } else if (stop === "max_tokens") {
+            logRun("too_long");
             fail(
               "too_long",
               route === "cascade"
@@ -463,33 +504,24 @@ export default {
                 : "That brief ran long — please try again.",
             );
           } else if (!text) {
+            logRun("empty");
             fail("empty", "The engine returned nothing — try again.");
           } else {
             const parsed = JSON.parse(text);
             const body: Record<string, any> = { ...limitBody(route, parsed), schema: shape };
             send({ type: "done", body });
-            console.log(
-              JSON.stringify({
-                route,
-                request_id: upstream.requestId,
-                model,
-                ms: Date.now() - started,
-                usage,
-                metrics: input.metrics.length,
-                refused: Boolean(body.refusal),
-                items: route === "cascade" ? body.opportunities.length : body.pieces.length,
-                consent: input.consent,
-              }),
-            );
+            logRun(body.refusal ? "refusal" : "ok", {
+              items: route === "cascade" ? body.opportunities?.length : body.pieces?.length,
+            });
             // Consented research storage — best-effort, never blocks the response. Runs
             // only: the consent text and privacy notice cover the submission and its
             // generated result, not the briefs opened afterwards.
             if (route === "cascade" && input.consent && !body.refusal) {
-              storeResearch(env, ctx, route, { input: modelInput, output: body, model });
+              storeResearch(env, ctx, route, { input: modelInput, source: input.source, output: body, model });
             }
           }
         } catch (err) {
-          console.log(`${route} stream error:`, err instanceof Error ? err.message : String(err));
+          logRun("error", { error: err instanceof Error ? err.message : String(err) });
           const busy = err instanceof BedrockError && [429, 503].includes(err.status);
           fail(
             busy ? "upstream_busy" : "engine_error",
