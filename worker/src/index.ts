@@ -184,20 +184,27 @@ function checkShape(schema: any, value: unknown): boolean {
 // outputs can't express minItems/maxItems, so every streamed event and the final body
 // pass through limitItem / limitField / limitBody. The page renders streamed events
 // directly, so a cap applied only to the final body would not reach it.
+// Keys are root-level lists, or "parent.child" for a list inside a root-level value
+// (a list element's object, or a root object field).
 const LIST_LIMITS: Record<Route, Record<string, number>> = {
   cascade: { required_changes: 3, opportunities: 3, below_the_line: 3 },
-  brief: { target_queries: 4, ai_questions: 3, pieces: 3, dependencies: 3 },
+  brief: {
+    target_queries: 4, ai_questions: 3, pieces: 3, dependencies: 3,
+    "pieces.establishes": 4, "problem.evidence": 3,
+  },
 };
 
-// Lists nested inside one element or field value.
+// Lists nested inside one element or field value, capped from the same table.
 function limitNested(route: Route, key: string, value: any): any {
-  if (route === "brief" && key === "pieces" && value && typeof value === "object") {
-    return { ...value, establishes: (value.establishes ?? []).slice(0, 4) };
+  if (!value || typeof value !== "object" || Array.isArray(value)) return value;
+  let out = value;
+  for (const [path, max] of Object.entries(LIST_LIMITS[route])) {
+    const [parent, child] = path.split(".");
+    if (parent === key && child && Array.isArray(value[child])) {
+      out = { ...out, [child]: value[child].slice(0, max) };
+    }
   }
-  if (route === "brief" && key === "problem" && value && typeof value === "object") {
-    return { ...value, evidence: (value.evidence ?? []).slice(0, 3) };
-  }
-  return value;
+  return out;
 }
 
 // An element of a root-level list: dropped past the list's limit, nested lists capped.
@@ -263,8 +270,10 @@ function usageKey(route: Route, ip: string): string {
   return route === "cascade" ? `runs:${ip}` : `briefs:${ip}`;
 }
 
-// Best-effort per-IP counter. KV isn't atomic, but the burst limiter caps per-IP
-// concurrency, so a rare off-by-one under a race is acceptable here. Uses an
+// Best-effort per-IP counter. KV get-then-put isn't atomic: requests that overlap
+// (e.g. several briefs opened at once) can lose increments, so a cap can be exceeded
+// by the number of parallel requests the burst limiter lets through (5 per 60 s).
+// Accepted: the caps bound spend loosely, not exactly. Uses an
 // absolute `expiration` so the 30-day window stays anchored to the first call
 // rather than sliding forward on every increment.
 async function incrementUsage(env: Env, key: string): Promise<void> {
@@ -322,7 +331,7 @@ export default {
 
     const ip = request.headers.get("CF-Connecting-IP") ?? "unknown";
     const exempt = isExempt(env, ip);
-    const { success } = exempt ? { success: true } : await env.RATE_LIMITER.limit({ key: ip });
+    const { success } = exempt ? { success: true } : await env.RATE_LIMITER.limit({ key: `${route}:${ip}` });
     if (!success) {
       return errorResponse(
         "rate_limited",
@@ -355,7 +364,9 @@ export default {
     let raw: unknown;
     try {
       const text = await request.text();
-      if (text.length > maxBytes) return errorResponse("too_large", "Request too large.", 400, origin);
+      if (new TextEncoder().encode(text).length > maxBytes) {
+        return errorResponse("too_large", "Request too large.", 400, origin);
+      }
       raw = JSON.parse(text);
     } catch {
       return errorResponse("bad_json", "Request body must be valid JSON.", 400, origin);
@@ -392,9 +403,18 @@ export default {
     //   {type:"error", error:{code,message}}
     const shape = route === "cascade" ? CASCADE_SHAPE : BRIEF_SHAPE;
     const encoder = new TextEncoder();
+    let cancelled = false;
     const out = new ReadableStream<Uint8Array>({
+      // The visitor closed the page or aborted: stop reading Bedrock's stream so the
+      // generation is not paid for to the end, and stop writing to a closed stream.
+      cancel() {
+        cancelled = true;
+        upstream.events.return(undefined).catch(() => {});
+      },
       async start(controller) {
-        const send = (event: unknown) => controller.enqueue(encoder.encode(JSON.stringify(event) + "\n"));
+        const send = (event: unknown) => {
+          if (!cancelled) controller.enqueue(encoder.encode(JSON.stringify(event) + "\n"));
+        };
         const fail = (code: string, message: string) => send({ type: "error", error: { code, message } });
         send({ type: "start", schema: shape });
 
@@ -474,7 +494,7 @@ export default {
             busy ? "High demand right now — please try again in a minute." : "The engine hiccuped — please try again.",
           );
         }
-        controller.close();
+        if (!cancelled) controller.close();
       },
     });
 

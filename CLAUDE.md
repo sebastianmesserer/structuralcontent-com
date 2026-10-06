@@ -69,7 +69,7 @@ credits, no Anthropic API spend) with a JSON-schema structured output:
   required change — the ticket's impact line); plus below-the-line items. Prompt
   `prompts/system-prompt.md`, schema `DIAGNOSIS_SCHEMA`.
 - `POST /v1/brief` — the same body plus one `opportunity` from the diagnosis → the
-  **full campaign brief** behind its ticket's "Open brief" control (one opportunity = one brief = one campaign = one
+  **full campaign brief** behind its ticket's "Full brief · Open brief ▾" control (one opportunity = one brief = one campaign = one
   measure), generated only when the visitor opens it. Prompt
   `prompts/brief-prompt.md`, schema `BRIEF_SCHEMA`. The opportunity is shape-checked
   against `OPPORTUNITY_SCHEMA` before it reaches the model.
@@ -83,9 +83,10 @@ still generating. Measured 5 Oct 2026, warm: first card ~9 s, all three ~22 s, d
 - **CORS allowlist** (`ALLOWED_ORIGINS`) — only the production domains and
   `localhost:8000` may call it. Update this list if origins change.
 - **Two-layer abuse protection per IP**: a burst guard via the unsafe
-  `RATE_LIMITER` binding (5 req / 60s, declared in `wrangler.toml`), plus a
-  longer-horizon usage cap (`USAGE_CAP` = 10 runs / 30-day window) counted in
-  the `USAGE` KV namespace, keyed by IP. Loopback (wrangler dev) is always exempt
+  `RATE_LIMITER` binding (5 req / 60s per route, declared in `wrangler.toml`), plus
+  longer-horizon usage caps (`USAGE_CAP`: 10 runs and 30 opened briefs per 30-day
+  window) counted in the `USAGE` KV namespace (`runs:<ip>`, `briefs:<ip>`). The KV
+  count is best-effort (not atomic), so parallel requests can overshoot a cap slightly. Loopback (wrangler dev) is always exempt
   from both; the optional `EXEMPT_IPS` Worker secret (comma-separated) exempts
   Sebastian's own IPs in production — set it with `npx wrangler secret put
   EXEMPT_IPS`, never write an IP into the repo. Compare is by exact string, so paste
@@ -115,7 +116,7 @@ Structured outputs require `additionalProperties: false` on every object and do
 **not** support `minItems`/`maxItems`. So list lengths (3 opportunities, 2–3 below
 the line, 2–3 brief pieces, 2–4 queries, …) are set in the **prompts**, then
 defensively capped in one table, `LIST_LIMITS` in `src/index.ts`, which every
-streamed event and the final body pass through. If you change them, update all three: prompt, truncation, and any UI
+streamed event and the final body pass through. If you change them, update all three: prompt, `LIST_LIMITS`, and any UI
 assumptions.
 
 ## Secrets and gitignored IP (the repo is PUBLIC)

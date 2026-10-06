@@ -1,7 +1,7 @@
 // Claude on Amazon Bedrock via the InvokeModel API (bedrock-runtime, streamed), signed with SigV4
 // using a dedicated IAM user's long-lived keys. Chosen over the newer Messages-API
 // ("Mantle") endpoint because only this one supports structured outputs: with
-// `output_config.format` the model's JSON is constrained to CASCADE_SCHEMA at decode
+// `output_config.format` the model's JSON is constrained to the route's schema at decode
 // time, so the response shape is guaranteed rather than checked after the fact (on
 // Mantle, 18 of 20 free-text runs came back with a dropped brace, 3 Oct 2026).
 // Structured outputs on Bedrock cover Opus 4.6 and earlier; the model ID is a global
@@ -73,33 +73,42 @@ async function* decodeEvents(stream: ReadableStream<Uint8Array>): AsyncGenerator
   const reader = stream.getReader();
   let buf = new Uint8Array(0);
   const text = new TextDecoder();
-  for (;;) {
-    const { value, done } = await reader.read();
-    if (value) {
-      const next = new Uint8Array(buf.length + value.length);
-      next.set(buf);
-      next.set(value, buf.length);
-      buf = next;
-    }
+  try {
     for (;;) {
-      if (buf.length < 12) break;
-      const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength);
-      const total = view.getUint32(0);
-      if (buf.length < total) break;
-      const headersLen = view.getUint32(4);
-      const headers = parseHeaders(buf.subarray(12, 12 + headersLen));
-      const payload = text.decode(buf.subarray(12 + headersLen, total - 4));
-      buf = buf.subarray(total);
-      if (headers[":message-type"] === "exception" || headers[":message-type"] === "error") {
-        const kind = headers[":exception-type"] ?? headers[":error-code"] ?? "exception";
-        const status = /throttl/i.test(kind) ? 429 : /unavailable|overload/i.test(kind) ? 503 : 502;
-        throw new BedrockError(status, `bedrock stream ${kind}: ${payload.slice(0, 300)}`);
+      const { value, done } = await reader.read();
+      if (value) {
+        const next = new Uint8Array(buf.length + value.length);
+        next.set(buf);
+        next.set(value, buf.length);
+        buf = next;
       }
-      if (headers[":event-type"] !== "chunk") continue;
-      const bytes = JSON.parse(payload).bytes as string;
-      yield JSON.parse(text.decode(Uint8Array.from(atob(bytes), (c) => c.charCodeAt(0))));
+      for (;;) {
+        if (buf.length < 12) break;
+        const view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength);
+        const total = view.getUint32(0);
+        if (buf.length < total) break;
+        const headersLen = view.getUint32(4);
+        const headers = parseHeaders(buf.subarray(12, 12 + headersLen));
+        const payload = text.decode(buf.subarray(12 + headersLen, total - 4));
+        buf = buf.subarray(total);
+        if (headers[":message-type"] === "exception" || headers[":message-type"] === "error") {
+          const kind = headers[":exception-type"] ?? headers[":error-code"] ?? "exception";
+          const status = /throttl/i.test(kind) ? 429 : /unavailable|overload/i.test(kind) ? 503 : 502;
+          throw new BedrockError(status, `bedrock stream ${kind}: ${payload.slice(0, 300)}`);
+        }
+        if (headers[":event-type"] !== "chunk") continue;
+        const bytes = JSON.parse(payload).bytes as string;
+        yield JSON.parse(text.decode(Uint8Array.from(atob(bytes), (c) => c.charCodeAt(0))));
+      }
+      if (done) {
+        // A partial frame left over means the upstream stream was cut mid-message.
+        if (buf.length) throw new BedrockError(502, `bedrock stream truncated (${buf.length} bytes left)`);
+        return;
+      }
     }
-    if (done) return;
+  } finally {
+    // Runs on normal end, error, or the caller's return() after a client abort.
+    reader.cancel().catch(() => {});
   }
 }
 

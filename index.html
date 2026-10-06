@@ -1909,7 +1909,13 @@
           var finished = false;
           function handle(line) {
             if (!line.trim()) return;
-            var event = JSON.parse(line);
+            var event;
+            try {
+              event = JSON.parse(line);
+            } catch (e) {
+              // Only a stream cut mid-line can leave a partial event.
+              throw new Error("The connection dropped – please try again.");
+            }
             // A body with no event type is a worker from before streaming (one JSON
             // object, no trailing newline): this page and the worker are out of step.
             if (!event || !event.type) event = { type: "legacy" };
@@ -2047,20 +2053,23 @@
         var timeout = setTimeout(function () { controller.abort(); }, 120000);
         var payload = { priority: lastInput.priority, metrics: lastInput.metrics, opportunity: o, consent: lastInput.consent };
         var finished = false;
-        function fail(msg) {
+        function fail(msg, noRetry) {
           if (finished) return;
           finished = true;
           clearTimeout(timeout);
           body.textContent = "";
           body.appendChild(el("p", "brief-error", msg));
-          var retry = el("button", "brief-retry", "Try again");
-          retry.type = "button";
-          body.appendChild(retry);
+          // A retry cannot succeed on an out-of-date page; only a reload helps.
+          if (!noRetry) {
+            var retry = el("button", "brief-retry", "Try again");
+            retry.type = "button";
+            body.appendChild(retry);
+          }
           done(false);
         }
         streamPost(BRIEF_API, payload, function (event) {
           if (event.type === "legacy" || (event.type === "start" && event.schema !== "brief-v1")) {
-            fail("This page is out of date – please reload it and run again.");
+            fail("This page is out of date – please reload it and run again.", true);
             controller.abort();
             return;
           }
@@ -2193,6 +2202,7 @@
         return {
           opportunity: function (o) {
             shown += 1;
+            revealCounter = 0; // each streamed row staggers on its own, without the earlier rows' delay
             var row = shown + 1;
             flow.appendChild(place(revealItem(problemCard(o)), row, 1));
             flow.appendChild(place(revealItem(arrowEl()), row, 2));
@@ -2259,6 +2269,7 @@
         var queued = [];
         var revealing = false;
         var failed = false; // terminal: once set, nothing later renders over the notice
+        var settled = false; // the complete answer arrived: later events or errors may not replace it
 
         // The first finished card ends the loading animation; cards that arrive while
         // it winds down are queued and rendered right after it.
@@ -2278,7 +2289,7 @@
         }
 
         function fail(msg) {
-          if (failed) return;
+          if (failed || settled) return;
           failed = true;
           clearTimeout(timeout);
           controller.abort();
@@ -2289,7 +2300,7 @@
         }
 
         streamPost(API, read.input, function (event) {
-          if (failed) return;
+          if (failed || settled) return;
           if (event.type === "legacy" || (event.type === "start" && event.schema !== "cascade-v3")) {
             fail("This page is out of date – please reload it and run again.");
             return;
@@ -2305,6 +2316,7 @@
               fail("The system returned no opportunities for this run – please try again.");
               return;
             }
+            settled = true;
             if (view) view.finish(body);
             else fields.__done = body;
           }
