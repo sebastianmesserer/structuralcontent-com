@@ -391,12 +391,11 @@
       font-size: 1rem;
       line-height: 1.45;
       color: var(--charcoal-soft);
-      transition: opacity 0.3s ease;
     }
     /* Every caption sits in the same cell, so the box is always as tall as
        the longest one at the current width and nothing below it moves. */
-    .lanes-cap > span { grid-area: 1 / 1; opacity: 0; transition: opacity 0.3s ease; }
-    .lanes-cap > span.on { opacity: 1; }
+    .lanes-cap > span { grid-area: 1 / 1; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s; }
+    .lanes-cap > span.on { opacity: 1; visibility: visible; }
     .lanes-cap b { color: var(--charcoal); font-weight: 600; }
     .lanes-cap .k { color: var(--accent); font-weight: 600; margin-right: 0.35em; }
 
@@ -1111,8 +1110,6 @@
     }
     .closing .secondary { font-size: 0.95rem; color: var(--muted); }
 
-    /* ---------- What it is ---------- */
-
     /* ---------- How it works ---------- */
     .steps {
       display: grid;
@@ -1679,7 +1676,8 @@
           var e = document.createElement("span"); e.innerHTML = html; cap.appendChild(e); return e;
         });
         function setCap(html) {
-          capEls.forEach(function (e, i) { e.classList.toggle("on", CAPS[i] === html); });
+          var k = CAPS.indexOf(html);
+          capEls.forEach(function (e, i) { e.classList.toggle("on", i === k); });
           return wait(300);
         }
 
@@ -1769,7 +1767,8 @@
           return;
         }
 
-        // The loop only advances while the figure is on screen, and a layout
+        // The loop starts each lane only while the figure is on screen (a lane
+        // already under way finishes), and a layout
         // change (rotate, resize across the breakpoint) restarts it on a fresh
         // drawing. `gen` retires the old loop: every step checks it first.
         var gen = 0, visible = false, waiters = [];
@@ -1777,7 +1776,7 @@
           return visible ? Promise.resolve() : new Promise(function (r) { waiters.push(r); });
         }
         function run(g) {
-          var chain = whenVisible();
+          var chain = Promise.resolve();
           LANES.forEach(function (l, i) {
             chain = chain.then(function () { return whenVisible(); }).then(function () {
               if (g !== gen) throw g;
@@ -1801,7 +1800,7 @@
           });
           chain.then(function () { return wait(1200); })
             .then(function () { if (g !== gen) throw g; build(); run(g); })
-            .catch(function () { /* a retired loop stops here */ });
+            .catch(function (e) { if (e !== g) throw e; /* a retired loop stops here */ });
         }
         function restart() { gen += 1; build(); run(gen); }
         window.addEventListener("resize", function () { if (wantNarrow() !== NARROW) restart(); });
