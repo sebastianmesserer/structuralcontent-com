@@ -136,7 +136,7 @@
         "name": "Is this mainly for marketing content?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "No. Structural Content is built for marketing and content teams, but it can identify opportunities wherever content can support a business priority – from acquisition and retention to onboarding, adoption, support, enablement, and hiring. It treats content as any communication that helps move an audience from a current state to a required end-state in service of a job, a metric, and a strategic priority."
+          "text": "Mostly. Structural Content is built for marketing and content teams, and it works on the priorities those teams work on: lead generation, lead conversion, activation, retention, and expansion. It treats content as any communication that helps move an audience from a current state to a required end-state in service of a job, a metric, and a strategic priority."
         }
       },
       {
@@ -1319,7 +1319,7 @@
         <form id="cascade-form" novalidate>
           <div class="priority-block measure">
             <label class="field-label" for="priority">Strategic priority</label>
-            <textarea id="priority" maxlength="300" rows="2" placeholder="e.g. Get every field team onto the new CRM before the Q4 close"></textarea>
+            <textarea id="priority" maxlength="300" rows="2" placeholder="e.g. Turn more demo requests into closed deals before the end of Q1"></textarea>
           </div>
 
           <div class="measure">
@@ -1377,12 +1377,13 @@
       <div class="wrap">
         <div class="section-head measure">
           <p class="eyebrow">Overview</p>
-          <h2 id="what-h">Put content to work across the whole business.</h2>
+          <h2 id="what-h">Content for the problems a dashboard can&rsquo;t show.</h2>
         </div>
         <div class="lead measure">
-          <p>Most content teams work from requests, campaign calendars, and briefs. That can leave valuable business signals untouched &ndash; even when content could help solve the problem.</p>
-          <p>Structural Content helps marketing and content teams decide what content to create to support their business goals &ndash; across the entire company. It analyzes company documentation and connected systems, such as CRMs, project-management tools, support queues, and product data, to find where content can solve real operational needs.</p>
-          <p>It then turns those opportunities into actionable campaign briefs for the content team, with the deeper business context. Instead of adding more requests to the backlog, Structural Content helps teams focus their effort on content that can support a specific strategic priority. That lets content teams support the business wherever they are needed, beyond just lead generation and direct product marketing.</p>
+          <p>When a business metric is under pressure, content teams plan from what they can see. They look at the funnel to find the stage that is lagging, pick the persona that matters most there, and brief content for it: a case study, a webinar, a guide.</p>
+          <p>That works as far as it goes. But the real reasons why the business metric in question, say, pipeline, isn&rsquo;t moving often sit deeper in the company&rsquo;s data than a team can reasonably and consistently get to. Deals may stall after the demo because nobody can answer the security questionnaire, and that shows up in lost-deal notes and sales calls, not on the dashboard. Or customers may leave at renewal because the person who set the product up has moved on, and that shows up in support tickets and churn calls, not in the usage chart. Until now, most of these opportunities have gone overlooked.</p>
+          <p>Structural Content finds them. With AI, it reads the systems behind the metric at that depth, consistently, with one question in mind: where can content move the metric under pressure? Each opportunity comes to your marketing team as a campaign brief, ready for production: which group of people is stuck, at which step, why, and what to make to get them unstuck and move the metric.</p>
+          <p>The result: marketing makes precise content, aimed at exactly the place where the business needs to move.</p>
         </div>
       </div>
     </section>
@@ -1403,12 +1404,12 @@
           <div class="step">
             <div class="step-num">2</div>
             <h3>Analyze the signals around it</h3>
-            <p>It analyzes connected systems &ndash; including CRM, project-management, support, product, and communication tools &ndash; to find where customers, prospects, or internal teams have real operational needs that content can solve.</p>
+            <p>It analyzes connected systems &ndash; including CRM, project-management, support, product, and communication tools &ndash; to find where prospects or customers have real needs that content can solve.</p>
           </div>
           <div class="step">
             <div class="step-num">3</div>
             <h3>Identify high-impact content opportunities</h3>
-            <p>It determines where content can solve a real operational need and move the priority: for example, by supporting retention, adoption, onboarding, sales, support, or hiring.</p>
+            <p>It determines where content can solve a real need and move the priority, for example lead generation, lead conversion, activation, retention, or expansion.</p>
           </div>
           <div class="step">
             <div class="step-num">4</div>
@@ -1433,8 +1434,8 @@
             <p>Structural Content can detect in CRM data that customers left because they believed a feature was missing. When that feature becomes available, it can brief the outreach campaign needed to bring those customers back &ndash; helping support retention and recover ARR.</p>
           </div>
           <div class="example">
-            <h3>Reduce support demand by improving onboarding content.</h3>
-            <p>It can spot a cluster of support tickets around a recurring onboarding issue, then brief a campaign to improve the relevant help, education, or in-product content &ndash; helping customers succeed sooner, reduce avoidable support demand, and protect NRR.</p>
+            <h3>Help new customers succeed sooner.</h3>
+            <p>It can spot a cluster of support tickets around a recurring onboarding issue, then brief a campaign to improve the relevant help, education, or in-product content &ndash; helping customers reach first value sooner, and protecting activation and NRR.</p>
           </div>
         </div>
       </div>
@@ -1548,7 +1549,7 @@
           <details class="faq-item">
             <summary>Is this mainly for marketing content?</summary>
             <div class="faq-body">
-              <p>No. Structural Content is built for marketing and content teams, but it can identify opportunities wherever content can support a business priority &ndash; from acquisition and retention to onboarding, adoption, support, enablement, and hiring.</p>
+              <p>Mostly. Structural Content is built for marketing and content teams, and it works on the priorities those teams work on: lead generation, lead conversion, activation, retention, and expansion.</p>
               <p>It treats content as any communication that helps move an audience from a current state to a required end-state in service of a job, a metric, and a strategic priority.</p>
             </div>
           </details>
@@ -1652,7 +1653,7 @@
 
         if (REDUCED_MOTION) { settle(); return; }
 
-        var WORDS = ["adoption", "retention", "renewals", "pipeline", "support", "hiring", "your strategic priorities"];
+        var WORDS = ["lead generation", "lead conversion", "activation", "retention", "expansion", "your strategic priorities"];
         // Lock the height measured with the final (longest) phrase so the
         // shorter cycling words don't reflow the page.
         h1.style.minHeight = h1.offsetHeight + "px";
@@ -1741,7 +1742,7 @@
         var nameInput = document.createElement("input");
         nameInput.type = "text";
         nameInput.maxLength = 120;
-        nameInput.placeholder = "e.g. weekly active users in the new CRM";
+        nameInput.placeholder = "e.g. demo-to-close rate";
         nameInput.className = "m-name";
         if (prefill) nameInput.value = prefill.name || "";
         nameWrap.appendChild(nameLabel);
@@ -1770,9 +1771,9 @@
 
         var delta = el("div", "delta-row");
         [
-          ["Today", "m-status-quo", "e.g. 2", "status_quo"],
-          ["Target", "m-target", "e.g. >5", "target"],
-          ["Deadline", "m-deadline", "e.g. within 7 days", "deadline"]
+          ["Today", "m-status-quo", "e.g. 20%", "status_quo"],
+          ["Target", "m-target", "e.g. 30%", "target"],
+          ["Deadline", "m-deadline", "e.g. by end of Q1", "deadline"]
         ].forEach(function (spec) {
           var w = el("div");
           w.appendChild(el("label", "sub-label", spec[0]));
