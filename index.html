@@ -136,7 +136,7 @@
         "name": "How do I know my data is secure?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "The baseline: you choose what to share, and in the pilot nothing connects to your live systems. Your data is processed in the EU only, under a data processing agreement signed before anything is shared, and it is never used to train AI models. We take you through the full setup on the first call."
+          "text": "The baseline for a pilot: you choose what to share, and nothing connects to your live systems. Pilot data is processed in the EU only, under a data processing agreement signed before anything is shared, and it is never used to train AI models. We take you through the full setup on the first call."
         }
       }
     ]
@@ -395,6 +395,7 @@
       transition: opacity 0.3s ease;
     }
     .lanes-cap.fade { opacity: 0; }
+    @media (max-width: 600px) { .lanes-cap { min-height: 7.4em; } }
     .lanes-cap b { color: var(--charcoal); font-weight: 600; }
     .lanes-cap .k { color: var(--accent); font-weight: 600; margin-right: 0.35em; }
 
@@ -1627,7 +1628,7 @@
           <details class="faq-item">
             <summary>How do I know my data is secure?</summary>
             <div class="faq-body">
-              <p>The baseline: you choose what to share, and in the pilot nothing connects to your live systems. Your data is processed in the EU only, under a data processing agreement signed before anything is shared, and it is never used to train AI models. We take you through the full setup on the first call.</p>
+              <p>The baseline for a pilot: you choose what to share, and nothing connects to your live systems. Pilot data is processed in the EU only, under a data processing agreement signed before anything is shared, and it is never used to train AI models. We take you through the full setup on the first call.</p>
             </div>
           </details>
         </div>
@@ -1733,9 +1734,12 @@
         function bridge(p, l) {
           var x = stallX(l);
           make("line", { x1: x + 14, y1: l.y, x2: X1, y2: l.y, "class": "bridge" }, p.g);
+          // The key sits where the bridged lane ends: labels are left-aligned,
+          // so the right end of the lane is the one place a label never reaches.
+          var pw = NARROW ? 52 : 44, ph = NARROW ? 24 : 20;
           var pin = make("g", { "class": "pin" }, p.g);
-          make("rect", { x: x - 22, y: l.y - 44, width: 44, height: 20, rx: 4 }, pin);
-          text(l.key, { x: x, y: l.y - 30, "text-anchor": "middle" }, pin);
+          make("rect", { x: X1 - pw, y: l.y - ph - 12, width: pw, height: ph, rx: 4 }, pin);
+          text(l.key, { x: X1 - pw / 2, y: l.y - 12 - ph / 2 + (NARROW ? 6 : 4), "text-anchor": "middle" }, pin);
         }
         function reset() {
           svg.querySelectorAll(".xm, .bridge, .pin, .dot").forEach(function (e) { e.remove(); });
