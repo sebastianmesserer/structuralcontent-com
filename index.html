@@ -346,7 +346,6 @@
       padding: 96px 0 84px;
     }
     .hero h1 {
-      position: relative;
       font-size: clamp(2.2rem, 5.2vw, 3.5rem);
       line-height: 1.08;
       max-width: 22ch;
@@ -387,15 +386,17 @@
     .lanes-svg.narrow .stp { font-size: 16px; }
     .lanes-svg.narrow .pin text { font-size: 16px; }
     .lanes-cap {
-      min-height: 4.6em;
+      display: grid;
       margin-top: 10px;
       font-size: 1rem;
       line-height: 1.45;
       color: var(--charcoal-soft);
       transition: opacity 0.3s ease;
     }
-    .lanes-cap.fade { opacity: 0; }
-    @media (max-width: 600px) { .lanes-cap { min-height: 7.4em; } }
+    /* Every caption sits in the same cell, so the box is always as tall as
+       the longest one at the current width and nothing below it moves. */
+    .lanes-cap > span { grid-area: 1 / 1; opacity: 0; transition: opacity 0.3s ease; }
+    .lanes-cap > span.on { opacity: 1; }
     .lanes-cap b { color: var(--charcoal); font-weight: 600; }
     .lanes-cap .k { color: var(--accent); font-weight: 600; margin-right: 0.35em; }
 
@@ -1111,7 +1112,6 @@
     .closing .secondary { font-size: 0.95rem; color: var(--muted); }
 
     /* ---------- What it is ---------- */
-    .lead p { font-size: 1.12rem; }
 
     /* ---------- How it works ---------- */
     .steps {
@@ -1136,7 +1136,7 @@
       line-height: 1;
       margin-bottom: 14px;
     }
-    .step h3, .example h3 {
+    .step h3 {
       font-size: 1.18rem;
       margin-bottom: 10px;
     }
@@ -1181,9 +1181,6 @@
     .prose p { max-width: 70ch; }
     .prose p + p { margin-top: 0; }
 
-    /* ---------- Examples ---------- */
-    .example { max-width: 70ch; }
-    .example + .example { margin-top: 32px; }
 
     /* ---------- Founder ---------- */
     .about-body { max-width: 760px; }
@@ -1344,7 +1341,7 @@
           <svg class="lanes-svg" id="lanes-svg" viewBox="0 0 900 270" role="img" aria-hidden="true"></svg>
           <div class="lanes-cap" id="lanes-cap" aria-hidden="true"></div>
         </figure>
-        <p class="trust-line">Built by <strong>Sebastian Messerer</strong>, formerly Senior Content Strategist at Amazon, where he built and scaled an AI-driven content and communications system across 13 countries.</p>
+        <p class="trust-line">Built by <strong>Sebastian Messerer</strong>, formerly Senior Content Strategist at Amazon, where he built an AI-driven communications planning tool used in 13 countries.</p>
       </div>
     </section>
 
@@ -1660,13 +1657,6 @@
         var cap = document.getElementById("lanes-cap");
         if (!svg || !cap) return;
         var NS = "http://www.w3.org/2000/svg";
-        // Narrow screens get a narrower drawing so the labels stay readable
-        // instead of shrinking with the whole picture.
-        var W = svg.getBoundingClientRect().width < 600 ? 460 : 900;
-        var NARROW = W < 900;
-        svg.setAttribute("viewBox", "0 0 " + W + (NARROW ? " 290" : " 270"));
-        if (NARROW) svg.classList.add("narrow");
-        var X0 = W < 900 ? 8 : 30, X1 = W - X0;
         // One lane per audience. `stall` is where they stop (null = they get through).
         var LANES = [
           { y: 50, label: "Trial users", steps: ["Sign up", "Connect data", "Use it weekly", "Pay"], stall: null,
@@ -1678,7 +1668,26 @@
             say: "<b>Customers who never invite a teammate</b> stall between onboarding and renewal. They renew at 61 %, against 88 % for teams.",
             key: "SC-2", fix: "An &lsquo;invite your team&rsquo; email series in week two." }
         ];
-        var IN = W < 900 ? 40 : 80, stepX = function (i) { return X0 + IN + i * ((X1 - X0 - IN * 1.5) / 3); };
+        var fixCap = function (l) { return '<span class="k">' + l.key + "</span>" + l.fix; };
+
+        // Every caption is rendered once and stacked in one cell; showing one
+        // is a class toggle, so the box never changes height mid-loop.
+        var CAPS = [];
+        LANES.forEach(function (l) { CAPS.push(l.say); if (l.key) CAPS.push(fixCap(l)); });
+        CAPS.push(LANES.filter(function (l) { return l.key; }).map(fixCap).join("<br>"));
+        var capEls = CAPS.map(function (html) {
+          var e = document.createElement("span"); e.innerHTML = html; cap.appendChild(e); return e;
+        });
+        function setCap(html) {
+          capEls.forEach(function (e, i) { e.classList.toggle("on", CAPS[i] === html); });
+          return wait(300);
+        }
+
+        // Geometry depends on the drawing's width: narrow screens get a narrower
+        // drawing so the labels stay readable instead of shrinking with it.
+        var W, NARROW, X0, X1, IN, parts;
+        function stepX(i) { return X0 + IN + i * ((X1 - X0 - IN * 1.5) / 3); }
+        function stallX(l) { return (stepX(l.stall - 1) + stepX(l.stall)) / 2; }
         function make(tag, attrs, parent) {
           var e = document.createElementNS(NS, tag);
           for (var k in attrs) e.setAttribute(k, attrs[k]);
@@ -1686,28 +1695,32 @@
           return e;
         }
         function text(t, attrs, parent) { var e = make("text", attrs, parent); e.textContent = t; return e; }
-        function stallX(l) { return (stepX(l.stall - 1) + stepX(l.stall)) / 2; }
+        function wantNarrow() { return svg.getBoundingClientRect().width < 600; }
 
-        // Static scaffolding: every lane drawn grey, filled in as the story reaches it.
-        var parts = LANES.map(function (l) {
-          var g = make("g", {});
-          text(l.label, { x: X0, y: l.y - (NARROW ? 22 : 18), "class": "lbl" }, g);
-          // A stalled lane is two segments: the part they get through, and the
-          // part after the stall that stays grey until a campaign bridges it.
-          var cut = l.stall === null ? X1 : stallX(l);
-          var line = make("line", { x1: X0, y1: l.y, x2: cut, y2: l.y, "class": "ln pending" }, g);
-          if (cut < X1) make("line", { x1: cut, y1: l.y, x2: X1, y2: l.y, "class": "ln pending" }, g);
-          var ticks = (NARROW && l.short ? l.short : l.steps).map(function (s, i) {
-            text(s, { x: stepX(i), y: l.y + (NARROW ? 32 : 24), "class": "stp", "text-anchor": "middle" }, g);
-            return make("circle", { cx: stepX(i), cy: l.y, r: 5, "class": "tick pending" }, g);
-          }).filter(function (t, i) { return stepX(i) < cut; });
-          return { g: g, line: line, ticks: ticks };
-        });
-
-        function setCap(html) {
-          cap.classList.add("fade");
-          return wait(300).then(function () { cap.innerHTML = html; cap.classList.remove("fade"); });
+        function build() {
+          NARROW = wantNarrow();
+          W = NARROW ? 460 : 900;
+          X0 = NARROW ? 8 : 30; X1 = W - X0; IN = NARROW ? 40 : 80;
+          svg.textContent = "";
+          svg.setAttribute("viewBox", "0 0 " + W + (NARROW ? " 290" : " 270"));
+          svg.classList.toggle("narrow", NARROW);
+          // Static scaffolding: every lane drawn grey, filled in as the story reaches it.
+          parts = LANES.map(function (l) {
+            var g = make("g", {});
+            text(l.label, { x: X0, y: l.y - (NARROW ? 22 : 18), "class": "lbl" }, g);
+            // A stalled lane is two segments: the part they get through, and the
+            // part after the stall that stays grey until a campaign bridges it.
+            var cut = l.stall === null ? X1 : stallX(l);
+            var line = make("line", { x1: X0, y1: l.y, x2: cut, y2: l.y, "class": "ln pending" }, g);
+            if (cut < X1) make("line", { x1: cut, y1: l.y, x2: X1, y2: l.y, "class": "ln pending" }, g);
+            var ticks = (NARROW && l.short ? l.short : l.steps).map(function (s, i) {
+              text(s, { x: stepX(i), y: l.y + (NARROW ? 32 : 24), "class": "stp", "text-anchor": "middle" }, g);
+              return make("circle", { cx: stepX(i), cy: l.y, r: 5, "class": "tick pending" }, g);
+            }).filter(function (t, i) { return stepX(i) < cut; });
+            return { g: g, line: line, ticks: ticks };
+          });
         }
+
         function wait(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
         function travel(dot, y, from, to, ms) {
           return new Promise(function (resolve) {
@@ -1741,30 +1754,34 @@
           make("rect", { x: X1 - pw, y: l.y - ph - 12, width: pw, height: ph, rx: 4 }, pin);
           text(l.key, { x: X1 - pw / 2, y: l.y - 12 - ph / 2 + (NARROW ? 6 : 4), "text-anchor": "middle" }, pin);
         }
-        function reset() {
-          svg.querySelectorAll(".xm, .bridge, .pin, .dot").forEach(function (e) { e.remove(); });
-          parts.forEach(function (p) {
-            p.g.querySelectorAll(".ln, .tick").forEach(function (e) { e.setAttribute("class", e.getAttribute("class").split(" ")[0] + " pending"); });
-            p.ticks.forEach(function (t) { t.setAttribute("class", "tick pending"); });
-          });
-        }
         function finalFrame() {
           parts.forEach(function (p, i) {
             var l = LANES[i]; solid(p);
             if (l.stall !== null) { cross(p, stallX(l), l.y); bridge(p, l); }
           });
-          cap.innerHTML = LANES.filter(function (l) { return l.key; })
-            .map(function (l) { return '<span class="k">' + l.key + '</span>' + l.fix; }).join("<br>");
+          setCap(CAPS[CAPS.length - 1]);
         }
 
-        if (REDUCED_MOTION) { finalFrame(); return; }
+        build();
+        if (REDUCED_MOTION) {
+          finalFrame();
+          window.addEventListener("resize", function () { if (wantNarrow() !== NARROW) { build(); finalFrame(); } });
+          return;
+        }
 
-        function run() {
-          reset();
-          var chain = Promise.resolve();
+        // The loop only advances while the figure is on screen, and a layout
+        // change (rotate, resize across the breakpoint) restarts it on a fresh
+        // drawing. `gen` retires the old loop: every step checks it first.
+        var gen = 0, visible = false, waiters = [];
+        function whenVisible() {
+          return visible ? Promise.resolve() : new Promise(function (r) { waiters.push(r); });
+        }
+        function run(g) {
+          var chain = whenVisible();
           LANES.forEach(function (l, i) {
-            var p = parts[i];
-            chain = chain.then(function () {
+            chain = chain.then(function () { return whenVisible(); }).then(function () {
+              if (g !== gen) throw g;
+              var p = parts[i];
               solid(p);
               var dot = make("circle", { cx: X0, cy: l.y, r: 9, "class": "dot" });
               if (l.stall === null) {
@@ -1774,26 +1791,28 @@
               }
               var sx = stallX(l);
               return travel(dot, l.y, X0, sx - 20, 1100)
-                .then(function () { cross(p, sx, l.y); return setCap(l.say); })
+                .then(function () { if (g !== gen) throw g; cross(p, sx, l.y); return setCap(l.say); })
                 .then(function () { return wait(3200); })
-                .then(function () {
-                  bridge(p, l);
-                  return setCap('<span class="k">' + l.key + "</span>" + l.fix);
-                })
+                .then(function () { if (g !== gen) throw g; bridge(p, l); return setCap(fixCap(l)); })
                 .then(function () { return travel(dot, l.y, sx - 20, X1, 1500); })
                 .then(function () { return wait(2200); })
                 .then(function () { dot.remove(); });
             });
           });
-          chain.then(function () { return wait(1200); }).then(run);
+          chain.then(function () { return wait(1200); })
+            .then(function () { if (g !== gen) throw g; build(); run(g); })
+            .catch(function () { /* a retired loop stops here */ });
         }
-        // Start when the figure is first on screen.
+        function restart() { gen += 1; build(); run(gen); }
+        window.addEventListener("resize", function () { if (wantNarrow() !== NARROW) restart(); });
+
         if ("IntersectionObserver" in window) {
-          var io = new IntersectionObserver(function (es) {
-            if (es.some(function (e) { return e.isIntersecting; })) { io.disconnect(); run(); }
-          });
-          io.observe(svg);
-        } else { run(); }
+          new IntersectionObserver(function (es) {
+            visible = es.some(function (e) { return e.isIntersecting; });
+            if (visible) { var w = waiters; waiters = []; w.forEach(function (r) { r(); }); }
+          }).observe(svg);
+        } else { visible = true; }
+        run(gen);
       })();
 
       /* ================= Demo ================= */
