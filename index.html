@@ -1674,7 +1674,7 @@
           // The lock only holds for the width it was measured at; a width
           // change mid-cycle ends the cycle on the final phrase. Height-only
           // resizes (mobile toolbars on scroll) don't change the wrap.
-          if (lockWidth && window.innerWidth !== lockWidth) settle();
+          if (window.innerWidth !== lockWidth) settle();
         });
 
         if (REDUCED_MOTION) { settle(); return; }
@@ -1695,6 +1695,7 @@
           lockWidth = window.innerWidth;
           h1.style.minHeight = h1.offsetHeight + "px";
         }
+        cycle.textContent = WORDS[WORDS.length - 1];
         lock();
         cycle.textContent = WORDS[0];
         timer = setTimeout(next, 850);
