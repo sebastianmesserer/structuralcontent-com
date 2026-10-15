@@ -1643,7 +1643,7 @@
         }
 
         var WORDS = ["lead generation", "lead conversion", "activation", "retention", "expansion", "your strategic priorities"];
-        var settled = false, timer;
+        var settled = false, timer, i = 0;
         function settle() {
           settled = true;
           clearTimeout(timer);
@@ -1675,16 +1675,24 @@
             else settle();
           }, 220);
         }
-        var i = 0;
         // Lock the height measured with the final (longest) phrase so the
-        // shorter cycling words don't reflow the page; measured once the web
-        // fonts are in, since the fallback font can wrap differently.
-        (document.fonts ? document.fonts.ready : Promise.resolve()).then(function () {
-          if (settled) return;
+        // shorter cycling words don't reflow the page.
+        function lock() {
           lockWidth = window.innerWidth;
           h1.style.minHeight = h1.offsetHeight + "px";
-          cycle.textContent = WORDS[0];
-          timer = setTimeout(next, 850);
+        }
+        lock();
+        cycle.textContent = WORDS[0];
+        timer = setTimeout(next, 850);
+        // The fallback font can wrap differently: re-measure with the final
+        // phrase once the web fonts are in (one task, so nothing paints).
+        if (document.fonts) document.fonts.ready.then(function () {
+          if (settled) return;
+          var word = cycle.textContent;
+          h1.style.minHeight = "";
+          cycle.textContent = WORDS[WORDS.length - 1];
+          lock();
+          cycle.textContent = word;
         });
       })();
 
