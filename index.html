@@ -1645,6 +1645,9 @@
         var settled = false;
         function settle() {
           settled = true;
+          // The cycle is over: release the height lock so the H1 reflows
+          // with the window (rotation, resize) instead of keeping a stale height.
+          h1.style.minHeight = "";
           setTimeout(function () { drawUnderline(!REDUCED_MOTION); }, 200);
         }
         window.addEventListener("resize", function () {
