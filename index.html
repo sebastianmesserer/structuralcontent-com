@@ -1643,7 +1643,13 @@
         }
 
         var WORDS = ["lead generation", "lead conversion", "activation", "retention", "expansion", "your strategic priorities"];
-        var settled = false, timer, i = 0;
+        var settled = false, timer, i = 0, raf;
+        // Reading layout first makes the H1's web fonts start loading, so
+        // fonts.ready covers them rather than resolving on an idle font set.
+        function fontsReady() {
+          h1.offsetHeight;
+          return document.fonts ? document.fonts.ready : Promise.resolve();
+        }
         function settle() {
           settled = true;
           clearTimeout(timer);
@@ -1652,11 +1658,19 @@
           // The cycle is over: release the height lock so the H1 reflows
           // with the window (rotation, resize) instead of keeping a stale height.
           h1.style.minHeight = "";
-          setTimeout(function () { drawUnderline(!REDUCED_MOTION); }, 200);
+          // Draw in the final font: a stroke drawn before the swap would sit
+          // on the fallback font's line boxes.
+          fontsReady().then(function () {
+            setTimeout(function () { drawUnderline(!REDUCED_MOTION); }, 200);
+          });
         }
         var lockWidth = 0;
         window.addEventListener("resize", function () {
-          if (settled) { drawUnderline(false); return; }
+          if (settled) {
+            cancelAnimationFrame(raf);
+            raf = requestAnimationFrame(function () { drawUnderline(false); });
+            return;
+          }
           // The lock only holds for the width it was measured at; a width
           // change mid-cycle ends the cycle on the final phrase. Height-only
           // resizes (mobile toolbars on scroll) don't change the wrap.
@@ -1686,7 +1700,7 @@
         timer = setTimeout(next, 850);
         // The fallback font can wrap differently: re-measure with the final
         // phrase once the web fonts are in (one task, so nothing paints).
-        if (document.fonts) document.fonts.ready.then(function () {
+        fontsReady().then(function () {
           if (settled) return;
           var word = cycle.textContent;
           h1.style.minHeight = "";
