@@ -1642,34 +1642,73 @@
           });
         }
 
-        var settled = false;
+        var WORDS = ["lead generation", "lead conversion", "activation", "retention", "expansion", "your strategic priorities"];
+        var settled = false, timer, i = 0, raf;
+        // Reading layout first makes the H1's web fonts start loading, so
+        // fonts.ready covers them rather than resolving on an idle font set.
+        function fontsReady() {
+          h1.offsetHeight;
+          return document.fonts ? document.fonts.ready : Promise.resolve();
+        }
         function settle() {
           settled = true;
-          setTimeout(function () { drawUnderline(!REDUCED_MOTION); }, 200);
+          clearTimeout(timer);
+          cycle.textContent = WORDS[WORDS.length - 1];
+          cycle.classList.remove("fade");
+          // The cycle is over: release the height lock so the H1 reflows
+          // with the window (rotation, resize) instead of keeping a stale height.
+          h1.style.minHeight = "";
+          // Draw in the final font: a stroke drawn before the swap would sit
+          // on the fallback font's line boxes.
+          fontsReady().then(function () {
+            setTimeout(function () { drawUnderline(!REDUCED_MOTION); }, 200);
+          });
         }
+        var lockWidth = 0;
         window.addEventListener("resize", function () {
-          if (settled) drawUnderline(false);
+          if (settled) {
+            cancelAnimationFrame(raf);
+            raf = requestAnimationFrame(function () { drawUnderline(false); });
+            return;
+          }
+          // The lock only holds for the width it was measured at; a width
+          // change mid-cycle ends the cycle on the final phrase. Height-only
+          // resizes (mobile toolbars on scroll) don't change the wrap.
+          if (window.innerWidth !== lockWidth) settle();
         });
 
         if (REDUCED_MOTION) { settle(); return; }
 
-        var WORDS = ["lead generation", "lead conversion", "activation", "retention", "expansion", "your strategic priorities"];
-        // Lock the height measured with the final (longest) phrase so the
-        // shorter cycling words don't reflow the page.
-        h1.style.minHeight = h1.offsetHeight + "px";
-        var i = 0;
-        cycle.textContent = WORDS[0];
         function next() {
           cycle.classList.add("fade");
-          setTimeout(function () {
+          timer = setTimeout(function () {
             i += 1;
             cycle.textContent = WORDS[i];
             cycle.classList.remove("fade");
-            if (i < WORDS.length - 1) setTimeout(next, 850);
+            if (i < WORDS.length - 1) timer = setTimeout(next, 850);
             else settle();
           }, 220);
         }
-        setTimeout(next, 850);
+        // Lock the height measured with the final (longest) phrase so the
+        // shorter cycling words don't reflow the page.
+        function lock() {
+          lockWidth = window.innerWidth;
+          h1.style.minHeight = h1.offsetHeight + "px";
+        }
+        cycle.textContent = WORDS[WORDS.length - 1];
+        lock();
+        cycle.textContent = WORDS[0];
+        timer = setTimeout(next, 850);
+        // The fallback font can wrap differently: re-measure with the final
+        // phrase once the web fonts are in (one task, so nothing paints).
+        fontsReady().then(function () {
+          if (settled) return;
+          var word = cycle.textContent;
+          h1.style.minHeight = "";
+          cycle.textContent = WORDS[WORDS.length - 1];
+          lock();
+          cycle.textContent = word;
+        });
       })();
 
       /* ================= Demo ================= */
