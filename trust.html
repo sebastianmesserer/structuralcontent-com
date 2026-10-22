@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Data Handling – Structural Content</title>
+  <meta name="description" content="How Structural Content handles the data exports you send for a pilot: what you send, where it is processed, who can see it, and when it is deleted." />
+  <meta name="theme-color" content="#F7F5F0" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/svg+xml" href="/Media/logo/sc-favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/Media/logo/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/Media/logo/apple-touch-icon.png" />
+
+  <link rel="preload" href="/Media/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/Media/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+
+  <style>
+    /* Self-hosted fonts (no external CDN; see privacy.html) */
+    @font-face {
+      font-family: "Fraunces"; font-style: normal; font-weight: 400 600; font-display: swap;
+      src: url("/Media/fonts/fraunces-latin.woff2") format("woff2");
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    @font-face {
+      font-family: "Fraunces"; font-style: normal; font-weight: 400 600; font-display: swap;
+      src: url("/Media/fonts/fraunces-latin-ext.woff2") format("woff2");
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+    @font-face {
+      font-family: "Inter"; font-style: normal; font-weight: 400 600; font-display: swap;
+      src: url("/Media/fonts/inter-latin.woff2") format("woff2");
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    @font-face {
+      font-family: "Inter"; font-style: normal; font-weight: 400 600; font-display: swap;
+      src: url("/Media/fonts/inter-latin-ext.woff2") format("woff2");
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+    :root {
+      --stone:        #F7F5F0;
+      --charcoal:     #1F1D1A;
+      --charcoal-soft:#403C36;
+      --muted:        #6B665D;
+      --accent:       #1F5E55;
+      --accent-deep:  #184a43;
+      --line:         #E3DFD6;
+      --serif: "Fraunces", Georgia, "Times New Roman", serif;
+      --sans:  "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      /* page-local roles, mapped onto the site palette */
+      --bg: var(--stone);
+      --band: #EFECE4;
+      --ink: var(--charcoal);
+      --accent-ink: #FFFFFF;
+      --inc: #1F5E55;  --chip-inc: #DDEAE6;
+      --exc: #9A3A2C;  --chip-exc: #F3E1DC;
+      --opt: #7A5A12;  --chip-opt: #F1E8D2;
+      --display: var(--serif);
+      --body: var(--sans);
+      --mono: ui-monospace, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--stone); color: var(--charcoal);
+      font-family: var(--sans); font-size: 17px; line-height: 1.65;
+      -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent-deep); text-decoration: underline; text-underline-offset: 3px; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 0 28px; }
+    @media (max-width: 480px) { .wrap { padding: 0 18px; } }
+
+    .site-header { border-bottom: 1px solid var(--line); }
+    .site-header .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 16px; }
+    .wordmark { font-family: var(--serif); font-weight: 600; font-size: 1.15rem; color: var(--charcoal); letter-spacing: -0.01em; white-space: nowrap; }
+    .wordmark:hover { text-decoration: none; color: var(--charcoal); }
+    .head-right { display: flex; align-items: center; gap: 18px; }
+    .back { font-size: 0.95rem; font-weight: 500; }
+    .back::before { content: "\2190 "; }
+    @media (max-width: 480px) { .back { display: none; } }
+
+    .lede, .promise dd, ol.steps p, td, details p { color: var(--charcoal-soft); }
+
+    .site-footer { padding: 40px 0; border-top: 1px solid var(--line); margin-top: 56px; }
+    .site-footer .wrap { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 10px 28px; }
+    .site-footer .fw { font-family: var(--serif); font-weight: 600; color: var(--charcoal); }
+    .site-footer .meta { font-size: 0.9rem; color: var(--muted); }
+    .site-footer .foot-link { color: var(--accent); }
+    .site-footer .foot-link:hover { color: var(--accent-deep); }
+
+.lang { display: flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.lang button { font: inherit; font-size: 13px; font-weight: 600; padding: 4px 12px; background: transparent; color: var(--muted); border: 0; cursor: pointer; }
+.lang button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.lang button:focus-visible, .copy:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.band { background: var(--band); padding-block: 40px 48px; border-block: 1px solid var(--line); }
+.eyebrow { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: var(--accent); }
+h1 { font-family: var(--display); font-size: clamp(30px, 6vw, 42px); line-height: 1.12; font-weight: 500; margin: 8px 0 12px; text-wrap: balance; letter-spacing: -.01em; }
+h2 { font-family: var(--display); font-size: 24px; line-height: 1.25; font-weight: 600; letter-spacing: -0.01em; margin: 0 0 12px; text-wrap: balance; }
+h3 { font-size: 17px; font-weight: 600; margin: 0 0 4px; }
+p { margin: 0 0 12px; max-width: 65ch; }
+.lede { font-size: 18px; color: var(--muted); }
+section.block { display: grid; gap: 14px; padding-block: 28px 0; }
+
+.promises { display: grid; gap: 0; border-top: 1px solid var(--line); }
+.promise { display: grid; grid-template-columns: 9.5em 1fr; gap: 16px; padding-block: 14px; border-bottom: 1px solid var(--line); }
+.promise dt { font-weight: 600; }
+.promise dd { margin: 0; min-width: 0; }
+@media (max-width: 560px) { .promise { grid-template-columns: 1fr; gap: 2px; } }
+
+ol.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; counter-reset: s; }
+ol.steps li { counter-increment: s; display: grid; grid-template-columns: 36px 1fr; gap: 14px; }
+ol.steps li::before { content: counter(s); width: 32px; height: 32px; border-radius: 50%; background: var(--accent); color: var(--accent-ink); font-weight: 600; display: grid; place-items: center; font-variant-numeric: tabular-nums; }
+ol.steps li > div { min-width: 0; }
+ol.steps p { margin: 0; color: var(--muted); }
+
+.mail { background: var(--bg); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.mail-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 14px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+.mail-head span { font-size: 13px; font-weight: 600; color: var(--muted); }
+.copy { font: inherit; font-size: 14px; font-weight: 600; padding: 6px 14px; border-radius: 6px; border: 0; background: var(--accent); color: var(--accent-ink); cursor: pointer; }
+.mail pre { margin: 0; padding: 14px; white-space: pre-wrap; font-family: var(--body); font-size: 15px; line-height: 1.55; }
+
+.divider { padding-block: 44px 8px; }
+.divider .rule { border-top: 3px solid var(--ink); padding-top: 14px; }
+
+table { border-collapse: collapse; width: 100%; font-size: 15px; }
+.scroll { overflow-x: auto; }
+th, td { text-align: left; vertical-align: top; padding: 10px 12px 10px 0; border-bottom: 1px solid var(--line); }
+th { font-weight: 600; }
+.glance th { width: 34%; font-weight: 600; color: var(--muted); }
+
+.flow { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.flow li { display: grid; grid-template-columns: 22px 1fr; gap: 12px; position: relative; padding-bottom: 16px; }
+.flow li::before { content: ""; width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--accent); background: var(--bg); margin-top: 6px; z-index: 1; }
+.flow li:not(:last-child)::after { content: ""; position: absolute; left: 7px; top: 20px; bottom: 0; width: 2px; background: var(--line); }
+.flow li > div { min-width: 0; }
+.flow b { display: block; }
+.flow span { color: var(--muted); font-size: 15px; }
+.where { font-family: var(--mono); font-size: 12px; color: var(--accent); }
+
+.spec td:first-child { font-weight: 600; white-space: nowrap; }
+.chip { display: inline-block; font-size: 12px; font-weight: 600; padding: 1px 8px; border-radius: 4px; white-space: nowrap; }
+.chip.inc { background: var(--chip-inc); color: var(--inc); }
+.chip.exc { background: var(--chip-exc); color: var(--exc); }
+.chip.opt { background: var(--chip-opt); color: var(--opt); }
+.spec caption { text-align: left; font-weight: 600; padding-bottom: 6px; }
+
+details { border-bottom: 1px solid var(--line); padding-block: 12px; }
+details summary { cursor: pointer; font-weight: 600; }
+details p { margin: 8px 0 0; color: var(--muted); }
+
+.docs { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.doc { border: 1px solid var(--line); border-radius: 8px; padding: 14px; }
+.doc p { margin: 0; color: var(--muted); font-size: 14px; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a href="index.html" class="wordmark">Structural Content</a>
+      <div class="head-right">
+        <a href="index.html" class="back">Back to home</a>
+        <div class="lang" role="group" aria-label="Language">
+          <button id="btn-en" aria-pressed="true" data-set="en">EN</button>
+          <button id="btn-de" aria-pressed="false" data-set="de">DE</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+<!-- ============================== ENGLISH ============================== -->
+<div data-l="en">
+<div class="band"><div class="wrap">
+  <div class="eyebrow">Data exports · campaign briefs</div>
+  <h1>Sending us a data snapshot</h1>
+  <p class="lede">You send us exports from the systems that hold the story behind your business priority. We send back campaign briefs for your team. This page shows how we keep that safe, and everything your IT or privacy team will want to check. For your pilot you get your own version, with your sources and your column lists.</p>
+
+  <section class="block">
+    <h2>Why this is safe for you</h2>
+    <dl class="promises">
+      <div class="promise"><dt>You choose what leaves</dt><dd>You export only the columns on our list. Names, email addresses and your colleagues' names stay in your system, apart from what free-text fields hold if you choose to send them. We set up the export with you once, on a call in your own meeting tool.</dd></div>
+      <div class="promise"><dt>It stays in the EU</dt><dd>Your file is stored in Frankfurt, read on an encrypted company laptop that stays in the EU, and analysed by AI in EU data centres. It is used for one thing: your briefs. The AI service keeps nothing and learns nothing from it.</dd></div>
+      <div class="promise"><dt>It gets deleted</dt><dd>We delete your data and everything made from it within 30 days of the pilot ending, and confirm that to you in writing.</dd></div>
+      <div class="promise"><dt>It is covered by contract</dt><dd>A data processing agreement (AVV), the same paperwork your company signs for any software tool. Ours comes filled in, ready to sign.</dd></div>
+    </dl>
+  </section>
+
+  <section class="block">
+    <h2>What you do</h2>
+    <ol class="steps">
+      <li><div><h3>Forward this page to IT or privacy</h3><p>Every company checks a new data partner. That check is normal and usually quick, because everything they need is on this page. The email below is ready to send.</p></div></li>
+      <li><div><h3>Sign the AVV</h3><p>We send it filled in with your company's details. Your privacy team reviews it, someone authorised signs it.</p></div></li>
+      <li><div><h3>Set up the export with us</h3><p>On a call in your own meeting tool, we build a saved report or view in each agreed system with only the agreed columns. After that, each export is one click.</p></div></li>
+      <li><div><h3>Upload it</h3><p>You get a private upload link that expires after 7 days. Drop the file in. No email attachments, nothing to install.</p></div></li>
+    </ol>
+  </section>
+
+  <section class="block">
+    <h2>The email to forward</h2>
+    <div class="mail">
+      <div class="mail-head"><span>Copy, adjust the names, send</span><button class="copy" id="copy-en" data-target="mail-en">Copy email</button></div>
+<pre id="mail-en">Subject: Data processing check: Structural Content pilot
+
+Hi [name],
+
+We'd like to run a pilot with Structural Content. We send them exports from [the agreed systems] and they send back campaign briefs for our marketing team.
+
+Before we send anything, could you check the setup? Everything is on one page, including the data flow, the exact columns we'd export, where the data is processed and when it is deleted:
+
+https://structuralcontent.com/trust.html
+
+They provide a pre-filled data processing agreement (AVV) for us to sign. The export leaves out name, email address and employee columns. Processing happens in the EU, and the data is deleted within 30 days of the pilot ending.
+
+If you have questions, their contact is sebastian@structuralcontent.com.
+
+Thanks,
+[your name]</pre>
+    </div>
+  </section>
+</div></div>
+
+<div class="wrap">
+  <div class="divider"><div class="rule">
+    <div class="eyebrow">For IT, security and data protection</div>
+    <h2>Review details</h2>
+    <p>Structural Content acts as your processor under Art. 28 GDPR. You remain the controller. The pilot uses file exports only: no logins, API access or connectors to your systems.</p>
+  </div></div>
+
+  <section class="block">
+    <h2>At a glance</h2>
+    <div class="scroll"><table class="glance"><tbody>
+      <tr><th>Processor</th><td>Structural Content UG (haftungsbeschränkt), Kollwitzstraße 76, 10435 Berlin. HRB 291186 B, Amtsgericht Charlottenburg</td></tr>
+      <tr><th>Purpose</th><td>Deriving campaign briefs for your marketing team from the snapshot you supply. No other purpose.</td></tr>
+      <tr><th>Data received</th><td>File exports you create, limited to the agreed columns (see the field list below). Upload or file transfer only.</td></tr>
+      <tr><th>Storage</th><td>Amazon S3, eu-central-1 (Frankfurt). Private bucket, encrypted at rest, access limited to named Structural Content staff.</td></tr>
+      <tr><th>Processing</th><td>Run from one company laptop with full-disk encryption (FileVault), used only by named staff and only within the EU. AI inference through Amazon Bedrock, EU cross-region inference profile: EU regions only.</td></tr>
+      <tr><th>Sub-processor</th><td>Amazon Web Services EMEA SARL, Luxembourg (storage and AI inference). The only one.</td></tr>
+      <tr><th>AI model use</th><td>Bedrock is set to zero data retention: the model service stores no inputs or outputs. Your data is never used to train any model.</td></tr>
+      <tr><th>Retention</th><td>For the duration of the pilot. Deleted within 30 days of its end, including everything derived from it, with written confirmation.</td></tr>
+      <tr><th>Record keeping</th><td>We log every snapshot: what was received, from which system, when, and when it was deleted. You can ask to see it at any time.</td></tr>
+      <tr><th>Encryption</th><td>TLS in transit on every leg. Encrypted at rest in S3 and on the laptop.</td></tr>
+      <tr><th>Breach notice</th><td>Within 24 hours of becoming aware, with what happened, what data is affected and what we are doing about it.</td></tr>
+      <tr><th>Personal data</th><td>We treat the export as personal data even after names are removed. That is why an AVV is in place.</td></tr>
+      <tr><th>Certifications</th><td>None held yet (ISO 27001, SOC 2). In their place you get the full AVV and technical measures for direct review.</td></tr>
+      <tr><th>AI transparency</th><td>Every brief is marked as AI-generated (EU AI Act Art. 50).</td></tr>
+    </tbody></table></div>
+  </section>
+
+  <section class="block">
+    <h2>How the data moves</h2>
+    <ol class="flow">
+      <li><div><b>You export</b><span>A saved report in your system, limited to the agreed columns.</span><div class="where">your system</div></div></li>
+      <li><div><b>You upload</b><span>Through a private link that expires after 7 days. TLS.</span><div class="where">→ Amazon S3 · Frankfurt</div></div></li>
+      <li><div><b>We process</b><span>The file is read on an encrypted company laptop in the EU and sent to the AI model for analysis.</span><div class="where">→ Amazon Bedrock · EU regions · zero retention</div></div></li>
+      <li><div><b>We deliver</b><span>Campaign briefs as a CSV file for your task tracker, through the same kind of private link.</span><div class="where">→ your team</div></div></li>
+      <li><div><b>We delete</b><span>The snapshot and everything made from it, within 30 days of the pilot ending. Confirmed in writing.</span><div class="where">S3 + laptop</div></div></li>
+    </ol>
+  </section>
+
+  <section class="block">
+    <h2>Which columns</h2>
+    <p>Which systems matter depends on your priority: CRM, call recordings, support, product usage, surveys, chat or project tools, or whatever else holds the story. For each one you get a column list, and it doubles as the checklist we use to build the export with you. Every column falls into one of five groups:</p>
+    <div class="scroll"><table class="spec">
+      <thead><tr><th>Group</th><th></th><th>Examples</th></tr></thead>
+      <tbody>
+        <tr><td>Business facts</td><td><span class="chip inc">include</span></td><td>Stages, amounts, dates, categories, tags, reasons won or lost, plan or segment, usage counts, company name</td></tr>
+        <tr><td>IDs</td><td><span class="chip inc">include</span></td><td>Record and company IDs, so records from different systems can be linked</td></tr>
+        <tr><td>People</td><td><span class="chip exc">exclude</span></td><td>Names, email addresses, phone numbers of contacts and customers</td></tr>
+        <tr><td>Your staff</td><td><span class="chip exc">exclude</span></td><td>Owner, assignee, created-by, team or agent fields</td></tr>
+        <tr><td>Free text</td><td><span class="chip opt">your choice</span></td><td>Notes, descriptions, transcripts, comments</td></tr>
+      </tbody>
+    </table></div>
+    <p>Free text makes the briefs noticeably better, because we can quote what customers actually said. It can also contain names someone typed in. You decide per source.</p>
+    <p>Without free text, no staff data leaves your systems, so the pilot cannot be used to monitor your employees' performance. In German companies that usually keeps the works council (§ 87(1) no. 6 BetrVG) out of scope. If you include free text such as call transcripts, remove agent names first, and we will help you set that up.</p>
+  </section>
+
+  <section class="block">
+    <h2>Documents</h2>
+    <div class="docs">
+      <div class="doc"><h3>AVV (Art. 28 GDPR)</h3><p>Pre-filled with your company's details, sent for signature.</p></div>
+      <div class="doc"><h3>Technical and organisational measures</h3><p>Annex to the AVV, Art. 32 GDPR.</p></div>
+      <div class="doc"><h3>Sub-processor list</h3><p>Annex to the AVV. One entry: AWS EMEA SARL.</p></div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Questions reviewers usually ask</h2>
+    <div>
+      <details><summary>Is the export anonymised?</summary><p>No. Removing names makes it pseudonymised, which is still personal data under GDPR. We treat it that way, which is why the AVV applies.</p></details>
+      <details><summary>Who can see our data?</summary><p>Named Structural Content staff, for the purpose of running your pilot. Currently that is one person, the managing director. The AI service processes it in memory and keeps nothing.</p></details>
+      <details><summary>Does the AI provider train on our data?</summary><p>No. Amazon Bedrock does not use inputs or outputs to train models, and our account is set to zero data retention.</p></details>
+      <details><summary>Does data leave the EU?</summary><p>No. Storage is in Frankfurt, the company laptop that reads the files stays in the EU, and AI inference uses AWS's EU cross-region profile, which routes only within EU regions.</p></details>
+      <details><summary>Do you need access to our systems?</summary><p>No. You export files and upload them. There are no logins, API keys or connectors.</p></details>
+      <details><summary>What if we stop the pilot early?</summary><p>Tell us and we delete within 30 days of that date, and confirm in writing.</p></details>
+      <details><summary>Can we audit you?</summary><p>Yes, under the AVV. You can also ask for the snapshot log at any time.</p></details>
+    </div>
+  </section>
+</div>
+</div>
+
+<!-- ============================== DEUTSCH ============================== -->
+<div data-l="de" hidden>
+<div class="band"><div class="wrap">
+  <div class="eyebrow">Datenexporte · Kampagnen-Briefings</div>
+  <h1>Einen Datenauszug an uns senden</h1>
+  <p class="lede">Sie schicken uns Exporte aus den Systemen, in denen die Geschichte hinter Ihrer Geschäftspriorität steht. Wir schicken Kampagnen-Briefings für Ihr Team zurück. Diese Seite zeigt, wie wir das sicher machen, und alles, was Ihre IT oder Ihr Datenschutz prüfen möchte. Für Ihren Pilot erhalten Sie eine eigene Fassung mit Ihren Quellen und Ihren Spaltenlisten.</p>
+
+  <section class="block">
+    <h2>Warum das für Sie sicher ist</h2>
+    <dl class="promises">
+      <div class="promise"><dt>Sie bestimmen, was rausgeht</dt><dd>Sie exportieren nur die Spalten auf unserer Liste. Namen, E-Mail-Adressen und die Namen Ihrer Kolleg:innen bleiben in Ihrem System, abgesehen von dem, was Freitextfelder enthalten, falls Sie diese mitschicken. Den Export richten wir einmal gemeinsam ein, in einem Call über Ihr eigenes Meeting-Tool.</dd></div>
+      <div class="promise"><dt>Es bleibt in der EU</dt><dd>Ihre Datei liegt in Frankfurt, wird auf einem verschlüsselten Firmen-Laptop gelesen, der in der EU bleibt, und von der KI in EU-Rechenzentren analysiert. Sie dient einem einzigen Zweck: Ihren Briefings. Der KI-Dienst speichert nichts davon und lernt nichts daraus.</dd></div>
+      <div class="promise"><dt>Es wird gelöscht</dt><dd>Wir löschen Ihre Daten und alles daraus Erstellte innerhalb von 30 Tagen nach Pilotende und bestätigen Ihnen das schriftlich.</dd></div>
+      <div class="promise"><dt>Es ist vertraglich geregelt</dt><dd>Ein Auftragsverarbeitungsvertrag (AVV), wie ihn Ihr Unternehmen für jedes Software-Tool abschließt. Unserer kommt ausgefüllt und unterschriftsreif.</dd></div>
+    </dl>
+  </section>
+
+  <section class="block">
+    <h2>Was Sie tun</h2>
+    <ol class="steps">
+      <li><div><h3>Diese Seite an IT oder Datenschutz weiterleiten</h3><p>Jedes Unternehmen prüft einen neuen Datenpartner. Diese Prüfung ist normal und meist schnell, weil alles Nötige auf dieser Seite steht. Die E-Mail unten ist versandfertig.</p></div></li>
+      <li><div><h3>Den AVV unterschreiben</h3><p>Wir schicken ihn mit Ihren Firmendaten ausgefüllt. Ihr Datenschutz prüft, eine berechtigte Person unterschreibt.</p></div></li>
+      <li><div><h3>Den Export mit uns einrichten</h3><p>In einem Call über Ihr eigenes Meeting-Tool bauen wir in jedem vereinbarten System einen gespeicherten Bericht oder eine Ansicht mit genau den vereinbarten Spalten. Danach ist jeder Export ein Klick.</p></div></li>
+      <li><div><h3>Hochladen</h3><p>Sie erhalten einen privaten Upload-Link, der nach 7 Tagen abläuft. Datei hineinziehen, fertig. Keine E-Mail-Anhänge, nichts zu installieren.</p></div></li>
+    </ol>
+  </section>
+
+  <section class="block">
+    <h2>Die E-Mail zum Weiterleiten</h2>
+    <div class="mail">
+      <div class="mail-head"><span>Kopieren, Namen anpassen, senden</span><button class="copy" id="copy-de" data-target="mail-de">E-Mail kopieren</button></div>
+<pre id="mail-de">Betreff: Datenschutzprüfung: Pilot mit Structural Content
+
+Hallo [Name],
+
+wir möchten einen Pilot mit Structural Content machen. Wir schicken ihnen Exporte aus [den vereinbarten Systemen], sie schicken Kampagnen-Briefings für unser Marketing zurück.
+
+Bevor wir etwas senden: Kannst du dir das Setup ansehen? Alles steht auf einer Seite, mit Datenfluss, den genauen Spalten des Exports, dem Verarbeitungsort und der Löschfrist:
+
+https://structuralcontent.com/trust.html#de
+
+Sie stellen einen vorausgefüllten Auftragsverarbeitungsvertrag (AVV) zur Unterschrift. Der Export lässt Namens-, E-Mail- und Mitarbeiterspalten weg. Verarbeitet wird in der EU, gelöscht wird innerhalb von 30 Tagen nach Pilotende.
+
+Bei Fragen ist der Kontakt sebastian@structuralcontent.com.
+
+Danke,
+[dein Name]</pre>
+    </div>
+  </section>
+</div></div>
+
+<div class="wrap">
+  <div class="divider"><div class="rule">
+    <div class="eyebrow">Für IT, Sicherheit und Datenschutz</div>
+    <h2>Details zur Prüfung</h2>
+    <p>Structural Content ist Ihr Auftragsverarbeiter nach Art. 28 DSGVO. Sie bleiben Verantwortlicher. Der Pilot arbeitet ausschließlich mit Datei-Exporten: keine Logins, kein API-Zugang, keine Konnektoren zu Ihren Systemen.</p>
+  </div></div>
+
+  <section class="block">
+    <h2>Auf einen Blick</h2>
+    <div class="scroll"><table class="glance"><tbody>
+      <tr><th>Auftragsverarbeiter</th><td>Structural Content UG (haftungsbeschränkt), Kollwitzstraße 76, 10435 Berlin. HRB 291186 B, Amtsgericht Charlottenburg</td></tr>
+      <tr><th>Zweck</th><td>Ableitung von Kampagnen-Briefings für Ihr Marketing aus dem gelieferten Auszug. Kein anderer Zweck.</td></tr>
+      <tr><th>Empfangene Daten</th><td>Von Ihnen erstellte Datei-Exporte, beschränkt auf die vereinbarten Spalten (siehe Feldliste unten). Nur per Upload oder Dateiübertragung.</td></tr>
+      <tr><th>Speicherung</th><td>Amazon S3, eu-central-1 (Frankfurt). Privater Bucket, verschlüsselt gespeichert, Zugriff nur für benannte Mitarbeitende von Structural Content.</td></tr>
+      <tr><th>Verarbeitung</th><td>Auf einem Firmen-Laptop mit vollständiger Festplattenverschlüsselung (FileVault), genutzt nur von benannten Mitarbeitenden und nur innerhalb der EU. KI-Inferenz über Amazon Bedrock, EU-Inferenzprofil: ausschließlich EU-Regionen.</td></tr>
+      <tr><th>Unterauftragsverarbeiter</th><td>Amazon Web Services EMEA SARL, Luxemburg (Speicherung und KI-Inferenz). Der einzige.</td></tr>
+      <tr><th>KI-Nutzung</th><td>Bedrock ist auf Zero Data Retention eingestellt: Der Modelldienst speichert keine Ein- oder Ausgaben. Ihre Daten trainieren kein Modell.</td></tr>
+      <tr><th>Aufbewahrung</th><td>Für die Dauer des Pilots. Löschung innerhalb von 30 Tagen nach Ende, einschließlich aller abgeleiteten Daten, mit schriftlicher Bestätigung.</td></tr>
+      <tr><th>Protokoll</th><td>Wir protokollieren jeden Auszug: was kam, aus welchem System, wann, und wann er gelöscht wurde. Sie können es jederzeit einsehen.</td></tr>
+      <tr><th>Verschlüsselung</th><td>TLS bei jeder Übertragung. Verschlüsselt gespeichert in S3 und auf dem Laptop.</td></tr>
+      <tr><th>Datenpanne</th><td>Meldung innerhalb von 24 Stunden nach Kenntnis: was passiert ist, welche Daten betroffen sind, was wir unternehmen.</td></tr>
+      <tr><th>Personenbezug</th><td>Wir behandeln den Export als personenbezogen, auch ohne Namen. Deshalb gilt ein AVV.</td></tr>
+      <tr><th>Zertifizierungen</th><td>Noch keine (ISO 27001, SOC 2). Stattdessen erhalten Sie den vollständigen AVV und die TOMs zur direkten Prüfung.</td></tr>
+      <tr><th>KI-Transparenz</th><td>Jedes Briefing ist als KI-generiert gekennzeichnet (EU AI Act Art. 50).</td></tr>
+    </tbody></table></div>
+  </section>
+
+  <section class="block">
+    <h2>Wie die Daten fließen</h2>
+    <ol class="flow">
+      <li><div><b>Sie exportieren</b><span>Ein gespeicherter Bericht in Ihrem System, beschränkt auf die vereinbarten Spalten.</span><div class="where">Ihr System</div></div></li>
+      <li><div><b>Sie laden hoch</b><span>Über einen privaten Link, der nach 7 Tagen abläuft. TLS.</span><div class="where">→ Amazon S3 · Frankfurt</div></div></li>
+      <li><div><b>Wir verarbeiten</b><span>Die Datei wird auf einem verschlüsselten Firmen-Laptop in der EU gelesen und zur Analyse an das KI-Modell geschickt.</span><div class="where">→ Amazon Bedrock · EU-Regionen · Zero Retention</div></div></li>
+      <li><div><b>Wir liefern</b><span>Kampagnen-Briefings als CSV-Datei für Ihr Aufgaben-Tool, über einen ebensolchen privaten Link.</span><div class="where">→ Ihr Team</div></div></li>
+      <li><div><b>Wir löschen</b><span>Den Auszug und alles daraus Erstellte, innerhalb von 30 Tagen nach Pilotende. Schriftlich bestätigt.</span><div class="where">S3 + Laptop</div></div></li>
+    </ol>
+  </section>
+
+  <section class="block">
+    <h2>Welche Spalten</h2>
+    <p>Welche Systeme zählen, hängt von Ihrer Priorität ab: CRM, Gesprächsaufzeichnungen, Support, Produktnutzung, Umfragen, Chat- oder Projekt-Tools, oder wo sonst die Geschichte steht. Für jedes erhalten Sie eine Spaltenliste, zugleich die Checkliste, mit der wir den Export gemeinsam einrichten. Jede Spalte gehört zu einer von fünf Gruppen:</p>
+    <div class="scroll"><table class="spec">
+      <thead><tr><th>Gruppe</th><th></th><th>Beispiele</th></tr></thead>
+      <tbody>
+        <tr><td>Geschäftsdaten</td><td><span class="chip inc">aufnehmen</span></td><td>Phasen, Beträge, Daten, Kategorien, Tags, Gewinn- oder Verlustgründe, Tarif oder Segment, Nutzungszahlen, Firmenname</td></tr>
+        <tr><td>IDs</td><td><span class="chip inc">aufnehmen</span></td><td>Datensatz- und Firmen-IDs, damit sich Daten aus verschiedenen Systemen verknüpfen lassen</td></tr>
+        <tr><td>Personen</td><td><span class="chip exc">weglassen</span></td><td>Namen, E-Mail-Adressen, Telefonnummern von Kontakten und Kund:innen</td></tr>
+        <tr><td>Ihre Mitarbeitenden</td><td><span class="chip exc">weglassen</span></td><td>Owner, Bearbeiter:in, Erstellt-von, Team- oder Agent-Felder</td></tr>
+        <tr><td>Freitext</td><td><span class="chip opt">Ihre Wahl</span></td><td>Notizen, Beschreibungen, Transkripte, Kommentare</td></tr>
+      </tbody>
+    </table></div>
+    <p>Freitext macht die Briefings deutlich besser, weil wir zitieren können, was Kund:innen tatsächlich gesagt haben. Er kann aber auch eingetippte Namen enthalten. Sie entscheiden pro Quelle.</p>
+    <p>Ohne Freitext verlassen keine Mitarbeiterdaten Ihre Systeme, und mit dem Pilot lässt sich keine Leistung von Mitarbeitenden überwachen. Damit ist der Betriebsrat (§ 87 Abs. 1 Nr. 6 BetrVG) in der Regel nicht berührt. Wenn Sie Freitext wie Gesprächstranskripte mitschicken, entfernen Sie vorher die Namen der Mitarbeitenden. Wir helfen Ihnen, das einzurichten.</p>
+  </section>
+
+  <section class="block">
+    <h2>Dokumente</h2>
+    <div class="docs">
+      <div class="doc"><h3>AVV (Art. 28 DSGVO)</h3><p>Mit Ihren Firmendaten vorausgefüllt, zur Unterschrift.</p></div>
+      <div class="doc"><h3>Technische und organisatorische Maßnahmen</h3><p>Anlage zum AVV, Art. 32 DSGVO.</p></div>
+      <div class="doc"><h3>Liste der Unterauftragsverarbeiter</h3><p>Anlage zum AVV. Ein Eintrag: AWS EMEA SARL.</p></div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Was Prüfer:innen meist fragen</h2>
+    <div>
+      <details><summary>Ist der Export anonymisiert?</summary><p>Nein. Ohne Namen ist er pseudonymisiert, und das bleibt nach DSGVO personenbezogen. Wir behandeln ihn so, deshalb gilt der AVV.</p></details>
+      <details><summary>Wer kann unsere Daten sehen?</summary><p>Benannte Mitarbeitende von Structural Content, zum Zweck Ihres Pilots. Derzeit ist das eine Person, der Geschäftsführer. Der KI-Dienst verarbeitet die Daten im Arbeitsspeicher und speichert nichts.</p></details>
+      <details><summary>Trainiert der KI-Anbieter mit unseren Daten?</summary><p>Nein. Amazon Bedrock nutzt Ein- und Ausgaben nicht zum Training, und unser Konto ist auf Zero Data Retention eingestellt.</p></details>
+      <details><summary>Verlassen Daten die EU?</summary><p>Nein. Gespeichert wird in Frankfurt, der Firmen-Laptop, der die Dateien liest, bleibt in der EU, und die KI-Inferenz nutzt das EU-Inferenzprofil von AWS, das nur innerhalb von EU-Regionen routet.</p></details>
+      <details><summary>Brauchen Sie Zugang zu unseren Systemen?</summary><p>Nein. Sie exportieren Dateien und laden sie hoch. Keine Logins, keine API-Schlüssel, keine Konnektoren.</p></details>
+      <details><summary>Was, wenn wir den Pilot früher beenden?</summary><p>Sagen Sie Bescheid, dann löschen wir innerhalb von 30 Tagen ab diesem Datum und bestätigen es schriftlich.</p></details>
+      <details><summary>Dürfen wir Sie prüfen?</summary><p>Ja, nach dem AVV. Das Protokoll der Auszüge können Sie jederzeit anfordern.</p></details>
+    </div>
+  </section>
+</div>
+</div>
+
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span class="fw">Structural Content</span>
+      <span class="meta">Questions / Fragen: sebastian@structuralcontent.com</span>
+      <a class="meta foot-link" href="privacy.html">Privacy</a>
+      <a class="meta foot-link" href="impressum.html">Impressum</a>
+    </div>
+  </footer>
+
+<script>
+(function () {
+  var TITLES = { en: 'Data Handling – Structural Content', de: 'Datenumgang – Structural Content' };
+  function setLang(l, remember) {
+    document.querySelectorAll('[data-l]').forEach(function (el) { el.hidden = el.getAttribute('data-l') !== l; });
+    document.querySelectorAll('.lang button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.set === l)); });
+    document.documentElement.lang = l;
+    document.title = TITLES[l];
+    if (remember) {
+      try { localStorage.setItem('lang', l); } catch (e) {}
+      try { history.replaceState(null, '', '#' + l); } catch (e) {}
+    }
+  }
+  function initial() {
+    var h = location.hash.slice(1);
+    if (h === 'de' || h === 'en') return h;
+    var saved = null;
+    try { saved = localStorage.getItem('lang'); } catch (e) {}
+    if (saved === 'de' || saved === 'en') return saved;
+    return (navigator.language || '').toLowerCase().indexOf('de') === 0 ? 'de' : 'en';
+  }
+  setLang(initial(), false);
+  window.addEventListener('hashchange', function () { var h = location.hash.slice(1); if (h === 'de' || h === 'en') setLang(h, false); });
+  document.querySelectorAll('.lang button').forEach(function (b) { b.addEventListener('click', function () { setLang(b.dataset.set, true); }); });
+  document.querySelectorAll('.copy').forEach(function (btn) {
+    var label = btn.textContent;
+    btn.addEventListener('click', function () {
+      var el = document.getElementById(btn.dataset.target);
+      function done(t) { btn.textContent = t; clearTimeout(btn._restore); btn._restore = setTimeout(function () { btn.textContent = label; }, 1800); }
+      function fallback() {
+        var r = document.createRange(); r.selectNodeContents(el);
+        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        done(document.documentElement.lang === 'de' ? 'Markiert, jetzt kopieren' : 'Selected, press copy');
+      }
+      try {
+        navigator.clipboard.writeText(el.textContent).then(function () { done(document.documentElement.lang === 'de' ? 'Kopiert' : 'Copied'); }, fallback);
+      } catch (e) { fallback(); }
+    });
+  });
+})();
+</script>
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "e6cf228445244606a0e51751a75170ba"}'></script>
+</body>
+</html>
