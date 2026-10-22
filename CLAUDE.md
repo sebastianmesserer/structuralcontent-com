@@ -9,7 +9,7 @@ Cloudflare Worker backend that powers its "cascade" sales demo. Two independent
 deployables in one repo:
 
 - **The site** (repo root): a static one-page site. `index.html` (inline CSS +
-  JS, no build step) plus the standalone `impressum.html` and `privacy.html`
+  JS, no build step) plus the standalone `impressum.html`, `privacy.html` and `trust.html` (the data handling page for pilots, EN/DE; its storage claims are made true by `sc-product/tools/pilot-transfer.mjs`)
   legal pages, `Media/`, `favicon.ico`. Served by **GitHub Pages** from `main`
   at path `/`. `CNAME` pins the domain and `.nojekyll` disables Jekyll
   processing. (`examples-anim-preview.html` is gitignored local scratch, not
@@ -151,7 +151,7 @@ for the design decisions already settled (don't relitigate them).
 
 ## Analytics
 
-All three deployed pages load **Cloudflare Web Analytics** (cookieless, no consent
+All four deployed pages load **Cloudflare Web Analytics** (cookieless, no consent
 banner) via a beacon `<script>` before `</body>`, disclosed in `privacy.html`. The
 beacon only reports from the live domain, not `localhost`. To change/remove it,
-edit the `data-cf-beacon` token in `index.html`, `impressum.html`, `privacy.html`.
+edit the `data-cf-beacon` token in `index.html`, `impressum.html`, `privacy.html`, `trust.html`.
