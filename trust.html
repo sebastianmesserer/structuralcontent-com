@@ -94,23 +94,23 @@
 .lang button:focus-visible, .copy:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 .band { background: var(--band); padding-block: 40px 48px; border-block: 1px solid var(--line); }
-.eyebrow { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--accent); }
+.eyebrow { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: var(--accent); }
 h1 { font-family: var(--display); font-size: clamp(30px, 6vw, 42px); line-height: 1.12; font-weight: 500; margin: 8px 0 12px; text-wrap: balance; letter-spacing: -.01em; }
 h2 { font-family: var(--display); font-size: 24px; line-height: 1.25; font-weight: 600; letter-spacing: -0.01em; margin: 0 0 12px; text-wrap: balance; }
-h3 { font-size: 17px; font-weight: 700; margin: 0 0 4px; }
+h3 { font-size: 17px; font-weight: 600; margin: 0 0 4px; }
 p { margin: 0 0 12px; max-width: 65ch; }
 .lede { font-size: 18px; color: var(--muted); }
 section.block { display: grid; gap: 14px; padding-block: 28px 0; }
 
 .promises { display: grid; gap: 0; border-top: 1px solid var(--line); }
 .promise { display: grid; grid-template-columns: 9.5em 1fr; gap: 16px; padding-block: 14px; border-bottom: 1px solid var(--line); }
-.promise dt { font-weight: 700; }
+.promise dt { font-weight: 600; }
 .promise dd { margin: 0; min-width: 0; }
 @media (max-width: 560px) { .promise { grid-template-columns: 1fr; gap: 2px; } }
 
 ol.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; counter-reset: s; }
 ol.steps li { counter-increment: s; display: grid; grid-template-columns: 36px 1fr; gap: 14px; }
-ol.steps li::before { content: counter(s); width: 32px; height: 32px; border-radius: 50%; background: var(--accent); color: var(--accent-ink); font-weight: 700; display: grid; place-items: center; font-variant-numeric: tabular-nums; }
+ol.steps li::before { content: counter(s); width: 32px; height: 32px; border-radius: 50%; background: var(--accent); color: var(--accent-ink); font-weight: 600; display: grid; place-items: center; font-variant-numeric: tabular-nums; }
 ol.steps li > div { min-width: 0; }
 ol.steps p { margin: 0; color: var(--muted); }
 
@@ -126,7 +126,7 @@ ol.steps p { margin: 0; color: var(--muted); }
 table { border-collapse: collapse; width: 100%; font-size: 15px; }
 .scroll { overflow-x: auto; }
 th, td { text-align: left; vertical-align: top; padding: 10px 12px 10px 0; border-bottom: 1px solid var(--line); }
-th { font-weight: 700; }
+th { font-weight: 600; }
 .glance th { width: 34%; font-weight: 600; color: var(--muted); }
 
 .flow { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
@@ -139,11 +139,11 @@ th { font-weight: 700; }
 .where { font-family: var(--mono); font-size: 12px; color: var(--accent); }
 
 .spec td:first-child { font-weight: 600; white-space: nowrap; }
-.chip { display: inline-block; font-size: 12px; font-weight: 700; padding: 1px 8px; border-radius: 4px; white-space: nowrap; }
+.chip { display: inline-block; font-size: 12px; font-weight: 600; padding: 1px 8px; border-radius: 4px; white-space: nowrap; }
 .chip.inc { background: var(--chip-inc); color: var(--inc); }
 .chip.exc { background: var(--chip-exc); color: var(--exc); }
 .chip.opt { background: var(--chip-opt); color: var(--opt); }
-.spec caption { text-align: left; font-weight: 700; padding-bottom: 6px; }
+.spec caption { text-align: left; font-weight: 600; padding-bottom: 6px; }
 
 details { border-bottom: 1px solid var(--line); padding-block: 12px; }
 details summary { cursor: pointer; font-weight: 600; }
@@ -178,7 +178,7 @@ details p { margin: 8px 0 0; color: var(--muted); }
   <section class="block">
     <h2>Why this is safe for you</h2>
     <dl class="promises">
-      <div class="promise"><dt>You choose what leaves</dt><dd>You export only the columns on our list. Names, email addresses and your colleagues' names stay in your system, apart from what free-text fields hold if you choose to send them. We set up the export with you once, in a 15-minute screen-share.</dd></div>
+      <div class="promise"><dt>You choose what leaves</dt><dd>You export only the columns on our list. Names, email addresses and your colleagues' names stay in your system, apart from what free-text fields hold if you choose to send them. We set up the export with you once, on a call in your own meeting tool.</dd></div>
       <div class="promise"><dt>It stays in the EU</dt><dd>Your file is stored in Frankfurt, read on an encrypted company laptop that stays in the EU, and analysed by AI in EU data centres. It is used for one thing: your briefs. The AI service keeps nothing and learns nothing from it.</dd></div>
       <div class="promise"><dt>It gets deleted</dt><dd>We delete your data and everything made from it within 30 days of the pilot ending, and confirm that to you in writing.</dd></div>
       <div class="promise"><dt>It is covered by contract</dt><dd>A data processing agreement (AVV), the same paperwork your company signs for any software tool. Ours comes filled in, ready to sign.</dd></div>
@@ -190,7 +190,7 @@ details p { margin: 8px 0 0; color: var(--muted); }
     <ol class="steps">
       <li><div><h3>Forward this page to IT or privacy</h3><p>Every company checks a new data partner. That check is normal and usually quick, because everything they need is on this page. The email below is ready to send.</p></div></li>
       <li><div><h3>Sign the AVV</h3><p>We send it filled in with your company's details. Your privacy team reviews it, someone authorised signs it.</p></div></li>
-      <li><div><h3>Set up the export with us</h3><p>15 minutes on a call. We build a saved report or view in each agreed system with only the agreed columns. After that, each export is one click.</p></div></li>
+      <li><div><h3>Set up the export with us</h3><p>On a call in your own meeting tool, we build a saved report or view in each agreed system with only the agreed columns. After that, each export is one click.</p></div></li>
       <li><div><h3>Upload it</h3><p>You get a private upload link that expires after 7 days. Drop the file in. No email attachments, nothing to install.</p></div></li>
     </ol>
   </section>
@@ -271,7 +271,7 @@ Thanks,
       </tbody>
     </table></div>
     <p>Free text makes the briefs noticeably better, because we can quote what customers actually said. It can also contain names someone typed in. You decide per source.</p>
-    <p>Because no staff fields are exported, the pilot cannot be used to monitor your employees' performance. In German companies that usually keeps the works council (§ 87(1) no. 6 BetrVG) out of scope.</p>
+    <p>Without free text, no staff data leaves your systems, so the pilot cannot be used to monitor your employees' performance. In German companies that usually keeps the works council (§ 87(1) no. 6 BetrVG) out of scope. If you include free text such as call transcripts, remove agent names first, and we will help you set that up.</p>
   </section>
 
   <section class="block">
@@ -308,7 +308,7 @@ Thanks,
   <section class="block">
     <h2>Warum das für Sie sicher ist</h2>
     <dl class="promises">
-      <div class="promise"><dt>Sie bestimmen, was rausgeht</dt><dd>Sie exportieren nur die Spalten auf unserer Liste. Namen, E-Mail-Adressen und die Namen Ihrer Kolleg:innen bleiben in Ihrem System, abgesehen von dem, was Freitextfelder enthalten, falls Sie diese mitschicken. Den Export richten wir einmal gemeinsam ein, in 15 Minuten per Bildschirmfreigabe.</dd></div>
+      <div class="promise"><dt>Sie bestimmen, was rausgeht</dt><dd>Sie exportieren nur die Spalten auf unserer Liste. Namen, E-Mail-Adressen und die Namen Ihrer Kolleg:innen bleiben in Ihrem System, abgesehen von dem, was Freitextfelder enthalten, falls Sie diese mitschicken. Den Export richten wir einmal gemeinsam ein, in einem Call über Ihr eigenes Meeting-Tool.</dd></div>
       <div class="promise"><dt>Es bleibt in der EU</dt><dd>Ihre Datei liegt in Frankfurt, wird auf einem verschlüsselten Firmen-Laptop gelesen, der in der EU bleibt, und von der KI in EU-Rechenzentren analysiert. Sie dient einem einzigen Zweck: Ihren Briefings. Der KI-Dienst speichert nichts davon und lernt nichts daraus.</dd></div>
       <div class="promise"><dt>Es wird gelöscht</dt><dd>Wir löschen Ihre Daten und alles daraus Erstellte innerhalb von 30 Tagen nach Pilotende und bestätigen Ihnen das schriftlich.</dd></div>
       <div class="promise"><dt>Es ist vertraglich geregelt</dt><dd>Ein Auftragsverarbeitungsvertrag (AVV), wie ihn Ihr Unternehmen für jedes Software-Tool abschließt. Unserer kommt ausgefüllt und unterschriftsreif.</dd></div>
@@ -320,7 +320,7 @@ Thanks,
     <ol class="steps">
       <li><div><h3>Diese Seite an IT oder Datenschutz weiterleiten</h3><p>Jedes Unternehmen prüft einen neuen Datenpartner. Diese Prüfung ist normal und meist schnell, weil alles Nötige auf dieser Seite steht. Die E-Mail unten ist versandfertig.</p></div></li>
       <li><div><h3>Den AVV unterschreiben</h3><p>Wir schicken ihn mit Ihren Firmendaten ausgefüllt. Ihr Datenschutz prüft, eine berechtigte Person unterschreibt.</p></div></li>
-      <li><div><h3>Den Export mit uns einrichten</h3><p>15 Minuten im Call. Wir bauen in jedem vereinbarten System einen gespeicherten Bericht oder eine Ansicht mit genau den vereinbarten Spalten. Danach ist jeder Export ein Klick.</p></div></li>
+      <li><div><h3>Den Export mit uns einrichten</h3><p>In einem Call über Ihr eigenes Meeting-Tool bauen wir in jedem vereinbarten System einen gespeicherten Bericht oder eine Ansicht mit genau den vereinbarten Spalten. Danach ist jeder Export ein Klick.</p></div></li>
       <li><div><h3>Hochladen</h3><p>Sie erhalten einen privaten Upload-Link, der nach 7 Tagen abläuft. Datei hineinziehen, fertig. Keine E-Mail-Anhänge, nichts zu installieren.</p></div></li>
     </ol>
   </section>
@@ -401,7 +401,7 @@ Danke,
       </tbody>
     </table></div>
     <p>Freitext macht die Briefings deutlich besser, weil wir zitieren können, was Kund:innen tatsächlich gesagt haben. Er kann aber auch eingetippte Namen enthalten. Sie entscheiden pro Quelle.</p>
-    <p>Da keine Mitarbeiterfelder exportiert werden, lässt sich mit dem Pilot keine Leistung von Mitarbeitenden überwachen. Damit ist der Betriebsrat (§ 87 Abs. 1 Nr. 6 BetrVG) in der Regel nicht berührt.</p>
+    <p>Ohne Freitext verlassen keine Mitarbeiterdaten Ihre Systeme, und mit dem Pilot lässt sich keine Leistung von Mitarbeitenden überwachen. Damit ist der Betriebsrat (§ 87 Abs. 1 Nr. 6 BetrVG) in der Regel nicht berührt. Wenn Sie Freitext wie Gesprächstranskripte mitschicken, entfernen Sie vorher die Namen der Mitarbeitenden. Wir helfen Ihnen, das einzurichten.</p>
   </section>
 
   <section class="block">
@@ -460,6 +460,7 @@ Danke,
     return (navigator.language || '').toLowerCase().indexOf('de') === 0 ? 'de' : 'en';
   }
   setLang(initial(), false);
+  window.addEventListener('hashchange', function () { var h = location.hash.slice(1); if (h === 'de' || h === 'en') setLang(h, false); });
   document.querySelectorAll('.lang button').forEach(function (b) { b.addEventListener('click', function () { setLang(b.dataset.set, true); }); });
   document.querySelectorAll('.copy').forEach(function (btn) {
     var label = btn.textContent;
