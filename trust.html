@@ -51,12 +51,8 @@
       --band: #EFECE4;
       --ink: var(--charcoal);
       --accent-ink: #FFFFFF;
-      --inc: #1F5E55;  --chip-inc: #DDEAE6;
-      --exc: #9A3A2C;  --chip-exc: #F3E1DC;
-      --opt: #7A5A12;  --chip-opt: #F1E8D2;
       --display: var(--serif);
       --body: var(--sans);
-      --mono: ui-monospace, Menlo, monospace;
     }
     * { box-sizing: border-box; }
     body {
@@ -79,7 +75,6 @@
     .back::before { content: "\2190 "; }
     @media (max-width: 480px) { .back { display: none; } }
 
-    .lede, .promise dd, ol.steps p, td, details p { color: var(--charcoal-soft); }
 
     .site-footer { padding: 40px 0; border-top: 1px solid var(--line); margin-top: 56px; }
     .site-footer .wrap { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 10px 28px; }
@@ -88,10 +83,6 @@
     .site-footer .foot-link { color: var(--accent); }
     .site-footer .foot-link:hover { color: var(--accent-deep); }
 
-.lang { display: flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
-.lang button { font: inherit; font-size: 13px; font-weight: 600; padding: 4px 12px; background: transparent; color: var(--muted); border: 0; cursor: pointer; }
-.lang button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
-.lang button:focus-visible, .copy:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 .band { background: var(--band); padding-block: 40px 48px; border-block: 1px solid var(--line); }
 .eyebrow { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: var(--accent); }
@@ -102,48 +93,19 @@ p { margin: 0 0 12px; max-width: 65ch; }
 .lede { font-size: 18px; color: var(--muted); }
 section.block { display: grid; gap: 14px; padding-block: 28px 0; }
 
-.promises { display: grid; gap: 0; border-top: 1px solid var(--line); }
-.promise { display: grid; grid-template-columns: 9.5em 1fr; gap: 16px; padding-block: 14px; border-bottom: 1px solid var(--line); }
-.promise dt { font-weight: 600; }
-.promise dd { margin: 0; min-width: 0; }
 @media (max-width: 560px) { .promise { grid-template-columns: 1fr; gap: 2px; } }
 
-ol.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; counter-reset: s; }
-ol.steps li { counter-increment: s; display: grid; grid-template-columns: 36px 1fr; gap: 14px; }
-ol.steps li::before { content: counter(s); width: 32px; height: 32px; border-radius: 50%; background: var(--accent); color: var(--accent-ink); font-weight: 600; display: grid; place-items: center; font-variant-numeric: tabular-nums; }
-ol.steps li > div { min-width: 0; }
-ol.steps p { margin: 0; color: var(--muted); }
 
-.mail { background: var(--bg); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
-.mail-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 14px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
-.mail-head span { font-size: 13px; font-weight: 600; color: var(--muted); }
-.copy { font: inherit; font-size: 14px; font-weight: 600; padding: 6px 14px; border-radius: 6px; border: 0; background: var(--accent); color: var(--accent-ink); cursor: pointer; }
-.mail pre { margin: 0; padding: 14px; white-space: pre-wrap; font-family: var(--body); font-size: 15px; line-height: 1.55; }
 
-.divider { padding-block: 44px 8px; }
-.divider .rule { border-top: 3px solid var(--ink); padding-top: 14px; }
 
 table { border-collapse: collapse; width: 100%; font-size: 15px; }
 .scroll { overflow-x: auto; }
 th, td { text-align: left; vertical-align: top; padding: 10px 12px 10px 0; border-bottom: 1px solid var(--line); }
 th { font-weight: 600; }
+td, details p { color: var(--charcoal-soft); }
 .glance th { width: 34%; font-weight: 600; color: var(--muted); }
 
-.flow { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
-.flow li { display: grid; grid-template-columns: 22px 1fr; gap: 12px; position: relative; padding-bottom: 16px; }
-.flow li::before { content: ""; width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--accent); background: var(--bg); margin-top: 6px; z-index: 1; }
-.flow li:not(:last-child)::after { content: ""; position: absolute; left: 7px; top: 20px; bottom: 0; width: 2px; background: var(--line); }
-.flow li > div { min-width: 0; }
-.flow b { display: block; }
-.flow span { color: var(--muted); font-size: 15px; }
-.where { font-family: var(--mono); font-size: 12px; color: var(--accent); }
 
-.spec td:first-child { font-weight: 600; white-space: nowrap; }
-.chip { display: inline-block; font-size: 12px; font-weight: 600; padding: 1px 8px; border-radius: 4px; white-space: nowrap; }
-.chip.inc { background: var(--chip-inc); color: var(--inc); }
-.chip.exc { background: var(--chip-exc); color: var(--exc); }
-.chip.opt { background: var(--chip-opt); color: var(--opt); }
-.spec caption { text-align: left; font-weight: 600; padding-bottom: 6px; }
 
 details { border-bottom: 1px solid var(--line); padding-block: 12px; }
 details summary { cursor: pointer; font-weight: 600; }
@@ -162,7 +124,6 @@ details p { margin: 8px 0 0; color: var(--muted); }
 .btn:hover { background: var(--accent-deep); color: var(--accent-ink); text-decoration: none; }
 .btn.ghost { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
 .btn.ghost:hover { background: var(--band); color: var(--accent-deep); }
-.glance td { color: var(--charcoal-soft); }
 .end { background: var(--band); border: 1px solid var(--line); border-radius: 8px; padding: 22px; margin-top: 36px; }
   </style>
 </head>
@@ -181,7 +142,7 @@ details p { margin: 8px 0 0; color: var(--muted); }
   <h1>How we handle your data</h1>
   <p class="lede">Structural Content turns your business data into campaign briefs for your marketing team. This page answers the questions your team, IT and privacy colleagues usually ask, so you can judge us before the first call. It covers the data you send us for the work; the demo on our homepage runs on a separate setup, described in our <a href="privacy.html">privacy policy</a>.</p>
   <div class="cta">
-    <a class="btn" href="https://calendar.app.google/kjbz3aB3NKsHcP5E7">Book a call</a>
+    <a class="btn" href="https://calendar.app.google/kjbz3aB3NKsHcP5E7" target="_blank" rel="noopener">Book a call</a>
     <a class="btn ghost" href="mailto:sebastian@structuralcontent.com?subject=Security%20question">Ask a security question</a>
   </div>
 </div></div>
@@ -193,7 +154,7 @@ details p { margin: 8px 0 0; color: var(--muted); }
     <div class="cards">
       <div class="card"><h3>Your data serves your briefs</h3><p>We use what you share for one purpose: the briefs for your company.</p></div>
       <div class="card"><h3>It stays in the EU</h3><p>Stored in Frankfurt and analysed by AI in EU data centres.</p></div>
-      <div class="card"><h3>You choose what we see</h3><p>You pick the systems and the columns. Names and email addresses stay in your systems, apart from what free-text fields hold if you choose to send them.</p></div>
+      <div class="card"><h3>You choose what we see</h3><p>You pick the systems and the columns. Names, email addresses, phone numbers and your staff's fields stay in your systems, apart from what free-text fields hold if you choose to send them.</p></div>
       <div class="card"><h3>Zero retention at the AI</h3><p>The AI service runs with zero data retention: it keeps your inputs and outputs only while it works on them.</p></div>
       <div class="card"><h3>Deleted when we are done</h3><p>Your data and everything made from it is deleted within 30 days of the work ending, confirmed in writing.</p></div>
       <div class="card"><h3>A standard contract</h3><p>The EU Commission's standard data processing clauses (Art. 28 GDPR), the form your privacy team already knows.</p></div>
@@ -208,6 +169,7 @@ details p { margin: 8px 0 0; color: var(--muted); }
 
   <section class="block">
     <h2>At a glance</h2>
+    <p>For work from file exports. A connected setup names its own hosting, regions and sub-processors in its own agreement.</p>
     <div class="scroll"><table class="glance">
       <tr><th>Company</th><td>Structural Content UG (haftungsbeschränkt), Kollwitzstraße 76, 10435 Berlin. HRB 291186 B, Amtsgericht Charlottenburg</td></tr>
       <tr><th>Role under GDPR</th><td>Your processor (Art. 28 GDPR). Your company remains the controller.</td></tr>
@@ -227,7 +189,7 @@ details p { margin: 8px 0 0; color: var(--muted); }
 
   <section class="block">
     <h2>Documents</h2>
-    <p>Ask for any of these by email and we send them to you.</p>
+    <p>Ask for the agreement documents at <a href="mailto:sebastian@structuralcontent.com">sebastian@structuralcontent.com</a> and we send them to you.</p>
     <div class="docs">
       <div class="doc"><h3>Data processing agreement</h3><p>Art. 28 GDPR, on the EU standard clauses.</p></div>
       <div class="doc"><h3>Technical and organisational measures</h3><p>Art. 32 GDPR, annex to the agreement.</p></div>
@@ -243,7 +205,7 @@ details p { margin: 8px 0 0; color: var(--muted); }
       <details><summary>Is our data used to train AI models?</summary><p>Your data serves your briefs only. Amazon Bedrock uses inputs and outputs to produce the response, and our account runs with zero data retention.</p></details>
       <details><summary>Where is our data processed?</summary><p>In the EU: storage in Frankfurt, AI inference in EU regions through AWS's EU cross-region profile, and the work on a company laptop that stays in the EU.</p></details>
       <details><summary>Who at Structural Content can see it?</summary><p>Named staff bound to confidentiality, for your work only. Today that is one person, the managing director.</p></details>
-      <details><summary>Which data would we send?</summary><p>That depends on your priority: CRM, call recordings, support, product usage, surveys, or whatever else holds the story. For each system we agree a column list with you. It includes business facts such as stages, amounts, dates and reasons, and leaves names, email addresses and your colleagues' names in your system. Free-text fields such as notes or transcripts are your choice per system; they make the briefs better and can contain names someone typed in.</p></details>
+      <details><summary>Which data would we send?</summary><p>That depends on your priority: CRM, call recordings, support, product usage, surveys, or whatever else holds the story. For each system we agree a column list with you. It includes business facts such as stages, amounts, dates and reasons, and leaves names, email addresses, phone numbers and your staff's fields (owner, assignee, created-by, team, agent) in your system. Free-text fields such as notes or transcripts are your choice per system; they make the briefs better and can contain names someone typed in. We treat everything you send as personal data, which is why the data processing agreement applies.</p></details>
       <details><summary>Does our works council need to be involved?</summary><p>Without free-text fields, your staff's data stays in your systems. In German companies that usually keeps the work outside § 87(1) no. 6 BetrVG. If you include free text such as call transcripts, we help you remove agent names first.</p></details>
       <details><summary>What happens to our data at the end?</summary><p>We delete it, and everything made from it, within 30 days of the work ending, and confirm it to you in writing. You can end the work at any time by email.</p></details>
       <details><summary>Do you hold ISO 27001 or SOC 2?</summary><p>In place of a certificate, you get the full data processing agreement and technical measures to review directly, and you can audit us under the agreement.</p></details>
@@ -255,7 +217,7 @@ details p { margin: 8px 0 0; color: var(--muted); }
     <h2>Ready to talk?</h2>
     <p>Book a call and bring your questions, or send them ahead by email.</p>
     <div class="cta">
-      <a class="btn" href="https://calendar.app.google/kjbz3aB3NKsHcP5E7">Book a call</a>
+      <a class="btn" href="https://calendar.app.google/kjbz3aB3NKsHcP5E7" target="_blank" rel="noopener">Book a call</a>
       <a class="btn ghost" href="mailto:sebastian@structuralcontent.com">sebastian@structuralcontent.com</a>
     </div>
   </div>
@@ -265,7 +227,7 @@ details p { margin: 8px 0 0; color: var(--muted); }
   <footer class="site-footer">
     <div class="wrap">
       <span class="fw">Structural Content</span>
-      <span class="meta">Questions / Fragen: sebastian@structuralcontent.com</span>
+      <span class="meta">Questions: sebastian@structuralcontent.com</span>
       <a class="meta foot-link" href="privacy.html">Privacy</a>
       <a class="meta foot-link" href="impressum.html">Impressum</a>
     </div>
