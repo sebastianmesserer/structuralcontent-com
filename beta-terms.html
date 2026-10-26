@@ -13,7 +13,6 @@
   <link rel="preload" href="/Media/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/Media/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
   <style>
-  <style>
     /* Self-hosted fonts (no external CDN; see privacy.html) */
     @font-face {
       font-family: "Fraunces"; font-style: normal; font-weight: 400 600; font-display: swap;
@@ -91,6 +90,7 @@
 .lang button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
 .lang button:focus-visible, .copy:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
+    .wordmark { font-family: var(--serif); font-weight: 600; font-size: 1.15rem; color: var(--charcoal); letter-spacing: -0.01em; white-space: nowrap; }
 
 .band { background: var(--band); padding-block: 40px 44px; border-bottom: 1px solid var(--line); }
 .eyebrow { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: var(--accent); }
@@ -135,7 +135,7 @@ td:first-child { width: 30%; font-weight: 600; color: var(--charcoal); }
 <div class="wrap">
   <h2>1. Parties and how these terms are agreed</h2>
   <p>These terms apply between Structural Content UG (haftungsbeschränkt), Kollwitzstraße 76, 10435 Berlin, Germany; Amtsgericht Charlottenburg, HRB 291186 B; managing director Sebastian Rasso Messerer ("we") and the company named when they are accepted ("you"). They are for businesses only.</p>
-  <p>They are agreed when a person authorised to act for your company accepts them on your private upload page, or confirms them to us by email. We record who accepted, for which company, when, and which version.</p>
+  <p>They are agreed when a person authorised to act for your company accepts them, together with the Data Processing Agreement, on your private upload page. We record who accepted, for which company, when, and which version; our <a href="privacy.html">privacy policy</a> says how we handle those details.</p>
   <h2>2. What the beta is</h2>
   <p>You upload file exports from your own systems and state a strategic priority and the metrics under pressure. We analyse them, with AI, and send you campaign briefs for your marketing team. The service is still being developed: we work with care, but we do not promise a particular result or that a metric moves.</p>
   <h2>3. Price</h2>
@@ -152,7 +152,7 @@ td:first-child { width: 30%; font-weight: 600; color: var(--charcoal); }
   <h2>8. Liability</h2>
   <p>We are liable without limitation for intent and gross negligence, for injury to life, body or health, and under the German Product Liability Act. For slight negligence we are liable only for breach of an obligation that makes the beta possible at all and on which you may rely, and only for the damage typical and foreseeable when these terms were agreed. Liability under Art. 82 GDPR is unaffected.</p>
   <h2>9. Duration and end</h2>
-  <p>The beta runs from acceptance until the pilot ends as Annex II of the Data Processing Agreement defines it: at the final handover of the briefs, on written notice by either side (email suffices), or 90 days after your first upload, whichever comes first. Clauses 4 to 8 continue to apply after the end.</p>
+  <p>The beta runs from acceptance until the pilot ends as Annex II of the Data Processing Agreement defines it: at the final handover of the briefs, on written notice by either side (email suffices), or 90 days after your first upload, whichever comes first. If nothing has been uploaded 30 days after acceptance, the beta ends then. Clauses 4 to 8 continue to apply after the end.</p>
   <h2>10. Changes</h2>
   <p>A change to these terms or to the Data Processing Agreement applies only once you accept it. The version you accepted stays on record. A change of sub-processor follows the notice procedure of the Data Processing Agreement (Clause 7.7).</p>
   <h2>11. Law and language</h2>
@@ -172,7 +172,7 @@ td:first-child { width: 30%; font-weight: 600; color: var(--charcoal); }
 <div class="wrap">
   <h2>1. Parteien und Zustandekommen</h2>
   <p>Diese Bedingungen gelten zwischen der Structural Content UG (haftungsbeschränkt), Kollwitzstraße 76, 10435 Berlin, Deutschland; Amtsgericht Charlottenburg, HRB 291186 B; Geschäftsführer Sebastian Rasso Messerer („wir") und dem Unternehmen, das bei der Annahme genannt wird („Sie"). Sie richten sich ausschließlich an Unternehmer.</p>
-  <p>Sie kommen zustande, wenn eine für Ihr Unternehmen vertretungsberechtigte Person sie auf Ihrer privaten Upload-Seite annimmt oder uns per E-Mail bestätigt. Wir halten fest, wer für welches Unternehmen wann welche Fassung angenommen hat.</p>
+  <p>Sie kommen zustande, wenn eine für Ihr Unternehmen vertretungsberechtigte Person sie zusammen mit dem Auftragsverarbeitungsvertrag auf Ihrer privaten Upload-Seite annimmt. Wir halten fest, wer für welches Unternehmen wann welche Fassung angenommen hat; wie wir mit diesen Angaben umgehen, steht in unserer <a href="privacy.html">Datenschutzerklärung</a>.</p>
   <h2>2. Was die Beta ist</h2>
   <p>Sie laden Dateiexporte aus Ihren eigenen Systemen hoch und nennen eine strategische Priorität und die Kennzahlen unter Druck. Wir analysieren sie, mit KI, und schicken Ihnen Kampagnen-Briefings für Ihr Marketingteam. Der Dienst wird noch entwickelt: Wir arbeiten sorgfältig, versprechen aber kein bestimmtes Ergebnis und nicht, dass sich eine Kennzahl bewegt.</p>
   <h2>3. Preis</h2>
@@ -189,7 +189,7 @@ td:first-child { width: 30%; font-weight: 600; color: var(--charcoal); }
   <h2>8. Haftung</h2>
   <p>Wir haften unbeschränkt bei Vorsatz und grober Fahrlässigkeit, bei Verletzung von Leben, Körper oder Gesundheit und nach dem Produkthaftungsgesetz. Bei leichter Fahrlässigkeit haften wir nur für die Verletzung einer Pflicht, die die Beta überhaupt erst ermöglicht und auf die Sie vertrauen dürfen, und nur für den bei Vereinbarung dieser Bedingungen typischen und vorhersehbaren Schaden. Die Haftung nach Art. 82 DSGVO bleibt unberührt.</p>
   <h2>9. Laufzeit und Ende</h2>
-  <p>Die Beta läuft ab der Annahme, bis der Pilot so endet, wie Anlage II des Auftragsverarbeitungsvertrags es festlegt: mit der letzten Übergabe der Briefings, auf schriftliche Mitteilung einer Seite (E-Mail genügt) oder 90 Tage nach Ihrem ersten Upload, je nachdem, was zuerst eintritt. Ziffern 4 bis 8 gelten nach dem Ende fort.</p>
+  <p>Die Beta läuft ab der Annahme, bis der Pilot so endet, wie Anlage II des Auftragsverarbeitungsvertrags es festlegt: mit der letzten Übergabe der Briefings, auf schriftliche Mitteilung einer Seite (E-Mail genügt) oder 90 Tage nach Ihrem ersten Upload, je nachdem, was zuerst eintritt. Ist 30 Tage nach der Annahme nichts hochgeladen, endet die Beta dann. Ziffern 4 bis 8 gelten nach dem Ende fort.</p>
   <h2>10. Änderungen</h2>
   <p>Eine Änderung dieser Bedingungen oder des Auftragsverarbeitungsvertrags gilt erst, wenn Sie sie annehmen. Die von Ihnen angenommene Fassung bleibt festgehalten. Ein Wechsel von Unterauftragsverarbeitern folgt dem Mitteilungsverfahren des Auftragsverarbeitungsvertrags (Klausel 7.7).</p>
   <h2>11. Recht und Sprache</h2>
