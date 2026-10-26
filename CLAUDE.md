@@ -9,7 +9,7 @@ Cloudflare Worker backend that powers its "cascade" sales demo. Two independent
 deployables in one repo:
 
 - **The site** (repo root): a static one-page site. `index.html` (inline CSS +
-  JS, no build step) plus the standalone `impressum.html`, `privacy.html` and `trust.html` (the classic trust page a prospect reads before a discovery call, English only; its storage claims are made true by `sc-product/tools/pilot-transfer.mjs`)
+  JS, no build step) plus the standalone `impressum.html`, `privacy.html` and `trust.html` (the trust page: what makes Structural Content safe for a company's data, English only; its storage claims are made true by `sc-product/tools/pilot-transfer.mjs`)
   legal pages, `Media/`, `favicon.ico`. Served by **GitHub Pages** from `main`
   at path `/`. `CNAME` pins the domain and `.nojekyll` disables Jekyll
   processing. (`examples-anim-preview.html` is gitignored local scratch, not
