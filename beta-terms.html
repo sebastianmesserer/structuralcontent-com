@@ -49,12 +49,6 @@
       --band: #EFECE4;
       --ink: var(--charcoal);
       --accent-ink: #FFFFFF;
-      --inc: #1F5E55;  --chip-inc: #DDEAE6;
-      --exc: #9A3A2C;  --chip-exc: #F3E1DC;
-      --opt: #7A5A12;  --chip-opt: #F1E8D2;
-      --display: var(--serif);
-      --body: var(--sans);
-      --mono: ui-monospace, Menlo, monospace;
     }
     * { box-sizing: border-box; }
     body {
@@ -72,11 +66,7 @@
     .site-header .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 16px; }
     .wordmark:hover { text-decoration: none; color: var(--charcoal); }
     .head-right { display: flex; align-items: center; gap: 18px; }
-    .back { font-size: 0.95rem; font-weight: 500; }
-    .back::before { content: "\2190 "; }
-    @media (max-width: 480px) { .back { display: none; } }
 
-    .lede, .promise dd, ol.steps p, td, details p { color: var(--charcoal-soft); }
 
     .site-footer { padding: 40px 0; border-top: 1px solid var(--line); margin-top: 56px; }
     .site-footer .wrap { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 10px 28px; }
@@ -88,7 +78,7 @@
 .lang { display: flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
 .lang button { font: inherit; font-size: 13px; font-weight: 600; padding: 4px 12px; background: transparent; color: var(--muted); border: 0; cursor: pointer; }
 .lang button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
-.lang button:focus-visible, .copy:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.lang button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
     .wordmark { font-family: var(--serif); font-weight: 600; font-size: 1.15rem; color: var(--charcoal); letter-spacing: -0.01em; white-space: nowrap; }
 
@@ -152,7 +142,7 @@ td:first-child { width: 30%; font-weight: 600; color: var(--charcoal); }
   <h2>8. Liability</h2>
   <p>We are liable without limitation for intent and gross negligence, for injury to life, body or health, and under the German Product Liability Act. For slight negligence we are liable only for breach of an obligation that makes the beta possible at all and on which you may rely, and only for the damage typical and foreseeable when these terms were agreed. Liability under Art. 82 GDPR is unaffected.</p>
   <h2>9. Duration and end</h2>
-  <p>The beta runs from acceptance until the pilot ends as Annex II of the Data Processing Agreement defines it: at the final handover of the briefs, on written notice by either side (email suffices), or 90 days after your first upload, whichever comes first. If nothing has been uploaded 30 days after acceptance, the beta ends then. Clauses 4 to 8 continue to apply after the end.</p>
+  <p>The beta runs from acceptance until the pilot ends as Annex II of the Data Processing Agreement defines it: at the final handover of the briefs, on written notice by either side (email suffices), or 90 days after your first upload, whichever comes first. If nothing has been uploaded 30 days after acceptance, the beta ends then. Clauses 4 to 8 and 11 continue to apply after the end.</p>
   <h2>10. Changes</h2>
   <p>A change to these terms or to the Data Processing Agreement applies only once you accept it. The version you accepted stays on record. A change of sub-processor follows the notice procedure of the Data Processing Agreement (Clause 7.7).</p>
   <h2>11. Law and language</h2>
@@ -172,7 +162,7 @@ td:first-child { width: 30%; font-weight: 600; color: var(--charcoal); }
 <div class="wrap">
   <h2>1. Parteien und Zustandekommen</h2>
   <p>Diese Bedingungen gelten zwischen der Structural Content UG (haftungsbeschränkt), Kollwitzstraße 76, 10435 Berlin, Deutschland; Amtsgericht Charlottenburg, HRB 291186 B; Geschäftsführer Sebastian Rasso Messerer („wir") und dem Unternehmen, das bei der Annahme genannt wird („Sie"). Sie richten sich ausschließlich an Unternehmer.</p>
-  <p>Sie kommen zustande, wenn eine für Ihr Unternehmen vertretungsberechtigte Person sie zusammen mit dem Auftragsverarbeitungsvertrag auf Ihrer privaten Upload-Seite annimmt. Wir halten fest: Firma, Anschrift und Registereintrag des Unternehmens; Name, Funktion und E-Mail der annehmenden Person; ein optionaler Datenschutzkontakt; der Zeitpunkt; und die angenommene Fassung; wie wir mit diesen Angaben umgehen, steht in unserer <a href="privacy.html">Datenschutzerklärung</a>.</p>
+  <p>Sie kommen zustande, wenn eine für Ihr Unternehmen vertretungsberechtigte Person sie zusammen mit dem Auftragsverarbeitungsvertrag auf Ihrer privaten Upload-Seite annimmt. Wir halten fest: Firma, Anschrift und Registereintrag des Unternehmens; Name, Funktion und E-Mail der annehmenden Person; einen optionalen Datenschutzkontakt; den Zeitpunkt; und die angenommene Fassung; wie wir mit diesen Angaben umgehen, steht in unserer <a href="privacy.html">Datenschutzerklärung</a> (auf Englisch).</p>
   <h2>2. Was die Beta ist</h2>
   <p>Sie laden Dateiexporte aus Ihren eigenen Systemen hoch und nennen eine strategische Priorität und die Kennzahlen unter Druck. Wir analysieren sie, mit KI, und schicken Ihnen Kampagnen-Briefings für Ihr Marketingteam. Der Dienst wird noch entwickelt: Wir arbeiten sorgfältig, versprechen aber kein bestimmtes Ergebnis und nicht, dass sich eine Kennzahl bewegt.</p>
   <h2>3. Preis</h2>
@@ -189,7 +179,7 @@ td:first-child { width: 30%; font-weight: 600; color: var(--charcoal); }
   <h2>8. Haftung</h2>
   <p>Wir haften unbeschränkt bei Vorsatz und grober Fahrlässigkeit, bei Verletzung von Leben, Körper oder Gesundheit und nach dem Produkthaftungsgesetz. Bei leichter Fahrlässigkeit haften wir nur für die Verletzung einer Pflicht, die die Beta überhaupt erst ermöglicht und auf die Sie vertrauen dürfen, und nur für den bei Vereinbarung dieser Bedingungen typischen und vorhersehbaren Schaden. Die Haftung nach Art. 82 DSGVO bleibt unberührt.</p>
   <h2>9. Laufzeit und Ende</h2>
-  <p>Die Beta läuft ab der Annahme, bis der Pilot so endet, wie Anlage II des Auftragsverarbeitungsvertrags es festlegt: mit der letzten Übergabe der Briefings, auf schriftliche Mitteilung einer Seite (E-Mail genügt) oder 90 Tage nach Ihrem ersten Upload, je nachdem, was zuerst eintritt. Ist 30 Tage nach der Annahme nichts hochgeladen, endet die Beta dann. Ziffern 4 bis 8 gelten nach dem Ende fort.</p>
+  <p>Die Beta läuft ab der Annahme, bis der Pilot so endet, wie Anlage II des Auftragsverarbeitungsvertrags es festlegt: mit der letzten Übergabe der Briefings, auf schriftliche Mitteilung einer Seite (E-Mail genügt) oder 90 Tage nach Ihrem ersten Upload, je nachdem, was zuerst eintritt. Ist 30 Tage nach der Annahme nichts hochgeladen, endet die Beta dann. Ziffern 4 bis 8 und 11 gelten nach dem Ende fort.</p>
   <h2>10. Änderungen</h2>
   <p>Eine Änderung dieser Bedingungen oder des Auftragsverarbeitungsvertrags gilt erst, wenn Sie sie annehmen. Die von Ihnen angenommene Fassung bleibt festgehalten. Ein Wechsel von Unterauftragsverarbeitern folgt dem Mitteilungsverfahren des Auftragsverarbeitungsvertrags (Klausel 7.7).</p>
   <h2>11. Recht und Sprache</h2>
