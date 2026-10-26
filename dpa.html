@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Data Processing Agreement – Structural Content</title>
+  <meta name="description" content="Data Processing Agreement (Art. 28 GDPR) for the Structural Content private beta." />
+  <!-- Private beta document: sent by link, never linked from the site or listed in the sitemap. -->
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#F7F5F0" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/svg+xml" href="/Media/logo/sc-favicon.svg" />
+  <link rel="preload" href="/Media/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/Media/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <style>
+  <style>
+    /* Self-hosted fonts (no external CDN; see privacy.html) */
+    @font-face {
+      font-family: "Fraunces"; font-style: normal; font-weight: 400 600; font-display: swap;
+      src: url("/Media/fonts/fraunces-latin.woff2") format("woff2");
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    @font-face {
+      font-family: "Fraunces"; font-style: normal; font-weight: 400 600; font-display: swap;
+      src: url("/Media/fonts/fraunces-latin-ext.woff2") format("woff2");
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+    @font-face {
+      font-family: "Inter"; font-style: normal; font-weight: 400 600; font-display: swap;
+      src: url("/Media/fonts/inter-latin.woff2") format("woff2");
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    @font-face {
+      font-family: "Inter"; font-style: normal; font-weight: 400 600; font-display: swap;
+      src: url("/Media/fonts/inter-latin-ext.woff2") format("woff2");
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+    :root {
+      --stone:        #F7F5F0;
+      --charcoal:     #1F1D1A;
+      --charcoal-soft:#403C36;
+      --muted:        #6B665D;
+      --accent:       #1F5E55;
+      --accent-deep:  #184a43;
+      --line:         #E3DFD6;
+      --serif: "Fraunces", Georgia, "Times New Roman", serif;
+      --sans:  "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      /* page-local roles, mapped onto the site palette */
+      --bg: var(--stone);
+      --band: #EFECE4;
+      --ink: var(--charcoal);
+      --accent-ink: #FFFFFF;
+      --inc: #1F5E55;  --chip-inc: #DDEAE6;
+      --exc: #9A3A2C;  --chip-exc: #F3E1DC;
+      --opt: #7A5A12;  --chip-opt: #F1E8D2;
+      --display: var(--serif);
+      --body: var(--sans);
+      --mono: ui-monospace, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--stone); color: var(--charcoal);
+      font-family: var(--sans); font-size: 17px; line-height: 1.65;
+      -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent-deep); text-decoration: underline; text-underline-offset: 3px; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 0 28px; }
+    @media (max-width: 480px) { .wrap { padding: 0 18px; } }
+
+    .site-header { border-bottom: 1px solid var(--line); }
+    .site-header .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 16px; }
+    .wordmark:hover { text-decoration: none; color: var(--charcoal); }
+    .head-right { display: flex; align-items: center; gap: 18px; }
+    .back { font-size: 0.95rem; font-weight: 500; }
+    .back::before { content: "\2190 "; }
+    @media (max-width: 480px) { .back { display: none; } }
+
+    .lede, .promise dd, ol.steps p, td, details p { color: var(--charcoal-soft); }
+
+    .site-footer { padding: 40px 0; border-top: 1px solid var(--line); margin-top: 56px; }
+    .site-footer .wrap { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 10px 28px; }
+    .site-footer .fw { font-family: var(--serif); font-weight: 600; color: var(--charcoal); }
+    .site-footer .meta { font-size: 0.9rem; color: var(--muted); }
+    .site-footer .foot-link { color: var(--accent); }
+    .site-footer .foot-link:hover { color: var(--accent-deep); }
+
+.lang { display: flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.lang button { font: inherit; font-size: 13px; font-weight: 600; padding: 4px 12px; background: transparent; color: var(--muted); border: 0; cursor: pointer; }
+.lang button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.lang button:focus-visible, .copy:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+
+.band { background: var(--band); padding-block: 40px 44px; border-bottom: 1px solid var(--line); }
+.eyebrow { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: var(--accent); }
+h1 { font-family: var(--serif); font-size: clamp(28px, 5.5vw, 38px); line-height: 1.15; font-weight: 500; margin: 8px 0 12px; text-wrap: balance; letter-spacing: -.01em; }
+h2 { font-family: var(--serif); font-size: 22px; line-height: 1.3; font-weight: 600; margin: 36px 0 10px; text-wrap: balance; }
+p, li { max-width: 68ch; color: var(--charcoal-soft); }
+p { margin: 0 0 12px; }
+ul, ol { padding-left: 22px; margin: 0 0 12px; }
+li { margin-bottom: 6px; }
+.lede { font-size: 18px; color: var(--muted); }
+.version { font-size: 14px; color: var(--muted); }
+table { border-collapse: collapse; width: 100%; font-size: 15px; }
+.scroll { overflow-x: auto; }
+th, td { text-align: left; vertical-align: top; padding: 10px 12px 10px 0; border-bottom: 1px solid var(--line); color: var(--charcoal-soft); }
+th { font-weight: 600; color: var(--charcoal); }
+td:first-child { width: 30%; font-weight: 600; color: var(--charcoal); }
+.subs td:first-child { width: auto; font-weight: 400; }
+.note { border-left: 3px solid var(--accent); padding: 4px 0 4px 14px; margin: 16px 0; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a href="index.html" class="wordmark">Structural Content</a>
+      <div class="head-right">
+        <div class="lang" role="group" aria-label="Language">
+          <button aria-pressed="true" data-set="en">EN</button>
+          <button aria-pressed="false" data-set="de">DE</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+<!-- ============================== ENGLISH ============================== -->
+<div data-l="en">
+<div class="band"><div class="wrap">
+  <div class="eyebrow">Private beta</div>
+  <h1>Data Processing Agreement (Art. 28 GDPR)</h1>
+  <p class="lede">Standard contractual clauses between controllers and processors, Commission Implementing Decision (EU) 2021/915 of 4 June 2021, with the four annexes completed for the Structural Content private beta. Part of the <a href="beta-terms.html">Private Beta Terms</a>.</p>
+  <p class="version">Version 2026-10-26</p>
+</div></div>
+<div class="wrap">
+  <h2>How it is concluded</h2>
+  <p>In electronic form (Art. 28(9) GDPR). The processor offers it by issuing the controller's private upload link. A person authorised to act for the controller accepts it there, together with the Private Beta Terms, naming the company and themselves, before anything is uploaded. The processor records the acceptance with the version above and the time. That record takes the place of signatures. A controller that prefers a signed copy receives this text as a PDF with its details filled in.</p>
+  <h2>The agreement</h2>
+  <p>The parties agree the standard contractual clauses in the Annex to Commission Implementing Decision (EU) 2021/915 ("the Clauses"), which are incorporated by reference and <strong>not altered</strong>. The official text in all EU languages: <a href="https://commission.europa.eu/publications/standard-contractual-clauses-controllers-and-processors-eueea_en">commission.europa.eu</a>.</p>
+  <p>Where the Clauses ask the parties to choose or complete:</p>
+  <ul>
+    <li><strong>Regulation (EU) 2016/679 (GDPR)</strong> applies wherever the Clauses offer a choice between it and Regulation (EU) 2018/1725.</li>
+    <li><strong>Clause 5 (docking clause)</strong> is not used.</li>
+    <li><strong>Clause 7.7(a): OPTION 2</strong>, general written authorisation, with a notice period of <strong>30 days</strong>.</li>
+    <li><strong>Clause 9.1(a)</strong>: the words in brackets ("unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons") apply.</li>
+    <li><strong>Annexes I to IV</strong> are completed below.</li>
+  </ul>
+  <h2>Annex I: List of parties</h2>
+  <div class="scroll"><table>
+      <tr><td>Controller</td><td>The company named in the acceptance record, with the address, register entry and contact person given there.</td></tr>
+      <tr><td>Processor</td><td>Structural Content UG (haftungsbeschränkt), Kollwitzstraße 76, 10435 Berlin, Germany; Amtsgericht Charlottenburg, HRB 291186 B; managing director Sebastian Rasso Messerer. Contact: sebastian@structuralcontent.com.</td></tr>
+      <tr><td>Accession</td><td>The processor by issuing the upload link that offers this agreement; the controller by accepting it there, recorded with the name and role of the person accepting, the time and this version.</td></tr>
+  </table></div>
+  <h2>Annex II: Description of the processing</h2>
+  <div class="scroll"><table>
+      <tr><td>Categories of data subjects</td><td>The controller's customers and prospects as they appear in the exported records. The controller's employees appear only if the controller includes free text that names them.</td></tr>
+      <tr><td>Categories of personal data</td><td>Only the columns the controller exports, per a column list the parties agree for each source before its first upload. The list leaves out contact names, email addresses, phone numbers and fields naming the controller's staff (owner, assignee, creator, team, agent). It includes business facts (stages, amounts, dates, categories, reasons), identifiers that link records across systems, and company names. Free-text fields (notes, descriptions, transcripts, comments) are included only where the controller chooses them for a source and may then contain names someone typed in. Records without names are still treated as personal data.</td></tr>
+      <tr><td>Sensitive data</td><td>None requested. If free text the controller includes contains special categories of data, it is processed only for the purpose below and deleted with everything else.</td></tr>
+      <tr><td>Sources</td><td>The systems the controller exports from, each with its column list, as the parties agree in writing (email suffices) before that source's first upload. That agreement forms part of this Annex.</td></tr>
+      <tr><td>Nature of the processing</td><td>The controller exports files from its own systems and uploads them through a private link the processor issues, together with the priority and metrics it states. The processor analyses them, with AI inference, and hands campaign briefs back through a private download link. The processor receives no logins, API keys or connector access to the controller's systems, and accepts the controller's data only through the upload link: a file sent any other way is deleted on receipt.</td></tr>
+      <tr><td>Purpose</td><td>Deriving campaign briefs for the controller's marketing team against the priority the controller states. No other purpose. The data is never used to train or evaluate any model, or for any other customer.</td></tr>
+      <tr><td>Duration</td><td>From the first upload until the pilot ends, which is the earliest of: (1) the final handover, when the controller confirms it has downloaded the last bundle of briefs or the download link for it expires, 7 days after it is issued; (2) written notice by either party (email suffices); (3) 90 days after the first upload. Within 30 days of the end the processor deletes the uploaded files, the priority and metrics and everything derived from them, in storage and on the laptop, except what the next row keeps, and confirms the deletion in writing.</td></tr>
+      <tr><td>What is kept after deletion</td><td>A record that holds none of the controller's files and no personal data from them: the number of files and their sizes, the dates of each step, the kinds of question the controller asked about the briefs (without their content), the controller's reply to the follow-up question after the pilot (which briefs it used and whether the metric moved), the deletion confirmation, and the record of the controller's acceptance of this agreement. File names are removed from the processor's upload log at deletion.</td></tr>
+      <tr><td>Processing by the sub-processor</td><td>Storage and AI inference as in Annex IV, for the duration above.</td></tr>
+  </table></div>
+  <h2>Annex III: Technical and organisational measures</h2>
+  <div class="scroll"><table>
+      <tr><td>Entry</td><td>Files arrive only through private upload links issued per pilot. Each expires after 7 days and accepts files up to 1 GiB. No system access is granted.</td></tr>
+      <tr><td>Storage</td><td>A private Amazon S3 bucket in eu-central-1 (Frankfurt). Public access is blocked; only TLS connections are accepted; data is encrypted at rest (AES-256); every object is scheduled to expire 30 days after upload. The credential the transfer tool uses can reach this bucket and nothing else.</td></tr>
+      <tr><td>Processing</td><td>One company laptop with full-disk encryption (FileVault), used only by named staff and only within the EU. Pilot files live in one directory per pilot, excluded from backups and cloud sync.</td></tr>
+      <tr><td>AI analysis</td><td>Amazon Bedrock, EU cross-region inference profile (EU regions only), account set to zero data retention: the model service stores no inputs or outputs. No model is trained on the data, and model providers receive no copy of it.</td></tr>
+      <tr><td>Delivery</td><td>Briefs are handed over through a private download link that expires after 7 days.</td></tr>
+      <tr><td>Access</td><td>Named processor staff bound to confidentiality. At acceptance that is one person, the managing director named in Annex I.</td></tr>
+      <tr><td>Transport</td><td>TLS on every leg; the storage refuses plain HTTP.</td></tr>
+      <tr><td>Minimisation</td><td>The column list per source (Annex II), agreed before the first upload.</td></tr>
+      <tr><td>Deletion</td><td>As in Annex II, confirmed in writing; independently, scheduled expiry in storage 30 days after upload.</td></tr>
+      <tr><td>Record</td><td>An upload log: which file arrived, from which system and when. The controller may see its part at any time. At deletion it is reduced as in Annex II.</td></tr>
+      <tr><td>Breach</td><td>The controller is notified within 24 hours of the processor becoming aware (Clause 9.2).</td></tr>
+      <tr><td>Certification</td><td>None held. This agreement and its annexes are offered for direct review instead.</td></tr>
+  </table></div>
+  <h2>Annex IV: List of sub-processors</h2>
+  <p>The controller has authorised the use of the following sub-processor:</p>
+  <div class="scroll"><table class="subs">
+      <tr><th>Entity</th><th>Processing</th><th>Location</th><th>Transfer safeguard</th></tr>
+      <tr><td>Amazon Web Services EMEA SARL, 38 Avenue John F. Kennedy, L-1855 Luxembourg</td><td>Storage (Amazon S3) and AI inference (Amazon Bedrock)</td><td>EU: S3 in eu-central-1; Bedrock in EU regions only, zero data retention</td><td>Standard contractual clauses incorporated in the AWS GDPR Data Processing Addendum, for any transfer that may arise</td></tr>
+  </table></div>
+  <p>No other service of the processor receives the controller's data: data enters only through the upload link, setup calls run on the controller's own meeting tool, and email between the parties is each party's own correspondence.</p>
+  <p class="note">This page is published in English and German; if the two differ, the German version prevails. The Clauses themselves are binding in their official text.</p>
+</div>
+</div>
+
+<!-- ============================== DEUTSCH ============================== -->
+<div data-l="de" hidden>
+<div class="band"><div class="wrap">
+  <div class="eyebrow">Private Beta</div>
+  <h1>Auftragsverarbeitungsvertrag (Art. 28 DSGVO)</h1>
+  <p class="lede">Standardvertragsklauseln zwischen Verantwortlichen und Auftragsverarbeitern, Durchführungsbeschluss (EU) 2021/915 der Kommission vom 4. Juni 2021, mit den vier Anlagen ausgefüllt für die Private Beta von Structural Content. Teil der <a href="beta-terms.html#de">Bedingungen der Private Beta</a>.</p>
+  <p class="version">Fassung 2026-10-26</p>
+</div></div>
+<div class="wrap">
+  <h2>Wie er geschlossen wird</h2>
+  <p>In elektronischer Form (Art. 28 Abs. 9 DSGVO). Der Auftragsverarbeiter bietet ihn an, indem er dem Verantwortlichen seinen privaten Upload-Link ausgibt. Eine für den Verantwortlichen vertretungsberechtigte Person nimmt ihn dort zusammen mit den Bedingungen der Private Beta an, bevor etwas hochgeladen wird, und nennt dabei das Unternehmen und sich selbst. Der Auftragsverarbeiter hält die Annahme mit der obigen Fassung und dem Zeitpunkt fest. Dieser Nachweis ersetzt die Unterschriften. Ein Verantwortlicher, der eine unterschriebene Ausfertigung vorzieht, erhält diesen Text als PDF mit seinen Angaben.</p>
+  <h2>Der Vertrag</h2>
+  <p>Die Parteien vereinbaren die Standardvertragsklauseln im Anhang des Durchführungsbeschlusses (EU) 2021/915 der Kommission („die Klauseln"), die durch Verweis einbezogen und <strong>nicht verändert</strong> werden. Der amtliche Text in allen EU-Sprachen: <a href="https://commission.europa.eu/publications/standard-contractual-clauses-controllers-and-processors-eueea_en">commission.europa.eu</a>.</p>
+  <p>Wo die Klauseln die Parteien wählen oder ergänzen lassen:</p>
+  <ul>
+    <li><strong>Verordnung (EU) 2016/679 (DSGVO)</strong> gilt überall, wo die Klauseln die Wahl zwischen ihr und der Verordnung (EU) 2018/1725 lassen.</li>
+    <li><strong>Klausel 5 (Kopplungsklausel)</strong> wird nicht genutzt.</li>
+    <li><strong>Klausel 7.7 Buchstabe a: OPTION 2</strong>, allgemeine schriftliche Genehmigung, mit einer Frist von <strong>30 Tagen</strong>.</li>
+    <li><strong>Klausel 9.1 Buchstabe a</strong>: Die Worte in Klammern („es sei denn, die Verletzung des Schutzes personenbezogener Daten führt voraussichtlich nicht zu einem Risiko für die Rechte und Freiheiten natürlicher Personen") gelten.</li>
+    <li><strong>Anlagen I bis IV</strong> sind unten ausgefüllt.</li>
+  </ul>
+  <h2>Anlage I: Liste der Parteien</h2>
+  <div class="scroll"><table>
+      <tr><td>Verantwortlicher</td><td>Das im Annahmenachweis genannte Unternehmen, mit der dort angegebenen Anschrift, Registereintragung und Kontaktperson.</td></tr>
+      <tr><td>Auftragsverarbeiter</td><td>Structural Content UG (haftungsbeschränkt), Kollwitzstraße 76, 10435 Berlin, Deutschland; Amtsgericht Charlottenburg, HRB 291186 B; Geschäftsführer Sebastian Rasso Messerer. Kontakt: sebastian@structuralcontent.com.</td></tr>
+      <tr><td>Beitritt</td><td>Der Auftragsverarbeiter durch die Ausgabe des Upload-Links, der diesen Vertrag anbietet; der Verantwortliche durch die Annahme dort, festgehalten mit Name und Funktion der annehmenden Person, Zeitpunkt und dieser Fassung.</td></tr>
+  </table></div>
+  <h2>Anlage II: Beschreibung der Verarbeitung</h2>
+  <div class="scroll"><table>
+      <tr><td>Kategorien betroffener Personen</td><td>Kunden und Interessenten des Verantwortlichen, wie sie in den exportierten Datensätzen vorkommen. Beschäftigte des Verantwortlichen kommen nur vor, wenn der Verantwortliche Freitext mitschickt, der sie nennt.</td></tr>
+      <tr><td>Kategorien personenbezogener Daten</td><td>Nur die Spalten, die der Verantwortliche exportiert, nach einer Spaltenliste, die die Parteien für jede Quelle vor deren erstem Upload vereinbaren. Die Liste lässt Kontaktnamen, E-Mail-Adressen, Telefonnummern und Felder weg, die Beschäftigte des Verantwortlichen nennen (Owner, Bearbeiter, Ersteller, Team, Agent). Sie umfasst Geschäftsfakten (Phasen, Beträge, Daten, Kategorien, Gründe), Kennungen, die Datensätze systemübergreifend verbinden, und Firmennamen. Freitextfelder (Notizen, Beschreibungen, Transkripte, Kommentare) sind nur enthalten, wo der Verantwortliche sie für eine Quelle wählt, und können dann Namen enthalten, die jemand eingetippt hat. Datensätze ohne Namen werden weiterhin als personenbezogen behandelt.</td></tr>
+      <tr><td>Besondere Kategorien</td><td>Keine angefragt. Enthält Freitext, den der Verantwortliche mitschickt, besondere Kategorien personenbezogener Daten, werden sie nur zum unten genannten Zweck verarbeitet und mit allem anderen gelöscht.</td></tr>
+      <tr><td>Quellen</td><td>Die Systeme, aus denen der Verantwortliche exportiert, jeweils mit ihrer Spaltenliste, wie die Parteien sie vor dem ersten Upload der Quelle schriftlich vereinbaren (E-Mail genügt). Diese Vereinbarung ist Teil dieser Anlage.</td></tr>
+      <tr><td>Art der Verarbeitung</td><td>Der Verantwortliche exportiert Dateien aus seinen eigenen Systemen und lädt sie über einen privaten Link hoch, den der Auftragsverarbeiter ausgibt, zusammen mit der Priorität und den Kennzahlen, die er nennt. Der Auftragsverarbeiter analysiert sie mit KI-Inferenz und übergibt Kampagnen-Briefings über einen privaten Download-Link. Der Auftragsverarbeiter erhält keine Zugangsdaten, API-Schlüssel oder Konnektor-Zugriffe auf die Systeme des Verantwortlichen und nimmt dessen Daten nur über den Upload-Link an: Eine auf anderem Weg geschickte Datei wird bei Eingang gelöscht.</td></tr>
+      <tr><td>Zweck</td><td>Ableitung von Kampagnen-Briefings für das Marketingteam des Verantwortlichen zu der Priorität, die der Verantwortliche nennt. Kein anderer Zweck. Die Daten werden nie zum Trainieren oder Bewerten eines Modells oder für einen anderen Kunden verwendet.</td></tr>
+      <tr><td>Dauer</td><td>Vom ersten Upload bis zum Ende des Piloten; das ist der früheste dieser Zeitpunkte: (1) die letzte Übergabe, wenn der Verantwortliche bestätigt, das letzte Paket Briefings heruntergeladen zu haben, oder der Download-Link dafür 7 Tage nach Ausgabe abläuft; (2) schriftliche Mitteilung einer Partei (E-Mail genügt); (3) 90 Tage nach dem ersten Upload. Innerhalb von 30 Tagen nach dem Ende löscht der Auftragsverarbeiter die hochgeladenen Dateien, die Priorität und Kennzahlen und alles daraus Abgeleitete, im Speicher und auf dem Laptop, außer dem, was die nächste Zeile behält, und bestätigt die Löschung schriftlich.</td></tr>
+      <tr><td>Was nach der Löschung bleibt</td><td>Ein Protokoll ohne Dateien des Verantwortlichen und ohne personenbezogene Daten daraus: Anzahl und Größe der Dateien, die Daten jedes Schritts, die Arten von Fragen, die der Verantwortliche zu den Briefings gestellt hat (ohne deren Inhalt), die Antwort des Verantwortlichen auf die Nachfrage nach dem Piloten (welche Briefings er genutzt hat und ob sich die Kennzahl bewegt hat), die Löschbestätigung und der Nachweis, dass der Verantwortliche diesen Vertrag angenommen hat. Dateinamen werden bei der Löschung aus dem Upload-Protokoll des Auftragsverarbeiters entfernt.</td></tr>
+      <tr><td>Verarbeitung durch den Unterauftragsverarbeiter</td><td>Speicherung und KI-Inferenz wie in Anlage IV, für die oben genannte Dauer.</td></tr>
+  </table></div>
+  <h2>Anlage III: Technische und organisatorische Maßnahmen</h2>
+  <div class="scroll"><table>
+      <tr><td>Eingang</td><td>Dateien kommen nur über private Upload-Links an, die je Pilot ausgegeben werden. Jeder läuft nach 7 Tagen ab und nimmt Dateien bis 1 GiB an. Es wird kein Systemzugang gewährt.</td></tr>
+      <tr><td>Speicherung</td><td>Ein privater Amazon-S3-Bucket in eu-central-1 (Frankfurt). Öffentlicher Zugriff ist gesperrt; nur TLS-Verbindungen werden angenommen; die Daten sind im Ruhezustand verschlüsselt (AES-256); jedes Objekt läuft planmäßig 30 Tage nach dem Upload ab. Die Zugangsdaten des Übertragungswerkzeugs erreichen diesen Bucket und sonst nichts.</td></tr>
+      <tr><td>Verarbeitung</td><td>Ein Firmen-Laptop mit Festplattenverschlüsselung (FileVault), genutzt nur von benannten Mitarbeitenden und nur innerhalb der EU. Pilotdateien liegen in einem Verzeichnis je Pilot, ausgenommen von Backups und Cloud-Synchronisation.</td></tr>
+      <tr><td>KI-Analyse</td><td>Amazon Bedrock, regionsübergreifendes EU-Inferenzprofil (nur EU-Regionen), Konto auf Zero Data Retention gestellt: Der Modelldienst speichert keine Ein- oder Ausgaben. Kein Modell wird mit den Daten trainiert, und Modellanbieter erhalten keine Kopie.</td></tr>
+      <tr><td>Übergabe</td><td>Briefings werden über einen privaten Download-Link übergeben, der nach 7 Tagen abläuft.</td></tr>
+      <tr><td>Zugriff</td><td>Benannte, zur Vertraulichkeit verpflichtete Mitarbeitende des Auftragsverarbeiters. Bei Annahme ist das eine Person, der in Anlage I genannte Geschäftsführer.</td></tr>
+      <tr><td>Transport</td><td>TLS auf jeder Strecke; der Speicher lehnt unverschlüsseltes HTTP ab.</td></tr>
+      <tr><td>Datensparsamkeit</td><td>Die Spaltenliste je Quelle (Anlage II), vereinbart vor dem ersten Upload.</td></tr>
+      <tr><td>Löschung</td><td>Wie in Anlage II, schriftlich bestätigt; unabhängig davon planmäßiger Ablauf im Speicher 30 Tage nach dem Upload.</td></tr>
+      <tr><td>Protokoll</td><td>Ein Upload-Protokoll: welche Datei aus welchem System wann ankam. Der Verantwortliche kann seinen Teil jederzeit einsehen. Bei der Löschung wird es wie in Anlage II reduziert.</td></tr>
+      <tr><td>Datenpanne</td><td>Der Verantwortliche wird innerhalb von 24 Stunden benachrichtigt, nachdem der Auftragsverarbeiter davon Kenntnis erlangt hat (Klausel 9.2).</td></tr>
+      <tr><td>Zertifizierung</td><td>Keine. Stattdessen werden dieser Vertrag und seine Anlagen zur direkten Prüfung vorgelegt.</td></tr>
+  </table></div>
+  <h2>Anlage IV: Liste der Unterauftragsverarbeiter</h2>
+  <p>Der Verantwortliche hat den Einsatz des folgenden Unterauftragsverarbeiters genehmigt:</p>
+  <div class="scroll"><table class="subs">
+      <tr><th>Stelle</th><th>Verarbeitung</th><th>Ort</th><th>Garantie für Übermittlungen</th></tr>
+      <tr><td>Amazon Web Services EMEA SARL, 38 Avenue John F. Kennedy, L-1855 Luxemburg</td><td>Speicherung (Amazon S3) und KI-Inferenz (Amazon Bedrock)</td><td>EU: S3 in eu-central-1; Bedrock nur in EU-Regionen, Zero Data Retention</td><td>Standardvertragsklauseln im AWS GDPR Data Processing Addendum, für etwaige Übermittlungen</td></tr>
+  </table></div>
+  <p>Kein anderer Dienst des Auftragsverarbeiters erhält Daten des Verantwortlichen: Daten kommen nur über den Upload-Link an, Abstimmungstermine laufen über das Meeting-Tool des Verantwortlichen, und E-Mails zwischen den Parteien sind die eigene Korrespondenz jeder Partei.</p>
+  <p class="note">Diese Seite ist auf Englisch und Deutsch veröffentlicht; weichen beide voneinander ab, gilt die deutsche Fassung. Die Klauseln selbst gelten in ihrem amtlichen Wortlaut.</p>
+</div>
+</div>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span class="fw">Structural Content</span>
+      <span class="meta">Questions / Fragen: sebastian@structuralcontent.com</span>
+      <a class="meta foot-link" href="privacy.html">Privacy</a>
+      <a class="meta foot-link" href="impressum.html">Impressum</a>
+    </div>
+  </footer>
+
+<script>
+(function () {
+  var TITLES = { en: 'Data Processing Agreement – Structural Content', de: 'Auftragsverarbeitungsvertrag – Structural Content' };
+  function setLang(l, remember) {
+    document.querySelectorAll('[data-l]').forEach(function (el) { el.hidden = el.getAttribute('data-l') !== l; });
+    document.querySelectorAll('.lang button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.set === l)); });
+    document.documentElement.lang = l;
+    document.title = TITLES[l];
+    if (remember) {
+      try { localStorage.setItem('lang', l); } catch (e) {}
+      try { history.replaceState(null, '', '#' + l); } catch (e) {}
+    }
+  }
+  function initial() {
+    var h = location.hash.slice(1);
+    if (h === 'de' || h === 'en') return h;
+    var saved = null;
+    try { saved = localStorage.getItem('lang'); } catch (e) {}
+    if (saved === 'de' || saved === 'en') return saved;
+    return (navigator.language || '').toLowerCase().indexOf('de') === 0 ? 'de' : 'en';
+  }
+  setLang(initial(), false);
+  window.addEventListener('hashchange', function () { var h = location.hash.slice(1); if (h === 'de' || h === 'en') setLang(h, false); });
+  document.querySelectorAll('.lang button').forEach(function (b) { b.addEventListener('click', function () { setLang(b.dataset.set, true); }); });
+})();
+</script>
+</body>
+</html>
