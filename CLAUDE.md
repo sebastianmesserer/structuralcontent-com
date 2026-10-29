@@ -9,8 +9,8 @@ Cloudflare Worker backend that powered its earlier "cascade" sales demo (unused 
 deployables in one repo:
 
 - **The site** (repo root): a static one-page site. `index.html` (inline CSS +
-  JS, no build step) plus the standalone `impressum.html`, `privacy.html` and `trust.html` (the trust page: what makes Structural Content safe for a company's data, English only; its storage claims are made true by `sc-product/tools/pilot-transfer.mjs`), and the two agreement documents `beta-terms.html` and `dpa.html`, linked from `trust.html` (`sc-product/tools/pilot-transfer.mjs` pins both by sha256, so any edit to them needs a re-pin there before an upload link can be issued)
-  legal pages, `Media/`, `favicon.ico`. Served by **GitHub Pages** from `main`
+  JS, no build step) plus the standalone `impressum.html`, `privacy.html` and `trust.html` (the trust page: what makes Structural Content safe for a company's data, English only; its storage claims are made true by `sc-product/tools/pilot-transfer.mjs`), and the two agreement documents `beta-terms.html` and `dpa.html`, linked from `trust.html` (`sc-product/tools/pilot-transfer.mjs` pins both by sha256, so any edit to them needs a re-pin there before an upload link can be issued),
+  `Media/` and `favicon.ico`. Served by **GitHub Pages** from `main`
   at path `/`. `CNAME` pins the domain and `.nojekyll` disables Jekyll
   processing. (`examples-anim-preview.html` is gitignored local scratch, not
   part of the deployed site.)

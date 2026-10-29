@@ -122,7 +122,7 @@ td:first-child { width: 30%; font-weight: 600; color: var(--charcoal); }
 </div></div>
 <div class="wrap">
   <h2>How it is concluded</h2>
-  <p>In electronic form (Art. 28(9) GDPR). The processor offers it by issuing the controller's private upload link. A person authorised to act for the controller accepts it there, together with the Private Beta Terms, naming the company and themselves, before anything is uploaded. The processor records the acceptance with the version above and the time. That record takes the place of signatures. Once accepted, it covers every later upload link until it ends.</p>
+  <p>In electronic form (Art. 28(9) GDPR). The processor offers it by issuing the controller's private upload link. A person authorised to act for the controller accepts it there, together with the Private Beta Terms, naming the company and themselves, before anything is uploaded. The processor records the acceptance with the version above and the time. That record takes the place of signatures. Once accepted, this agreement covers every later upload link until it ends.</p>
   <h2>The agreement</h2>
   <p>The parties agree the standard contractual clauses in the Annex to Commission Implementing Decision (EU) 2021/915 ("the Clauses"), which are incorporated by reference and <strong>not altered</strong>. The official text in all EU languages: <a href="https://commission.europa.eu/publications/standard-contractual-clauses-controllers-and-processors-eueea_en">commission.europa.eu</a>.</p>
   <p>Where the Clauses ask the parties to choose or complete:</p>
@@ -148,14 +148,14 @@ td:first-child { width: 30%; font-weight: 600; color: var(--charcoal); }
       <tr><td>Nature of the processing</td><td>The controller exports files from its own systems and uploads them through a private link the processor issues, together with the priority and metrics it states. The processor analyses them, with AI inference, and hands campaign briefs back through a private download link. The processor receives no logins, API keys or connector access to the controller's systems, and accepts the controller's data only through the upload link: a file sent any other way is deleted on receipt.</td></tr>
       <tr><td>Purpose</td><td>Deriving campaign briefs for the controller's marketing team against the priority the controller states. No other purpose. The data is never used to train or evaluate any model, or for any other customer.</td></tr>
       <tr><td>Duration</td><td>For the term of the Private Beta Terms. It ends when they end, and deletion follows as their Clause 9 states.</td></tr>
-      <tr><td>What is kept after deletion</td><td>A record that holds none of the controller's files and no personal data from them: the number of files and their sizes, the dates of each step, the kinds of question the controller asked about the briefs (without their content), the controller's reply to the follow-up question after the briefs are handed over (which briefs it used and whether the metric moved), the deletion confirmation, and the record of the controller's acceptance of this agreement, which is kept until the end of the sixth year after the year in which this agreement ends. File names are removed from the processor's upload log at deletion.</td></tr>
+      <tr><td>What is kept after deletion</td><td>A record that holds none of the controller's files and no personal data from them: the number of files and their sizes, the dates of each step, the kinds of question the controller asked about the briefs (without their content), the controller's reply to the follow-up question after the briefs are handed over (which briefs it used and whether the metric moved), the deletion confirmation, and the record of the controller's acceptance of this agreement, which is kept until the end of the sixth year after the year in which this agreement ends; the rest of this record is kept as long and deleted with it. File names are removed from the processor's upload log at deletion.</td></tr>
       <tr><td>Processing by the sub-processor</td><td>Storage and AI inference as in Annex IV, for the duration above.</td></tr>
   </table></div>
   <h2>Annex III: Technical and organisational measures</h2>
   <div class="scroll"><table>
-      <tr><td>Entry</td><td>Files arrive only through private upload links issued per pilot. Each expires after 7 days and accepts files up to 1 GiB. No system access is granted.</td></tr>
+      <tr><td>Entry</td><td>Files arrive only through private upload links issued per controller. Each expires after 7 days and accepts files up to 1 GiB. No system access is granted.</td></tr>
       <tr><td>Storage</td><td>A private Amazon S3 bucket in eu-central-1 (Frankfurt). Public access is blocked; only TLS connections are accepted; data is encrypted at rest (AES-256); every object is scheduled to expire 30 days after upload. The credential the transfer tool uses can reach this bucket and nothing else.</td></tr>
-      <tr><td>Processing</td><td>One company laptop with full-disk encryption (FileVault), used only by named staff and only within the EU. Pilot files live in one directory per pilot, excluded from backups and cloud sync.</td></tr>
+      <tr><td>Processing</td><td>One company laptop with full-disk encryption (FileVault), used only by named staff and only within the EU. The controller's files live in one directory per controller, excluded from backups and cloud sync.</td></tr>
       <tr><td>AI analysis</td><td>Amazon Bedrock, EU cross-region inference profile (EU regions only), account set to zero data retention: the model service stores no inputs or outputs. No model is trained on the data, and model providers receive no copy of it.</td></tr>
       <tr><td>Delivery</td><td>Briefs are handed over through a private download link that expires after 7 days.</td></tr>
       <tr><td>Access</td><td>Named processor staff bound to confidentiality. At acceptance that is one person, the managing director named in Annex I.</td></tr>
@@ -187,20 +187,20 @@ td:first-child { width: 30%; font-weight: 600; color: var(--charcoal); }
 </div></div>
 <div class="wrap">
   <h2>Wie er geschlossen wird</h2>
-  <p>In elektronischer Form (Art. 28 Abs. 9 DSGVO). Der Auftragsverarbeiter bietet ihn an, indem er dem Verantwortlichen seinen privaten Upload-Link ausgibt. Eine für den Verantwortlichen vertretungsberechtigte Person nimmt ihn dort zusammen mit den Bedingungen der Private Beta an, bevor etwas hochgeladen wird, und nennt dabei das Unternehmen und sich selbst. Der Auftragsverarbeiter hält die Annahme mit der obigen Fassung und dem Zeitpunkt fest. Dieser Nachweis ersetzt die Unterschriften. Einmal angenommen, gilt er für jeden späteren Upload-Link, bis er endet.</p>
+  <p>In elektronischer Form (Art. 28 Abs. 9 DSGVO). Der Auftragsverarbeiter bietet ihn an, indem er dem Verantwortlichen seinen privaten Upload-Link ausgibt. Eine für den Verantwortlichen vertretungsberechtigte Person nimmt ihn dort zusammen mit den Bedingungen der Private Beta an, bevor etwas hochgeladen wird, und nennt dabei das Unternehmen und sich selbst. Der Auftragsverarbeiter hält die Annahme mit der obigen Fassung und dem Zeitpunkt fest. Dieser Nachweis ersetzt die Unterschriften. Einmal angenommen, gilt dieser Vertrag für jeden späteren Upload-Link, bis er endet.</p>
   <h2>Der Vertrag</h2>
-  <p>Die Parteien vereinbaren die Standardvertragsklauseln im Anhang des Durchführungsbeschlusses (EU) 2021/915 der Kommission („die Klauseln"), die durch Verweis einbezogen und <strong>nicht verändert</strong> werden. Der amtliche Text in allen EU-Sprachen: <a href="https://commission.europa.eu/publications/standard-contractual-clauses-controllers-and-processors-eueea_en">commission.europa.eu</a>.</p>
+  <p>Die Parteien vereinbaren die Standardvertragsklauseln im Anhang des Durchführungsbeschlusses (EU) 2021/915 der Kommission („die Klauseln“), die durch Verweis einbezogen und <strong>nicht verändert</strong> werden. Der amtliche Text in allen EU-Sprachen: <a href="https://commission.europa.eu/publications/standard-contractual-clauses-controllers-and-processors-eueea_en">commission.europa.eu</a>.</p>
   <p>Wo die Klauseln die Parteien wählen oder ergänzen lassen:</p>
   <ul>
     <li><strong>Verordnung (EU) 2016/679 (DSGVO)</strong> gilt überall, wo die Klauseln die Wahl zwischen ihr und der Verordnung (EU) 2018/1725 lassen.</li>
     <li><strong>Klausel 5 (Kopplungsklausel)</strong> wird nicht genutzt.</li>
     <li><strong>Klausel 7.7 Buchstabe a: OPTION 2</strong>, allgemeine schriftliche Genehmigung, mit einer Frist von <strong>30 Tagen</strong>.</li>
-    <li><strong>Klausel 9.1 Buchstabe a</strong>: Die Worte in Klammern („es sei denn, die Verletzung des Schutzes personenbezogener Daten führt voraussichtlich nicht zu einem Risiko für die Rechte und Freiheiten natürlicher Personen") gelten.</li>
+    <li><strong>Klausel 9.1 Buchstabe a</strong>: Die Worte in Klammern („es sei denn, die Verletzung des Schutzes personenbezogener Daten führt voraussichtlich nicht zu einem Risiko für die Rechte und Freiheiten natürlicher Personen“) gelten.</li>
     <li><strong>Anlagen I bis IV</strong> sind unten ausgefüllt.</li>
   </ul>
   <h2>Anlage I: Liste der Parteien</h2>
   <div class="scroll"><table>
-      <tr><td>Verantwortlicher</td><td>Das im Annahmenachweis genannte Unternehmen, mit der dort angegebenen Anschrift und Registereintragung. Kontakt: der dort genannte Datenschutzkontakt, sonst die annehmende Person.</td></tr>
+      <tr><td>Verantwortlicher</td><td>Das im Annahmenachweis genannte Unternehmen, mit der dort angegebenen Anschrift und Registereintrag. Kontakt: der dort genannte Datenschutzkontakt, sonst die annehmende Person.</td></tr>
       <tr><td>Auftragsverarbeiter</td><td>Structural Content UG (haftungsbeschränkt), Kollwitzstraße 76, 10435 Berlin, Deutschland; Amtsgericht Charlottenburg, HRB 291186 B; Geschäftsführer Sebastian Rasso Messerer. Kontakt: sebastian@structuralcontent.com.</td></tr>
       <tr><td>Beitritt</td><td>Der Auftragsverarbeiter durch die Ausgabe des Upload-Links, der diesen Vertrag anbietet; der Verantwortliche durch die Annahme dort. Der Annahmenachweis enthält: Firma, Anschrift und Registereintrag des Unternehmens; Name, Funktion und E-Mail der annehmenden Person; einen optionalen Datenschutzkontakt; den Zeitpunkt; und die angenommene Fassung.</td></tr>
   </table></div>
@@ -213,14 +213,14 @@ td:first-child { width: 30%; font-weight: 600; color: var(--charcoal); }
       <tr><td>Art der Verarbeitung</td><td>Der Verantwortliche exportiert Dateien aus seinen eigenen Systemen und lädt sie über einen privaten Link hoch, den der Auftragsverarbeiter ausgibt, zusammen mit der Priorität und den Kennzahlen, die er nennt. Der Auftragsverarbeiter analysiert sie mit KI-Inferenz und übergibt Kampagnen-Briefings über einen privaten Download-Link. Der Auftragsverarbeiter erhält keine Zugangsdaten, API-Schlüssel oder Konnektor-Zugriffe auf die Systeme des Verantwortlichen und nimmt dessen Daten nur über den Upload-Link an: Eine auf anderem Weg geschickte Datei wird bei Eingang gelöscht.</td></tr>
       <tr><td>Zweck</td><td>Ableitung von Kampagnen-Briefings für das Marketingteam des Verantwortlichen zu der Priorität, die der Verantwortliche nennt. Kein anderer Zweck. Die Daten werden nie zum Trainieren oder Bewerten eines Modells oder für einen anderen Kunden verwendet.</td></tr>
       <tr><td>Dauer</td><td>Für die Laufzeit der Bedingungen der Private Beta. Er endet mit ihnen, und die Löschung folgt, wie deren Ziffer 9 es festlegt.</td></tr>
-      <tr><td>Was nach der Löschung bleibt</td><td>Ein Protokoll ohne Dateien des Verantwortlichen und ohne personenbezogene Daten daraus: Anzahl und Größe der Dateien, die Daten jedes Schritts, die Arten von Fragen, die der Verantwortliche zu den Briefings gestellt hat (ohne deren Inhalt), die Antwort des Verantwortlichen auf die Nachfrage nach der Übergabe der Briefings (welche Briefings er genutzt hat und ob sich die Kennzahl bewegt hat), die Löschbestätigung und der Nachweis, dass der Verantwortliche diesen Vertrag angenommen hat; dieser wird bis zum Ende des sechsten Jahres nach dem Jahr, in dem dieser Vertrag endet, aufbewahrt. Dateinamen werden bei der Löschung aus dem Upload-Protokoll des Auftragsverarbeiters entfernt.</td></tr>
+      <tr><td>Was nach der Löschung bleibt</td><td>Ein Protokoll ohne Dateien des Verantwortlichen und ohne personenbezogene Daten daraus: Anzahl und Größe der Dateien, das Datum jedes Schritts, die Arten von Fragen, die der Verantwortliche zu den Briefings gestellt hat (ohne deren Inhalt), die Antwort des Verantwortlichen auf die Nachfrage nach der Übergabe der Briefings (welche Briefings er genutzt hat und ob sich die Kennzahl bewegt hat), die Löschbestätigung und der Nachweis, dass der Verantwortliche diesen Vertrag angenommen hat; dieser wird bis zum Ende des sechsten Jahres nach dem Jahr, in dem dieser Vertrag endet, aufbewahrt; der Rest dieses Protokolls wird ebenso lange aufbewahrt und mit ihm gelöscht. Dateinamen werden bei der Löschung aus dem Upload-Protokoll des Auftragsverarbeiters entfernt.</td></tr>
       <tr><td>Verarbeitung durch den Unterauftragsverarbeiter</td><td>Speicherung und KI-Inferenz wie in Anlage IV, für die oben genannte Dauer.</td></tr>
   </table></div>
   <h2>Anlage III: Technische und organisatorische Maßnahmen</h2>
   <div class="scroll"><table>
-      <tr><td>Eingang</td><td>Dateien kommen nur über private Upload-Links an, die je Pilot ausgegeben werden. Jeder läuft nach 7 Tagen ab und nimmt Dateien bis 1 GiB an. Es wird kein Systemzugang gewährt.</td></tr>
+      <tr><td>Eingang</td><td>Dateien kommen nur über private Upload-Links an, die je Verantwortlichem ausgegeben werden. Jeder läuft nach 7 Tagen ab und nimmt Dateien bis 1 GiB an. Es wird kein Systemzugang gewährt.</td></tr>
       <tr><td>Speicherung</td><td>Ein privater Amazon-S3-Bucket in eu-central-1 (Frankfurt). Öffentlicher Zugriff ist gesperrt; nur TLS-Verbindungen werden angenommen; die Daten sind im Ruhezustand verschlüsselt (AES-256); jedes Objekt läuft planmäßig 30 Tage nach dem Upload ab. Die Zugangsdaten des Übertragungswerkzeugs erreichen diesen Bucket und sonst nichts.</td></tr>
-      <tr><td>Verarbeitung</td><td>Ein Firmen-Laptop mit Festplattenverschlüsselung (FileVault), genutzt nur von benannten Mitarbeitenden und nur innerhalb der EU. Pilotdateien liegen in einem Verzeichnis je Pilot, ausgenommen von Backups und Cloud-Synchronisation.</td></tr>
+      <tr><td>Verarbeitung</td><td>Ein Firmen-Laptop mit Festplattenverschlüsselung (FileVault), genutzt nur von benannten Mitarbeitenden und nur innerhalb der EU. Die Dateien des Verantwortlichen liegen in einem Verzeichnis je Verantwortlichem, ausgenommen von Backups und Cloud-Synchronisation.</td></tr>
       <tr><td>KI-Analyse</td><td>Amazon Bedrock, regionsübergreifendes EU-Inferenzprofil (nur EU-Regionen), Konto auf Zero Data Retention gestellt: Der Modelldienst speichert keine Ein- oder Ausgaben. Kein Modell wird mit den Daten trainiert, und Modellanbieter erhalten keine Kopie.</td></tr>
       <tr><td>Übergabe</td><td>Briefings werden über einen privaten Download-Link übergeben, der nach 7 Tagen abläuft.</td></tr>
       <tr><td>Zugriff</td><td>Benannte, zur Vertraulichkeit verpflichtete Mitarbeitende des Auftragsverarbeiters. Bei Annahme ist das eine Person, der in Anlage I genannte Geschäftsführer.</td></tr>
@@ -260,16 +260,12 @@ td:first-child { width: 30%; font-weight: 600; color: var(--charcoal); }
     document.documentElement.lang = l;
     document.title = TITLES[l];
     if (remember) {
-      try { localStorage.setItem('lang', l); } catch (e) {}
       try { history.replaceState(null, '', '#' + l); } catch (e) {}
     }
   }
   function initial() {
     var h = location.hash.slice(1);
     if (h === 'de' || h === 'en') return h;
-    var saved = null;
-    try { saved = localStorage.getItem('lang'); } catch (e) {}
-    if (saved === 'de' || saved === 'en') return saved;
     return (navigator.language || '').toLowerCase().indexOf('de') === 0 ? 'de' : 'en';
   }
   setLang(initial(), false);
