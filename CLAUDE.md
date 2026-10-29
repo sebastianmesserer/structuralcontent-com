@@ -5,11 +5,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## What this is
 
 `structuralcontent.com` — the marketing site for Structural Content, plus the
-Cloudflare Worker backend that powers its "cascade" sales demo. Two independent
+Cloudflare Worker backend that powered its earlier "cascade" sales demo (unused since 26 Oct 2026; see Current state of the demo). Two independent
 deployables in one repo:
 
 - **The site** (repo root): a static one-page site. `index.html` (inline CSS +
-  JS, no build step) plus the standalone `impressum.html`, `privacy.html` and `trust.html` (the data handling page for pilots, EN/DE; its storage claims are made true by `sc-product/tools/pilot-transfer.mjs`), and two unlisted private-beta documents, `beta-terms.html` and `dpa.html` (noindex, not in the sitemap, linked from nowhere on the site; `sc-product/tools/pilot-transfer.mjs` pins both by sha256, so any edit to them needs a re-pin there before an upload link can be issued)
+  JS, no build step) plus the standalone `impressum.html`, `privacy.html` and `trust.html` (the trust page: what makes Structural Content safe for a company's data, English only; its storage claims are made true by `sc-product/tools/pilot-transfer.mjs`), and the two agreement documents `beta-terms.html` and `dpa.html`, linked from `trust.html` (`sc-product/tools/pilot-transfer.mjs` pins both by sha256, so any edit to them needs a re-pin there before an upload link can be issued)
   legal pages, `Media/`, `favicon.ico`. Served by **GitHub Pages** from `main`
   at path `/`. `CNAME` pins the domain and `.nojekyll` disables Jekyll
   processing. (`examples-anim-preview.html` is gitignored local scratch, not
@@ -143,11 +143,12 @@ Never commit these — they're gitignored and must stay that way:
 
 ## Current state of the demo
 
-The cascade demo is **live**: the worker is deployed, `index.html` calls it at the
-real `sc-cascade.structuralcontent.workers.dev` URL (`API` is defined near the
-bottom of the inline script; localhost uses `http://localhost:8787/v1/cascade`),
-and a production smoke test returns a real cascade. See the `cascade-demo` memory
-for the design decisions already settled (don't relitigate them).
+Since the 26 Oct 2026 homepage (copy verbatim from `Sales/website-page.md` and
+`Sales/website-demo.md`), the homepage demo is **pre-built**: fixed CloudBox data in
+the inline script, no network calls. `index.html` no longer calls the worker. The
+worker stays deployed but unused, and consented inputs from the old demo expire from
+the `RESEARCH` KV within a year (disclosed in `privacy.html`). Retire the worker once
+that's settled. The worker notes above describe the old cascade demo.
 
 ## Analytics
 
