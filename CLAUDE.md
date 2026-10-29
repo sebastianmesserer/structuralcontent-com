@@ -152,7 +152,7 @@ that's settled. The worker notes above describe the old cascade demo.
 
 ## Analytics
 
-The four listed pages (not the two unlisted private-beta documents, which are legal texts sent by link) load **Cloudflare Web Analytics** (cookieless, no consent
+The four main pages (not the two agreement documents, `beta-terms.html` and `dpa.html`: legal texts pinned by sha256, kept free of anything that changes) load **Cloudflare Web Analytics** (cookieless, no consent
 banner) via a beacon `<script>` before `</body>`, disclosed in `privacy.html`. The
 beacon only reports from the live domain, not `localhost`. To change/remove it,
 edit the `data-cf-beacon` token in `index.html`, `impressum.html`, `privacy.html`, `trust.html`.
