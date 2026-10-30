@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Growth campaigns walkthrough</title>
+<style>
+    @font-face {
+      font-family: "Fraunces"; font-style: normal; font-weight: 400 600; font-display: swap;
+      src: url("/Media/fonts/fraunces-latin.woff2") format("woff2");
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    @font-face {
+      font-family: "Fraunces"; font-style: normal; font-weight: 400 600; font-display: swap;
+      src: url("/Media/fonts/fraunces-latin-ext.woff2") format("woff2");
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+    @font-face {
+      font-family: "Inter"; font-style: normal; font-weight: 400 600; font-display: swap;
+      src: url("/Media/fonts/inter-latin.woff2") format("woff2");
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    @font-face {
+      font-family: "Inter"; font-style: normal; font-weight: 400 600; font-display: swap;
+      src: url("/Media/fonts/inter-latin-ext.woff2") format("woff2");
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+:root{
+  --bg:#FFFFFF; --ink:#121211; --ink-soft:#3B3A37; --muted:#8A877F;
+  --line:#ECEAE5; --line-strong:#D9D7D0; --grey-soft:#F5F4F1;
+  --accent:#1F5E55; --accent-soft:#E8F0EE; --on-accent:#FFFFFF; --hatch:#D9D7D0;
+  --serif:"Fraunces",Georgia,"Times New Roman",serif;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#141413; --ink:#F2F1EC; --ink-soft:#CFCDC6; --muted:#8F8C84;
+  --line:#2A2927; --line-strong:#3A3936; --grey-soft:#1D1C1A;
+  --accent:#6FB3A6; --accent-soft:#1E2D2A; --on-accent:#0E1513; --hatch:#3A3936; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141413; --ink:#F2F1EC; --ink-soft:#CFCDC6; --muted:#8F8C84;
+  --line:#2A2927; --line-strong:#3A3936; --grey-soft:#1D1C1A;
+  --accent:#6FB3A6; --accent-soft:#1E2D2A; --on-accent:#0E1513; --hatch:#3A3936; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:500;letter-spacing:-.01em;text-wrap:balance;margin:0}
+h1{font-size:clamp(32px,5vw,52px);line-height:1.1}
+h3{font-size:22px;line-height:1.25}
+p{margin:0}
+.lede{font-size:19px;color:var(--ink-soft);max-width:62ch}
+.label{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.muted{color:var(--muted)}
+.stack{display:flex;flex-direction:column;gap:20px}
+.row{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:10px;padding:14px 22px;font:600 16px var(--sans);border:1px solid var(--ink);background:var(--ink);color:var(--bg);cursor:pointer;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line-strong)}
+.btn:focus-visible,button:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.seg{display:inline-flex;border:1px solid var(--line-strong);border-radius:10px;overflow:hidden}
+.seg button{font:500 14px var(--sans);padding:8px 14px;border:0;background:transparent;color:var(--ink-soft);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+header.top{padding-block:20px;border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:space-between;align-items:center}
+header.top b{font-weight:600}
+.intro{padding-block:56px 32px}
+.made-up{border-left:3px solid var(--accent);padding:10px 14px;background:var(--accent-soft);border-radius:0 8px 8px 0;font-size:14px;color:var(--ink-soft);max-width:70ch}
+/* demo */
+.demo{border:1px solid var(--line-strong);border-radius:16px;overflow:hidden;background:var(--bg);margin-bottom:64px}
+.demo-top{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid var(--line);background:var(--grey-soft)}
+.prog{display:flex;gap:6px}
+.prog span{width:22px;height:4px;border-radius:2px;background:var(--line-strong)}
+.prog span.on{background:var(--accent)}
+.demo-body{padding:28px;display:grid;gap:22px;min-height:420px;align-content:start}
+.demo-nav{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;padding:16px 20px;border-top:1px solid var(--line)}
+.pick{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.pick button{font:500 17px var(--sans);text-align:left;padding:20px;border-radius:12px;border:1px solid var(--line-strong);background:var(--bg);color:var(--ink);cursor:pointer;display:grid;gap:6px;align-content:start}
+.pick button:hover{border-color:var(--accent)}
+.pick button small{color:var(--muted);font-size:13px;font-weight:400}
+.raw{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.rawc{border:1px solid var(--line);border-radius:10px;padding:14px;font-size:14px;display:grid;gap:8px;align-content:start;background:var(--bg)}
+.rawc .s{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.rawc q{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;color:var(--ink-soft);quotes:none}
+.rawc .tr{font-size:12px;color:var(--muted)}
+.groups{display:grid;gap:12px}
+.grp{border:1px solid var(--line);border-radius:12px;padding:18px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 20px}
+.grp.top{border-color:var(--accent);background:var(--accent-soft)}
+.grp h4{margin:0;font:600 16px var(--sans)}
+.grp .why{font-size:14px;color:var(--ink-soft)}
+.grp .mv{text-align:right;font-family:var(--serif);font-size:22px;color:var(--accent);grid-row:span 2;align-self:center;white-space:nowrap}
+.grp .mv small{display:block;font:12px var(--sans);color:var(--muted)}
+.tipwrap{position:relative;display:inline-block;vertical-align:super;margin-left:4px}
+.info{width:17px;height:17px;border-radius:50%;border:1px solid var(--line-strong);background:var(--bg);color:var(--muted);font:600 11px/15px var(--serif);font-style:italic;padding:0;cursor:help}
+.info:hover,.info:focus-visible{border-color:var(--accent);color:var(--accent)}
+.tip{position:absolute;right:-8px;top:calc(100% + 8px);width:min(300px,70vw);padding:12px 14px;border-radius:10px;background:var(--bg);border:1px solid var(--line-strong);box-shadow:0 8px 24px rgba(0,0,0,.12);font:400 13px/1.45 var(--sans);color:var(--ink-soft);text-align:left;white-space:normal;opacity:0;visibility:hidden;transition:opacity .15s;z-index:5}
+.tip b{display:block;font-weight:600;color:var(--ink);margin-bottom:4px}
+.tipwrap:hover .tip,.tipwrap:focus-within .tip{opacity:1;visibility:visible}
+.cal-scroll{overflow-x:auto}
+.cal{min-width:760px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.cal .head,.cal .line{display:grid;grid-template-columns:260px repeat(12,minmax(0,1fr));align-items:center}
+.cal .head{background:var(--grey-soft);font-size:12px;color:var(--muted);padding:8px 0}
+.cal .head span{text-align:center}
+.cal .line{border-top:1px solid var(--line);padding:12px 0;cursor:pointer;background:var(--bg);text-align:left;border-left:0;border-right:0;border-bottom:0;width:100%;font:inherit;color:inherit}
+.cal .line:hover{background:var(--grey-soft)}
+.cal .meta{padding:0 14px;display:grid;gap:2px}
+.cal .meta b{font:600 11px var(--sans);color:var(--accent);letter-spacing:.05em}
+.cal .meta span{font-size:14px;line-height:1.3}
+.cal .meta small{font-size:12px;color:var(--muted)}
+.gbar{height:14px;border-radius:7px}
+.cal .gbar{margin:0 3px}
+.gbar.make{background:repeating-linear-gradient(135deg,var(--hatch) 0 6px,transparent 6px 11px)}
+.gbar.live{background:var(--accent)}
+.board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.bcol{background:var(--grey-soft);border-radius:12px;padding:12px;display:grid;gap:10px;align-content:start}
+.bcol .h{display:flex;justify-content:space-between;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.bcard{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px;display:grid;gap:4px;font-size:14px;text-align:left;cursor:pointer;font-family:inherit;color:inherit}
+.bcard b{font-size:11px;color:var(--accent);letter-spacing:.05em}
+.bcard small{color:var(--muted);font-size:12px}
+.legend{display:flex;flex-wrap:wrap;gap:16px;align-items:center;font-size:13px;color:var(--muted)}
+.legend i{display:inline-block;width:28px;height:10px;border-radius:5px;vertical-align:middle;margin-right:6px}
+.brief{border:1px solid var(--line-strong);border-radius:14px;padding:24px;display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:24px}
+.brief .big{font-family:var(--serif);font-size:56px;line-height:1;color:var(--accent)}
+.brief dl{display:grid;grid-template-columns:90px 1fr;gap:10px 16px;margin:0;font-size:15px}
+.brief dt{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;padding-top:3px}
+.brief dd{margin:0}
+.brief details{grid-column:1/-1;border:1px solid var(--line);border-radius:10px;padding:12px 16px}
+.brief summary{cursor:pointer;font-weight:600;color:var(--accent)}
+.brief details dl{margin-top:12px}
+.bring{display:grid;gap:18px}
+.bring .big{font-family:var(--serif);font-size:clamp(30px,5vw,44px);line-height:1.1}
+.teams{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.team{border:1px solid var(--line);border-radius:12px;padding:18px;display:grid;gap:8px;align-content:start}
+.team h4{font:600 16px var(--sans)}
+.team p{font-size:14px;color:var(--ink-soft)}
+.close-demo{display:grid;gap:18px;padding:12px 0}
+.close-demo h3{font-size:28px;max-width:30ch}
+.chain{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.chain li{display:grid;grid-template-columns:170px minmax(0,1fr);gap:16px;padding:12px 0 12px 18px;border-left:2px solid var(--accent-soft);position:relative;font-size:15px}
+.chain li::before{content:"";position:absolute;left:-6px;top:18px;width:10px;height:10px;border-radius:50%;background:var(--accent)}
+.chain .k{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;padding-top:3px}
+@media (max-width:760px){.chain li{grid-template-columns:1fr;gap:4px}}
+footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:14px;color:var(--muted)}
+footer a{color:var(--accent);font-weight:600;text-decoration:none}
+@media (max-width:760px){
+  .pick,.raw,.board,.teams{grid-template-columns:1fr}
+  .brief{grid-template-columns:1fr}
+  .brief dl{grid-template-columns:1fr;gap:2px 0}
+  .brief dd{margin-bottom:8px}
+  .demo-body{padding:20px}
+}
+@media (max-width:600px){.grp{grid-template-columns:1fr}.grp .mv{grid-row:auto;text-align:left;order:3}.grp .mv small{display:inline;margin-left:8px}.tip{right:auto;left:-120px}}
+</style>
+</head>
+<body>
+<style>
+.pick button .f{font-size:14px;line-height:1.4;color:var(--ink-soft);font-weight:400;border-top:1px solid var(--line);padding-top:10px;margin-top:4px}
+.pick button .lift{font-family:var(--serif);font-size:20px;color:var(--accent);font-weight:500}
+[hidden]{display:none!important}
+.bcard.static{cursor:default}
+@media (max-width:760px){.seg.views{display:none}}
+.tipwrap.open .tip{opacity:1;visibility:visible}
+.fine{font-size:13px;color:var(--muted)}
+.intro{padding-block:40px 24px}
+@media (max-width:760px){.intro h1{font-size:30px}.intro .lede{font-size:17px}}
+</style>
+<header class="top"><div class="wrap"><b>Structural Content</b><span class="muted" style="font-size:14px">Example: a European crypto app, on made-up data</span></div></header>
+<main class="wrap">
+  <section class="intro stack" style="gap:14px">
+    <h1>What your customers already tell you, turned into campaigns.</h1>
+    <p class="lede">Pick a number. See who is stuck and why, read from chats, surveys and account data together, and the campaigns that would move it.</p>
+  </section>
+  <div class="demo" id="demo">
+    <div class="demo-top"><span class="label">A European crypto app · made-up data</span><span class="prog" id="prog"></span></div>
+    <div class="demo-body" id="demo-body" aria-live="polite"></div>
+    <div class="demo-nav"><button class="btn ghost" id="d-back">Back</button><button class="btn" id="d-next">Next</button></div>
+  </div>
+  <p class="fine" style="margin:-48px 0 56px">All numbers, quotes and findings on this page are invented, to show how the approach works. They describe no real company. Every campaign idea would go through your own compliance review.</p>
+</main>
+<footer><div class="wrap">Built by Sebastian Messerer, Structural Content, Berlin · <a href="https://structuralcontent.com" target="_blank" rel="noopener">structuralcontent.com</a> · <a href="/trust.html">Trust</a> · <a href="/privacy.html">Privacy</a> · <a href="/impressum.html">Impressum</a></div></footer>
+<script>
+(function(){
+  /* camps: [id, title, live-month index (0 = Nov), month label, lift] ; piece counts come from pieces */
+  const PATHS={
+  "New customers who keep trading":{
+    sub:"New funded accounts still trading after 60 days, and what each one costs in incentives.",
+    target:"Say the goal is 20,000 more new customers still trading after 60 days next year.",
+    unit:"active traders a year", need:"20,000",
+    raw:[
+      ["Accounts · new funded, last quarter","Still trading after 60 days: 35%."],
+      ["Support chat · first week","If I buy now, how do I get my money out again if I need it?"],
+      ["Accounts · support contacts","Asked how to sell or withdraw in week one, and got an answer: 54% still trading after 60 days."],
+      ["Sign-up survey","Came for US stocks. Then it asked me about my trading experience, so I bought a bit of bitcoin and left."],
+      ["Help-centre search · before a first trade","Top searches: \"fees\", \"what does it cost\", \"spread\"."],
+      ["Help-centre pages · new customers","Opened the page that shows a trade's full cost in euros: traded within a week 1.6x as often."]],
+    groups:[
+      ["New customers who know how to get their money out are the ones who stay.","The most common week-one question in chat is how to sell or withdraw. Customers who got an answer still trade after 60 days at 54%, against 35% overall. Most new customers never ask.","+7,000","About 400,000 new funded accounts a year. People who ask are keener to begin with, so this assumes only part of the gap comes from the answer: if 100,000 more hear it in week one and stay at 42% instead of 35%, about 7,000. The hold-out test shows the real share."],
+      ["\"What will this cost me?\" is the question right before the first trade.","Fees are the top help-centre search before a first trade. New customers who open a page showing the full cost in euros trade within a week 1.6 times as often.","+2,500","If 60,000 more new customers a year see the cost in euros before their first trade, and 1 in 24 more of them keep trading (half the gap, since readers are keener): about 2,500."],
+      ["People who came for stocks stop at questions they didn't expect.","1 in 7 new customers say they came for US stocks. Stocks need a one-time check of their knowledge and experience, and most who stop, stop at its first question. Nothing tells them beforehand what it asks, or why.","+1,500","About 57,000 stock-first customers a year. If 1 in 10 fewer stop because the questions no longer surprise them, and 1 in 4 of those keep trading: about 1,500."]],
+    camps:[
+      ["AT-1","Tell new customers how to get their money out, before they need to.",1,"Dec","+7,000"],
+      ["AT-2","Show the full cost of a first trade, in euros.",2,"Jan","+2,500"],
+      ["AT-3","Explain what the stocks check asks, and why, before people start.",3,"Feb","+1,500"],
+      ["AT-4","Show bonus customers what to do after the bonus trade.",5,"Apr","+1,500"],
+      ["AT-5","Answer week-one questions in each customer's language.",6,"May","+500"]],
+    pieces:{prog:[
+      ["AT-1","How selling and withdrawing work, step by step","Email and in-app · week one"],
+      ["AT-1","Your money out, in plain words: times, fees and limits","Help page · for first-timers"],
+      ["AT-1","Where to find it later","In-app card · after the first buy"]],
+     next:[
+      ["AT-2","What your first trade costs, in euros","Page · linked before the first buy"],
+      ["AT-2","Fees and spread, explained once","Help page"],
+      ["AT-3","Before you add stocks: the questions we'll ask, and why the law requires them","Help page · linked from the survey answer"],
+      ["AT-3","Capital at risk: what that means for stocks","Explainer"],
+      ["AT-4","After your bonus: three things people check next","Email · day 3 after the bonus trade"],
+      ["AT-5","Your first week, answered","Help pages · in the five biggest languages"]]},
+    brief:{id:"AT-1",above:"New customers who know how to get their money out are the ones who stay.",
+      title:"Tell new customers how to get their money out, before they need to.",
+      summary:"A short week-one message on how selling and withdrawing work, the same answer in the app after a first buy, and a help page written for first-timers.",
+      forr:"New funded accounts in their first week. About 100,000 a quarter. Most bought once and haven't asked anything.",
+      target:"New customers still trading after 60 days: from 35% to about 37%.",
+      big:"+7,000",
+      stuck:"\"If I buy now, how do I get my money out again if I need it?\" Not knowing the way out makes people hold back on the way in.",
+      content:"How selling and withdrawing work, step by step (email and in-app, week one) · Your money out, in plain words: times, fees and limits (help page) · Where to find it later (in-app card after the first buy)",
+      reach:"Every new funded account in week one, in their language.",
+      measured:"Against a hold-out group of new customers who don't get it, so market swings don't count.",
+      notes:"Factual and open about fees and timings. The standard risk warning on each piece."},
+    bring_big:"About +11,000 active traders a year, of the 20,000 in this example goal.",
+    bring_lede:"That's after removing people that more than one campaign reaches. Each result can be set against what the same number of active traders costs in incentives today. The rest needs product or pricing work, and the plan says so."},
+
+  "Funded accounts from sponsorships":{
+    sub:"People who first saw you through football and F1 sponsorships.",
+    target:"Say the goal is 20,000 more funded accounts next year from people who first saw you through a sponsorship.",
+    unit:"funded accounts a year", need:"20,000",
+    raw:[
+      ["Web analytics · match-day traffic","Visits from match-day ads and QR codes: 1.2% sign up. Visits from search: 5.8%."],
+      ["Search data","\"is [your name] safe\": the most common search with your name in the days after a big match."],
+      ["Social comments · club posts","Saw the logo all match. What do you actually do?"],
+      ["Support chat · new sign-ups","Is my money protected if you go bust?"],
+      ["Sign-up survey","I already have crypto in my banking app. Why would I need another one?"],
+      ["Accounts · by source","Fans who joined through a club page: 1.8x as likely to still be active after six months as paid-social sign-ups."]],
+    groups:[
+      ["\"Is it safe?\" is the first question new fans ask.","It's the most common search with your name after a big match, and the first question new sign-ups ask in chat. The honest answer is specific: who authorises you, how client assets are held, and what isn't covered. Most fans have never heard it.","+4,000","About 250,000 such searches a year. If 1 in 60 of them fund an account after a plain, honest answer: about 4,000."],
+      ["Fans see your name all match, but not what you'd do for them.","Match-day visitors sign up at 1.2%, against 5.8% from search. Under club posts, the most-liked question is what you actually do.","+3,700","About 1.1 million match-day visits a year. If 1 in 300 more of them fund an account: about 3,700."],
+      ["Fans who join through their club stay longest.","Sign-ups through a club page are 1.8 times as likely to still be active after six months. Club pages ran at two partner clubs, for one month.","+2,500","Club pages brought about 600 funded accounts in their launch month, then about 100 a month. Kept up all season at each EEA partner club: about 2,500 more than today."]],
+    camps:[
+      ["SP-1","Answer \"is it safe?\" honestly, where new fans ask it.",1,"Dec","+4,000"],
+      ["SP-2","Tell fans in one line what you do.",2,"Jan","+3,700"],
+      ["SP-3","Give each EEA partner club a guided start for fans.",4,"Mar","+2,500"],
+      ["SP-4","Show banking-app crypto users what's different here.",5,"Apr","+1,200"],
+      ["SP-5","Follow up race weekends with a first-week guide.",6,"May","+600"]],
+    pieces:{prog:[
+      ["SP-1","If a crypto company fails: how we keep your assets separate, and what isn't covered","Page · every language, built for search"],
+      ["SP-1","The 30-second answer","Video · EEA club channels"],
+      ["SP-1","Who authorises us, in one line","Sign-up screen"]],
+     next:[
+      ["SP-2","What we do, in one line","Match-day screens and club posts"],
+      ["SP-2","From the stadium to your first step","Landing page · from the QR code"],
+      ["SP-3","Your club, your first step","Club page · EEA partner clubs, 18+"],
+      ["SP-4","Crypto in your banking app, or here: what's different","Comparison page · built for search"],
+      ["SP-5","Race weekend over. Here's your first week.","Email · F1 sign-ups"]]},
+    brief:{id:"SP-1",above:"\"Is it safe?\" is the first question new fans ask.",
+      title:"Answer \"is it safe?\" honestly, where new fans ask it.",
+      summary:"A plain-words page on how client assets are held and what isn't covered, a 30-second version for club channels, and one factual line on the sign-up screen.",
+      forr:"People who search \"is it safe\" with your name, about 60,000 times a quarter, mostly in the days after a big match, plus new sign-ups who ask it in chat. Most have never bought crypto.",
+      target:"Funded accounts from these searches: from 1.0% to 2.6%.",
+      big:"+4,000",
+      stuck:"\"Is my money protected if you go bust?\" They've read the crypto stories in the news, and a logo on a shirt doesn't answer it.",
+      content:"If a crypto company fails: how we keep your assets separate, and what isn't covered (page) · The 30-second answer (video, EEA club channels) · Who authorises us, in one line (sign-up screen)",
+      reach:"Search ads on \"is it safe\" in each language; the answer linked from chat and the first sign-up screen; the 30-second version on EEA club channels.",
+      measured:"Countries with the campaign against countries without it, so market swings don't count.",
+      notes:"Name the authorisation as a fact, never as a guarantee. Say plainly that crypto and euros held with us aren't covered by deposit-guarantee or investor-compensation schemes. Risk warning on every piece. EEA-targeted only; any UK placement goes through UK promotion approval. Age-gate where the platform allows."},
+    bring_big:"About +11,000 funded accounts a year, of the 20,000 in this example goal.",
+    bring_lede:"That's after removing people that more than one campaign reaches. And each sponsorship gets a number of its own: funded accounts by club and by country, against places without the campaign. The rest needs more than content, like the media plan or the product, and the plan says so."},
+
+  "Dormant accounts active again":{
+    sub:"Funded accounts with no activity in 90 days.",
+    target:"Say the goal is 40,000 more dormant accounts active again next year.",
+    unit:"accounts active again a year", need:"40,000",
+    raw:[
+      ["Accounts","Funded, no activity in 90 days: 1.9 million. Most opened at a price peak, in 2021 or 2024."],
+      ["Push · dormant accounts","About an asset the person holds: 6% open. About anything else: 1.4%."],
+      ["App review","Too many notifications about coins I don't own. Turned them all off."],
+      ["Survey · dormant accounts","Bought in 2021, haven't opened the app since. Not sure what's even in there now."],
+      ["Preferences","Accounts that chose their own message topics: half as likely to switch push off."],
+      ["Support chat · returning customers","Can I buy Apple shares here now, or only crypto?"]],
+    groups:[
+      ["People open messages about what they own four times as often.","Push about an asset the person holds is opened by 6%, anything else by 1.4%. \"Too many notifications\" is a top review theme, and every opt-out is hard to win back.","+15,000","About 1.9 million dormant accounts. If messages about what they hold bring 1 in 125 of them back over a year: about 15,000."],
+      ["Dormant customers don't know what has changed since they left.","Many haven't opened the app since 2021. Since then, stocks and new ways to pay in have arrived. In the survey, most say they don't know what they hold now, or what's new.","+10,000","If 1 in 190 dormant accounts come back after a plain \"since you left\" summary: about 10,000."],
+      ["People who pick their own topics keep messages switched on.","Accounts that chose what they hear about are half as likely to switch push off. Few dormant accounts have ever been asked.","+3,000","If 300,000 dormant accounts choose their topics, and 1 in 100 of them come back because the one message that matters still arrives: about 3,000."]],
+    camps:[
+      ["RT-1","Send dormant customers news only about what they hold.",1,"Dec","+15,000"],
+      ["RT-2","Tell returning customers what has changed since they left.",3,"Feb","+10,000"],
+      ["RT-3","Let people choose what they hear about.",3,"Feb","+3,000"],
+      ["RT-4","Explain what the stocks check asks, for customers who ask about shares.",5,"Apr","+1,500"],
+      ["RT-5","Answer returning customers' first question in their language.",6,"May","+1,000"]],
+    pieces:{prog:[
+      ["RT-1","What you hold, this month","Email and push · monthly"],
+      ["RT-1","Choose what we tell you about","Settings screen"],
+      ["RT-1","Message rules for dormant accounts","One page · for the lifecycle team"]],
+     next:[
+      ["RT-2","Since you left","Email · accounts dormant for a year or more"],
+      ["RT-2","What's new, on one screen","In-app card · on return"],
+      ["RT-3","Your topics, your call","Preference email"],
+      ["RT-4","Before you add stocks: the questions we'll ask, and why","Help page · linked from chat"],
+      ["RT-5","Welcome back: your first questions, answered","Help pages · five languages"]]},
+    brief:{id:"RT-1",above:"People open messages about what they own four times as often.",
+      title:"Send dormant customers news only about what they hold.",
+      summary:"Rules for push and email to dormant accounts, a short monthly summary of what each person holds, and a settings screen to choose topics.",
+      forr:"Funded accounts with no trade in 90 days. About 1.9 million. Most bought at a peak and haven't been back.",
+      target:"Dormant accounts active again each quarter (a trade or a deposit): from 1.0% to 1.2%.",
+      big:"+15,000",
+      stuck:"\"Too many notifications about coins I don't own.\" They switched messages off, so the one that matters never arrives.",
+      content:"What you hold, this month (email and push, monthly) · Choose what we tell you about (settings screen) · Message rules for dormant accounts (one page)",
+      reach:"Push and email, only to accounts with marketing consent for that channel, in their language.",
+      measured:"Against a hold-out group that keeps getting today's messages, so market swings don't count.",
+      notes:"Factual summaries, no calls to buy. A risk warning wherever a price is shown. Only to accounts with marketing consent."},
+    bring_big:"About +26,000 accounts active again a year, of the 40,000 in this example goal.",
+    bring_lede:"That's after removing people that more than one campaign reaches. The messages people want stay switched on. The rest needs more than content, like product or pricing, and the plan says so."}
+  };
+
+  const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  const MONTHS=["Nov","Dec","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct"];
+  let D=null, step=0, planView="board";
+  const N=7;
+  const demo=document.getElementById('demo'), body=document.getElementById('demo-body'), prog=document.getElementById('prog'), back=document.getElementById('d-back'), next=document.getElementById('d-next');
+  const allPieces=()=>D.pieces.prog.concat(D.pieces.next);
+  const count=id=>allPieces().filter(p=>p[0]===id).length;
+  function cal(){return `<div class="cal-scroll"><div class="cal"><div class="head"><span></span>${MONTHS.map(m=>`<span>${m}</span>`).join('')}</div>${D.camps.map(c=>{const live=c[2],mk=Math.max(0,live-1),n=count(c[0]),first=c[0]===D.brief.id;
+      const tag=first?'button':'div';
+      return `<${tag} class="line"${first?` data-open="${c[0]}"`:' style="cursor:default"'}><span class="meta" style="grid-row:1;grid-column:1"><b>${c[0]}${first?' · open brief':''}</b><span>${esc(c[1])}</span><small>${n} ${n===1?'piece':'pieces'} · live from ${c[3]}</small></span>${live>mk?`<div class="gbar make" style="grid-row:1;grid-column:${mk+2}/${live+2}"></div>`:''}<div class="gbar live" style="grid-row:1;grid-column:${live+2}/14"></div></${tag}>`}).join('')}</div></div>
+      <div class="legend"><span><i class="gbar make" style="display:inline-block"></i>being made</span><span><i style="background:var(--accent)"></i>live</span></div>`}
+  function card(p){const first=p[0]===D.brief.id;return first?`<button class="bcard" data-open="${p[0]}"><b>${p[0]}</b>${esc(p[1])}<small>${esc(p[2])}</small></button>`:`<div class="bcard static"><b>${p[0]}</b>${esc(p[1])}<small>${esc(p[2])}</small></div>`}
+  function board(){const col=(h,arr)=>`<div class="bcol"><span class="h"><span>${h}</span><span>${arr.length}</span></span>${arr.map(card).join('')}</div>`;
+    return `<div class="board" style="grid-template-columns:repeat(2,minmax(0,1fr))">${col("In progress",D.pieces.prog)}${col("Up next",D.pieces.next)}</div>`}
+  function render(scroll){
+    prog.innerHTML=Array.from({length:N},(_,i)=>`<span class="${i<=step?'on':''}"></span>`).join('');
+    back.hidden=step===0; next.hidden=step===0||step===N-1;
+    next.textContent=step===3?"See the whole plan":step===4?"What would this bring?":step===5?"Finish":"Next";
+    const B=D&&D.brief; let h="";
+    if(step===0) h=`<h3>Pick a number to move.</h3>
+      <div class="pick">${Object.keys(PATHS).map(k=>{const P=PATHS[k];return `<button data-num="${esc(k)}"><span>${esc(k)}</span><small>${esc(P.sub)}</small><span class="f">Top finding: ${esc(P.groups[0][0])}</span><span class="lift">${P.groups[0][2]} <small>${esc(P.unit)}</small></span></button>`}).join('')}</div>`;
+    if(step===1) h=`<p class="label" style="color:var(--accent)">${esc(D.target)}</p><h3>What the app's data already holds.</h3><p class="muted">It sits in different tools today. Read together, it says who is stuck and why.</p><div class="raw">${D.raw.map(r=>`<div class="rawc"><span class="s">${esc(r[0])}</span><q>${esc(r[1])}</q></div>`).join('')}</div>`;
+    if(step===2) h=`<h3>What Structural Content found.</h3><p class="muted">The top three findings, ranked by how much they'd move the number. Tap ⓘ to see how each estimate was made.</p>
+      <div class="groups">${D.groups.map((g,i)=>`<div class="grp ${i===0?'top':''}"><h4>${esc(g[0])}</h4><span class="mv">${g[2]}<span class="tipwrap"><button class="info" aria-label="How we got this">i</button><span class="tip" role="tooltip"><b>How we got this</b>${esc(g[3])}</span></span><small>estimated ${esc(D.unit)}</small></span><p class="why">${esc(g[1])}</p></div>`).join('')}</div>`;
+    if(step===3) h=`<div class="stack" style="gap:6px"><span class="label">The top finding, as a campaign</span><p class="lede">${esc(B.above)}</p></div>
+      <div class="brief"><div class="stack" style="gap:16px"><span class="label">${B.id}</span><h3 style="font-size:28px">${esc(B.title)}</h3>
+      <p class="muted">${esc(B.summary)}</p>
+      <dl><dt>For</dt><dd>${esc(B.forr)}</dd><dt>Target</dt><dd>${esc(B.target)}</dd><dt>Measured</dt><dd>${esc(B.measured)}</dd></dl></div>
+      <div class="stack" style="gap:6px;align-self:center"><span class="big">${B.big}</span><b>estimated ${esc(D.unit)}</b><span class="muted" style="font-size:14px">sizing, not a promise: see ⓘ on the findings</span></div>
+      <details><summary>Open the full brief</summary><dl>
+      <dt>Stuck on</dt><dd>${esc(B.stuck)}</dd><dt>Content</dt><dd>${esc(B.content)}</dd><dt>Reach</dt><dd>${esc(B.reach)}</dd><dt>For review</dt><dd>${esc(B.notes)}</dd></dl></details></div>`;
+    if(step===4) h=`<div class="row" style="justify-content:space-between;align-items:end"><div class="stack" style="gap:6px"><span class="label">Every finding becomes a campaign</span><h3>The plan, as a content board.</h3><p class="muted">Each campaign can go into the team's own tracker as a ticket, with its brief and its pieces.</p></div>
+      <span class="seg views"><button data-view="board" aria-pressed="${planView==='board'}">Board</button><button data-view="calendar" aria-pressed="${planView==='calendar'}">Calendar</button></span></div>
+      ${planView==='calendar'&&!matchMedia('(max-width:760px)').matches?cal():board()}`;
+    if(step===5) h=`<div class="bring"><span class="label">What would this bring?</span><p class="big">${esc(D.bring_big)}</p>
+      <p class="lede">${esc(D.bring_lede)}</p>
+      <div class="teams">
+        <div class="team"><h4>The customers' own words</h4><p>Every campaign starts from what a group of customers asked or did, counted across chats, surveys and accounts.</p></div>
+        <div class="team"><h4>A number, and a fair test</h4><p>Each campaign has one target and is measured against a hold-out or a comparison market, so a good week for bitcoin doesn't count as a win.</p></div>
+        <div class="team"><h4>Ready for review</h4><p>Each brief lists what a compliance reviewer will check, so review starts from the right wording.</p></div>
+      </div></div>`;
+    if(step===6) h=`<div class="close-demo"><h3>This was made-up data. Your chats, surveys and accounts hold different findings, and no one else has them.</h3>
+      <p class="lede">A first test gives you a measured answer on one number before the 2027 plan is locked. It's free, and it takes a few hours of your team's time.</p>
+      <ol class="chain">
+        <li><span class="k">20 minutes</span><span>Pick one number and the group of customers behind it. No data needed.</span></li>
+        <li><span class="k">You choose the data</span><span>Exports you make yourselves, with only the columns you agree to. Names, emails and phone numbers stay in your systems. It's covered by the EU's standard data processing agreement, and data is stored in Frankfurt. Or start from what's public, like app-store reviews, so nothing leaves your systems.</span></li>
+        <li><span class="k">Within two weeks</span><span>The ranked findings for that number, and a brief for each campaign, ready for your compliance review.</span></li>
+        <li><span class="k">One campaign, one fair test</span><span>Run the top campaign against a hold-out. You keep everything. If it doesn't move the number, you've spent a few hours.</span></li>
+      </ol>
+      <p class="muted">Why free: this has been built for B2B so far, and you'd be one of the first consumer teams to try it. I run every test myself, and what I learn shapes the consumer version.</p>
+      <div class="row" style="align-items:center;gap:20px"><button class="btn ghost" data-restart>Try another number</button><a href="https://structuralcontent.com/trust.html" target="_blank" rel="noopener" style="color:var(--accent);font-weight:600">How we handle a company's data →</a></div></div>`;
+    body.innerHTML=h;
+    if(scroll&&demo.getBoundingClientRect().top<0) demo.scrollIntoView({block:'start'});
+  }
+  body.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)return;
+    if(t.classList.contains('info')){const w=t.parentElement,o=w.classList.contains('open');body.querySelectorAll('.tipwrap.open').forEach(x=>x.classList.remove('open'));if(!o)w.classList.add('open');return}
+    if(t.dataset.num){D=PATHS[t.dataset.num];step=1;render(true)}
+    if(t.dataset.view){planView=t.dataset.view;render()}
+    if(t.dataset.open){step=3;render(true)}
+    if(t.hasAttribute('data-restart')){step=0;render(true)}});
+  next.onclick=()=>{step=Math.min(N-1,step+1);render(true)}; back.onclick=()=>{step=Math.max(0,step-1);render(true)};
+  render();
+})();
+</script>
+  <!-- Cloudflare Web Analytics (cookieless; see privacy.html) -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "e6cf228445244606a0e51751a75170ba"}'></script>
+</body>
+</html>
