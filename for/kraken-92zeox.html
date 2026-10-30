@@ -5,9 +5,86 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex, nofollow" />
   <title>Structural Content for Kraken</title>
+  <meta name="description" content="Content strategy software for B2B marketing teams. Content that moves the business, not just engagement." />
+  <meta name="author" content="Sebastian Messerer" />
   <meta name="theme-color" content="#FFFFFF" />
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/svg+xml" href="/Media/logo/sc-favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/Media/logo/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/Media/logo/apple-touch-icon.png" />
+  <link rel="canonical" href="https://structuralcontent.com/" />
+  <script>document.documentElement.className += " js";</script>
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Structural Content" />
+  <meta property="og:description" content="Content strategy software for B2B marketing teams. Content that moves the business, not just engagement." />
+  <meta property="og:url" content="https://structuralcontent.com/" />
+  <meta property="og:site_name" content="Structural Content" />
+  <meta property="og:image" content="https://structuralcontent.com/Media/logo/sc-linkedin-800.png" />
+  <meta property="og:image:width" content="800" />
+  <meta property="og:image:height" content="800" />
+  <meta property="og:image:alt" content="Structural Content" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Structural Content" />
+  <meta name="twitter:description" content="Content strategy software for B2B marketing teams. Content that moves the business, not just engagement." />
+  <meta name="twitter:image" content="https://structuralcontent.com/Media/logo/sc-linkedin-800.png" />
+
+  <!-- Organization structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://structuralcontent.com/#organization",
+    "name": "Structural Content",
+    "alternateName": "Structural Content™",
+    "legalName": "Structural Content UG (haftungsbeschränkt)",
+    "url": "https://structuralcontent.com/",
+    "logo": "https://structuralcontent.com/Media/logo/sc-linkedin-800.png",
+    "image": "https://structuralcontent.com/Media/logo/sc-linkedin-800.png",
+    "description": "Content strategy software for B2B marketing teams. Content that moves the business, not just engagement.",
+    "email": "sebastian@structuralcontent.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Kollwitzstr. 76",
+      "postalCode": "10435",
+      "addressLocality": "Berlin",
+      "addressCountry": "DE"
+    },
+    "knowsAbout": [
+      "Content strategy",
+      "AI content systems",
+      "Strategic communications",
+      "Content marketing"
+    ],
+    "sameAs": [
+      "https://www.linkedin.com/company/structural-content"
+    ],
+    "founder": {
+      "@type": "Person",
+      "name": "Sebastian Messerer",
+      "image": "https://structuralcontent.com/Media/Headshot-24.jpg",
+      "sameAs": [
+        "https://www.linkedin.com/in/sebastianmesserer",
+        "https://x.com/SRMesserer"
+      ]
+    }
+  }
+  </script>
+
+  <!-- WebSite structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://structuralcontent.com/#website",
+    "name": "Structural Content",
+    "url": "https://structuralcontent.com/",
+    "description": "Content strategy software for B2B marketing teams. Content that moves the business, not just engagement.",
+    "publisher": { "@id": "https://structuralcontent.com/#organization" },
+    "inLanguage": "en"
+  }
+  </script>
 <style>
     /* Self-hosted fonts (no external CDN; see privacy.html) */
     @font-face {
@@ -261,16 +338,106 @@ img.photo{object-fit:cover;width:160px;height:160px}
 <body>
 <header class="site-header"><div class="wrap"><img src="/Media/logo/sc-favicon.svg" alt="" width="28" height="28"><span>Structural Content</span></div></header>
 
+
 <main>
+<!-- 1. Hero -->
+<section class="hero"><div class="wrap stack" style="gap:28px">
+  <span class="eyebrow">Content strategy software · shown here for Kraken</span>
+  <h1>Content that moves <span class="cycle" id="c1">the business.</span><br><span class="not" id="l2">Not just <span class="cycle" id="c2">engagement.</span></span></h1>
+  <p class="lede">Name what you need people to do, like fund an account and keep trading. Structural Content reads your support chats, surveys, reviews and account data to find what's stopping them, and tells you which content to make to get them there.</p>
+  <div class="row"><a class="btn" href="https://calendar.app.google/zcdpzTwGYA1PHGTC6" target="_blank" rel="noopener">Get a free content audit</a><a class="btn ghost" href="#demo">Try it on your number</a></div>
+  <p class="muted" style="font-size:14px">Built by Sebastian Messerer, ex-Amazon Senior Content Strategist, who scaled an AI-driven content system across 13 countries.</p>
+  <p class="muted" style="font-size:12px;letter-spacing:.04em;opacity:.75">NVIDIA Inception &middot; AWS Activate</p>
+</div></section>
+
+<!-- Try it (directly under the hero) -->
 <section id="demo"><div class="wrap stack" style="gap:24px">
-  <h2>Structural Content, on a crypto app like Kraken.</h2>
-  <p class="lede">See Structural Content work through a company's own data, from the number you pick to the content worth making right now. It takes two minutes.</p>
+  <h2>Try it on a number like Kraken's.</h2>
+  <p class="lede">See Structural Content work through synthetic data built to look like Kraken's, from the number you pick to the content worth making right now. It takes two minutes.</p>
   <div class="demo">
     <div class="demo-top"><span class="label">Example: Kraken, on synthetic data</span><span class="prog" id="prog"></span></div>
     <div class="demo-body" id="demo-body" aria-live="polite"></div>
     <div class="demo-nav"><button class="btn ghost" id="d-back">Back</button><button class="btn" id="d-next">Next</button></div>
   </div>
-  <p class="note">All numbers, quotes and findings on this page are synthetic, built to show how Structural Content works. None of it is Kraken's data. Every campaign idea would go through Kraken's own compliance review.</p>
+  <p class="note">All numbers, quotes and findings in this demo are synthetic, built to show how Structural Content works. None of it is Kraken's data. Every campaign idea would go through Kraken's own compliance review.</p>
+</div></section>
+
+<!-- 3. How it works -->
+<section id="how"><div class="wrap stack" style="gap:40px">
+  <div class="stack" style="gap:10px"><h2>How it works</h2><p class="lede" style="max-width:52ch">It does what a great content strategist would, if they could read every chat, review and account, and never stopped.</p></div>
+  <div class="steps">
+    <div class="step"><span class="n">1</span><h3>Pick the number you need to move.</h3><p class="muted">Funded accounts, active traders, returning customers: the one under the most pressure.</p>
+      <div class="vis"><div class="numcards"><span class="numcard sel">Active traders</span><span class="numcard">Funded accounts</span><span class="numcard">Returning customers</span></div></div></div>
+    <div class="step"><span class="n">2</span><h3>Connect everything you know about your customers,</h3><p class="muted">from support chats to surveys and account data, plus outside data like search volumes.</p>
+      <div class="vis"><div class="sources"><span class="src">Account data</span><span class="src">Support chats</span><span class="src">Tickets</span><span class="src">Surveys</span><span class="src">Push and email</span><span class="src">Product usage</span><span class="src">Web analytics</span><span class="src">Reviews</span><span class="src">Search and market data</span></div></div></div>
+    <div class="step"><span class="n">3</span><h3>Get the campaigns that move it.</h3><p class="muted">Structural Content finds who has to move for your number to move, and what's stopping them, and turns each group into a content campaign: a brief, and the pieces to make, in your content board.</p>
+      <div class="vis" id="s3-vis"></div></div>
+    <div class="step"><span class="n">4</span><h3>Publish them, and watch the number that matters.</h3><p class="muted">Each campaign reports what it did to funded accounts, active traders or returning customers. Structural Content keeps track of how close you are to your number, and suggests what to do next until you get there.</p>
+      <div class="vis"><div class="dash">
+        <div class="r label" style="font-size:10px"><span>Campaign</span><span>Active traders, target vs actual</span><span class="grey">Traffic · clicks</span></div>
+        <div class="r"><span>AT-1 How to get your money out</span><div class="bar"><i style="width:82%"></i></div><span class="grey">—</span></div>
+        <div class="r"><span>AT-2 The full cost, in euros</span><div class="bar"><i style="width:64%"></i></div><span class="grey">—</span></div>
+        <div class="r"><span>AT-3 What the stocks check asks</span><div class="bar"><i style="width:40%"></i></div><span class="grey">—</span></div>
+      </div></div></div>
+  </div>
+  <div class="cfo">
+    <h3>Be taken seriously by your CFO.</h3>
+    <p>Lots of traffic is great. But when your CFO asks, "And what did that traffic bring us, for five figures a month?", things get awkward. With Structural Content, you can answer: "This campaign was aimed at new customers in their first week. Against a hold-out group, 1,700 more of them were still trading after 60 days."</p>
+  </div>
+</div></section>
+
+<!-- 4. Ways + why now -->
+<section id="ways"><div class="wrap stack" style="gap:40px">
+  <h2>New ways to win customers, hidden in your own data.</h2>
+  <div class="ways">
+    <div><h3>Win more of your best customers.</h3><p>Find the customers who buy fastest and stay longest, and what made them buy, in their words. Aim your campaigns at more companies like them.</p></div>
+    <div><h3>Find the customers you didn't know you had.</h3><p>Spot the group that keeps buying from you without ever being targeted: a role, an industry, a company size. Give them a campaign of their own.</p></div>
+    <div><h3>Win back the near-misses.</h3><p>Find the people who look like your best customers but never asked for a demo or started a trial, and what held them back.</p></div>
+    <div><h3>Answer the first question before they ask it.</h3><p>Find the question your buyers ask first on every call and chat, and answer it in your content, so more of them ask for the call.</p></div>
+    <div><h3>Stop paying for people who never buy.</h3><p>Find the groups that click and sign up but never become customers, and move that budget to the groups that do.</p></div>
+    <div><h3>Say what only you can say.</h3><p>Find why buyers chose you over the alternative, from won deals. Your competitors can't copy that message, because they don't have those calls.</p></div>
+  </div>
+  <p class="why-now">Opportunities like these were always in your data. But finding them meant reading thousands of calls, tickets and CRM records, and no team had the time. With the help of AI, Structural Content reads all of it, all the time, and tells you which opportunities will move your number most.</p>
+</div></section>
+
+<!-- 6. Who -->
+<section id="who"><div class="wrap">
+  <div class="who">
+    <img class="photo" src="/Media/Headshot-24.jpg" width="160" height="160" alt="Portrait of Sebastian Messerer" />
+    <div class="stack">
+      <h2>Built on what worked at Amazon.</h2>
+      <p class="lede">Hi, I'm Sebastian, a content strategist in Berlin. For more than ten years I've made content that gets people to act, for brands like Amazon, Adobe, Allianz and Corning: international campaigns, measurement frameworks, multi-million-euro video budgets, and award-winning work.</p>
+      <p class="lede">Most recently, at Amazon, I led B2B content strategy for Germany, the UK and Ireland, and ran the international channel strategy for Amazon Logistics' delivery partners. There I built AI-driven planning systems that scaled across 13 markets and more than doubled conversion on the actions they targeted. They started from what Amazon needed its partners to do, and found what was stopping them in Amazon's own data.</p>
+      <p class="lede">Structural Content is a new, much better version of that approach, built from scratch for B2B marketing teams. When you ask for an audit, I run it with you, using the software. After that, Structural Content runs on its own, and you still have me to talk to.</p>
+      <p class="label" style="letter-spacing:.06em">Worked with Amazon · Adobe · Allianz · Corning</p>
+      <p><a href="https://sebastianmesserer.com/essays/structural-content/" style="color:var(--accent);font-weight:600">Read the founding essay, as featured in TLDR Marketing →</a></p>
+      <a href="https://www.linkedin.com/in/sebastianmesserer" target="_blank" rel="noopener" style="color:var(--accent);font-weight:600">Connect with me on LinkedIn →</a>
+    </div>
+  </div>
+</div></section>
+
+<!-- 7. FAQ -->
+<section id="faq"><div class="wrap stack faq" style="gap:8px">
+  <h2 style="margin-bottom:16px">Fair questions</h2>
+  <details><summary>Isn't this just an attribution tool?</summary><p>No. Attribution looks back at which content worked. Structural Content looks ahead: it finds what's stopping your buyers, tells you what to make about it, and then checks whether it moved your number.</p></details>
+  <details><summary>Does this mean I stop doing what I do now?</summary><p>No. Same channels, same team, same tools. What changes is where your money goes. You keep the search terms and campaigns that bring in customers, add the ones only your buyers use, and stop spending time and money competing for terms that only bring in engagement that doesn't convert.</p></details>
+  <details><summary>Couldn't we build this ourselves? Isn't it just Gong with an LLM?</summary><p>You could try: drop your sales calls into an LLM and ask what's stopping your buyers. You'll get answers that sound good. Getting campaign briefs your team would use as they are is the hard part: connecting everything reliably, deep content strategy and AI engineering working together, months of work, and upkeep after that. Not convinced? The free audit lets you compare what Structural Content finds with what you could build yourself.</p></details>
+  <details><summary>Isn't this just an SEO tool?</summary><p>SEO tools start from what everyone searches for, so you get the same list as your competitors. Structural Content starts from what's stopping your buyers, which only your data knows, then finds the searches that reach them.</p></details>
+  <details><summary>Is it an AI writing tool?</summary><p>No, on purpose: there are plenty of good ones already. Structural Content gives you unusually rich briefs, so whoever makes your content, your AI tools, your agency, your team or a mix, knows exactly what to make and can make it fast.</p></details>
+  <details><summary>Isn't this an intent-data or ABM tool?</summary><p>Those start from outside signals about who might be in the market. Structural Content starts from your own customers, finds who to win and why they'd buy, and can then use outside signals to find more like them.</p></details>
+  <details><summary>Isn't this stepping on sales' or CS's toes?</summary><p>No. Sales and CS work one-to-one, especially with your biggest accounts. Marketing reaches whole groups at once: before the sale, and after it in lifecycle marketing, from onboarding to cross-sell. Structural Content does the group part, using what sales and CS already know. Say your CS notes show that customers who back up the whole company in their first week stay three times longer. It can suggest a campaign that brings in more companies like them, and an onboarding series that gets every new customer there in their first week.</p></details>
+  <details><summary>Is it more work for my team?</summary><p>Less than today. Deciding what to make usually takes research, workshops and debate, or briefing an agency and reviewing what comes back. With Structural Content, you connect your data once, and campaigns arrive in your content board as tickets, already briefed and ranked. Your team reviews them and makes the pieces, as it does now.</p></details>
+  <details><summary>Is our data safe?</summary><p>Here's exactly how we handle it. Your data stays in the EU, on Amazon's servers in Frankfurt. The AI runs on Amazon Bedrock, which stores nothing, and your data is never used to train any model. One sub-processor (Amazon). Everything except a record without your files or any personal data taken from them (listed in Annex II of our data processing agreement) is deleted within 30 days of the end, with written confirmation. No SOC 2 yet; you can review our full data processing agreement and security measures instead. <a href="https://structuralcontent.com/trust.html" style="color:var(--accent)">See how we handle your data →</a></p></details>
+</div></section>
+
+<!-- 9. Offer -->
+<section id="offer"><div class="wrap">
+  <div class="offer">
+    <h2>Get a free content audit for your 2027 plan.</h2>
+    <p class="lede">Pick the number that needs to move most next year. Send the buyer data you're comfortable sharing, with names taken out. Within a week, get back the campaigns that would move it.</p>
+    <p class="muted" style="font-size:14px">Free for the first 10 teams, because I run each one myself · Data processing agreement accepted online first · After the audit: from $2,500 a month</p>
+    <div class="row" style="align-items:center;gap:20px"><a class="btn" href="https://calendar.app.google/zcdpzTwGYA1PHGTC6" target="_blank" rel="noopener">Book a 15-minute call</a><a href="#demo" style="color:var(--accent);font-weight:600">Not sure yet? See an example first.</a></div>
+  </div>
 </div></section>
 </main>
 
@@ -283,7 +450,31 @@ img.photo{object-fit:cover;width:160px;height:160px}
 </div></footer>
 <script>
 (function(){
+  /* hero cycle: rests on the settled words */
+  const a=["funded accounts.","active traders.","returning customers.","the business."], b=["rankings.","traffic.","clicks.","engagement."];
+  const c1=document.getElementById('c1'), c2=document.getElementById('c2');
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const l2=document.getElementById('l2');
+  function cycle(el,words,done){let i=0;el.textContent=words[0];
+    const t=setInterval(()=>{i++;el.style.opacity=0;setTimeout(()=>{el.textContent=words[i];el.style.opacity=1;if(i>=words.length-1){clearInterval(t);done&&setTimeout(done,350)}},200)},900);}
+  if(!reduce){l2.style.opacity=0;cycle(c1,a,()=>{l2.style.opacity=1;cycle(c2,b)});}
+
   const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+
+  /* step 3 visual */
+  const s3=document.getElementById('s3-vis');
+  const CARD=`<div class="mini-brief"><span class="label" style="font-size:10px">AT-1 · campaign brief</span><span class="t">Tell new customers how to get their money out, before they need to.</span><dl>
+    <dt>For</dt><dd>New funded accounts in their first week (100,000 a quarter)</dd>
+    <dt>Stuck on</dt><dd>"If I buy now, how do I get my money out again?"</dd>
+    <dt>Content</dt><dd>Week-one email · help page for first-timers</dd>
+    <dt>Reach</dt><dd>Every new funded account, in their language</dd>
+    <dt>Target</dt><dd>Still trading after 60 days: 35% to about 37%</dd></dl></div>`;
+  const BOARD=`<div class="mini-board">
+    <div class="mini-col"><span class="h">To do</span><div class="mini-card"><b>AT-2</b>What your first trade costs, in euros</div><div class="mini-card"><b>AT-3</b>Before you add stocks: the questions we'll ask</div></div>
+    <div class="mini-col"><span class="h">In progress</span><div class="mini-card"><b>AT-1</b>How selling and withdrawing work</div><div class="mini-card"><b>AT-1</b>Your money out, in plain words</div></div>
+    <div class="mini-col"><span class="h">Done</span><div class="mini-card"><b>AT-1</b>Where to find it later</div></div></div>`;
+  let s3Mode="card"; const renderS3=()=>{s3.innerHTML=s3Mode==="board"?BOARD:CARD};renderS3();
+
   /* demo */
   const PATHS={"New customers who keep trading": {"target": "Say the goal is 20,000 more new customers still trading after 60 days next year.", "unit": "active traders a year", "need": "20,000", "raw": [["Accounts · new funded, last quarter", "Still trading after 60 days: 35%."], ["Support chat · first week", "If I buy now, how do I get my money out again if I need it?"], ["Accounts · support contacts", "Asked how to sell or withdraw in week one, and got an answer: 54% still trading after 60 days."], ["Sign-up survey", "Came for US stocks. Then it asked me about my trading experience, so I bought a bit of bitcoin and left."], ["Help-centre search · before a first trade", "Top searches: \"fees\", \"what does it cost\", \"spread\"."], ["Help-centre pages · new customers", "Opened the page that shows a trade's full cost in euros: traded within a week 1.6x as often."]], "groups": [["New customers who know how to get their money out are the ones who stay.", "The most common week-one question in chat is how to sell or withdraw. Customers who got an answer still trade after 60 days at 54%, against 35% overall. Most new customers never ask.", "+7,000", "About 400,000 new funded accounts a year. People who ask are keener to begin with, so this assumes only part of the gap comes from the answer: if 100,000 more hear it in week one and stay at 42% instead of 35%, about 7,000. The hold-out test shows the real share."], ["\"What will this cost me?\" is the question right before the first trade.", "Fees are the top help-centre search before a first trade. New customers who open a page showing the full cost in euros trade within a week 1.6 times as often.", "+2,500", "If 60,000 more new customers a year see the cost in euros before their first trade, and 1 in 24 more of them keep trading (half the gap, since readers are keener): about 2,500."], ["People who came for stocks stop at questions they didn't expect.", "1 in 7 new customers say they came for US stocks. Stocks need a one-time check of their knowledge and experience, and most who stop, stop at its first question. Nothing tells them beforehand what it asks, or why.", "+1,500", "About 57,000 stock-first customers a year. If 1 in 10 fewer stop because the questions no longer surprise them, and 1 in 4 of those keep trading: about 1,500."]], "camps": [["AT-1", "Tell new customers how to get their money out, before they need to.", 3, 2, "Jan", "+7,000"], ["AT-2", "Show the full cost of a first trade, in euros.", 2, 3, "Feb", "+2,500"], ["AT-3", "Explain what the stocks check asks, and why, before people start.", 2, 4, "Mar", "+1,500"], ["AT-4", "Show bonus customers what to do after the bonus trade.", 1, 6, "May", "+1,500"], ["AT-5", "Answer week-one questions in each customer's language.", 1, 7, "Jun", "+500"]], "pieces": {"todo": [["AT-2", "What your first trade costs, in euros", "Page · linked before the first buy"], ["AT-2", "Fees and spread, explained once", "Help page"], ["AT-3", "Before you add stocks: the questions we'll ask, and why the law requires them", "Help page · linked from the survey answer"], ["AT-3", "Capital at risk: what that means for stocks", "Explainer"], ["AT-4", "After your bonus: three things people check next", "Email · day 3 after the bonus trade"], ["AT-5", "Your first week, answered", "Help pages · in the five biggest languages"]], "prog": [["AT-1", "How selling and withdrawing work, step by step", "Email and in-app · week one"], ["AT-1", "Your money out, in plain words: times, fees and limits", "Help page · for first-timers"], ["AT-1", "Where to find it later", "In-app card · after the first buy"]], "done": []}, "brief": {"id": "AT-1", "above": "New customers who know how to get their money out are the ones who stay.", "title": "Tell new customers how to get their money out, before they need to.", "summary": "A short week-one message on how selling and withdrawing work, the same answer in the app after a first buy, and a help page written for first-timers.", "forr": "New funded accounts in their first week. About 100,000 a quarter. Most bought once and haven't asked anything.", "target": "New customers still trading after 60 days: from 35% to about 37%.", "big": "+7,000", "stuck": "\"If I buy now, how do I get my money out again if I need it?\" Not knowing the way out makes people hold back on the way in.", "content": "How selling and withdrawing work, step by step (email and in-app, week one) · Your money out, in plain words: times, fees and limits (help page) · Where to find it later (in-app card after the first buy)", "reach": "Every new funded account in week one, in their language.", "measured": "Against a hold-out group of new customers who don't get it, so market swings don't count.", "notes": "Factual and open about fees and timings. The standard risk warning on each piece."}, "bring_big": "About +11,000 active traders a year, of the 20,000 in this example goal.", "bring_lede": "That's after removing people that more than one campaign reaches. Each result can be set against what the same number of active traders costs in incentives today. The rest needs product or pricing work, and the plan says so."}, "Funded accounts from sponsorships": {"target": "Say the goal is 20,000 more funded accounts next year from people who first saw you through a sponsorship.", "unit": "funded accounts a year", "need": "20,000", "raw": [["Web analytics · match-day traffic", "Visits from match-day ads and QR codes: 1.2% sign up. Visits from search: 5.8%."], ["Search data", "\"is [your name] safe\": the most common search with your name in the days after a big match."], ["Social comments · club posts", "Saw the logo all match. What do you actually do?"], ["Support chat · new sign-ups", "Is my money protected if you go bust?"], ["Sign-up survey", "I already have crypto in my banking app. Why would I need another one?"], ["Accounts · by source", "Fans who joined through a club page: 1.8x as likely to still be active after six months as paid-social sign-ups."]], "groups": [["\"Is it safe?\" is the first question new fans ask.", "It's the most common search with your name after a big match, and the first question new sign-ups ask in chat. The honest answer is specific: who authorises you, how client assets are held, and what isn't covered. Most fans have never heard it.", "+4,000", "About 250,000 such searches a year. If 1 in 60 of them fund an account after a plain, honest answer: about 4,000."], ["Fans see your name all match, but not what you'd do for them.", "Match-day visitors sign up at 1.2%, against 5.8% from search. Under club posts, the most-liked question is what you actually do.", "+3,700", "About 1.1 million match-day visits a year. If 1 in 300 more of them fund an account: about 3,700."], ["Fans who join through their club stay longest.", "Sign-ups through a club page are 1.8 times as likely to still be active after six months. Club pages ran at two partner clubs, for one month.", "+2,500", "Club pages brought about 600 funded accounts in their launch month, then about 100 a month. Kept up all season at each EEA partner club: about 2,500 more than today."]], "camps": [["SP-1", "Answer \"is it safe?\" honestly, where new fans ask it.", 3, 2, "Jan", "+4,000"], ["SP-2", "Tell fans in one line what you do.", 2, 3, "Feb", "+3,700"], ["SP-3", "Give each EEA partner club a guided start for fans.", 1, 5, "Apr", "+2,500"], ["SP-4", "Show banking-app crypto users what's different here.", 1, 6, "May", "+1,200"], ["SP-5", "Follow up race weekends with a first-week guide.", 1, 7, "Jun", "+600"]], "pieces": {"todo": [["SP-2", "What we do, in one line", "Match-day screens and club posts"], ["SP-2", "From the stadium to your first step", "Landing page · from the QR code"], ["SP-3", "Your club, your first step", "Club page · EEA partner clubs, 18+"], ["SP-4", "Crypto in your banking app, or here: what's different", "Comparison page · built for search"], ["SP-5", "Race weekend over. Here's your first week.", "Email · F1 sign-ups"]], "prog": [["SP-1", "If a crypto company fails: how we keep your assets separate, and what isn't covered", "Page · every language, built for search"], ["SP-1", "The 30-second answer", "Video · EEA club channels"], ["SP-1", "Who authorises us, in one line", "Sign-up screen"]], "done": []}, "brief": {"id": "SP-1", "above": "\"Is it safe?\" is the first question new fans ask.", "title": "Answer \"is it safe?\" honestly, where new fans ask it.", "summary": "A plain-words page on how client assets are held and what isn't covered, a 30-second version for club channels, and one factual line on the sign-up screen.", "forr": "People who search \"is it safe\" with your name, about 60,000 times a quarter, mostly in the days after a big match, plus new sign-ups who ask it in chat. Most have never bought crypto.", "target": "Funded accounts from these searches: from 1.0% to 2.6%.", "big": "+4,000", "stuck": "\"Is my money protected if you go bust?\" They've read the crypto stories in the news, and a logo on a shirt doesn't answer it.", "content": "If a crypto company fails: how we keep your assets separate, and what isn't covered (page) · The 30-second answer (video, EEA club channels) · Who authorises us, in one line (sign-up screen)", "reach": "Search ads on \"is it safe\" in each language; the answer linked from chat and the first sign-up screen; the 30-second version on EEA club channels.", "measured": "Countries with the campaign against countries without it, so market swings don't count.", "notes": "Name the authorisation as a fact, never as a guarantee. Say plainly that crypto and euros held with us aren't covered by deposit-guarantee or investor-compensation schemes. Risk warning on every piece. EEA-targeted only; any UK placement goes through UK promotion approval. Age-gate where the platform allows."}, "bring_big": "About +11,000 funded accounts a year, of the 20,000 in this example goal.", "bring_lede": "That's after removing people that more than one campaign reaches. And each sponsorship gets a number of its own: funded accounts by club and by country, against places without the campaign. The rest needs more than content, like the media plan or the product, and the plan says so."}, "Dormant accounts active again": {"target": "Say the goal is 40,000 more dormant accounts active again next year.", "unit": "accounts active again a year", "need": "40,000", "raw": [["Accounts", "Funded, no activity in 90 days: 1.9 million. Most opened at a price peak, in 2021 or 2024."], ["Push · dormant accounts", "About an asset the person holds: 6% open. About anything else: 1.4%."], ["App review", "Too many notifications about coins I don't own. Turned them all off."], ["Survey · dormant accounts", "Bought in 2021, haven't opened the app since. Not sure what's even in there now."], ["Preferences", "Accounts that chose their own message topics: half as likely to switch push off."], ["Support chat · returning customers", "Can I buy Apple shares here now, or only crypto?"]], "groups": [["People open messages about what they own four times as often.", "Push about an asset the person holds is opened by 6%, anything else by 1.4%. \"Too many notifications\" is a top review theme, and every opt-out is hard to win back.", "+15,000", "About 1.9 million dormant accounts. If messages about what they hold bring 1 in 125 of them back over a year: about 15,000."], ["Dormant customers don't know what has changed since they left.", "Many haven't opened the app since 2021. Since then, stocks and new ways to pay in have arrived. In the survey, most say they don't know what they hold now, or what's new.", "+10,000", "If 1 in 190 dormant accounts come back after a plain \"since you left\" summary: about 10,000."], ["People who pick their own topics keep messages switched on.", "Accounts that chose what they hear about are half as likely to switch push off. Few dormant accounts have ever been asked.", "+3,000", "If 300,000 dormant accounts choose their topics, and 1 in 100 of them come back because the one message that matters still arrives: about 3,000."]], "camps": [["RT-1", "Send dormant customers news only about what they hold.", 3, 2, "Jan", "+15,000"], ["RT-2", "Tell returning customers what has changed since they left.", 2, 4, "Mar", "+10,000"], ["RT-3", "Let people choose what they hear about.", 1, 4, "Mar", "+3,000"], ["RT-4", "Explain what the stocks check asks, for customers who ask about shares.", 1, 6, "May", "+1,500"], ["RT-5", "Answer returning customers' first question in their language.", 1, 7, "Jun", "+1,000"]], "pieces": {"todo": [["RT-2", "Since you left", "Email · accounts dormant for a year or more"], ["RT-2", "What's new, on one screen", "In-app card · on return"], ["RT-3", "Your topics, your call", "Preference email"], ["RT-4", "Before you add stocks: the questions we'll ask, and why", "Help page · linked from chat"], ["RT-5", "Welcome back: your first questions, answered", "Help pages · five languages"]], "prog": [["RT-1", "What you hold, this month", "Email and push · monthly"], ["RT-1", "Choose what we tell you about", "Settings screen"], ["RT-1", "Message rules for dormant accounts", "One page · for the lifecycle team"]], "done": []}, "brief": {"id": "RT-1", "above": "People open messages about what they own four times as often.", "title": "Send dormant customers news only about what they hold.", "summary": "Rules for push and email to dormant accounts, a short monthly summary of what each person holds, and a settings screen to choose topics.", "forr": "Funded accounts with no trade in 90 days. About 1.9 million. Most bought at a peak and haven't been back.", "target": "Dormant accounts active again each quarter (a trade or a deposit): from 1.0% to 1.2%.", "big": "+15,000", "stuck": "\"Too many notifications about coins I don't own.\" They switched messages off, so the one that matters never arrives.", "content": "What you hold, this month (email and push, monthly) · Choose what we tell you about (settings screen) · Message rules for dormant accounts (one page)", "reach": "Push and email, only to accounts with marketing consent for that channel, in their language.", "measured": "Against a hold-out group that keeps getting today's messages, so market swings don't count.", "notes": "Factual summaries, no calls to buy. A risk warning wherever a price is shown. Only to accounts with marketing consent."}, "bring_big": "About +26,000 accounts active again a year, of the 40,000 in this example goal.", "bring_lede": "That's after removing people that more than one campaign reaches. The messages people want stay switched on. The rest needs more than content, like product or pricing, and the plan says so."}};
   let D=PATHS["New customers who keep trading"],RAW=D.raw,GROUPS=D.groups,CAMPS=D.camps,PIECES=D.pieces,B=D.brief;
