@@ -237,17 +237,20 @@ table.ba th[scope=row]{font:600 13px/1.4 var(--sans);letter-spacing:.06em;text-t
 .grp h4{margin:0;font:600 16px var(--sans)}
 .grp .why{font-size:14px;color:var(--ink-soft)}
 .grp .likely{grid-column:1/-1;margin:0;font-size:13px;color:var(--muted)}
+.grp:last-child .tip{top:auto;bottom:calc(100% + 8px)}
 .stakes{list-style:none;margin:0;padding:0;display:grid;gap:10px}
 .stakes li{display:flex;justify-content:space-between;gap:16px;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:10px}
 .stakes .stake{font-family:var(--serif);font-size:20px;color:var(--accent);white-space:nowrap;text-align:right}
 .stakes .stake small{display:block;font:12px var(--sans);color:var(--muted)}
+.stakes .stake small{white-space:normal}
+@media (max-width:600px){.stakes li{flex-wrap:wrap}.stakes .stake{text-align:left}}
 .tipwrap{position:relative;display:inline-block;vertical-align:super;margin-left:4px}
 .info{width:17px;height:17px;border-radius:50%;border:1px solid var(--line-strong);background:var(--bg);color:var(--muted);font:600 11px/15px var(--serif);font-style:italic;padding:0;cursor:help}
 .info:hover,.info:focus-visible{border-color:var(--accent);color:var(--accent)}
 .tip{position:absolute;right:-8px;top:calc(100% + 8px);width:min(300px,70vw);padding:12px 14px;border-radius:10px;background:var(--bg);border:1px solid var(--line-strong);box-shadow:0 8px 24px rgba(0,0,0,.12);font:400 13px/1.45 var(--sans);color:var(--ink-soft);text-align:left;white-space:normal;opacity:0;visibility:hidden;transition:opacity .15s;z-index:5}
 .tip b{display:block;font-weight:600;color:var(--ink);margin-bottom:4px}
 .tipwrap:hover .tip,.tipwrap:focus-within .tip{opacity:1;visibility:visible}
-@media (max-width:600px){.groups .grp{grid-template-columns:1fr}.groups .grp .mv{grid-row:auto;text-align:left;order:3}.groups .grp .mv small{display:inline;margin-left:8px}.groups .tip{right:auto;left:-120px}}
+@media (max-width:600px){.groups .grp{grid-template-columns:1fr}.groups .grp .mv{grid-row:auto;text-align:left;order:3;white-space:normal}.groups .grp .mv small{display:inline;margin-left:8px}.groups .tip{right:auto;left:-120px;width:min(300px,calc(100vw - 120px))}}
 .grp .mv{text-align:right;font-family:var(--serif);font-size:22px;color:var(--accent);grid-row:span 2;align-self:center;white-space:nowrap}
 .grp .mv small{display:block;font:12px var(--sans);color:var(--muted)}
 .cal-scroll{overflow-x:auto}
@@ -480,12 +483,12 @@ img.photo{object-fit:cover;width:160px;height:160px}
     ["Your keyword list",'"free desk booking software", "best hybrid office app". Your five competitors have the same list.','"book desks for a team of 30 without IT", "replace the office spreadsheet": how your best self-serve customers described their problem in their first support chat. Content on these terms brings in more people like them.'],
     ["Your content calendar","A weekly blog post and social posts, judged by traffic.","Three pieces for office managers at 20–100-person companies, the group most likely to sign up and pay: a template that answers the question they all asked in their first support chat. Watch: trial sign-ups from them, month by month."],
     ["Your messaging",'"Get started free in minutes." The same words as every competitor.','"We stopped double-booking desks in the first week": why your best self-serve customers stayed, from their reviews and sign-up survey. On your pricing page and ads. Watch: trial starts on the pricing page, 4% of visitors today.'],
-    ["A line in your 2027 plan",'"Paid social: €80k (last year plus 10%)."','"€25k: retarget the 2,400 companies that look like your best self-serve customers and visited pricing but never started a trial, with the answer to their top question. Up to 2,400 trial sign-ups at stake."']],
+    ["A line in your 2027 plan",'"Paid social: €80k (last year plus 10%)."','"€25k: retarget the 2,400 companies that look like your best self-serve customers and visited pricing but never started a trial, with the answer to their top question. Watch: trial starts from these companies, month by month."']],
    "Qualified pipeline":[
     ["Your target-account list","1,000 mid-market accounts from an intent-data tool, in your industries. Your competitors buy the same list.","320 accounts that match what your best customers had in common in your CRM: a recent office move and a new COO. You know why each account is on the list."],
     ["Your content calendar","A monthly webinar on industry trends, judged by registrations.","Three pieces for heads of workplace at companies with a recent office move, the group that turns into pipeline most often: a cost guide that answers the question they all asked first on the discovery call. Watch: qualified opportunities from them, month by month."],
     ["Your messaging",'"The leading workplace platform for the modern enterprise." The same words as every competitor.','"We knew within a month which floors we could give back": why your best customers chose you over the alternative, from won-deal calls. It becomes a customer-story campaign: three of your best customers telling that story, in short videos for the 320 target accounts. Watch: accounts engaging with the campaign, 4% today.'],
-    ["A line in your 2027 plan",'"Trade shows: €150k (same as last year)."','"€50k: account-based campaign for the 320 accounts above, built on the reason your best customers chose you. Up to 320 accounts at stake."']]
+    ["A line in your 2027 plan",'"Trade shows: €150k (same as last year)."','"€50k: account-based campaign for the 320 accounts above, built on the reason your best customers chose you. Watch: qualified opportunities from these accounts, month by month."']]
   };
   let tab="Demo requests", row=0, side="after", baMode="table";
   const tabsEl=document.getElementById('ba-tabs'), tEl=document.getElementById('ba-table'), rEl=document.getElementById('ba-row');
@@ -553,7 +556,7 @@ img.photo{object-fit:cover;width:160px;height:160px}
       <p class="muted">${esc(B.summary)}</p>
       <dl><dt>For</dt><dd>${esc(B.forr)}</dd>
       <dt>Likely</dt><dd>${esc(B.likely.replace(/^Likely: (.)/,(m,c)=>c.toUpperCase()))}</dd></dl></div>
-      <div class="stack" style="gap:6px;align-self:center"><span class="big" style="white-space:nowrap">${B.big}</span><b>${D.unit} at stake</b><span class="muted" style="font-size:14px">a ceiling, not a forecast</span></div>
+      <div class="stack" style="gap:6px;align-self:center"><span class="label">up to</span><span class="big">${B.big.replace(/^up to /,'')}</span><b>${D.unit} at stake</b><span class="muted" style="font-size:14px">a ceiling, not a forecast</span></div>
       <details><summary>Open brief</summary><dl>
       <dt>Stuck on</dt><dd>${esc(B.stuck)}</dd>
       <dt>Content</dt><dd>${esc(B.content)}</dd>
