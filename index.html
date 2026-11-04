@@ -229,9 +229,9 @@ table.ba th[scope=row]{font:600 13px/1.4 var(--sans);letter-spacing:.06em;text-t
 .flow{display:grid}
 .sc{grid-area:1/1;display:flex;flex-direction:column;gap:14px}
 .jcols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-.jcol{background:#24272B;border-radius:9px;padding:10px;display:grid;gap:8px;align-content:start;min-height:200px}
-.jcol>span{color:#A0A1A3;font-size:11px;font-weight:600;letter-spacing:.09em}
-.jcard{background:#2E3236;border:1px solid #3A3E43;border-radius:7px;padding:9px;color:#E8E8E8;font-size:13.5px;line-height:1.35}
+.jcol{background:#24272B;border-radius:9px;padding:10px;display:grid;grid-template-columns:minmax(0,1fr);gap:8px;align-content:start;min-height:200px}
+.jcol>span{color:#A0A1A3;font-size:11px;font-weight:600;letter-spacing:.09em;overflow-wrap:anywhere}
+.jcard{min-width:0;overflow-wrap:anywhere;background:#2E3236;border:1px solid #3A3E43;border-radius:7px;padding:9px;color:#E8E8E8;font-size:13.5px;line-height:1.35}
 .jcard small{display:block;color:#A0A1A3;font-size:12px}
 .jcard.new{border-color:#4FB3E8}
 .brief-lines{display:grid;gap:8px;font-size:14.5px}
@@ -373,6 +373,10 @@ table.cmp th[scope=row]{font-size:12px;letter-spacing:.06em;text-transform:upper
   section{padding-block:64px}
   .steps,.pick,.raw,.board,.ways,.book-steps,.cfo-cmp,.cfo-nums{grid-template-columns:1fr}
   .hero-grid{grid-template-columns:1fr;gap:40px}
+  .jcols{gap:6px}
+  .jcol{padding:6px}
+  .jcard{padding:6px;font-size:12px}
+  .jcard small{font-size:11px}
   .cfo-block{padding:22px}
   .brief{grid-template-columns:1fr}
   .who{grid-template-columns:1fr}
