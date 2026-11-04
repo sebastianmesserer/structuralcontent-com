@@ -151,9 +151,10 @@ p{margin:0}
 
 /* hero */
 .hero{padding-block:96px 72px}
-.cycle{color:var(--accent);display:inline-grid;transition:opacity .25s}
-.cycle>span{grid-area:1/1;visibility:hidden;white-space:nowrap}
-.cycle>span.on{visibility:visible}
+.cycle{color:var(--accent);display:inline-block;max-width:100%;transition:opacity .25s}
+.cycle.run{display:inline-grid}
+.cycle.run>span{grid-area:1/1;visibility:hidden}
+.cycle.run>span.on{visibility:visible}
 .hero .not{color:var(--muted);transition:opacity .5s}
 .hero .not .cycle{color:var(--muted)}
 
@@ -219,7 +220,7 @@ table.ba th[scope=row]{font:600 13px/1.4 var(--sans);letter-spacing:.06em;text-t
 /* hero: text left, the product's flow right */
 .hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:56px;align-items:center}
 .hero h1{font-size:clamp(36px,4.8vw,54px)}
-.slack{background:#1A1D21;color:#D1D2D3;border-radius:14px;padding:20px 22px 16px;font-size:15px;line-height:1.5;box-shadow:0 8px 24px rgba(0,0,0,.12)}
+.slack{overflow:hidden;background:#1A1D21;color:#D1D2D3;border-radius:14px;padding:20px 22px 16px;font-size:15px;line-height:1.5;box-shadow:0 8px 24px rgba(0,0,0,.12)}
 .slack .ex-note{text-align:right;color:#A0A1A3;font-size:12.5px;margin-bottom:8px}
 .slack b,.slack .nm{color:#F8F8F8}
 .slack .top{color:#E8E8E8;font-weight:600;padding-bottom:10px;border-bottom:1px solid #34373B}
@@ -403,7 +404,7 @@ img.photo{object-fit:cover;width:160px;height:160px}
 <section class="hero"><div class="wrap hero-grid">
   <div class="stack" style="gap:24px">
   <span class="eyebrow">Content strategy software for B2B marketing teams</span>
-  <h1>Content that moves <span class="cycle" id="c1"><span>demo requests.</span><span>trial sign-ups.</span><span>pipeline.</span><span class="on">the business.</span></span><br><span class="not" id="l2">Not just <span class="cycle" id="c2"><span>rankings.</span><span>traffic.</span><span>clicks.</span><span class="on">engagement.</span></span></span></h1>
+  <h1>Content that moves <span class="cycle" id="c1">the business.</span><br><span class="not" id="l2">Not just <span class="cycle" id="c2">engagement.</span></span></h1>
   <p class="lede">Name what you need people to do, like book a demo. See what stops them in your own data, and the marketing campaigns that fix it.</p>
   <div class="row"><a class="btn" href="https://calendar.app.google/zcdpzTwGYA1PHGTC6" target="_blank" rel="noopener">Book a demo</a><a class="btn ghost" href="#demo">Try it on your number</a></div>
   <p style="font-size:15px;color:var(--ink-soft)">A 15-minute call. Then free campaign briefs from a snapshot of your data, within a week.</p>
@@ -535,10 +536,15 @@ img.photo{object-fit:cover;width:160px;height:160px}
   const c1=document.getElementById('c1'), c2=document.getElementById('c2');
   const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const l2=document.getElementById('l2');
-  /* every word sits in one grid cell, so the slot is always as wide as its widest word and the line breaks never move */
+  /* While cycling, every word sits in one grid cell, so the slot is as wide as its widest word and the line breaks
+     never move. When it settles, the slot keeps that width and goes back to plain text: the markup and the settled
+     DOM hold only the real sentence. */
+  const WORDS={c1:["demo requests.","trial sign-ups.","pipeline.","the business."],c2:["rankings.","traffic.","clicks.","engagement."]};
+  function stack(el){el.classList.add('run');el.innerHTML=WORDS[el.id].map(w=>`<span>${w}</span>`).join('')}
+  function settle(el){const w=el.getBoundingClientRect().width;el.classList.remove('run');el.textContent=WORDS[el.id].at(-1);el.style.minWidth=w+'px'}
   function cycle(el,done){const w=[...el.children];let i=0;const show=k=>w.forEach((s,j)=>s.classList.toggle('on',j===k));show(0);
     const t=setInterval(()=>{i++;el.style.opacity=0;setTimeout(()=>{show(i);el.style.opacity=1;if(i>=w.length-1){clearInterval(t);done&&setTimeout(done,350)}},200)},900);}
-  if(!reduce){l2.style.opacity=0;cycle(c1,()=>{l2.style.opacity=1;cycle(c2)});}
+  if(!reduce){stack(c1);stack(c2);l2.style.opacity=0;cycle(c1,()=>{l2.style.opacity=1;cycle(c2,()=>{settle(c1);settle(c2)})});}
 
   /* hero click-through: pause control (WCAG 2.2.2) */
   const slack=document.querySelector('.slack'), fp=document.querySelector('.fpause');
