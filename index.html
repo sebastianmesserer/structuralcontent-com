@@ -207,10 +207,8 @@ table.ba th[scope=row]{font:600 13px/1.4 var(--sans);letter-spacing:.06em;text-t
 .cfo-nums .moved b{color:var(--accent)}
 .cfo-nums span:not(.label){font-size:15px}
 .book{border-top:1px solid var(--line);margin-top:56px;padding-top:36px;display:grid;gap:24px}
-.book-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
-.book-steps div{display:grid;gap:6px;align-content:start}
-.book-steps .label{color:var(--accent)}
-.book-steps p{font-size:15px;color:var(--ink-soft)}
+.book-text{max-width:62ch;font-size:17px;line-height:1.6}
+.book-data{font-size:14px;color:var(--ink-soft);margin-top:-12px}
 .site-header .btn{margin-left:auto;padding:10px 16px;font-size:15px;white-space:nowrap}
 /* hero: text left, the product's flow right */
 .hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:56px;align-items:center}
@@ -370,7 +368,7 @@ table.ba th[scope=row]{font:600 13px/1.4 var(--sans);letter-spacing:.06em;text-t
 .exp-min{display:none}
 @media (max-width:760px){
   section{padding-block:64px}
-  .steps,.pick,.raw,.board,.ways,.book-steps,.cfo-cmp,.cfo-nums{grid-template-columns:1fr}
+  .steps,.pick,.raw,.board,.ways,.cfo-cmp,.cfo-nums{grid-template-columns:1fr}
   .hero-grid{grid-template-columns:1fr;gap:40px}
   .cfo-block{padding:22px}
   .brief{grid-template-columns:1fr}
@@ -490,11 +488,8 @@ img.photo{object-fit:cover;width:160px;height:160px}
   </div>
   <div class="book" id="offer">
     <h3>What happens when you book.</h3>
-    <div class="book-steps">
-      <div><span class="label">1 · 30 minutes</span><p>A call with me about what your team is working on.</p></div>
-      <div><span class="label">2 · Free</span><p>Campaign briefs from your own data, within a week. Your data stays in the EU, under our data processing agreement. <a href="trust.html" style="color:var(--accent)">How we handle your data →</a></p></div>
-      <div><span class="label">3 · Paid</span><p>Then, if you want to continue: a monthly licence, priced for the teams and markets you use it for. Cancel any month.</p></div>
-    </div>
+    <p class="book-text">We talk for 30 minutes about the number you need to move and the data you already have. If it's a fit, I run Structural Content on that data with you, and within a week you see your first campaigns. If they're worth making, you can start with a monthly subscription.</p>
+    <p class="book-data">Your data stays in the EU, under our data processing agreement. <a href="trust.html" style="color:var(--accent)">How we handle your data →</a></p>
     <div class="row"><a class="btn" href="https://calendar.app.google/uPeQFcDajNFzsZJYA" target="_blank" rel="noopener">Book a 30-minute call</a></div>
   </div>
 </div></section>
