@@ -209,6 +209,11 @@ table.ba th[scope=row]{font:600 13px/1.4 var(--sans);letter-spacing:.06em;text-t
 .book{border-top:1px solid var(--line);margin-top:56px;padding-top:36px;display:grid;gap:24px}
 .book-text{max-width:62ch;font-size:17px;line-height:1.6}
 .book-copy{display:grid;gap:12px}
+.paths{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
+.path{display:flex;flex-direction:column;gap:12px;border:1px solid var(--line);border-radius:12px;padding:24px}
+.path h4{font:600 18px/1.3 var(--sans);margin:0}
+.path p{font-size:16px;line-height:1.6;color:var(--ink-soft);margin:0}
+.path .row{margin-top:auto}
 .book-data{font-size:14px;color:var(--ink-soft)}
 .book-data a{color:var(--accent)}
 .site-header .btn{margin-left:auto;padding:10px 16px;font-size:15px;white-space:nowrap}
@@ -370,7 +375,7 @@ table.ba th[scope=row]{font:600 13px/1.4 var(--sans);letter-spacing:.06em;text-t
 .exp-min{display:none}
 @media (max-width:760px){
   section{padding-block:64px}
-  .steps,.pick,.raw,.board,.ways,.cfo-cmp,.cfo-nums{grid-template-columns:1fr}
+  .steps,.pick,.raw,.board,.ways,.paths,.cfo-cmp,.cfo-nums{grid-template-columns:1fr}
   .hero-grid{grid-template-columns:1fr;gap:40px}
   .cfo-block{padding:22px}
   .brief{grid-template-columns:1fr}
@@ -489,10 +494,23 @@ img.photo{object-fit:cover;width:160px;height:160px}
     </div>
   </div>
   <div class="book" id="offer">
-    <h3>What happens when you book.</h3>
-    <div class="book-copy"><p class="book-text">We talk for 30 minutes about the number you need to move and the data you already have. If it's a fit, I run Structural Content on that data with you, and within a week you see your first campaigns, free. If they're worth making, you can start with a monthly subscription.</p>
-    <p class="book-data">Your data stays in the EU, under our data processing agreement. <a href="trust.html">How we handle your data →</a></p></div>
-    <div class="row"><a class="btn" href="https://calendar.app.google/uPeQFcDajNFzsZJYA" target="_blank" rel="noopener">Book a 30-minute call</a></div>
+    <h3>How to get started.</h3>
+    <div class="paths">
+      <div class="path">
+        <h4>Try it in Slack.</h4>
+        <p>A test workspace with a made-up company modelled on yours, with its calls, CRM and traffic. Ask it what you'd ask about your own number. Nothing to install, and none of your data involved. Ready within one or two working days.</p>
+        <div class="row"><a class="btn ghost" href="mailto:sebastian@structuralcontent.com?subject=Test%20workspace%20request&amp;body=Hi%20Sebastian%2C%20I%27d%20like%20a%20Structural%20Content%20test%20workspace.%0A%0ACompany%3A%20%0AMy%20role%3A%20%0AThe%20number%20I%27d%20want%20to%20move%3A%20">Request a test workspace</a></div>
+      </div>
+      <div class="path">
+        <h4>Or talk it through.</h4>
+        <p>We talk for 30 minutes about the number you need to move and the data you already have.</p>
+        <div class="row"><a class="btn" href="https://calendar.app.google/uPeQFcDajNFzsZJYA" target="_blank" rel="noopener">Book a 30-minute call</a></div>
+      </div>
+    </div>
+    <div class="book-copy">
+      <p class="book-text"><b>From there to a subscription.</b> If it's a fit, I run Structural Content on your own data with you, and within a week you see your first campaigns, free. If they're worth making, you start with a monthly subscription. The price is value-based: set by what the number you're moving is worth to you, and the teams and markets it covers.</p>
+      <p class="book-data">Your data stays in the EU, under our data processing agreement. <a href="trust.html">How we handle your data →</a></p>
+    </div>
   </div>
 </div></section>
 
