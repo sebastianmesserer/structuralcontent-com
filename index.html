@@ -207,10 +207,10 @@ table.ba th[scope=row]{font:600 13px/1.4 var(--sans);letter-spacing:.06em;text-t
 .cfo-nums .moved b{color:var(--accent)}
 .cfo-nums span:not(.label){font-size:15px}
 .book{border-top:1px solid var(--line);margin-top:56px;padding-top:36px;display:grid;gap:24px}
-.book-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
-.book-steps div{display:grid;gap:6px;align-content:start}
-.book-steps .label{color:var(--accent)}
-.book-steps p{font-size:15px;color:var(--ink-soft)}
+.book-text{max-width:62ch;font-size:17px;line-height:1.6}
+.book-copy{display:grid;gap:12px}
+.book-data{font-size:14px;color:var(--ink-soft)}
+.book-data a{color:var(--accent)}
 .site-header .btn{margin-left:auto;padding:10px 16px;font-size:15px;white-space:nowrap}
 /* hero: text left, the product's flow right */
 .hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:56px;align-items:center}
@@ -370,7 +370,7 @@ table.ba th[scope=row]{font:600 13px/1.4 var(--sans);letter-spacing:.06em;text-t
 .exp-min{display:none}
 @media (max-width:760px){
   section{padding-block:64px}
-  .steps,.pick,.raw,.board,.ways,.book-steps,.cfo-cmp,.cfo-nums{grid-template-columns:1fr}
+  .steps,.pick,.raw,.board,.ways,.cfo-cmp,.cfo-nums{grid-template-columns:1fr}
   .hero-grid{grid-template-columns:1fr;gap:40px}
   .cfo-block{padding:22px}
   .brief{grid-template-columns:1fr}
@@ -482,7 +482,7 @@ img.photo{object-fit:cover;width:160px;height:160px}
       <h2>Built on what worked at Amazon.</h2>
       <p class="lede">Hi, I'm Sebastian, a content strategist in Berlin. For more than ten years I've made content that gets people to act, for brands like Amazon, Adobe, Allianz and Corning: international campaigns, measurement frameworks, multi-million-euro video budgets, and award-winning work.</p>
       <p class="lede">Most recently, at Amazon, I led B2B content strategy for Germany, the UK and Ireland, and ran the international channel strategy for Amazon Logistics' delivery partners. There I built AI-driven planning systems that scaled across 13 markets and more than doubled conversion on the actions they targeted. They started from what Amazon needed its partners to do, and found what was stopping them in Amazon's own data.</p>
-      <p class="lede">Structural Content is a new, much better version of that approach, built from scratch for B2B marketing teams. When you ask for the free briefs, I make them with you, using the software. After that, Structural Content runs on its own, and you still have me to talk to.</p>
+      <p class="lede">Structural Content is a new, much better version of that approach, built from scratch for B2B marketing teams. When you book, I make your first campaigns with you, using the software. After that, Structural Content runs on its own, and you still have me to talk to.</p>
       <p class="label" style="letter-spacing:.06em">Worked with Amazon · Adobe · Allianz · Corning</p>
       <p><a href="https://sebastianmesserer.com/essays/structural-content/" style="color:var(--accent);font-weight:600">Read the founding essay, as featured in TLDR Marketing →</a></p>
       <a href="https://www.linkedin.com/in/sebastianmesserer" target="_blank" rel="noopener" style="color:var(--accent);font-weight:600">Connect with me on LinkedIn →</a>
@@ -490,11 +490,8 @@ img.photo{object-fit:cover;width:160px;height:160px}
   </div>
   <div class="book" id="offer">
     <h3>What happens when you book.</h3>
-    <div class="book-steps">
-      <div><span class="label">1 · 30 minutes</span><p>A call with me about what your team is working on.</p></div>
-      <div><span class="label">2 · Free</span><p>Campaign briefs from your own data, within a week. Your data stays in the EU, under our data processing agreement. <a href="trust.html" style="color:var(--accent)">How we handle your data →</a></p></div>
-      <div><span class="label">3 · Paid</span><p>Then, if you want to continue: a monthly licence, priced for the teams and markets you use it for. Cancel any month.</p></div>
-    </div>
+    <div class="book-copy"><p class="book-text">We talk for 30 minutes about the number you need to move and the data you already have. If it's a fit, I run Structural Content on that data with you, and within a week you see your first campaigns, free. If they're worth making, you can start with a monthly subscription.</p>
+    <p class="book-data">Your data stays in the EU, under our data processing agreement. <a href="trust.html">How we handle your data →</a></p></div>
     <div class="row"><a class="btn" href="https://calendar.app.google/uPeQFcDajNFzsZJYA" target="_blank" rel="noopener">Book a 30-minute call</a></div>
   </div>
 </div></section>
@@ -504,7 +501,7 @@ img.photo{object-fit:cover;width:160px;height:160px}
   <h2 style="margin-bottom:16px">Fair questions</h2>
   <details><summary>Isn't this just an attribution tool?</summary><p>No. Attribution looks back at which content worked. Structural Content looks ahead: it finds what's stopping your buyers, tells you what to make about it, and then checks whether it moved your number.</p></details>
   <details><summary>Does this mean I stop doing what I do now?</summary><p>No. Same channels, same team, same tools. What changes is where your money goes. You keep the search terms and campaigns that bring in customers, add the ones only your buyers use, and stop spending time and money competing for terms that only bring in engagement that doesn't convert.</p></details>
-  <details><summary>Couldn't we build this ourselves? Isn't it just Gong with an LLM?</summary><p>You could try: drop your sales calls into an LLM and ask what's stopping your buyers. You'll get answers that sound good. Getting campaign briefs your team would use as they are is the hard part: connecting everything reliably, deep content strategy and AI engineering working together, months of work, and upkeep after that. Not convinced? The free briefs let you compare what Structural Content finds with what you could build yourself.</p></details>
+  <details><summary>Couldn't we build this ourselves? Isn't it just Gong with an LLM?</summary><p>You could try: drop your sales calls into an LLM and ask what's stopping your buyers. You'll get answers that sound good. Getting campaign briefs your team would use as they are is the hard part: connecting everything reliably, deep content strategy and AI engineering working together, months of work, and upkeep after that. Not convinced? Your first campaigns are free, so you can compare what Structural Content finds with what you could build yourself.</p></details>
   <details><summary>How is this different from hiring an agency?</summary><p>An agency works from what you hand them a few times a year. They're not in your calls or your CRM, so they guess what your buyers need, and plan for the clicks they can show you in a report. Structural Content reads every call, chat and deal, every week, and aims each campaign at a group counted in your own data. Your team or your agency still makes the pieces.</p></details>
   <details><summary>Isn't this just an SEO tool?</summary><p>SEO tools start from what everyone searches for, so you get the same list as your competitors. Structural Content starts from what's stopping your buyers, which only your data knows, then finds the searches that reach them.</p></details>
   <details><summary>Is it an AI writing tool?</summary><p>No, on purpose: there are plenty of good ones already. Structural Content gives you unusually rich briefs, so whoever makes your content, your AI tools, your agency, your team or a mix, knows exactly what to make and can make it fast.</p></details>
