@@ -409,8 +409,8 @@ img.photo{object-fit:cover;width:160px;height:160px}
 
 <!-- Try it (directly under the hero) -->
 <section id="demo"><div class="wrap stack" style="gap:24px">
-  <h2>Try it on your number.</h2>
-  <p class="lede">See Structural Content work through a company's own data, from the number you pick to the content worth making right now. It takes two minutes.</p>
+  <h2>See it work on an example.</h2>
+  <p class="lede">Watch Structural Content work through the data of CloudBox, a made-up company: pick one of its goals, and see the content worth making right now. It takes two minutes.</p>
   <div class="demo">
     <div class="demo-top"><span class="label">Example: CloudBox, online backup for businesses (fictional)</span><span class="prog" id="prog"></span></div>
     <div class="demo-body" id="demo-body" aria-live="polite"></div>
@@ -582,7 +582,7 @@ img.photo{object-fit:cover;width:160px;height:160px}
     next.textContent=step===3?"See the whole plan":step===4?"What's at stake?":"Next";
     let h="";
     if(step===1) h=`<p class="label" style="color:var(--accent)">${D.target}</p><h3>Here's what CloudBox already has.</h3><div class="raw">${RAW.map(r=>`<div class="rawc"><span class="s">${r[0]}</span><q>${esc(r[1])}</q></div>`).join('')}</div>`;
-    if(step===0) h=`<h3>Which number do you need to move?</h3><p class="muted">Everything you'll see is CloudBox's data, not yours.</p>
+    if(step===0) h=`<h3>Which goal should CloudBox reach?</h3><p class="muted">Everything you'll see is CloudBox's made-up data.</p>
       <div class="pick"><button data-num="Demo requests">Demo requests</button><button data-num="Trial sign-ups">Trial sign-ups</button><button data-num="Qualified pipeline">Qualified pipeline</button></div>`;
     if(step===2) h=`<h3>What Structural Content found.</h3><p class="muted">${esc(D.lead)}</p>
       <div class="groups">${GROUPS.map((g,i)=>`<div class="grp ${i===0?'top':''}"><h4>${esc(g.h)}</h4><span class="mv">${esc(g.big)}<small>${D.unit} at stake</small><small>likely to work: ${esc(g.level)}</small></span><p class="why">${esc(g.why)}</p><details class="maths"><summary>Show the maths</summary><ul class="lines">${g.lines.map(l=>`<li>${esc(l[0])}<small>${esc(l[1])}</small></li>`).join('')}<li class="eq">= ${esc(g.big)} ${D.unit}</li></ul><p><b>Likely to work, ${esc(g.level)}:</b> ${esc(g.reason)}</p></details></div>`).join('')}</div>`;
@@ -604,7 +604,7 @@ img.photo{object-fit:cover;width:160px;height:160px}
     if(step===5) h=`<div class="bring"><span class="label">What's at stake?</span><p class="lede"><b>${esc(D.bring_big)}</b></p><ul class="stakes">${D.stakes.map(s=>`<li><span><b>${s[0]}</b> ${esc(s[1])}</span><span class="stake">${esc(s[2])}<small>${D.unit} at stake</small><small>likely to work: ${esc(s[3])}</small></span></li>`).join('')}</ul>
       <p class="lede"><b>Combined:</b> ${esc(D.combined)}</p></div>`;
     if(step===6) h=`<div class="close-demo"><h3>This was CloudBox's data. Try it on a company like yours, in Slack.</h3>
-      <div class="row" style="align-items:center;gap:20px"><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form?prefill_Data%20sources=Sales%20or%20demo%20call%20recordings%2CSupport%20tickets%20or%20live%20chat%2CProduct%20usage%20data%2CCustomer%20reviews%2CCustomer%20surveys%2CPaid%20ads%2CEmail%20marketing" target="_blank" rel="noopener">Try it in Slack</a><button class="btn ghost" data-restart>Try another number</button><a href="https://calendar.app.google/uPeQFcDajNFzsZJYA" target="_blank" rel="noopener" style="color:var(--accent);font-weight:600">or book a 30-minute call</a></div></div>`;
+      <div class="row" style="align-items:center;gap:20px"><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form?prefill_Data%20sources=Sales%20or%20demo%20call%20recordings%2CSupport%20tickets%20or%20live%20chat%2CProduct%20usage%20data%2CCustomer%20reviews%2CCustomer%20surveys%2CPaid%20ads%2CEmail%20marketing" target="_blank" rel="noopener">Try it in Slack</a><button class="btn ghost" data-restart>Try another goal</button><a href="https://calendar.app.google/uPeQFcDajNFzsZJYA" target="_blank" rel="noopener" style="color:var(--accent);font-weight:600">or book a 30-minute call</a></div></div>`;
     body.innerHTML=h;
   }
   body.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)return;
