@@ -152,6 +152,8 @@ p{margin:0}
 /* hero */
 .hero{padding-block:96px 72px}
 .hero .hl{color:var(--accent)}
+.hero .cyc{display:block;white-space:nowrap;transition:opacity .25s,transform .25s}
+.hero .cyc.out{opacity:0;transform:translateY(6px)}
 .hero .not{color:var(--muted)}
 
 /* before/after */
@@ -410,7 +412,7 @@ img.photo{object-fit:cover;width:160px;height:160px}
 <section class="hero"><div class="wrap hero-grid">
   <div class="stack" style="gap:24px">
   <span class="eyebrow">Content strategy software for B2B marketing teams</span>
-  <h1>Content that moves <span class="hl">the business.</span></h1>
+  <h1 aria-label="Content that moves the business.">Content that moves <span class="hl cyc" aria-hidden="true">the business.</span></h1>
   <p class="lede">Name what you need people to do, like book a demo. See what stops them in your own data, and the marketing campaigns that fix it.</p>
   <div class="row"><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form?prefill_Data%20sources=Sales%20or%20demo%20call%20recordings%2CSupport%20tickets%20or%20live%20chat%2CProduct%20usage%20data%2CCustomer%20reviews%2CCustomer%20surveys%2CPaid%20ads%2CEmail%20marketing" target="_blank" rel="noopener">Try it in Slack</a><a class="btn ghost" href="https://calendar.app.google/uPeQFcDajNFzsZJYA" target="_blank" rel="noopener">Book a 30-minute call</a></div>
   <p class="muted" style="font-size:14px">Built by Sebastian Messerer, ex-Amazon Senior Content Strategist, who scaled an AI-driven content system across 13 countries.</p>
@@ -534,6 +536,14 @@ img.photo{object-fit:cover;width:160px;height:160px}
 </div></footer>
 <script>
 (function(){
+  /* headline: one pass through lifecycle events, under 5 s, landing on "the business." */
+  const cyc=document.querySelector('.hero .cyc');
+  if(cyc&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+    const words=['demo requests.','trial sign-ups.','upgrades.','renewals.','the business.'];
+    let i=0; cyc.textContent=words[0];
+    const step=()=>{if(++i>=words.length)return;cyc.classList.add('out');setTimeout(()=>{cyc.textContent=words[i];cyc.classList.remove('out');setTimeout(step,850)},250)};
+    setTimeout(step,850);
+  }
   /* hero click-through: pause control (WCAG 2.2.2) */
   const slack=document.querySelector('.slack'), fp=document.getElementById('fp'), fr=document.querySelector('.freplay');
   const clearStill=()=>slack.classList.remove('still','still-0','still-1','still-2','still-3');
