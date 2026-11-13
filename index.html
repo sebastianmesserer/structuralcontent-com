@@ -219,7 +219,6 @@ table.ba th[scope=row]{font:600 13px/1.4 var(--sans);letter-spacing:.06em;text-t
 .hero-text{align-items:center;text-align:center;max-width:760px}
 .hero-text .lede{margin-inline:auto}
 .hero-text .row{justify-content:center}
-.hero .slack{width:100%;max-width:880px}
 
 .hero h1{font-size:clamp(38px,5.6vw,68px)}
 .slack{container:slack/inline-size;overflow:hidden;background:#1A1D21;color:#D1D2D3;border-radius:14px;padding:20px 22px 16px;font-size:15px;line-height:1.5;box-shadow:0 8px 24px rgba(0,0,0,.12)}
@@ -406,6 +405,23 @@ table.ba th[scope=row]{font:600 13px/1.4 var(--sans);letter-spacing:.06em;text-t
 .site-footer a{color:var(--muted);text-decoration:none}
 .site-footer a:hover{color:var(--accent)}
 img.photo{object-fit:cover;width:160px;height:160px}
+.rank{width:100%;max-width:880px;border:1px solid var(--line-strong);border-radius:16px;background:var(--bg);box-shadow:0 8px 28px rgba(0,0,0,.08);overflow:hidden;text-align:left}
+.rank-top{display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:space-between;align-items:center;padding:16px 22px;background:var(--grey-soft);border-bottom:1px solid var(--line);font-size:15px}
+.rank-row{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:16px;align-items:start;padding:18px 22px;border-bottom:1px solid var(--line)}
+.rank-row.top{background:var(--accent-soft)}
+.rank-row .n{font:500 22px/1 var(--serif);color:var(--muted);width:20px}
+.rank-row.top .n{color:var(--accent)}
+.rank-row>div:nth-child(2){display:grid;gap:3px;font-size:15px}
+.rank-row>div:nth-child(2) span{color:var(--ink-soft)}
+.rank-row .camp{color:var(--accent)!important;font-weight:600}
+.rank-row .amt{text-align:right;font-size:13px;color:var(--muted);white-space:nowrap}
+.rank-row .amt b{display:block;font:500 28px/1.1 var(--serif);color:var(--ink)}
+.rank-row.top .amt b{color:var(--accent)}
+.rank-row .amt small{display:block;font-size:12px}
+.rank-foot{padding:14px 22px;font-size:13.5px;color:var(--muted)}
+#in-slack .slack{width:100%;max-width:880px;text-align:left}
+@media (max-width:600px){.rank-row{grid-template-columns:auto minmax(0,1fr);padding:16px}.rank-row .amt{grid-column:2;text-align:left}.rank-row .amt b{display:inline;font-size:24px}.rank-top,.rank-foot{padding-inline:16px}}
+
 </style>
 </head>
 <body>
@@ -415,14 +431,25 @@ img.photo{object-fit:cover;width:160px;height:160px}
 <main>
 <!-- 1. Hero -->
 <section class="hero"><div class="wrap hero-grid">
-  <div class="stack hero-text" style="gap:24px">
-  <span class="eyebrow">Content strategy software for B2B marketing teams</span>
-  <h1 aria-label="Content that moves the business.">Content that moves <span class="hl cyc" aria-hidden="true">the business.</span></h1>
-  <p class="lede">Name what you need people to do, like book a demo. See what stops them in your own data, and the marketing campaigns that fix it.</p>
+  <div class="stack hero-text" style="gap:22px">
+  <span class="eyebrow">For B2B marketing leaders</span>
+  <h1>The campaigns that will <span class="hl">move your pipeline.</span></h1>
+  <p class="lede">Structural Content finds the buyers who stall before they become pipeline, in your CRM and sales calls, and ranks the content that gets them moving by the revenue at stake.</p>
   <div class="row"><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form?prefill_Data%20sources=Sales%20or%20demo%20call%20recordings%2CSupport%20tickets%20or%20live%20chat%2CProduct%20usage%20data%2CCustomer%20reviews%2CCustomer%20surveys%2CPaid%20ads%2CEmail%20marketing" target="_blank" rel="noopener">Try it in Slack</a><a class="btn ghost" href="https://calendar.app.google/uPeQFcDajNFzsZJYA" target="_blank" rel="noopener">Book a 30-minute call</a></div>
-  <p class="muted" style="font-size:14px">Built by Sebastian Messerer, ex-Amazon Senior Content Strategist, who scaled an AI-driven content system across 13 countries.</p>
-  <p class="muted" style="font-size:12px;letter-spacing:.04em;opacity:.75">NVIDIA Inception &middot; AWS Activate</p>
   </div>
+  <div class="rank" role="img" aria-label="Example, CloudBox, a fictional company. Goal: 300 more demo requests in 2027. Three campaigns ranked by new revenue at stake: enterprise prospects who can't see how it works across offices, up to 4.1 million dollars; IT admins who can't find how to recover from a hack, up to 535 thousand; switchers who fear losing files, up to 394 thousand.">
+    <div class="rank-top"><span><b>Goal:</b> 300 more demo requests in 2027</span><span class="label">Example: CloudBox (fictional)</span></div>
+    <div class="rank-row top"><span class="n">1</span><div><b>1,630 enterprise prospects visit and never book.</b><span>They can't see how it would work across 12 offices.</span><span class="camp">→ Enterprise page and rollout story</span></div><div class="amt">up to <b>$4.1M</b><small>new ARR at stake</small></div></div>
+    <div class="rank-row"><span class="n">2</span><div><b>IT admins can't find how to recover from a hack.</b><span>It's the first question in support chats.</span><span class="camp">→ A recovery guide, answered up front</span></div><div class="amt">up to <b>$535k</b></div></div>
+    <div class="rank-row"><span class="n">3</span><div><b>Switchers fear losing their files.</b><span>It stalls deals in late-stage sales calls.</span><span class="camp">→ How switching works, step by step</span></div><div class="amt">up to <b>$394k</b></div></div>
+    <div class="rank-foot">Ranked from the CRM, sales calls and support chats. Each campaign arrives in your board as a ready brief.</div>
+  </div>
+</div></section>
+
+<!-- In Slack and Jira -->
+<section id="in-slack"><div class="wrap stack" style="gap:28px;align-items:center;text-align:center">
+  <h2>Ask in Slack. Get the campaigns in Jira.</h2>
+  <p class="lede" style="margin-inline:auto">Your team names the goal, Structural Content plans, and every campaign lands on your board with what's at stake and who it's for.</p>
   <div class="slack"><div class="ex-note" aria-hidden="true">Example: CloudBox, a fictional company</div><div class="flow" role="img" aria-label="Example, CloudBox, a fictional company. In Slack, Sam asks Structural Content how marketing can help reach a goal of 300 more demo requests. Structural Content suggests three campaigns, ranked by what is at stake. Sam gives the first, up to $4.1M at stake, to Jennifer, who opens the brief in Jira and asks Jon in design, in a comment, to start on the assets."><div class="sc sA"><div class="top"># marketing</div><div class="msg "><div class="av" style="background:#B9855C">S</div><div><div><b>Sam</b> <span class="meta">Head of Marketing</span></div><div><span class="lnk">@SC</span> Our 2027 goal is 300 more demo requests. How can marketing help?</div></div></div><div class="msg"><div class="av" style="background:#1F5E55">SC</div><div><div><b>SC</b> <span class="meta">APP</span></div><div class="swap"><div class="wk"><div>🎯 <b>Reading the priority…</b></div><i>Finding who has to act for it to move</i><i>Finding what stops them</i><i>Ranking by what's at stake, and how likely each campaign is to work</i></div><div class="a2"><div>I see these campaigns:</div><div><b>1.</b> Enterprise prospects leave without booking a demo → show how it works across offices · <b>up to $4.1M new ARR at stake</b> · likely to work: high</div><div><b>2.</b> People can't find how to recover from a hack → answer it · up to $535k · high</div><div><b>3.</b> Switchers fear losing files → show how switching works · up to $394k · medium</div></div></div></div></div><div class="msg a3"><div class="av" style="background:#B9855C">S</div><div><div><b>Sam</b> <span class="meta"></span></div><div>Jennifer takes 1</div></div></div></div><div class="sc sB"><div class="top">Direct message · Jennifer</div><div class="msg "><div class="av" style="background:#1F5E55">SC</div><div><div><b>SC</b> <span class="meta">APP</span></div><div>Hey Jennifer – Sam gave you a new campaign: <b>show enterprise buyers how it works across offices.</b></div><div><span class="tg pkB lnk" style="font-weight:600;padding:2px 4px">Open in Jira →<svg class="cur kB" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2l7 19 2.5-7.5L20 11z" fill="#fff" stroke="#111" stroke-width="1.5" stroke-linejoin="round"/></svg></span></div></div></div></div><div class="sc sC"><div class="top">Jira · Campaigns</div><div class="jcols"><div class="jcol"><span>TO DO</span><div class="jcard new tg pkC" style="display:block">Enterprise page<small>New · Jennifer</small><span class="stk">up to $4.1M at stake</span><svg class="cur kC" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2l7 19 2.5-7.5L20 11z" fill="#fff" stroke="#111" stroke-width="1.5" stroke-linejoin="round"/></svg></div><div class="jcard">Recovering from a hack<small>Unassigned</small><span class="stk">up to $535k at stake</span></div></div><div class="jcol"><span>IN PROGRESS</span><div class="jcard">Pricing page<small>Jon</small></div></div></div></div><div class="sc sD"><div class="top jtop"><span>Campaigns</span> / <span class="jkey">CAM-12</span></div><div class="jtitle">Enterprise page</div><div class="jmeta"><span class="jstat">TO DO</span><span>Assignee <b>Jennifer</b></span></div><div class="jsec">Description</div><div class="brief-lines"><div><b>At stake:</b> up to $4.1M new ARR · likely to work: high</div><div><b>Who:</b> 1,630 companies with 1,000+ staff that visited and never booked a demo.</div><div><b>Why they stop:</b> they can't see how it works across 12 offices.</div><div><b>Make:</b> an enterprise page, with a rollout diagram.</div><div><b>Promote:</b> search ads on "backup for many offices".</div><div><b>Measured by:</b> demo requests from those companies, month by month.</div></div><div class="jsec">Comments</div><span class="tg pkD jbox">Add a comment…<svg class="cur kD" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2l7 19 2.5-7.5L20 11z" fill="#fff" stroke="#111" stroke-width="1.5" stroke-linejoin="round"/></svg></span><div class="jcom d2"><div class="jav" style="background:#6C7FB0">J</div><div><div><b>Jennifer</b> <span class="meta">just now</span></div><div><span class="lnk">@Jon</span> could you start on the assets for this one?</div></div></div><div class="jcom d3"><div class="jav" style="background:#8A6FA8">Jo</div><div><div><b>Jon</b> <span class="meta">just now</span></div><div>On it. Drafts by Thursday.</div></div></div></div></div><div class="fbar"><div class="fsteps"><button type="button" class="L0" data-s="0">1 The plan</button><button type="button" class="L1" data-s="1">2 Jennifer's message</button><button type="button" class="L2" data-s="2">3 Jira</button><button type="button" class="L3" data-s="3">4 The brief</button></div><span class="fbtns"><button class="freplay fpause" type="button">Replay</button><button class="fpause" id="fp" type="button">Pause</button></span></div></div>
 </div></section>
 
