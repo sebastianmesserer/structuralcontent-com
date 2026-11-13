@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Structural Content – Content that moves the business</title>
-  <meta name="description" content="Content strategy software for B2B marketing teams. Content that moves the business, not just engagement." />
+  <meta name="description" content="Content strategy software for B2B marketing teams. Every campaign aimed at the people your goal depends on, ranked by what it's worth to the goal." />
   <meta name="author" content="Sebastian Messerer" />
   <meta name="theme-color" content="#FFFFFF" />
   <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -17,7 +17,7 @@
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Structural Content" />
-  <meta property="og:description" content="Content strategy software for B2B marketing teams. Content that moves the business, not just engagement." />
+  <meta property="og:description" content="Content strategy software for B2B marketing teams. Every campaign aimed at the people your goal depends on, ranked by what it's worth to the goal." />
   <meta property="og:url" content="https://structuralcontent.com/" />
   <meta property="og:site_name" content="Structural Content" />
   <meta property="og:image" content="https://structuralcontent.com/Media/logo/sc-linkedin-800.png" />
@@ -26,7 +26,7 @@
   <meta property="og:image:alt" content="Structural Content" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Structural Content" />
-  <meta name="twitter:description" content="Content strategy software for B2B marketing teams. Content that moves the business, not just engagement." />
+  <meta name="twitter:description" content="Content strategy software for B2B marketing teams. Every campaign aimed at the people your goal depends on, ranked by what it's worth to the goal." />
   <meta name="twitter:image" content="https://structuralcontent.com/Media/logo/sc-linkedin-800.png" />
 
   <!-- Organization structured data -->
@@ -41,7 +41,7 @@
     "url": "https://structuralcontent.com/",
     "logo": "https://structuralcontent.com/Media/logo/sc-linkedin-800.png",
     "image": "https://structuralcontent.com/Media/logo/sc-linkedin-800.png",
-    "description": "Content strategy software for B2B marketing teams. Content that moves the business, not just engagement.",
+    "description": "Content strategy software for B2B marketing teams. Every campaign aimed at the people your goal depends on, ranked by what it's worth to the goal.",
     "email": "sebastian@structuralcontent.com",
     "address": {
       "@type": "PostalAddress",
@@ -79,7 +79,7 @@
     "@id": "https://structuralcontent.com/#website",
     "name": "Structural Content",
     "url": "https://structuralcontent.com/",
-    "description": "Content strategy software for B2B marketing teams. Content that moves the business, not just engagement.",
+    "description": "Content strategy software for B2B marketing teams. Every campaign aimed at the people your goal depends on, ranked by what it's worth to the goal.",
     "publisher": { "@id": "https://structuralcontent.com/#organization" },
     "inLanguage": "en"
   }
@@ -152,6 +152,8 @@ p{margin:0}
 /* hero */
 .hero{padding-block:96px 72px}
 .hero .hl{color:var(--accent)}
+.hero .cyc{display:block;white-space:nowrap;min-height:1.1em;transition:opacity .25s,transform .25s}
+.hero .cyc.out{opacity:0;transform:translateY(6px)}
 .hero .not{color:var(--muted)}
 
 /* before/after */
@@ -206,6 +208,11 @@ table.ba th[scope=row]{font:600 13px/1.4 var(--sans);letter-spacing:.06em;text-t
 .cfo-nums b{display:block;font:500 clamp(26px,2.6vw,34px)/1.1 var(--serif);color:var(--ink)}
 .cfo-nums .moved b{color:var(--accent)}
 .cfo-nums span:not(.label){font-size:15px}
+.start3{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.start3 li{border:1px solid var(--line-strong);border-radius:12px;padding:18px;display:grid;gap:6px;align-content:start;font-size:15px}
+.start3 li b{font-size:17px}
+.start3 li span:not(.label){color:var(--ink-soft)}
+@media (max-width:760px){.start3{grid-template-columns:1fr}}
 .book{border-top:1px solid var(--line);margin-top:56px;padding-top:36px;display:grid;gap:24px}
 .book-text{max-width:62ch;font-size:17px;line-height:1.6}
 .book-copy{display:grid;gap:12px}
@@ -213,8 +220,14 @@ table.ba th[scope=row]{font:600 13px/1.4 var(--sans);letter-spacing:.06em;text-t
 .book-data a{color:var(--accent)}
 .site-header .btn{margin-left:auto;padding:10px 16px;font-size:15px;white-space:nowrap}
 /* hero: text left, the product's flow right */
-.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:56px;align-items:center}
-.hero h1{font-size:clamp(36px,4.8vw,54px)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:56px;justify-items:center}
+.hero-text{align-items:center;text-align:center;max-width:980px}
+.hero-text .lede{max-width:62ch}
+.hero-text .lede{margin-inline:auto}
+.hero-text .row{justify-content:center}
+
+.hero h1{font-size:clamp(30px,5.6vw,68px)}
+@media (max-width:480px){.hero h1{font-size:29px}}
 .slack{container:slack/inline-size;overflow:hidden;background:#1A1D21;color:#D1D2D3;border-radius:14px;padding:20px 22px 16px;font-size:15px;line-height:1.5;box-shadow:0 8px 24px rgba(0,0,0,.12)}
 .slack .ex-note{text-align:right;color:#A0A1A3;font-size:12.5px;margin-bottom:8px}
 .slack b{color:#F8F8F8}
@@ -240,6 +253,11 @@ table.ba th[scope=row]{font:600 13px/1.4 var(--sans);letter-spacing:.06em;text-t
 .jstat{background:#3A3E43;color:#E8E8E8;font-size:11px;font-weight:700;letter-spacing:.05em;padding:2px 6px;border-radius:3px}
 .jsec{color:#E8E8E8;font-weight:600;font-size:13px;margin-bottom:-6px}
 .sD .brief-lines{font-size:13.5px;gap:5px}
+.jbody,.jl,.jr{display:flex;flex-direction:column;gap:14px}
+@container slack (min-width:640px){.jbody{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:28px}}
+.conn{display:inline-flex;align-items:center;gap:8px;width:fit-content;border:1px solid #3A3E43;border-radius:999px;padding:3px 10px 3px 4px;font-size:12.5px;color:#BDBEC0}
+.conn .cdot{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#1F5E55;color:#F7F5F0;font-size:9.5px;font-weight:700}
+.unf{border-left:3px solid #4FB3E8;padding:4px 0 4px 12px;display:grid;gap:3px;font-size:13.5px;color:#BDBEC0;margin-top:4px}
 .jbox{border:1px solid #3A3E43;padding:7px 10px;color:#8E9093;font-size:13px}
 .jbox .cur{right:auto;left:72px}
 .jcom{display:flex;gap:10px;font-size:13.5px}.jcom>div:last-child{min-width:0;display:grid;gap:3px}
@@ -247,7 +265,19 @@ table.ba th[scope=row]{font:600 13px/1.4 var(--sans);letter-spacing:.06em;text-t
 .tg{position:relative;display:inline-block;border-radius:6px}
 .cur{position:absolute;right:-14px;bottom:-18px;width:22px;height:22px;opacity:0;pointer-events:none}
 .fsteps{display:flex;gap:4px;flex-wrap:wrap;margin-top:12px;font-size:12px;font-weight:600;letter-spacing:.03em}
-.fsteps span{padding:3px 7px;border-bottom:2px solid transparent;color:#8E9093}
+.fsteps button{font:inherit;letter-spacing:inherit;background:none;border:0;border-bottom:2px solid transparent;padding:3px 7px;color:#8E9093;cursor:pointer}
+.fsteps button:hover{color:#F8F8F8}
+.swap{display:grid}.swap>div{grid-area:1/1}
+.wk{display:grid;gap:3px;align-content:start;opacity:0;animation:wk 30s infinite}.wk i{color:#BDBEC0}
+.stk{display:block;margin-top:4px;color:#7CC4A8;font-size:12px;font-weight:600}
+@keyframes wk{0%,2%{opacity:0}3%,10%{opacity:1}11%,100%{opacity:0}}
+.slack.still *{animation:none!important}
+.slack.still .sc{opacity:0;visibility:hidden}
+.slack.still-0 .sA,.slack.still-1 .sB,.slack.still-2 .sC,.slack.still-3 .sD{opacity:1;visibility:visible}
+.slack.still .a2,.slack.still .a3,.slack.still .d2,.slack.still .d3{opacity:1;transform:none}
+.slack.still .wk{opacity:0}
+.slack.still .fsteps button{color:#8E9093;border-color:transparent}
+.slack.still-0 .L0,.slack.still-1 .L1,.slack.still-2 .L2,.slack.still-3 .L3{color:#F8F8F8;border-color:#4FB3E8}
 .fbar{display:flex;justify-content:space-between;align-items:flex-end;gap:8px}
 .fpause{flex:none;margin-top:12px;font:600 12px var(--sans);color:#D1D2D3;background:transparent;border:1px solid #3A3E43;border-radius:6px;padding:4px 10px;cursor:pointer}
 .slack.paused *{animation-play-state:paused!important}
@@ -258,8 +288,8 @@ table.ba th[scope=row]{font:600 13px/1.4 var(--sans);letter-spacing:.06em;text-t
 @keyframes sB{0%,29%{opacity:0;visibility:hidden}30%,46%{opacity:1;visibility:visible}47%,100%{opacity:0;visibility:hidden}}.sB{opacity:0;visibility:hidden;animation:sB 30s infinite}
 @keyframes sC{0%,46%{opacity:0;visibility:hidden}47%,61%{opacity:1;visibility:visible}62%,100%{opacity:0;visibility:hidden}}.sC{opacity:0;visibility:hidden;animation:sC 30s infinite}
 @keyframes sD{0%,61%{opacity:0;visibility:hidden}62%,98%{opacity:1;visibility:visible}99%,100%{opacity:0;visibility:hidden}}.sD{opacity:0;visibility:hidden;animation:sD 30s infinite}
-@keyframes a2{0%,4%{opacity:0;transform:translateY(8px)}6%,100%{opacity:1;transform:none}}.a2{opacity:0;animation:a2 30s infinite}
-@keyframes a3{0%,18%{opacity:0;transform:translateY(8px)}20%,100%{opacity:1;transform:none}}.a3{opacity:0;animation:a3 30s infinite}
+@keyframes a2{0%,10%{opacity:0;transform:translateY(8px)}12%,100%{opacity:1;transform:none}}.a2{opacity:0;animation:a2 30s infinite}
+@keyframes a3{0%,22%{opacity:0;transform:translateY(8px)}24%,100%{opacity:1;transform:none}}.a3{opacity:0;animation:a3 30s infinite}
 @keyframes d2{0%,73%{opacity:0;transform:translateY(8px)}75%,100%{opacity:1;transform:none}}.d2{opacity:0;animation:d2 30s infinite}
 @keyframes d3{0%,86%{opacity:0;transform:translateY(8px)}88%,100%{opacity:1;transform:none}}.d3{opacity:0;animation:d3 30s infinite}
 @keyframes kB{0%,37%{opacity:0;transform:translate(70px,60px)}38%{opacity:1;transform:translate(70px,60px)}42%{opacity:1;transform:translate(0,0) scale(1)}43%{opacity:1;transform:translate(0,0) scale(.8)}44%{opacity:1;transform:translate(0,0) scale(1)}46%,100%{opacity:0;transform:translate(0,0)}}.kB{animation:kB 30s infinite}
@@ -272,7 +302,7 @@ table.ba th[scope=row]{font:600 13px/1.4 var(--sans);letter-spacing:.06em;text-t
 @keyframes L1{0%,29%{color:#8E9093;border-color:transparent}30%,46%{color:#F8F8F8;border-color:#4FB3E8}47%,100%{color:#8E9093;border-color:transparent}}.L1{animation:L1 30s infinite}
 @keyframes L2{0%,46%{color:#8E9093;border-color:transparent}47%,61%{color:#F8F8F8;border-color:#4FB3E8}62%,100%{color:#8E9093;border-color:transparent}}.L2{animation:L2 30s infinite}
 @keyframes L3{0%,61%{color:#8E9093;border-color:transparent}62%,98%{color:#F8F8F8;border-color:#4FB3E8}99%,100%{color:#8E9093;border-color:transparent}}.L3{animation:L3 30s infinite}
-@media (prefers-reduced-motion:reduce){.sA,.sB,.sC,.sD,.a2,.a3,.d2,.d3,.kB,.kC,.kD,.pkB,.pkC,.pkD,.L0,.L1,.L2,.L3{animation:none}.a2,.a3{opacity:1}.fsteps .L0{color:#F8F8F8;border-color:#4FB3E8}.fpause{display:none}}
+@media (prefers-reduced-motion:reduce){.sA,.sB,.sC,.sD,.a2,.a3,.d2,.d3,.kB,.kC,.kD,.pkB,.pkC,.pkD,.L0,.L1,.L2,.L3,.wk{animation:none}.a2,.a3,.d2,.d3{opacity:1;transform:none}.fsteps .L0{color:#F8F8F8;border-color:#4FB3E8}.fpause{display:none}}
 
 /* demo */
 .demo{border:1px solid var(--line-strong);border-radius:16px;overflow:hidden;background:var(--bg)}
@@ -387,24 +417,52 @@ table.ba th[scope=row]{font:600 13px/1.4 var(--sans);letter-spacing:.06em;text-t
 .site-footer a{color:var(--muted);text-decoration:none}
 .site-footer a:hover{color:var(--accent)}
 img.photo{object-fit:cover;width:160px;height:160px}
+.rank{width:100%;max-width:880px;border:1px solid var(--line-strong);border-radius:16px;background:var(--bg);box-shadow:0 8px 28px rgba(0,0,0,.08);overflow:hidden;text-align:left}
+.rank-top{display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:space-between;align-items:center;padding:16px 22px;background:var(--grey-soft);border-bottom:1px solid var(--line);font-size:15px}
+.rank-row{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:16px;align-items:start;padding:18px 22px;border-bottom:1px solid var(--line)}
+.rank-row.top{background:var(--accent-soft)}
+.rank-row .n{font:500 22px/1 var(--serif);color:var(--muted);width:20px}
+.rank-row.top .n{color:var(--accent)}
+.rank-row>div:nth-child(2){display:grid;gap:3px;font-size:15px}
+.rank-row>div:nth-child(2) span{color:var(--ink-soft)}
+.rank-row .camp{color:var(--accent)!important;font-weight:600}
+.rank-row .amt{text-align:right;font-size:13px;color:var(--muted);white-space:nowrap}
+.rank-row .amt b{display:block;font:500 28px/1.1 var(--serif);color:var(--ink)}
+.rank-row.top .amt b{color:var(--accent)}
+.rank-row .amt small{display:block;font-size:12px}
+.rank-foot{padding:14px 22px;font-size:13.5px;color:var(--muted)}
+#in-slack .slack{width:100%;max-width:880px;text-align:left}
+@media (max-width:600px){.rank-row{grid-template-columns:auto minmax(0,1fr);padding:16px}.rank-row .amt{grid-column:2;text-align:left}.rank-row .amt b{display:inline;font-size:24px}.rank-top,.rank-foot{padding-inline:16px}}
+
 </style>
 </head>
 <body>
-<header class="site-header"><div class="wrap"><img src="Media/logo/sc-favicon.svg" alt="" width="28" height="28"><span>Structural Content</span><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form?prefill_Data%20sources=Sales%20or%20demo%20call%20recordings%2CSupport%20tickets%20or%20live%20chat%2CProduct%20usage%20data%2CCustomer%20reviews%2CCustomer%20surveys%2CPaid%20ads%2CEmail%20marketing" target="_blank" rel="noopener">Try it in Slack</a></div></header>
+<header class="site-header"><div class="wrap"><img src="Media/logo/sc-favicon.svg" alt="" width="28" height="28"><span>Structural Content</span><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form?prefill_Data%20sources=Sales%20or%20demo%20call%20recordings%2CSupport%20tickets%20or%20live%20chat%2CProduct%20usage%20data%2CCustomer%20reviews%2CCustomer%20surveys%2CPaid%20ads%2CEmail%20marketing" target="_blank" rel="noopener">Try it free</a></div></header>
 
 
 <main>
 <!-- 1. Hero -->
 <section class="hero"><div class="wrap hero-grid">
-  <div class="stack" style="gap:24px">
-  <span class="eyebrow">Content strategy software for B2B marketing teams</span>
-  <h1>Content that moves <span class="hl">the business.</span><br><span class="not">Not just engagement.</span></h1>
-  <p class="lede">Name what you need people to do, like book a demo. See what stops them in your own data, and the marketing campaigns that fix it.</p>
-  <div class="row"><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form?prefill_Data%20sources=Sales%20or%20demo%20call%20recordings%2CSupport%20tickets%20or%20live%20chat%2CProduct%20usage%20data%2CCustomer%20reviews%2CCustomer%20surveys%2CPaid%20ads%2CEmail%20marketing" target="_blank" rel="noopener">Try it in Slack</a><a class="btn ghost" href="https://calendar.app.google/uPeQFcDajNFzsZJYA" target="_blank" rel="noopener">Book a 30-minute call</a></div>
-  <p class="muted" style="font-size:14px">Built by Sebastian Messerer, ex-Amazon Senior Content Strategist, who scaled an AI-driven content system across 13 countries.</p>
-  <p class="muted" style="font-size:12px;letter-spacing:.04em;opacity:.75">NVIDIA Inception &middot; AWS Activate</p>
+  <div class="stack hero-text" style="gap:22px">
+  <span class="eyebrow">For B2B marketing leaders</span>
+  <h1 aria-label="The campaigns that will move your pipeline.">The campaigns that will move <span class="hl cyc" aria-hidden="true">your pipeline.</span></h1>
+  <p class="lede">Name your goal. Structural Content finds who has to act for it, what's stopping them, and the campaigns that get them moving, ranked by what each is worth.</p>
+  <div class="row"><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form?prefill_Data%20sources=Sales%20or%20demo%20call%20recordings%2CSupport%20tickets%20or%20live%20chat%2CProduct%20usage%20data%2CCustomer%20reviews%2CCustomer%20surveys%2CPaid%20ads%2CEmail%20marketing" target="_blank" rel="noopener">Try it free</a><a class="btn ghost" href="#in-slack">Learn more ↓</a></div>
   </div>
-  <div class="slack"><div class="ex-note" aria-hidden="true">Example: CloudBox, a fictional company</div><div class="flow" role="img" aria-label="Example, CloudBox, a fictional company. In Slack, Sam asks Structural Content how marketing can help reach a goal of 300 more demo requests. Structural Content suggests three campaigns, ranked by what is at stake. Sam gives the first to Jennifer, who opens the brief in Jira and asks Jon in design, in a comment, to start on the assets."><div class="sc sA"><div class="top"># marketing</div><div class="msg "><div class="av" style="background:#B9855C">S</div><div><div><b>Sam</b> <span class="meta">Head of Marketing</span></div><div><span class="lnk">@SC</span> Our 2027 goal is 300 more demo requests. How can marketing help?</div></div></div><div class="msg a2"><div class="av" style="background:#1F5E55">SC</div><div><div><b>SC</b> <span class="meta">APP</span></div><div>I see these campaigns:</div><div><b>1.</b> Enterprise prospects leave without booking a demo → show how it works across offices · <b>up to $4.1M new ARR at stake</b> · likely to work: high</div><div><b>2.</b> People can't find how to recover from a hack → answer it · up to $535k · high</div><div><b>3.</b> Switchers fear losing files → show how switching works · up to $394k · medium</div></div></div><div class="msg a3"><div class="av" style="background:#B9855C">S</div><div><div><b>Sam</b> <span class="meta"></span></div><div>Jennifer takes 1</div></div></div></div><div class="sc sB"><div class="top">Direct message · Jennifer</div><div class="msg "><div class="av" style="background:#1F5E55">SC</div><div><div><b>SC</b> <span class="meta">APP</span></div><div>Hey Jennifer – Sam gave you a new campaign: <b>show enterprise buyers how it works across offices.</b></div><div><span class="tg pkB lnk" style="font-weight:600;padding:2px 4px">Open in Jira →<svg class="cur kB" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2l7 19 2.5-7.5L20 11z" fill="#fff" stroke="#111" stroke-width="1.5" stroke-linejoin="round"/></svg></span></div></div></div></div><div class="sc sC"><div class="top">Jira · Campaigns</div><div class="jcols"><div class="jcol"><span>TO DO</span><div class="jcard new tg pkC" style="display:block">Enterprise page<small>New · Jennifer</small><svg class="cur kC" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2l7 19 2.5-7.5L20 11z" fill="#fff" stroke="#111" stroke-width="1.5" stroke-linejoin="round"/></svg></div><div class="jcard">Search ads<small>Jennifer</small></div></div><div class="jcol"><span>IN PROGRESS</span><div class="jcard">Pricing page<small>Jon</small></div></div></div></div><div class="sc sD"><div class="top jtop"><span>Campaigns</span> / <span class="jkey">CAM-12</span></div><div class="jtitle">Enterprise page</div><div class="jmeta"><span class="jstat">TO DO</span><span>Assignee <b>Jennifer</b></span></div><div class="jsec">Description</div><div class="brief-lines"><div><b>Who:</b> companies with 1,000+ staff that visit and never book a demo.</div><div><b>Why they stop:</b> they can't see how it works across 12 offices.</div><div><b>Make:</b> an enterprise page, with a rollout diagram.</div><div><b>Promote:</b> search ads on "backup for many offices".</div></div><div class="jsec">Comments</div><span class="tg pkD jbox">Add a comment…<svg class="cur kD" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2l7 19 2.5-7.5L20 11z" fill="#fff" stroke="#111" stroke-width="1.5" stroke-linejoin="round"/></svg></span><div class="jcom d2"><div class="jav" style="background:#6C7FB0">J</div><div><div><b>Jennifer</b> <span class="meta">just now</span></div><div><span class="lnk">@Jon</span> could you start on the assets for this one?</div></div></div><div class="jcom d3"><div class="jav" style="background:#8A6FA8">Jo</div><div><div><b>Jon</b> <span class="meta">just now</span></div><div>On it. Drafts by Thursday.</div></div></div></div></div><div class="fbar"><div class="fsteps" aria-hidden="true"><span class="L0">1 The plan</span><span class="L1">2 Jennifer's message</span><span class="L2">3 Jira</span><span class="L3">4 The brief</span></div><span class="fbtns"><button class="freplay fpause" type="button">Replay</button><button class="fpause" id="fp" type="button">Pause</button></span></div></div>
+  <div class="rank" role="img" aria-label="Example, CloudBox, a fictional company. Goal: 300 more demo requests in 2027. Three campaigns ranked by new revenue at stake: enterprise prospects who can't see how it works across offices, up to 4.1 million dollars; IT admins who can't find how to recover from a hack, up to 535 thousand; switchers who fear losing files, up to 394 thousand.">
+    <div class="rank-top"><span><b>Goal:</b> 300 more demo requests in 2027</span><span class="label">Example: CloudBox (fictional)</span></div>
+    <div class="rank-row top"><span class="n">1</span><div><b>1,630 enterprise prospects visit and never book.</b><span>They can't see how it would work across 12 offices.</span><span class="camp">→ Enterprise page and rollout story</span></div><div class="amt">up to <b>$4.1M</b><small>new ARR at stake</small></div></div>
+    <div class="rank-row"><span class="n">2</span><div><b>IT admins can't find how to recover from a hack.</b><span>It's the first question in support chats.</span><span class="camp">→ A recovery guide, answered up front</span></div><div class="amt">up to <b>$535k</b></div></div>
+    <div class="rank-row"><span class="n">3</span><div><b>Switchers fear losing their files.</b><span>It stalls deals in late-stage sales calls.</span><span class="camp">→ How switching works, step by step</span></div><div class="amt">up to <b>$394k</b></div></div>
+    <div class="rank-foot">Ranked from the CRM, sales calls and support chats. Each campaign arrives in your board as a ready brief.</div>
+  </div>
+</div></section>
+
+<!-- In Slack and Jira -->
+<section id="in-slack"><div class="wrap stack" style="gap:28px;align-items:center;text-align:center">
+  <h2>Ask where you work. Get the campaigns on your board.</h2>
+  <p class="lede" style="margin-inline:auto">Ask in Slack, Microsoft Teams or Claude. Every campaign lands in Jira, Asana, monday.com or whatever your team plans in, with what's at stake and who it's for.</p>
+  <div class="slack"><div class="ex-note" aria-hidden="true">Example: CloudBox, a fictional company</div><div class="flow" role="img" aria-label="Example, CloudBox, a fictional company. In Slack, Sam asks Claude, which uses the Structural Content connector, how marketing can help reach a goal of 300 more demo requests. Structural Content suggests three campaigns, ranked by what is at stake. Sam gives the first, up to $4.1M at stake, to Jennifer, who opens the brief in Jira and asks Jon in design, in a comment, to start on the assets."><div class="sc sA"><div class="top"># marketing</div><div class="msg "><div class="av" style="background:#B9855C">S</div><div><div><b>Sam</b> <span class="meta">Head of Marketing</span></div><div><span class="lnk">@Claude</span> Our 2027 goal is 300 more demo requests. How can marketing help?</div></div></div><div class="msg"><div class="av" style="background:#C96A4A">C</div><div><div><b>Claude</b> <span class="meta">APP</span></div><div class="conn"><span class="cdot">SC</span>Used <b>Structural Content</b> · CRM, sales calls, support chats</div><div class="swap"><div class="wk"><div><b>Reading the priority…</b></div><i>Finding who has to act for it to move</i><i>Finding what stops them</i><i>Ranking by what's at stake, and how likely each campaign is to work</i></div><div class="a2"><div>I see these campaigns:</div><div><b>1.</b> Enterprise prospects leave without booking a demo → show how it works across offices · <b>up to $4.1M new ARR at stake</b> · likely to work: high</div><div><b>2.</b> People can't find how to recover from a hack → answer it · up to $535k · high</div><div><b>3.</b> Switchers fear losing files → show how switching works · up to $394k · medium</div></div></div></div></div><div class="msg a3"><div class="av" style="background:#B9855C">S</div><div><div><b>Sam</b> <span class="meta"></span></div><div>Jennifer takes 1</div></div></div></div><div class="sc sB"><div class="top">Direct message · Jennifer</div><div class="msg "><div class="av" style="background:#C96A4A">C</div><div><div><b>Claude</b> <span class="meta">APP</span></div><div>Hey Jennifer – Sam gave you a new campaign: <b>show enterprise buyers how it works across offices.</b></div><div class="unf"><b>CAM-12 · Enterprise page</b><span>Up to $4.1M new ARR at stake · likely to work: high</span><span>Who: 1,630 companies with 1,000+ staff that visited and never booked a demo</span><span>Why: they can't see how it works across 12 offices</span></div><div><span class="tg pkB lnk" style="font-weight:600;padding:2px 4px">Open in Jira →<svg class="cur kB" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2l7 19 2.5-7.5L20 11z" fill="#fff" stroke="#111" stroke-width="1.5" stroke-linejoin="round"/></svg></span></div></div></div></div><div class="sc sC"><div class="top">Jira · Campaigns</div><div class="jcols"><div class="jcol"><span>TO DO</span><div class="jcard new tg pkC" style="display:block">Enterprise page<small>New · Jennifer</small><span class="stk">up to $4.1M at stake</span><svg class="cur kC" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2l7 19 2.5-7.5L20 11z" fill="#fff" stroke="#111" stroke-width="1.5" stroke-linejoin="round"/></svg></div><div class="jcard">Recovering from a hack<small>Unassigned</small><span class="stk">up to $535k at stake</span></div></div><div class="jcol"><span>IN PROGRESS</span><div class="jcard">Pricing page<small>Jon</small></div></div></div></div><div class="sc sD"><div class="top jtop"><span>Campaigns</span> / <span class="jkey">CAM-12</span></div><div class="jtitle">Enterprise page</div><div class="jmeta"><span class="jstat">TO DO</span><span>Assignee <b>Jennifer</b></span></div><div class="jbody"><div class="jl"><div class="jsec">Description</div><div class="brief-lines"><div><b>At stake:</b> up to $4.1M new ARR · likely to work: high</div><div><b>Who:</b> 1,630 companies with 1,000+ staff that visited and never booked a demo.</div><div><b>Why they stop:</b> they can't see how it works across 12 offices.</div><div><b>Make:</b> an enterprise page, with a rollout diagram.</div><div><b>Promote:</b> search ads on "backup for many offices".</div><div><b>Measured by:</b> demo requests from those companies, month by month.</div></div></div><div class="jr"><div class="jsec">Comments</div><span class="tg pkD jbox">Add a comment…<svg class="cur kD" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2l7 19 2.5-7.5L20 11z" fill="#fff" stroke="#111" stroke-width="1.5" stroke-linejoin="round"/></svg></span><div class="jcom d2"><div class="jav" style="background:#6C7FB0">J</div><div><div><b>Jennifer</b> <span class="meta">just now</span></div><div><span class="lnk">@Jon</span> could you start on the assets for this one?</div></div></div><div class="jcom d3"><div class="jav" style="background:#8A6FA8">Jo</div><div><div><b>Jon</b> <span class="meta">just now</span></div><div>On it. Drafts by Thursday.</div></div></div></div></div></div></div><div class="fbar"><div class="fsteps"><button type="button" class="L0" data-s="0">1 The plan</button><button type="button" class="L1" data-s="1">2 Jennifer's message</button><button type="button" class="L2" data-s="2">3 Jira</button><button type="button" class="L3" data-s="3">4 The brief</button></div><span class="fbtns"><button class="freplay fpause" type="button">Replay</button><button class="fpause" id="fp" type="button">Pause</button></span></div></div>
 </div></section>
 
 <!-- Try it (directly under the hero) -->
@@ -456,7 +514,7 @@ img.photo{object-fit:cover;width:160px;height:160px}
     <div class="step"><span class="n">4</span><h3>Publish them, and watch the number that matters.</h3><p class="muted">Each campaign shows, month by month, how its group moves to the next step. Structural Content keeps track of how close you are to your number, and suggests what to do next until you get there.</p>
       <p class="ex"><i>e.g.</i> Since the enterprise campaign launched: 9 more demo requests a month from those companies.</p></div>
   </div>
-  <p class="dayline">It all runs in Slack and your project tool: ask it anything, add what your team knows, and the plan updates.</p>
+  <p class="dayline">It all runs in your chat (Slack, Teams or Claude) and your project tool: ask it anything, add what your team knows, and the plan updates.</p>
   <p class="note">Example: CloudBox, online backup for businesses (fictional).</p>
 </div></section>
 
@@ -482,7 +540,7 @@ img.photo{object-fit:cover;width:160px;height:160px}
       <h2>Built on what worked at Amazon.</h2>
       <p class="lede">Hi, I'm Sebastian, a content strategist in Berlin. For more than ten years I've made content that gets people to act, for brands like Amazon, Adobe, Allianz and Corning: international campaigns, measurement frameworks, multi-million-euro video budgets, and award-winning work.</p>
       <p class="lede">Most recently, at Amazon, I led B2B content strategy for Germany, the UK and Ireland, and ran the international channel strategy for Amazon Logistics' delivery partners. There I built AI-driven planning systems that scaled across 13 markets and more than doubled conversion on the actions they targeted. They started from what Amazon needed its partners to do, and found what was stopping them in Amazon's own data.</p>
-      <p class="lede">Structural Content is a new, much better version of that approach, built from scratch for B2B marketing teams. When you book, I make your first campaigns with you, using the software. After that, Structural Content runs on its own, and you still have me to talk to.</p>
+      <p class="lede">Structural Content is a new, much better version of that approach, built from scratch for B2B marketing teams. In a pilot, I run it with your team on your own data. After that, Structural Content runs on its own, and you still have me to talk to.</p>
       <p class="label" style="letter-spacing:.06em">Worked with Amazon · Adobe · Allianz · Corning</p>
       <p><a href="https://sebastianmesserer.com/essays/structural-content/" style="color:var(--accent);font-weight:600">Read the founding essay, as featured in TLDR Marketing →</a></p>
       <a href="https://www.linkedin.com/in/sebastianmesserer" target="_blank" rel="noopener" style="color:var(--accent);font-weight:600">Connect with me on LinkedIn →</a>
@@ -490,9 +548,13 @@ img.photo{object-fit:cover;width:160px;height:160px}
   </div>
   <div class="book" id="offer">
     <h3>How to start.</h3>
-    <div class="book-copy"><p class="book-text">Try it in Slack first: we build a made-up company that looks like yours, with all its data synthetic, and invite you to its Slack within one working day. When you want it on your own data, we talk for 30 minutes about the number you need to move and the data you already have. If it's a fit, I run Structural Content on that data with you, and within a week you see your first campaigns, free. If they're worth making, you can start with a monthly subscription.</p>
+    <div class="book-copy"><ol class="start3">
+      <li><span class="label">1 · Free, in a day</span><b>Try it on a company like yours.</b><span>Made up, with synthetic data, in the chat and project tool you use.</span></li>
+      <li><span class="label">2 · 30 minutes</span><b>Talk about your number.</b><span>The goal you need to move, and the data you already have.</span></li>
+      <li><span class="label">3 · Paid pilot</span><b>Run it on your own data.</b><span>In the pilot, we set your baseline, then measure whether Structural Content lifted your number. So you decide on a yearly plan with the results in hand. The pilot fee counts towards it.</span></li>
+    </ol>
     <p class="book-data">Your data stays in the EU, under our data processing agreement. <a href="trust.html">How we handle your data →</a></p></div>
-    <div class="row"><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form?prefill_Data%20sources=Sales%20or%20demo%20call%20recordings%2CSupport%20tickets%20or%20live%20chat%2CProduct%20usage%20data%2CCustomer%20reviews%2CCustomer%20surveys%2CPaid%20ads%2CEmail%20marketing" target="_blank" rel="noopener">Try it in Slack</a><a class="btn ghost" href="https://calendar.app.google/uPeQFcDajNFzsZJYA" target="_blank" rel="noopener">Book a 30-minute call</a></div>
+    <div class="row"><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form?prefill_Data%20sources=Sales%20or%20demo%20call%20recordings%2CSupport%20tickets%20or%20live%20chat%2CProduct%20usage%20data%2CCustomer%20reviews%2CCustomer%20surveys%2CPaid%20ads%2CEmail%20marketing" target="_blank" rel="noopener">Try it free</a><a class="btn ghost" href="https://calendar.app.google/uPeQFcDajNFzsZJYA" target="_blank" rel="noopener">Book a 30-minute call</a></div>
   </div>
 </div></section>
 
@@ -501,7 +563,7 @@ img.photo{object-fit:cover;width:160px;height:160px}
   <h2 style="margin-bottom:16px">Fair questions</h2>
   <details><summary>Isn't this just an attribution tool?</summary><p>No. Attribution looks back at which content worked. Structural Content looks ahead: it finds what's stopping your buyers, tells you what to make about it, and then checks whether it moved your number.</p></details>
   <details><summary>Does this mean I stop doing what I do now?</summary><p>No. Same channels, same team, same tools. What changes is where your money goes. You keep the search terms and campaigns that bring in customers, add the ones only your buyers use, and stop spending time and money competing for terms that only bring in engagement that doesn't convert.</p></details>
-  <details><summary>Couldn't we build this ourselves? Isn't it just Gong with an LLM?</summary><p>You could try: drop your sales calls into an LLM and ask what's stopping your buyers. You'll get answers that sound good. Getting campaign briefs your team would use as they are is the hard part: connecting everything reliably, deep content strategy and AI engineering working together, months of work, and upkeep after that. Not convinced? Your first campaigns are free, so you can compare what Structural Content finds with what you could build yourself.</p></details>
+  <details><summary>Couldn't we build this ourselves? Isn't it just Gong with an LLM?</summary><p>You can build with it. Most teams start by asking ChatGPT or Claude, and get good ideas. Structural Content is what turns them into campaigns that work: your data joined and checked, every number traced to its source, each campaign a ready brief with what's at stake, and a record of which campaigns moved which number, growing every month. Your team, your agency or your own AI agents can all work from it.</p></details>
   <details><summary>How is this different from hiring an agency?</summary><p>An agency works from what you hand them a few times a year. They're not in your calls or your CRM, so they guess what your buyers need, and plan for the clicks they can show you in a report. Structural Content reads every call, chat and deal, every week, and aims each campaign at a group counted in your own data. Your team or your agency still makes the pieces.</p></details>
   <details><summary>Isn't this just an SEO tool?</summary><p>SEO tools start from what everyone searches for, so you get the same list as your competitors. Structural Content starts from what's stopping your buyers, which only your data knows, then finds the searches that reach them.</p></details>
   <details><summary>Is it an AI writing tool?</summary><p>No, on purpose: there are plenty of good ones already. Structural Content gives you unusually rich briefs, so whoever makes your content, your AI tools, your agency, your team or a mix, knows exactly what to make and can make it fast.</p></details>
@@ -522,11 +584,23 @@ img.photo{object-fit:cover;width:160px;height:160px}
 </div></footer>
 <script>
 (function(){
+  /* headline: one pass through lifecycle events, under 5 s, landing on "the business." */
+  const cyc=document.querySelector('.hero .cyc');
+  if(cyc&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+    const words=['your pipeline.','your demo requests.','your trial sign-ups.','your renewals.','the business.'];
+    let i=0; cyc.textContent=words[0];
+    const step=()=>{if(++i>=words.length)return;cyc.classList.add('out');setTimeout(()=>{cyc.textContent=words[i];cyc.classList.remove('out');setTimeout(step,850)},250)};
+    setTimeout(step,850);
+  }
   /* hero click-through: pause control (WCAG 2.2.2) */
   const slack=document.querySelector('.slack'), fp=document.getElementById('fp'), fr=document.querySelector('.freplay');
-  fp.addEventListener('click',()=>{const on=slack.classList.toggle('paused');fp.textContent=on?'Play':'Pause'});
+  const clearStill=()=>slack.classList.remove('still','still-0','still-1','still-2','still-3');
+  const restart=()=>{clearStill();slack.classList.remove('paused');fp.textContent='Pause';slack.classList.add('restart');void slack.offsetWidth;slack.classList.remove('restart')};
+  fp.addEventListener('click',()=>{if(slack.classList.contains('still')){restart();return}const on=slack.classList.toggle('paused');fp.textContent=on?'Play':'Pause'});
+  /* chapters: click one to hold that step as a still */
+  slack.querySelectorAll('.fsteps button').forEach(b=>b.addEventListener('click',()=>{clearStill();slack.classList.add('still','still-'+b.dataset.s);fp.textContent='Play'}));
   /* replay: drop every animation for one frame, then restart them all from 0 */
-  fr.addEventListener('click',()=>{slack.classList.remove('paused');fp.textContent='Pause';slack.classList.add('restart');void slack.offsetWidth;slack.classList.remove('restart')});
+  fr.addEventListener('click',restart);
 
   /* before / after */
   const BA={
@@ -603,8 +677,8 @@ img.photo{object-fit:cover;width:160px;height:160px}
       <dt>Watch</dt><dd>${esc(B.watch)}</dd></dl></details></div>`;
     if(step===5) h=`<div class="bring"><span class="label">What's at stake?</span><p class="lede"><b>${esc(D.bring_big)}</b></p><ul class="stakes">${D.stakes.map(s=>`<li><span><b>${s[0]}</b> ${esc(s[1])}</span><span class="stake">${esc(s[2])}<small>${D.unit} at stake</small><small>likely to work: ${esc(s[3])}</small></span></li>`).join('')}</ul>
       <p class="lede"><b>Combined:</b> ${esc(D.combined)}</p></div>`;
-    if(step===6) h=`<div class="close-demo"><h3>This was CloudBox's data. Try it on a company like yours, in Slack.</h3>
-      <div class="row" style="align-items:center;gap:20px"><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form?prefill_Data%20sources=Sales%20or%20demo%20call%20recordings%2CSupport%20tickets%20or%20live%20chat%2CProduct%20usage%20data%2CCustomer%20reviews%2CCustomer%20surveys%2CPaid%20ads%2CEmail%20marketing" target="_blank" rel="noopener">Try it in Slack</a><button class="btn ghost" data-restart>Try another goal</button><a href="https://calendar.app.google/uPeQFcDajNFzsZJYA" target="_blank" rel="noopener" style="color:var(--accent);font-weight:600">or book a 30-minute call</a></div></div>`;
+    if(step===6) h=`<div class="close-demo"><h3>This was CloudBox's data. Try it free on a company like yours, in the tools you use.</h3>
+      <div class="row" style="align-items:center;gap:20px"><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form?prefill_Data%20sources=Sales%20or%20demo%20call%20recordings%2CSupport%20tickets%20or%20live%20chat%2CProduct%20usage%20data%2CCustomer%20reviews%2CCustomer%20surveys%2CPaid%20ads%2CEmail%20marketing" target="_blank" rel="noopener">Try it free</a><button class="btn ghost" data-restart>Try another goal</button><a href="https://calendar.app.google/uPeQFcDajNFzsZJYA" target="_blank" rel="noopener" style="color:var(--accent);font-weight:600">or book a 30-minute call</a></div></div>`;
     body.innerHTML=h;
   }
   body.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)return;
