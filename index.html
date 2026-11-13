@@ -208,6 +208,11 @@ table.ba th[scope=row]{font:600 13px/1.4 var(--sans);letter-spacing:.06em;text-t
 .cfo-nums b{display:block;font:500 clamp(26px,2.6vw,34px)/1.1 var(--serif);color:var(--ink)}
 .cfo-nums .moved b{color:var(--accent)}
 .cfo-nums span:not(.label){font-size:15px}
+.start3{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.start3 li{border:1px solid var(--line-strong);border-radius:12px;padding:18px;display:grid;gap:6px;align-content:start;font-size:15px}
+.start3 li b{font-size:17px}
+.start3 li span:not(.label){color:var(--ink-soft)}
+@media (max-width:760px){.start3{grid-template-columns:1fr}}
 .book{border-top:1px solid var(--line);margin-top:56px;padding-top:36px;display:grid;gap:24px}
 .book-text{max-width:62ch;font-size:17px;line-height:1.6}
 .book-copy{display:grid;gap:12px}
@@ -543,7 +548,11 @@ img.photo{object-fit:cover;width:160px;height:160px}
   </div>
   <div class="book" id="offer">
     <h3>How to start.</h3>
-    <div class="book-copy"><p class="book-text">Try it free first: we build a made-up company that looks like yours, with all its data synthetic, and set it up in the chat and project tool you use (Slack, Teams or Claude; Jira, Notion, monday.com or another) within one working day. When you want it on your own data, we talk for 30 minutes about the number you need to move. Then a paid pilot: we agree up front how we'll measure it, I run Structural Content with your team for as long as it takes to see the effect, and you keep what it builds either way: the baseline for your number, a record of what your team already had planned, and the campaigns with their measured results. If it worked, a subscription priced on what it moved, with the pilot fee counted towards it.</p>
+    <div class="book-copy"><ol class="start3">
+      <li><span class="label">1 · Free, in a day</span><b>Try it on a company like yours.</b><span>Made up, with synthetic data, in the chat and project tool you use.</span></li>
+      <li><span class="label">2 · 30 minutes</span><b>Talk about your number.</b><span>The goal you need to move, and the data you already have.</span></li>
+      <li><span class="label">3 · Paid pilot</span><b>Run it on your own data.</b><span>Measured as we agree up front. You keep the results either way. If it works, a subscription priced on what it moved, with the pilot fee counted.</span></li>
+    </ol>
     <p class="book-data">Your data stays in the EU, under our data processing agreement. <a href="trust.html">How we handle your data →</a></p></div>
     <div class="row"><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form?prefill_Data%20sources=Sales%20or%20demo%20call%20recordings%2CSupport%20tickets%20or%20live%20chat%2CProduct%20usage%20data%2CCustomer%20reviews%2CCustomer%20surveys%2CPaid%20ads%2CEmail%20marketing" target="_blank" rel="noopener">Try it free</a><a class="btn ghost" href="https://calendar.app.google/uPeQFcDajNFzsZJYA" target="_blank" rel="noopener">Book a 30-minute call</a></div>
   </div>
