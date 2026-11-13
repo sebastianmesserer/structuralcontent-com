@@ -215,8 +215,13 @@ table.ba th[scope=row]{font:600 13px/1.4 var(--sans);letter-spacing:.06em;text-t
 .book-data a{color:var(--accent)}
 .site-header .btn{margin-left:auto;padding:10px 16px;font-size:15px;white-space:nowrap}
 /* hero: text left, the product's flow right */
-.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:56px;align-items:center}
-.hero h1{font-size:clamp(36px,4.8vw,54px)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:56px;justify-items:center}
+.hero-text{align-items:center;text-align:center;max-width:760px}
+.hero-text .lede{margin-inline:auto}
+.hero-text .row{justify-content:center}
+.hero .slack{width:100%;max-width:880px}
+
+.hero h1{font-size:clamp(38px,5.6vw,68px)}
 .slack{container:slack/inline-size;overflow:hidden;background:#1A1D21;color:#D1D2D3;border-radius:14px;padding:20px 22px 16px;font-size:15px;line-height:1.5;box-shadow:0 8px 24px rgba(0,0,0,.12)}
 .slack .ex-note{text-align:right;color:#A0A1A3;font-size:12.5px;margin-bottom:8px}
 .slack b{color:#F8F8F8}
@@ -410,7 +415,7 @@ img.photo{object-fit:cover;width:160px;height:160px}
 <main>
 <!-- 1. Hero -->
 <section class="hero"><div class="wrap hero-grid">
-  <div class="stack" style="gap:24px">
+  <div class="stack hero-text" style="gap:24px">
   <span class="eyebrow">Content strategy software for B2B marketing teams</span>
   <h1 aria-label="Content that moves the business.">Content that moves <span class="hl cyc" aria-hidden="true">the business.</span></h1>
   <p class="lede">Name what you need people to do, like book a demo. See what stops them in your own data, and the marketing campaigns that fix it.</p>
