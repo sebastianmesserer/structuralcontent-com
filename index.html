@@ -152,7 +152,7 @@ p{margin:0}
 /* hero */
 .hero{padding-block:96px 72px}
 .hero .hl{color:var(--accent)}
-.hero .cyc{display:block;white-space:nowrap;transition:opacity .25s,transform .25s}
+.hero .cyc{display:block;white-space:nowrap;min-height:1.1em;transition:opacity .25s,transform .25s}
 .hero .cyc.out{opacity:0;transform:translateY(6px)}
 .hero .not{color:var(--muted)}
 
@@ -216,11 +216,13 @@ table.ba th[scope=row]{font:600 13px/1.4 var(--sans);letter-spacing:.06em;text-t
 .site-header .btn{margin-left:auto;padding:10px 16px;font-size:15px;white-space:nowrap}
 /* hero: text left, the product's flow right */
 .hero-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:56px;justify-items:center}
-.hero-text{align-items:center;text-align:center;max-width:760px}
+.hero-text{align-items:center;text-align:center;max-width:980px}
+.hero-text .lede{max-width:62ch}
 .hero-text .lede{margin-inline:auto}
 .hero-text .row{justify-content:center}
 
-.hero h1{font-size:clamp(38px,5.6vw,68px)}
+.hero h1{font-size:clamp(30px,5.6vw,68px)}
+@media (max-width:480px){.hero h1{font-size:29px}}
 .slack{container:slack/inline-size;overflow:hidden;background:#1A1D21;color:#D1D2D3;border-radius:14px;padding:20px 22px 16px;font-size:15px;line-height:1.5;box-shadow:0 8px 24px rgba(0,0,0,.12)}
 .slack .ex-note{text-align:right;color:#A0A1A3;font-size:12.5px;margin-bottom:8px}
 .slack b{color:#F8F8F8}
@@ -430,7 +432,7 @@ img.photo{object-fit:cover;width:160px;height:160px}
 </style>
 </head>
 <body>
-<header class="site-header"><div class="wrap"><img src="Media/logo/sc-favicon.svg" alt="" width="28" height="28"><span>Structural Content</span><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form?prefill_Data%20sources=Sales%20or%20demo%20call%20recordings%2CSupport%20tickets%20or%20live%20chat%2CProduct%20usage%20data%2CCustomer%20reviews%2CCustomer%20surveys%2CPaid%20ads%2CEmail%20marketing" target="_blank" rel="noopener">Try it in Slack</a></div></header>
+<header class="site-header"><div class="wrap"><img src="Media/logo/sc-favicon.svg" alt="" width="28" height="28"><span>Structural Content</span><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form?prefill_Data%20sources=Sales%20or%20demo%20call%20recordings%2CSupport%20tickets%20or%20live%20chat%2CProduct%20usage%20data%2CCustomer%20reviews%2CCustomer%20surveys%2CPaid%20ads%2CEmail%20marketing" target="_blank" rel="noopener">Try it free</a></div></header>
 
 
 <main>
@@ -438,9 +440,9 @@ img.photo{object-fit:cover;width:160px;height:160px}
 <section class="hero"><div class="wrap hero-grid">
   <div class="stack hero-text" style="gap:22px">
   <span class="eyebrow">For B2B marketing leaders</span>
-  <h1>The campaigns that will <span class="hl">move your pipeline.</span></h1>
+  <h1 aria-label="The campaigns that will move your pipeline.">The campaigns that will move <span class="hl cyc" aria-hidden="true">your pipeline.</span></h1>
   <p class="lede">Structural Content finds the buyers who stall before they become pipeline, in your CRM and sales calls, and ranks the content that gets them moving by the revenue at stake.</p>
-  <div class="row"><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form?prefill_Data%20sources=Sales%20or%20demo%20call%20recordings%2CSupport%20tickets%20or%20live%20chat%2CProduct%20usage%20data%2CCustomer%20reviews%2CCustomer%20surveys%2CPaid%20ads%2CEmail%20marketing" target="_blank" rel="noopener">Try it in Slack</a><a class="btn ghost" href="https://calendar.app.google/uPeQFcDajNFzsZJYA" target="_blank" rel="noopener">Book a 30-minute call</a></div>
+  <div class="row"><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form?prefill_Data%20sources=Sales%20or%20demo%20call%20recordings%2CSupport%20tickets%20or%20live%20chat%2CProduct%20usage%20data%2CCustomer%20reviews%2CCustomer%20surveys%2CPaid%20ads%2CEmail%20marketing" target="_blank" rel="noopener">Try it free</a><a class="btn ghost" href="#in-slack">Learn more ↓</a></div>
   </div>
   <div class="rank" role="img" aria-label="Example, CloudBox, a fictional company. Goal: 300 more demo requests in 2027. Three campaigns ranked by new revenue at stake: enterprise prospects who can't see how it works across offices, up to 4.1 million dollars; IT admins who can't find how to recover from a hack, up to 535 thousand; switchers who fear losing files, up to 394 thousand.">
     <div class="rank-top"><span><b>Goal:</b> 300 more demo requests in 2027</span><span class="label">Example: CloudBox (fictional)</span></div>
@@ -507,7 +509,7 @@ img.photo{object-fit:cover;width:160px;height:160px}
     <div class="step"><span class="n">4</span><h3>Publish them, and watch the number that matters.</h3><p class="muted">Each campaign shows, month by month, how its group moves to the next step. Structural Content keeps track of how close you are to your number, and suggests what to do next until you get there.</p>
       <p class="ex"><i>e.g.</i> Since the enterprise campaign launched: 9 more demo requests a month from those companies.</p></div>
   </div>
-  <p class="dayline">It all runs in Slack and your project tool: ask it anything, add what your team knows, and the plan updates.</p>
+  <p class="dayline">It all runs in your chat (Slack, Teams or Claude) and your project tool: ask it anything, add what your team knows, and the plan updates.</p>
   <p class="note">Example: CloudBox, online backup for businesses (fictional).</p>
 </div></section>
 
@@ -541,9 +543,9 @@ img.photo{object-fit:cover;width:160px;height:160px}
   </div>
   <div class="book" id="offer">
     <h3>How to start.</h3>
-    <div class="book-copy"><p class="book-text">Try it in Slack first: we build a made-up company that looks like yours, with all its data synthetic, and invite you to its Slack within one working day. When you want it on your own data, we talk for 30 minutes about the number you need to move. Then a paid pilot: we agree up front how we'll measure it, I run Structural Content with your team for as long as it takes to see the effect, and you keep what it builds either way: the baseline for your number, a record of what your team already had planned, and the campaigns with their measured results. If it worked, a subscription priced on what it moved, with the pilot fee counted towards it.</p>
+    <div class="book-copy"><p class="book-text">Try it free first: we build a made-up company that looks like yours, with all its data synthetic, and set it up in the chat and project tool you use (Slack, Teams or Claude; Jira, Notion, monday.com or another) within one working day. When you want it on your own data, we talk for 30 minutes about the number you need to move. Then a paid pilot: we agree up front how we'll measure it, I run Structural Content with your team for as long as it takes to see the effect, and you keep what it builds either way: the baseline for your number, a record of what your team already had planned, and the campaigns with their measured results. If it worked, a subscription priced on what it moved, with the pilot fee counted towards it.</p>
     <p class="book-data">Your data stays in the EU, under our data processing agreement. <a href="trust.html">How we handle your data →</a></p></div>
-    <div class="row"><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form?prefill_Data%20sources=Sales%20or%20demo%20call%20recordings%2CSupport%20tickets%20or%20live%20chat%2CProduct%20usage%20data%2CCustomer%20reviews%2CCustomer%20surveys%2CPaid%20ads%2CEmail%20marketing" target="_blank" rel="noopener">Try it in Slack</a><a class="btn ghost" href="https://calendar.app.google/uPeQFcDajNFzsZJYA" target="_blank" rel="noopener">Book a 30-minute call</a></div>
+    <div class="row"><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form?prefill_Data%20sources=Sales%20or%20demo%20call%20recordings%2CSupport%20tickets%20or%20live%20chat%2CProduct%20usage%20data%2CCustomer%20reviews%2CCustomer%20surveys%2CPaid%20ads%2CEmail%20marketing" target="_blank" rel="noopener">Try it free</a><a class="btn ghost" href="https://calendar.app.google/uPeQFcDajNFzsZJYA" target="_blank" rel="noopener">Book a 30-minute call</a></div>
   </div>
 </div></section>
 
@@ -576,7 +578,7 @@ img.photo{object-fit:cover;width:160px;height:160px}
   /* headline: one pass through lifecycle events, under 5 s, landing on "the business." */
   const cyc=document.querySelector('.hero .cyc');
   if(cyc&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
-    const words=['demo requests.','trial sign-ups.','upgrades.','renewals.','the business.'];
+    const words=['your pipeline.','your demo requests.','your trial sign-ups.','your renewals.','the business.'];
     let i=0; cyc.textContent=words[0];
     const step=()=>{if(++i>=words.length)return;cyc.classList.add('out');setTimeout(()=>{cyc.textContent=words[i];cyc.classList.remove('out');setTimeout(step,850)},250)};
     setTimeout(step,850);
@@ -666,8 +668,8 @@ img.photo{object-fit:cover;width:160px;height:160px}
       <dt>Watch</dt><dd>${esc(B.watch)}</dd></dl></details></div>`;
     if(step===5) h=`<div class="bring"><span class="label">What's at stake?</span><p class="lede"><b>${esc(D.bring_big)}</b></p><ul class="stakes">${D.stakes.map(s=>`<li><span><b>${s[0]}</b> ${esc(s[1])}</span><span class="stake">${esc(s[2])}<small>${D.unit} at stake</small><small>likely to work: ${esc(s[3])}</small></span></li>`).join('')}</ul>
       <p class="lede"><b>Combined:</b> ${esc(D.combined)}</p></div>`;
-    if(step===6) h=`<div class="close-demo"><h3>This was CloudBox's data. Try it on a company like yours, in Slack.</h3>
-      <div class="row" style="align-items:center;gap:20px"><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form?prefill_Data%20sources=Sales%20or%20demo%20call%20recordings%2CSupport%20tickets%20or%20live%20chat%2CProduct%20usage%20data%2CCustomer%20reviews%2CCustomer%20surveys%2CPaid%20ads%2CEmail%20marketing" target="_blank" rel="noopener">Try it in Slack</a><button class="btn ghost" data-restart>Try another goal</button><a href="https://calendar.app.google/uPeQFcDajNFzsZJYA" target="_blank" rel="noopener" style="color:var(--accent);font-weight:600">or book a 30-minute call</a></div></div>`;
+    if(step===6) h=`<div class="close-demo"><h3>This was CloudBox's data. Try it free on a company like yours, in the tools you use.</h3>
+      <div class="row" style="align-items:center;gap:20px"><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form?prefill_Data%20sources=Sales%20or%20demo%20call%20recordings%2CSupport%20tickets%20or%20live%20chat%2CProduct%20usage%20data%2CCustomer%20reviews%2CCustomer%20surveys%2CPaid%20ads%2CEmail%20marketing" target="_blank" rel="noopener">Try it free</a><button class="btn ghost" data-restart>Try another goal</button><a href="https://calendar.app.google/uPeQFcDajNFzsZJYA" target="_blank" rel="noopener" style="color:var(--accent);font-weight:600">or book a 30-minute call</a></div></div>`;
     body.innerHTML=h;
   }
   body.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)return;
