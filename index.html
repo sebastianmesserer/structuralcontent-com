@@ -188,6 +188,12 @@ table.ba th[scope=row]{font:600 13px/1.4 var(--sans);letter-spacing:.06em;text-t
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 
 /* how it works */
+.flow3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.f3{border:1px solid var(--line-strong);border-radius:14px;padding:20px;display:grid;gap:12px;align-content:start}
+.f3 h3{font-size:20px}
+.f3 .ex{background:var(--accent-soft);border-radius:10px;padding:14px 16px;font-size:15px;color:var(--ink)}
+.f3 .ex small{color:var(--accent);font-size:12px;font-weight:600;white-space:nowrap}
+@media (max-width:760px){.flow3{grid-template-columns:1fr}}
 .steps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
 .step{display:grid;gap:14px;align-content:start}
 .step .n{font:600 13px var(--sans);color:var(--accent)}
@@ -458,6 +464,20 @@ img.photo{object-fit:cover;width:160px;height:160px}
   </div>
 </div></section>
 
+<!-- 2. Where it finds it -->
+<section id="how"><div class="wrap stack" style="gap:32px">
+  <div class="stack" style="gap:10px"><h2>Found in the data you already have.</h2><p class="lede" style="max-width:60ch">Your calls, chats and deals hold the reasons people buy, stall or leave. Structural Content reads all of it, like a great strategist who never stops.</p></div>
+  <div class="flow3">
+    <div class="f3"><span class="label">1 · Reads</span><h3>Everything you know about your buyers.</h3>
+      <div class="chips"><span class="chip">CRM</span><span class="chip">Sales calls</span><span class="chip">Support chats</span><span class="chip">Product usage</span><span class="chip">Web analytics</span><span class="chip">Reviews</span><span class="chip">Search data</span></div></div>
+    <div class="f3"><span class="label">2 · Finds</span><h3>Who's worth winning, and what's stopping them.</h3>
+      <p class="ex">1,630 enterprise prospects visit and never book <small>CRM · web analytics</small>. The few who call all ask: "How would this work across 12 offices?" <small>sales calls</small></p></div>
+    <div class="f3"><span class="label">3 · Delivers</span><h3>The campaigns that move them, on your board.</h3>
+      <p class="ex">Enterprise page and rollout story · up to $4.1M at stake · assigned to Jennifer. Then it tracks what each campaign moved, and suggests what's next.</p></div>
+  </div>
+  <p class="note">Example: CloudBox, online backup for businesses (fictional).</p>
+</div></section>
+
 <!-- In Slack and Jira -->
 <section id="in-slack"><div class="wrap stack" style="gap:28px;align-items:center;text-align:center">
   <h2>Ask where you work. Get the campaigns on your board.</h2>
@@ -502,21 +522,7 @@ img.photo{object-fit:cover;width:160px;height:160px}
 </div></section>
 
 <!-- 3. How it works -->
-<section id="how"><div class="wrap stack" style="gap:40px">
-  <div class="stack" style="gap:10px"><h2>How it works</h2><p class="lede" style="max-width:52ch">It does what a great content strategist would, if they could read every call, chat and deal, and never stopped.</p></div>
-  <div class="steps">
-    <div class="step"><span class="n">1</span><h3>Pick the number you need to move.</h3><p class="muted">Demo requests, trial sign-ups, qualified pipeline: the one under the most pressure.</p>
-      <p class="ex"><i>e.g.</i> 300 more demo requests in 2027.</p></div>
-    <div class="step"><span class="n">2</span><h3>Connect everything you know about your buyers,</h3><p class="muted">from sales calls to support chats, plus outside data like search volumes.</p>
-      <p class="ex"><i>e.g.</i> Sales calls, website chat, the CRM and support tickets.</p></div>
-    <div class="step"><span class="n">3</span><h3>Get the campaigns that move it.</h3><p class="muted">Structural Content finds who has to move for your number to move, and what's stopping them, and turns each group into a content campaign: a brief, and the pieces to make, in your content board.</p>
-      <p class="ex"><i>e.g.</i> 1,630 enterprise companies visited and never booked. The few who call all ask: "How would this work across 12 offices?" Campaign: an enterprise page and a rollout story.</p></div>
-    <div class="step"><span class="n">4</span><h3>Publish them, and watch the number that matters.</h3><p class="muted">Each campaign shows, month by month, how its group moves to the next step. Structural Content keeps track of how close you are to your number, and suggests what to do next until you get there.</p>
-      <p class="ex"><i>e.g.</i> Since the enterprise campaign launched: 9 more demo requests a month from those companies.</p></div>
-  </div>
-  <p class="dayline">It all runs in your chat (Slack, Teams or Claude) and your project tool: ask it anything, add what your team knows, and the plan updates.</p>
-  <p class="note">Example: CloudBox, online backup for businesses (fictional).</p>
-</div></section>
+
 
 <!-- 4. Ways + why now -->
 <section id="ways"><div class="wrap stack" style="gap:40px">
