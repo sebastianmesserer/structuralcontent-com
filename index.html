@@ -219,6 +219,12 @@ table.ba th[scope=row]{font:600 13px/1.4 var(--sans);letter-spacing:.06em;text-t
 .start3 li b{font-size:17px}
 .start3 li span:not(.label){color:var(--ink-soft)}
 @media (max-width:760px){.start3{grid-template-columns:1fr}}
+.start3.s4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.start3 ul{margin:4px 0 0;padding-left:18px;display:grid;gap:6px;color:var(--ink-soft)}
+.start3 ul li{border:0;border-radius:0;padding:0;display:list-item;font-size:14.5px}
+.start3 small{color:var(--accent);font-weight:600;font-size:13px;margin-top:4px}
+@media (max-width:1000px){.start3.s4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.start3.s4{grid-template-columns:1fr}}
 .book{border-top:1px solid var(--line);margin-top:56px;padding-top:36px;display:grid;gap:24px}
 .book-text{max-width:62ch;font-size:17px;line-height:1.6}
 .book-copy{display:grid;gap:12px}
@@ -455,7 +461,7 @@ img.photo{object-fit:cover;width:160px;height:160px}
   <div class="stack hero-text" style="gap:22px">
   <span class="eyebrow">B2B content strategy software</span>
   <h1 aria-label="The campaigns that will move your pipeline.">The campaigns that will move <span class="hl cyc" aria-hidden="true">your pipeline.</span></h1>
-  <p class="lede">Name your goal. Find who has to act, what's stopping them, and the campaigns that get them moving. Ranked by business impact.</p>
+  <p class="lede">Name your goal. Find the buyer barriers worth fixing first, and get ready-to-run campaign briefs for your team.</p>
   <div class="row"><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form?prefill_Data%20sources=Sales%20or%20demo%20call%20recordings%2CSupport%20tickets%20or%20live%20chat%2CProduct%20usage%20data%2CCustomer%20reviews%2CCustomer%20surveys%2CPaid%20ads%2CEmail%20marketing" target="_blank" rel="noopener">Try it first</a><a class="btn ghost" href="#in-slack">Learn more ↓</a></div>
   <p class="cred">Built by Sebastian Messerer, ex-Amazon Senior Content Strategist · <a href="https://sebastianmesserer.com/essays/structural-content/" target="_blank" rel="noopener">As featured in TLDR Marketing</a></p>
   </div>
@@ -557,11 +563,16 @@ img.photo{object-fit:cover;width:160px;height:160px}
     </div>
   </div>
   <div class="book" id="offer">
-    <h3>How to start.</h3>
-    <div class="book-copy"><ol class="start3">
+    <h3>What happens when you start.</h3>
+    <div class="book-copy"><ol class="start3 s4">
       <li><span class="label">1 · Free trial</span><b>Try it on a company like yours.</b><span>Made up, with synthetic data, in the chat and project tool you use. Send the form, start within a day.</span></li>
       <li><span class="label">2 · 30-minute demo</span><b>See it on your number.</b><span>The goal you need to move, and the data you already have.</span></li>
-      <li><span class="label">3 · Paid pilot</span><b>Run it on your own data.</b><span>In the pilot, we set your baseline, then measure whether Structural Content lifted your number. So you decide on a yearly plan with the results in hand.</span></li>
+      <li><span class="label">3 · Paid pilot</span><b>Your first campaigns, then the proof.</b>
+        <ul><li>In two weeks: the baseline for your goal, and three opportunities ranked with the evidence behind each.</li><li>The top one lands on your board as ready-to-run briefs.</li><li>Your team runs it. We measure the lift against the baseline, over a window we agree up front.</li></ul>
+        <small>Shaped to your goal and your data.</small></li>
+      <li><span class="label">4 · Yearly plan</span><b>Kept current, every month.</b>
+        <ul><li>New evidence reviewed as it comes in.</li><li>Live campaigns checked against their numbers.</li><li>The next campaigns ranked and briefed.</li><li>A monthly review with you on what to do next.</li></ul>
+        <small>Priced on what the pilot showed it moved.</small></li>
     </ol>
     <p class="book-data">Your data stays in the EU, under our data processing agreement. <a href="trust.html">How we handle your data →</a></p></div>
     <div class="row"><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form?prefill_Data%20sources=Sales%20or%20demo%20call%20recordings%2CSupport%20tickets%20or%20live%20chat%2CProduct%20usage%20data%2CCustomer%20reviews%2CCustomer%20surveys%2CPaid%20ads%2CEmail%20marketing" target="_blank" rel="noopener">Try it first</a><a class="btn ghost" href="https://calendar.app.google/uPeQFcDajNFzsZJYA" target="_blank" rel="noopener">Book a demo</a></div>
