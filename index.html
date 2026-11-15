@@ -219,6 +219,12 @@ table.ba th[scope=row]{font:600 13px/1.4 var(--sans);letter-spacing:.06em;text-t
 .start3 li b{font-size:17px}
 .start3 li span:not(.label){color:var(--ink-soft)}
 @media (max-width:760px){.start3{grid-template-columns:1fr}}
+.start3.s4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.start3 ul{margin:4px 0 0;padding-left:18px;display:grid;gap:6px;color:var(--ink-soft)}
+.start3 ul li{border:0;border-radius:0;padding:0;display:list-item;font-size:14.5px}
+.start3 small{color:var(--accent);font-weight:600;font-size:13px;margin-top:4px}
+@media (max-width:1000px){.start3.s4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.start3.s4{grid-template-columns:1fr}}
 .book{border-top:1px solid var(--line);margin-top:56px;padding-top:36px;display:grid;gap:24px}
 .book-text{max-width:62ch;font-size:17px;line-height:1.6}
 .book-copy{display:grid;gap:12px}
@@ -453,9 +459,9 @@ img.photo{object-fit:cover;width:160px;height:160px}
 <!-- 1. Hero -->
 <section class="hero"><div class="wrap hero-grid">
   <div class="stack hero-text" style="gap:22px">
-  <span class="eyebrow">B2B content strategy software</span>
+  <span class="eyebrow">Goal-to-campaign software for B2B marketing</span>
   <h1 aria-label="The campaigns that will move your pipeline.">The campaigns that will move <span class="hl cyc" aria-hidden="true">your pipeline.</span></h1>
-  <p class="lede">Name your goal. Find who has to act, what's stopping them, and the campaigns that get them moving. Ranked by business impact.</p>
+  <p class="lede">Name your goal. Find the buyer barriers worth fixing first, and get ready-to-run campaign briefs for your team.</p>
   <div class="row"><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form?prefill_Data%20sources=Sales%20or%20demo%20call%20recordings%2CSupport%20tickets%20or%20live%20chat%2CProduct%20usage%20data%2CCustomer%20reviews%2CCustomer%20surveys%2CPaid%20ads%2CEmail%20marketing" target="_blank" rel="noopener">Try it first</a><a class="btn ghost" href="#in-slack">Learn more ↓</a></div>
   <p class="cred">Built by Sebastian Messerer, ex-Amazon Senior Content Strategist · <a href="https://sebastianmesserer.com/essays/structural-content/" target="_blank" rel="noopener">As featured in TLDR Marketing</a></p>
   </div>
@@ -477,7 +483,7 @@ img.photo{object-fit:cover;width:160px;height:160px}
     <div class="f3"><span class="label">2 · Finds</span><h3>Who's worth winning, and what's stopping them.</h3>
       <p class="ex">1,630 enterprise prospects visit and never book <small>CRM · web analytics</small>. The few who call all ask: "How would this work across 12 offices?" <small>sales calls</small></p></div>
     <div class="f3"><span class="label">3 · Delivers</span><h3>The campaigns that move them, on your board.</h3>
-      <p class="ex">Enterprise page and rollout story · up to $4.1M at stake · assigned to Jennifer. Then it tracks what each campaign moved, and suggests what's next.</p></div>
+      <p class="ex">Enterprise page and rollout story · up to $4.1M at stake · assigned to Jennifer. Then it tracks what each campaign moved, and picks the next one better.</p></div>
   </div>
   <p class="note">Example: CloudBox, online backup for businesses (fictional).</p>
 </div></section>
@@ -539,7 +545,7 @@ img.photo{object-fit:cover;width:160px;height:160px}
     <div><h3>Stop paying for people who never buy.</h3><p>Find the groups that click and sign up but never become customers, and move that budget to the groups that do.</p></div>
     <div><h3>Say what only you can say.</h3><p>Find why buyers chose you over the alternative, from won deals. Your competitors can't copy that message, because they don't have those calls.</p></div>
   </div>
-  <p class="why-now">Opportunities like these were always in your data. But finding them meant reading thousands of calls, tickets and CRM records, and no team had the time. With the help of AI, Structural Content reads all of it, all the time, and tells you which opportunities will move your number most.</p>
+  <p class="why-now">Opportunities like these were always in your data. Finding them meant reading thousands of calls, tickets and CRM records, and no team had the time. Structural Content does that work for you, continuously and reliably, and tells you which opportunities will move your number most.</p>
 </div></section>
 
 <!-- 6. Who -->
@@ -557,11 +563,16 @@ img.photo{object-fit:cover;width:160px;height:160px}
     </div>
   </div>
   <div class="book" id="offer">
-    <h3>How to start.</h3>
-    <div class="book-copy"><ol class="start3">
+    <h3>What happens when you start.</h3>
+    <div class="book-copy"><ol class="start3 s4">
       <li><span class="label">1 · Free trial</span><b>Try it on a company like yours.</b><span>Made up, with synthetic data, in the chat and project tool you use. Send the form, start within a day.</span></li>
       <li><span class="label">2 · 30-minute demo</span><b>See it on your number.</b><span>The goal you need to move, and the data you already have.</span></li>
-      <li><span class="label">3 · Paid pilot</span><b>Run it on your own data.</b><span>In the pilot, we set your baseline, then measure whether Structural Content lifted your number. So you decide on a yearly plan with the results in hand.</span></li>
+      <li><span class="label">3 · Paid pilot</span><b>Proof on your own number.</b>
+        <ul><li>We agree one outcome to move, like demo requests.</li><li>We set the baseline: what marketing brings in today.</li><li>Your team runs Structural Content for a set period, with every campaign it finds.</li><li>We measure whether it lifted the baseline.</li></ul>
+        <small>The result sets your subscription price.</small></li>
+      <li><span class="label">4 · Subscription</span><b>Kept current, every month.</b>
+        <ul><li>New evidence reviewed as it comes in.</li><li>Live campaigns checked against their numbers.</li><li>The next campaigns ranked and briefed.</li><li>A monthly review with you on what to do next.</li><li>It learns from every result, so each round ranks better.</li></ul>
+        <small>Priced on the lift the pilot measured.</small></li>
     </ol>
     <p class="book-data">Your data stays in the EU, under our data processing agreement. <a href="trust.html">How we handle your data →</a></p></div>
     <div class="row"><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form?prefill_Data%20sources=Sales%20or%20demo%20call%20recordings%2CSupport%20tickets%20or%20live%20chat%2CProduct%20usage%20data%2CCustomer%20reviews%2CCustomer%20surveys%2CPaid%20ads%2CEmail%20marketing" target="_blank" rel="noopener">Try it first</a><a class="btn ghost" href="https://calendar.app.google/uPeQFcDajNFzsZJYA" target="_blank" rel="noopener">Book a demo</a></div>
@@ -580,6 +591,7 @@ img.photo{object-fit:cover;width:160px;height:160px}
   <details><summary>Isn't this an intent-data or ABM tool?</summary><p>Those start from outside signals about who might be in the market. Structural Content starts from your own customers, finds who to win and why they'd buy, and can then use outside signals to find more like them.</p></details>
   <details><summary>Isn't this stepping on sales' or CS's toes?</summary><p>No. Sales and CS work one-to-one, especially with your biggest accounts. Marketing reaches whole groups at once: before the sale, and after it in lifecycle marketing, from onboarding to cross-sell. Structural Content does the group part, using what sales and CS already know. Say your CS notes show that customers who back up the whole company in their first week stay three times longer. It can suggest a campaign that brings in more companies like them, and an onboarding series that gets every new customer there in their first week.</p></details>
   <details><summary>Is it more work for my team?</summary><p>Less than today. Deciding what to make usually takes research, workshops and debate, or briefing an agency and reviewing what comes back. With Structural Content, you connect your data once, and campaigns arrive in your content board as tickets, already briefed and ranked. Your team reviews them and makes the pieces, as it does now.</p></details>
+  <details><summary>How does it work under the hood?</summary><p>Structural Content is cloud software that gives AI the data, infrastructure and memory it needs to produce campaign briefs that are reliable and effective, and that get better with every campaign you run. Your team works with it in Slack, Teams or Claude, and approved campaigns go to your project tool.</p></details>
   <details><summary>Is our data safe?</summary><p>Here's exactly how we handle it. Your data stays in the EU, on Amazon's servers in Frankfurt. The AI runs on Amazon Bedrock, which stores nothing, and your data is never used to train any model. One sub-processor (Amazon). Everything except a record without your files or any personal data taken from them (listed in Annex II of our data processing agreement) is deleted within 30 days of the end, with written confirmation. No SOC 2 yet; you can review our full data processing agreement and security measures instead. <a href="https://structuralcontent.com/trust.html" style="color:var(--accent)">See how we handle your data →</a></p></details>
 </div></section>
 
