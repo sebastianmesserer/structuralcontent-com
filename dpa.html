@@ -154,14 +154,14 @@ td:first-child { width: 30%; font-weight: 600; color: var(--charcoal); }
   <h2>Annex III: Technical and organisational measures</h2>
   <div class="scroll"><table>
       <tr><td>Entry</td><td>Files arrive only through private upload links issued per controller. Each expires after 7 days and accepts files up to 1 GiB. No system access is granted.</td></tr>
-      <tr><td>Storage</td><td>A private Amazon S3 bucket in eu-central-1 (Frankfurt). Public access is blocked; only TLS connections are accepted; data is encrypted at rest (AES-256); every object is scheduled to expire 30 days after upload. The credential the transfer tool uses can reach this bucket and nothing else.</td></tr>
+      <tr><td>Storage</td><td>Two private Amazon S3 buckets in eu-central-1 (Frankfurt). Public access is blocked; only TLS connections are accepted; data is encrypted at rest (AES-256). The transfer bucket holds the upload page, the uploads and the briefs, and every object in it is scheduled to expire 30 days after upload. The records bucket holds only the acceptance records and keeps every stored state of them as long as Annex II states. The credential the transfer tool uses can reach these two buckets and nothing else, and cannot delete in the records bucket.</td></tr>
       <tr><td>Processing</td><td>One company laptop with full-disk encryption (FileVault), used only by named staff and only within the EU. The controller's files live in one directory per controller, excluded from backups and cloud sync.</td></tr>
       <tr><td>AI analysis</td><td>Amazon Bedrock, EU cross-region inference profile (EU regions only), account set to zero data retention: the model service stores no inputs or outputs. No model is trained on the data, and model providers receive no copy of it.</td></tr>
       <tr><td>Delivery</td><td>Briefs are handed over through a private download link that expires after 7 days.</td></tr>
       <tr><td>Access</td><td>Named processor staff bound to confidentiality. At acceptance that is one person, the managing director named in Annex I.</td></tr>
       <tr><td>Transport</td><td>TLS on every leg; the storage refuses plain HTTP.</td></tr>
       <tr><td>Minimisation</td><td>The column list per source (Annex II), agreed before the first upload.</td></tr>
-      <tr><td>Deletion</td><td>As in Annex II, confirmed in writing; independently, scheduled expiry in storage 30 days after upload.</td></tr>
+      <tr><td>Deletion</td><td>As in Annex II, confirmed in writing; independently, scheduled expiry in the transfer bucket 30 days after upload. In the records bucket an administrator deletes every stored state at the date Annex II sets.</td></tr>
       <tr><td>Record</td><td>An upload log: which file arrived, from which system and when. The controller may see its part at any time. At deletion it is reduced as in Annex II.</td></tr>
       <tr><td>Breach</td><td>The controller is notified within 24 hours of the processor becoming aware (Clause 9.2).</td></tr>
       <tr><td>Certification</td><td>None held. This agreement and its annexes are offered for direct review instead.</td></tr>
@@ -219,14 +219,14 @@ td:first-child { width: 30%; font-weight: 600; color: var(--charcoal); }
   <h2>Anlage III: Technische und organisatorische Maßnahmen</h2>
   <div class="scroll"><table>
       <tr><td>Eingang</td><td>Dateien kommen nur über private Upload-Links an, die je Verantwortlichem ausgegeben werden. Jeder läuft nach 7 Tagen ab und nimmt Dateien bis 1 GiB an. Es wird kein Systemzugang gewährt.</td></tr>
-      <tr><td>Speicherung</td><td>Ein privater Amazon-S3-Bucket in eu-central-1 (Frankfurt). Öffentlicher Zugriff ist gesperrt; nur TLS-Verbindungen werden angenommen; die Daten sind im Ruhezustand verschlüsselt (AES-256); jedes Objekt läuft planmäßig 30 Tage nach dem Upload ab. Die Zugangsdaten des Übertragungswerkzeugs erreichen diesen Bucket und sonst nichts.</td></tr>
+      <tr><td>Speicherung</td><td>Zwei private Amazon-S3-Buckets in eu-central-1 (Frankfurt). Öffentlicher Zugriff ist gesperrt; nur TLS-Verbindungen werden angenommen; die Daten sind im Ruhezustand verschlüsselt (AES-256). Der Übertragungs-Bucket hält die Upload-Seite, die Uploads und die Briefings, und jedes Objekt darin läuft planmäßig 30 Tage nach dem Upload ab. Der Nachweis-Bucket hält nur die Annahmenachweise und bewahrt jeden gespeicherten Stand davon so lange auf, wie Anlage II es festlegt. Die Zugangsdaten des Übertragungswerkzeugs erreichen diese beiden Buckets und sonst nichts und können im Nachweis-Bucket nichts löschen.</td></tr>
       <tr><td>Verarbeitung</td><td>Ein Firmen-Laptop mit Festplattenverschlüsselung (FileVault), genutzt nur von benannten Mitarbeitenden und nur innerhalb der EU. Die Dateien des Verantwortlichen liegen in einem Verzeichnis je Verantwortlichem, ausgenommen von Backups und Cloud-Synchronisation.</td></tr>
       <tr><td>KI-Analyse</td><td>Amazon Bedrock, regionsübergreifendes EU-Inferenzprofil (nur EU-Regionen), Konto auf Zero Data Retention gestellt: Der Modelldienst speichert keine Ein- oder Ausgaben. Kein Modell wird mit den Daten trainiert, und Modellanbieter erhalten keine Kopie.</td></tr>
       <tr><td>Übergabe</td><td>Briefings werden über einen privaten Download-Link übergeben, der nach 7 Tagen abläuft.</td></tr>
       <tr><td>Zugriff</td><td>Benannte, zur Vertraulichkeit verpflichtete Mitarbeitende des Auftragsverarbeiters. Bei Annahme ist das eine Person, der in Anlage I genannte Geschäftsführer.</td></tr>
       <tr><td>Transport</td><td>TLS auf jeder Strecke; der Speicher lehnt unverschlüsseltes HTTP ab.</td></tr>
       <tr><td>Datensparsamkeit</td><td>Die Spaltenliste je Quelle (Anlage II), vereinbart vor dem ersten Upload.</td></tr>
-      <tr><td>Löschung</td><td>Wie in Anlage II, schriftlich bestätigt; unabhängig davon planmäßiger Ablauf im Speicher 30 Tage nach dem Upload.</td></tr>
+      <tr><td>Löschung</td><td>Wie in Anlage II, schriftlich bestätigt; unabhängig davon planmäßiger Ablauf im Übertragungs-Bucket 30 Tage nach dem Upload. Im Nachweis-Bucket löscht ein Administrator jeden gespeicherten Stand zu dem Zeitpunkt, den Anlage II festlegt.</td></tr>
       <tr><td>Protokoll</td><td>Ein Upload-Protokoll: welche Datei aus welchem System wann ankam. Der Verantwortliche kann seinen Teil jederzeit einsehen. Bei der Löschung wird es wie in Anlage II reduziert.</td></tr>
       <tr><td>Datenpanne</td><td>Der Verantwortliche wird innerhalb von 24 Stunden benachrichtigt, nachdem der Auftragsverarbeiter davon Kenntnis erlangt hat (Klausel 9.2).</td></tr>
       <tr><td>Zertifizierung</td><td>Keine. Stattdessen werden dieser Vertrag und seine Anlagen zur direkten Prüfung vorgelegt.</td></tr>
