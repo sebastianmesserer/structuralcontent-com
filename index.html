@@ -225,17 +225,79 @@ p{margin:0}
 .decide{display:grid;gap:12px}
 .dnote{border-left:3px solid var(--accent);padding:6px 0 6px 14px;font-size:15px;color:var(--ink-soft);max-width:70ch}
 .sim{font-size:13px;color:var(--muted)}
-.s4{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:16px;align-items:start}
-/* the Jira issue, a static still */
-.jira{background:#1A1D21;color:#D1D2D3;border-radius:14px;padding:18px 20px;font-size:14px;line-height:1.5;display:grid;gap:12px}
-.jira b{color:#F8F8F8}
+.goalpick{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
+.goalpick .seg{background:var(--bg)}
+.setby{font-size:14px;color:var(--ink-soft);padding:10px 20px;border-bottom:1px solid var(--line)}
+.goalpick .seg button{white-space:nowrap}
+@media (max-width:480px){.demo-top{padding:12px 14px}.goalpick .seg button{padding:7px 8px;font-size:13px}}
+
+/* the workflow animation: CSS keyframes on a 40s loop; the script adds pause, replay and chapter stills */
+.slack{container:slack/inline-size;overflow:hidden;background:#1A1D21;color:#D1D2D3;border-radius:14px;padding:20px 22px 16px;font-size:15px;line-height:1.5;box-shadow:0 8px 24px rgba(0,0,0,.12)}
+.slack .ex-note{text-align:right;color:#A0A1A3;font-size:12.5px;margin-bottom:8px}
+.slack b{color:#F8F8F8}
+.slack .top{color:#E8E8E8;font-weight:600;padding-bottom:10px;border-bottom:1px solid #34373B}
+.slack .msg{display:flex;gap:12px}
+.slack .msg>div:last-child{min-width:0;display:grid;gap:5px;align-content:start}
+.slack .av{flex:none;width:34px;height:34px;border-radius:8px;color:#F7F5F0;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px}
+.slack .meta{color:#A0A1A3;font-size:12.5px;font-weight:400}
+.slack .lnk{color:#4FB3E8}
+.slack ol{margin:2px 0;padding-left:20px;display:grid;gap:3px;font-size:14px}
+.slack .parent{opacity:.65;font-size:14px}
+.flow{display:grid}
+.sc{grid-area:1/1;display:flex;flex-direction:column;gap:14px}
 .jtop{color:#A0A1A3;font-size:13px}.jkey{color:#4FB3E8}
 .jtitle{color:#F8F8F8;font-size:19px;font-weight:600;line-height:1.25}
-.jmeta{display:flex;gap:12px;align-items:center;flex-wrap:wrap;color:#A0A1A3;font-size:12.5px}
+.jmeta{display:flex;gap:12px;align-items:center;flex-wrap:wrap;color:#A0A1A3;font-size:12.5px;margin-top:-6px}
 .jstat{background:#3A3E43;color:#E8E8E8;font-size:11px;font-weight:700;letter-spacing:.05em;padding:2px 6px;border-radius:3px}
-.jsec{color:#E8E8E8;font-weight:600;font-size:13px}
-.brief-lines{display:grid;gap:6px;font-size:13.5px}
-.jira .sim{color:#A0A1A3;border-top:1px solid #34373B;padding-top:10px}
+.jsec{color:#E8E8E8;font-weight:600;font-size:13px;margin-bottom:-6px}
+.brief-lines{display:grid;gap:5px;font-size:13.5px}
+.jbody,.jl,.jr{display:flex;flex-direction:column;gap:14px}
+@container slack (min-width:640px){.jbody{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:28px}}
+.conn{display:inline-flex;align-items:center;gap:8px;width:fit-content;border:1px solid #3A3E43;border-radius:999px;padding:3px 10px 3px 4px;font-size:12.5px;color:#BDBEC0}
+.conn .cdot{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#1F5E55;color:#F7F5F0;font-size:9.5px;font-weight:700}
+.unf{border-left:3px solid #4FB3E8;padding:4px 0 4px 12px;display:grid;gap:3px;font-size:13.5px;color:#BDBEC0;margin-top:4px}
+.jbox{border:1px solid #3A3E43;border-radius:6px;padding:7px 10px;color:#8E9093;font-size:13px}
+.jcom{display:flex;gap:10px;font-size:13.5px}.jcom>div:last-child{min-width:0;display:grid;gap:3px}
+.jav{flex:none;width:28px;height:28px;border-radius:50%;color:#F7F5F0;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:11.5px}
+.swap{display:grid}.swap>div{grid-area:1/1}
+.wk{display:grid;gap:3px;align-content:start;opacity:0;animation:wk 40s infinite}.wk i{color:#BDBEC0}
+.fbar{display:flex;justify-content:space-between;align-items:flex-end;gap:8px}
+.fsteps{display:flex;gap:4px;flex-wrap:wrap;margin-top:12px;font-size:12px;font-weight:600;letter-spacing:.03em}
+.fsteps button{font:inherit;letter-spacing:inherit;background:none;border:0;border-bottom:2px solid transparent;padding:3px 7px;color:#8E9093;cursor:pointer}
+.fsteps button:hover{color:#F8F8F8}
+.fbtns{display:flex;gap:6px;flex:none}
+.fpause{flex:none;margin-top:12px;font:600 12px var(--sans);color:#D1D2D3;background:transparent;border:1px solid #3A3E43;border-radius:6px;padding:4px 10px;cursor:pointer}
+.slack button:focus-visible{outline-color:#4FB3E8}
+/* scenes: 1 recommendation 0–10s · 2 Sam asks 10–21s · 3 Sam approves 21–27s · 4 Jira 27–40s */
+@keyframes sA{0%{opacity:0;visibility:hidden}1%,24%{opacity:1;visibility:visible}25%,100%{opacity:0;visibility:hidden}}.sA{animation:sA 40s infinite}
+@keyframes sB{0%,24%{opacity:0;visibility:hidden}25%,51%{opacity:1;visibility:visible}52%,100%{opacity:0;visibility:hidden}}.sB{opacity:0;visibility:hidden;animation:sB 40s infinite}
+@keyframes sC{0%,51%{opacity:0;visibility:hidden}52%,67%{opacity:1;visibility:visible}68%,100%{opacity:0;visibility:hidden}}.sC{opacity:0;visibility:hidden;animation:sC 40s infinite}
+@keyframes sD{0%,67%{opacity:0;visibility:hidden}68%,98%{opacity:1;visibility:visible}99%,100%{opacity:0;visibility:hidden}}.sD{opacity:0;visibility:hidden;animation:sD 40s infinite}
+/* messages arriving inside a scene */
+@keyframes rA{0%,1%{opacity:0;transform:translateY(8px)}3%,100%{opacity:1;transform:none}}.rA{opacity:0;animation:rA 40s infinite}
+@keyframes rB1{0%,25%{opacity:0;transform:translateY(8px)}27%,100%{opacity:1;transform:none}}.rB1{opacity:0;animation:rB1 40s infinite}
+@keyframes rB2{0%,28%{opacity:0;transform:translateY(8px)}30%,100%{opacity:1;transform:none}}.rB2{opacity:0;animation:rB2 40s infinite}
+@keyframes rB3{0%,34%{opacity:0;transform:translateY(8px)}36%,100%{opacity:1;transform:none}}.rB3{opacity:0;animation:rB3 40s infinite}
+@keyframes wk{0%,29%{opacity:0}30%,34%{opacity:1}35%,100%{opacity:0}}
+@keyframes rC1{0%,52%{opacity:0;transform:translateY(8px)}54%,100%{opacity:1;transform:none}}.rC1{opacity:0;animation:rC1 40s infinite}
+@keyframes rC2{0%,57%{opacity:0;transform:translateY(8px)}59%,100%{opacity:1;transform:none}}.rC2{opacity:0;animation:rC2 40s infinite}
+@keyframes rD1{0%,78%{opacity:0;transform:translateY(8px)}80%,100%{opacity:1;transform:none}}.rD1{opacity:0;animation:rD1 40s infinite}
+@keyframes rD2{0%,86%{opacity:0;transform:translateY(8px)}88%,100%{opacity:1;transform:none}}.rD2{opacity:0;animation:rD2 40s infinite}
+@keyframes L0{0%,24%{color:#F8F8F8;border-color:#4FB3E8}25%,100%{color:#8E9093;border-color:transparent}}.L0{animation:L0 40s infinite}
+@keyframes L1{0%,24%{color:#8E9093;border-color:transparent}25%,51%{color:#F8F8F8;border-color:#4FB3E8}52%,100%{color:#8E9093;border-color:transparent}}.L1{animation:L1 40s infinite}
+@keyframes L2{0%,51%{color:#8E9093;border-color:transparent}52%,67%{color:#F8F8F8;border-color:#4FB3E8}68%,100%{color:#8E9093;border-color:transparent}}.L2{animation:L2 40s infinite}
+@keyframes L3{0%,67%{color:#8E9093;border-color:transparent}68%,98%{color:#F8F8F8;border-color:#4FB3E8}99%,100%{color:#8E9093;border-color:transparent}}.L3{animation:L3 40s infinite}
+/* controls: paused, restarted, or held on one scene as a still */
+.slack.paused *{animation-play-state:paused!important}
+.slack.restart *{animation:none!important}
+.slack.still *{animation:none!important}
+.slack.still .sc{opacity:0;visibility:hidden}
+.slack.still .sc.on{opacity:1;visibility:visible}
+.slack.still .rv{opacity:1;transform:none}
+.slack.still .wk{opacity:0}
+.slack.still .fsteps button{color:#8E9093;border-color:transparent}
+.slack.still .fsteps button.on{color:#F8F8F8;border-color:#4FB3E8}
+@media (prefers-reduced-motion:reduce){.slack *{animation:none!important}.slack .rv{opacity:1;transform:none}.slack:not(.still) .fsteps .L0{color:#F8F8F8;border-color:#4FB3E8}.slack .fpause{display:none}}
 
 /* who, offer, faq */
 .who{display:grid;grid-template-columns:160px minmax(0,1fr);gap:32px;align-items:start}
@@ -255,7 +317,8 @@ img.photo{object-fit:cover;width:160px;height:160px;border-radius:50%;border:1px
 @media (max-width:1000px){.start3{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:760px){
   section{padding-block:64px}
-  .flow3,.raw,.groups,.s4{grid-template-columns:1fr}
+  .flow3,.raw,.groups{grid-template-columns:1fr}
+  .slack{padding:16px 14px 12px;font-size:14px}
   .demo-body{padding:20px 16px}
   .brief{padding:18px}
   .brief dl{grid-template-columns:1fr;gap:2px}
@@ -310,20 +373,22 @@ img.photo{object-fit:cover;width:160px;height:160px;border-radius:50%;border:1px
 <!-- 4. Interactive demo -->
 <section id="demo"><div class="wrap stack" style="gap:24px">
   <h2>See what Structural Content would recommend.</h2>
-  <p class="lede">CloudBox is a fictional B2B software company. Explore what its customer data reveals, which opportunities deserve attention, and what its marketing team could do about them.</p>
+  <p class="lede">CloudBox is a fictional B2B software company. Explore what its customer data reveals, which opportunities deserve attention, and what its marketing team could do about them. Change the goal to see how the recommendations change.</p>
   <div class="demo">
-    <div class="demo-top"><span id="d-goal"></span><span class="prog" id="prog" aria-hidden="true"></span></div>
+    <div class="demo-top"><div class="goalpick"><span class="label" id="gp-l">Goal set by CloudBox</span><div class="seg" id="goals" role="group" aria-labelledby="gp-l"></div></div><span class="prog" id="prog" aria-hidden="true"></span></div>
+    <p class="setby" id="d-goal"></p>
     <div class="demo-body" id="demo-body" aria-live="polite" tabindex="-1"></div>
     <div class="demo-nav"><button class="btn ghost" id="d-back" type="button">Back</button><button class="btn" id="d-next" type="button">Next</button></div>
   </div>
 </div></section>
 
-<!-- 5. From recommendation to production -->
-<section id="production"><div class="wrap stack" style="gap:24px">
-  <h2>From recommendation to production.</h2>
+<!-- 5. The workflow: Sam's day, as an animation -->
+<section id="workflow"><div class="wrap stack" style="gap:24px">
+  <h2>The work arrives where your team already works.</h2>
+  <p class="lede">Structural Content brings recommendations to the person responsible for marketing priorities. They can review the evidence, ask questions and approve the work. Approved briefs go straight into the team's existing workflow.</p>
+  <div class="slack" id="slack"><div class="ex-note" id="ex-note"></div><div class="flow" id="flow" role="img"></div><div class="fbar"><div class="fsteps"><button type="button" class="L0">1 A recommendation arrives</button><button type="button" class="L1">2 Sam asks why</button><button type="button" class="L2">3 Sam approves</button><button type="button" class="L3">4 The team starts</button></div><span class="fbtns"><button class="fpause" id="fr" type="button">Replay</button><button class="fpause" id="fp" type="button">Pause</button></span></div></div>
   <div class="prose">
-    <p>Each approved opportunity becomes a brief with the audience, customer barrier, supporting evidence, proposed content, distribution and success measure.</p>
-    <p>Your team or agency creates the content. Structural Content helps determine what deserves to be made and uses the results to inform future recommendations.</p>
+    <p>Your team or agency creates the content. Structural Content uses the results to inform future recommendations.</p>
     <p>Work with it through Slack, Microsoft Teams or Claude. Send approved briefs to Jira, Asana or your existing project management tool.</p>
   </div>
 </div></section>
@@ -384,90 +449,228 @@ img.photo{object-fit:cover;width:160px;height:160px;border-radius:50%;border:1px
 </div></footer>
 <script>
 (function(){
-  /* CloudBox (fictional): the only place on the page that holds its numbers.
-     At stake = what the behaviour is worth if every affected account took the step, at today's rates.
-     Estimated impact = what the proposed work might add if it works; a range, not a forecast. */
+  /* CloudBox (fictional): the only place on the page that holds its numbers. Both the demo and the
+     workflow animation render from it, so they cannot disagree.
+     F = what Structural Content found in CloudBox's data, shared by every goal.
+     goals = what CloudBox's business set; each ranks the findings that bear on it.
+     At stake = what the step is worth if everyone affected took it, at today's rates.
+     Estimated impact = what the proposed work might add if it works: a range, not a forecast. */
   const CB={
-    goal:"Goal: $3M more ARR in 2027, from new and existing customers",
-    findings:[
-      {stage:"Acquire · prospects",h:"Enterprise prospects are interested, but don't book a demo.",
-       p:"1,630 companies with 1,000+ staff visited in the last 12 months and never booked. The few who called all asked how CloudBox would work across many offices.",
-       ev:[["Web analytics","Enterprise visitors: 4 in 100 book a demo. Mid-size visitors: 7 in 100."],["Sales call · first call","We have 12 offices. How would this work for all of them?"],["CRM","Win rate after an enterprise demo: 10%. Average contract: $25,000."]],
-       src:"CRM · sales calls · web analytics"},
-      {stage:"Activate · new customers",h:"Many new customers never set up backup for the whole company.",
-       p:"360 of this year's 600 new customers backed up only one team in their first week. Customers who back up everyone in week one leave a third as often in their first year.",
-       ev:[["Product usage · first 7 days","240 of 600 new accounts backed up every team. 360 backed up one."],["CRM · cancellations","First-year churn: 10% if set up company-wide in week one, 30% if not. Average contract: $15,000."],["Cancellation note","We only ever backed up the finance team, so we never saw the point."]],
-       src:"product usage · CRM · cancellation notes"},
-      {stage:"Expand · existing customers",h:"Multi-office customers don't know one account can hold every office.",
-       p:"420 customers run several offices on separate accounts. Of those who moved to one account, 30% upgraded to the multi-office plan.",
-       ev:[["Account records","420 customers with 2+ offices on separate accounts."],["Support chat","Can we see all our offices in one place?"],["CRM · upgrades","30% of customers who merged accounts upgraded to multi-office: $4,000 more a year."]],
-       src:"account records · support chats · product usage"}
-    ],
-    /* in rank order */
-    opps:[
-      {f:1,h:"New customers stop at one team",work:"Onboarding sequence and setup guide",
-       audience:"360 new accounts a year, about 30 a month",
-       stake:"$1.1M ARR kept a year",
-       evidence:"Strong: usage data and cancellations agree",
-       content:"Yes: a setup step that onboarding emails reliably move",
-       impact:"$110k–$215k ARR kept a year",conf:"Medium",effort:"About 2 weeks · first reading in 4–6 weeks",
-       maths:[["At stake: 360 accounts × 20 points less first-year churn × $15,000","= $1.08M if every one set up company-wide"],["If it works: 20–40% of them set up company-wide (72–144 accounts)","assumption to test"],["× 10 points less churn: only half the 20-point gap counted, since some of it is who these customers are","assumption"],["× $15,000 average contract","CRM"],["= about $110k–$215k ARR kept a year",""]]},
-      {f:2,h:"Multi-office customers don't know one account holds every office",work:"Existing-customer education campaign",
-       audience:"420 customers",
-       stake:"$504k expansion ARR",
-       evidence:"Strong: asked directly in support chats",
-       content:"Yes: the missing piece is information",
-       impact:"$75k–$125k expansion ARR",conf:"High",effort:"About 2 weeks · first reading in one quarter",
-       maths:[["At stake: 420 customers × 30% upgrade × $4,000","= $504k if every one moved to one account"],["If it works: 15–25% of them move to one account (63–105)","assumption to test"],["× 30% upgrade × $4,000 more a year","CRM"],["= about $75k–$125k expansion ARR",""]]},
-      {f:0,h:"Enterprise prospects can't see how it works across offices",work:"Deployment guide and customer case study",
-       audience:"1,630 enterprise prospects",
-       stake:"$4.1M new ARR",
-       evidence:"Thin: a handful of sales calls",
-       content:"Partly: content answers the question, but enterprise deals turn on many factors",
-       impact:"$120k–$245k new ARR",conf:"Low",effort:"About 6 weeks, a named customer and ad budget · first reading in 2–3 quarters",
-       maths:[["At stake: 1,630 prospects × 10% win rate × $25,000","= $4.1M if every one booked a demo"],["If it works: 3–6% more of them book (49–98)","assumption to test"],["× 10% win rate × $25,000","CRM"],["= about $120k–$245k new ARR, mostly landing after 2027",""]]}
-    ],
-    rule:"Ranked by estimated impact for the effort, adjusted for confidence. Revenue at stake shows what a behaviour is worth, not what the work will bring in, which is why the biggest number ranks last. Within 2027, the top two are estimated at $185k–$340k; the enterprise campaign's impact would mostly land after 2027. Real progress against the $3M goal, not the whole answer.",
-    rec:[["Why it ranks first","A similar estimated impact to the enterprise campaign at a third of the effort, with a first reading in weeks, not quarters."],
-         ["Behaviour to change","New customers back up every team in their first week, not just one."],
-         ["Evidence","360 of 600 new customers set up one team only. First-year churn is 30% for them and 10% for customers who set up company-wide. Cancellation notes say they never saw the point."],
-         ["Assumptions","Part of the churn gap is down to who these customers are, not the setup step, so the estimate counts only half of it. The 20–40% lift in setup is an assumption the first month will test."],
-         ["What Marketing would do","A three-email onboarding sequence and a whole-company setup guide, sent in the first week."]],
-    brief:{id:"CB-1",title:"Improve first-week backup activation.",
-      /* jira: shown on the project-tool issue; go: the demo stage it links back to */
-      rows:[{k:"Audience",v:"New accounts that haven't set up backup for every team in their first week: about 30 a month.",jira:true},
-            {k:"Evidence",v:"360 of 600 new customers set up one team only (product usage). First-year churn: 30% for them, 10% for customers who set up company-wide (CRM). \u201cWe only ever backed up the finance team\u201d (cancellation note).",go:0,goLabel:"See the findings"},
-            {k:"Customer barrier",v:"Setup starts with one team, and nothing prompts the admin to add the rest, so the value for the whole company is never seen."},
-            {k:"Recommended work",v:"An onboarding email sequence (days 1, 3 and 6) and a practical whole-company setup guide.",jira:true},
-            {k:"Distribution",v:"Onboarding emails, the in-app setup checklist, and the Customer Success welcome call."},
-            {k:"Outcome",v:"More new accounts back up every team in their first week."},
-            {k:"Measurement",v:"Week-one company-wide setup, 40% today, month by month; then first-year retention for those accounts.",jira:true},
-            {k:"Estimated impact",v:"$110k–$215k ARR kept a year, if it works. An estimate, not a forecast."}]},
-    pass:"Passed. The next recommendation moves up: multi-office customers → an education campaign, estimated at $75k–$125k expansion ARR. In the product, it records why you passed and takes that into later rankings. Simulated here."
+    F:{
+      ent:{stage:"Acquire · prospects",h:"Enterprise prospects hesitate because they don't understand how CloudBox works across multiple offices.",
+        p:"1,630 companies with 1,000+ staff visited in the last 12 months and never booked a demo. The few who called all asked how CloudBox would work across many offices.",
+        ev:[["Web analytics","Enterprise visitors: 4 in 100 book a demo. Mid-size visitors: 7 in 100."],["Sales call · first call","We have 12 offices. How would this work for all of them?"],["CRM","Win rate after an enterprise demo: 10%. Average contract: $25,000."]],
+        src:"CRM · sales calls · web analytics"},
+      onb:{stage:"Retain · new customers",h:"New customers who don't complete their first company-wide backup have weaker retention.",
+        p:"360 of this year's 600 new customers backed up only one team in their first week. Customers who back up everyone in week one leave a third as often in their first year.",
+        ev:[["Product usage · first 7 days","240 of 600 new accounts backed up every team. 360 backed up one."],["CRM · cancellations","First-year churn: 10% if set up company-wide in week one, 30% if not. Average contract: $15,000."],["Support chat · first week","Setup only shows my team. How do I add the other departments?"]],
+        src:"product usage · CRM · support chats"},
+      exp:{stage:"Expand · existing customers",h:"Existing multi-office customers appear unaware of capabilities that could help them consolidate or expand their accounts.",
+        p:"420 customers run several offices on separate accounts. Of those who moved to one account, 30% upgraded to the multi-office plan.",
+        ev:[["Account records","420 customers with 2+ offices on separate accounts."],["Support chat","Can we see all our offices in one place?"],["CRM · upgrades","30% of customers who merged accounts upgraded to multi-office: $4,000 more a year."]],
+        src:"account records · support chats · CRM"},
+      hack:{stage:"Acquire · prospects",h:"Prospects search for how to recover from a hack and find nothing.",
+        p:"200 mid-size companies that weren't customers searched CloudBox's site for “get files back after a hack” in the last 12 months. 2 of them booked a demo.",
+        ev:[["Website search","“get files back after a hack”: 140 searches last month. No page found."],["Sales call · first call","If we get hit, how fast do we get everything back?"],["CRM · demo bookings","2 of the 200 non-customers who searched it booked a demo."]],
+        src:"website search · sales calls · CRM"},
+      sw:{stage:"Acquire · prospects",h:"Companies on another backup fear losing files if they switch.",
+        p:"150 mid-size companies that weren't customers asked about switching in website chat in the last 12 months. 4 of them booked a demo. No page explains how switching works.",
+        ev:[["Website chat","Can I switch from my current backup without losing anything?"],["CRM · demo bookings","3 in 100 who ask about switching book a demo. 4 in 100 from other chats do."],["Your website","No page on how switching works."]],
+        src:"website chat · CRM · site content"},
+      smb:{stage:"Acquire · small offices",h:"Small offices without an IT person don't start a trial. The home page speaks to IT people.",
+        p:"6,450 companies under 50 staff, with no IT person and not yet customers, visited in the last 12 months. 1,340 started a trial, leaving 5,110.",
+        ev:[["Sign-up survey · why did you try us?","Our IT guy left and nobody knows what's backed up."],["Your website · home page","Centralised endpoint protection with granular retention policies."],["Product sign-ups","21 in 100 of these visitors start a trial. 35 in 100 small offices who read the plain-language help pages do."]],
+        src:"web analytics · sign-up survey · product sign-ups"},
+      dbx:{stage:"Acquire · small offices",h:"Visitors think backup is the same as Dropbox.",
+        p:"1,400 small offices that weren't customers arrived from searches mentioning Dropbox. 140 started a trial, leaving 1,260.",
+        ev:[["Website chat","Is this the same as Dropbox? We already have that."],["Website chat · topics","Asked 80 times last month."],["Product sign-ups","10 in 100 of these visitors start a trial. 29 in 100 other small offices do."]],
+        src:"website chat · web analytics · product sign-ups"},
+      med:{stage:"Acquire · practices",h:"Dental and medical practices ask about patient records and get no answer.",
+        p:"680 practices visited in the last 12 months. 200 started a trial, leaving 480. No page says whether CloudBox is fine for patient records.",
+        ev:[["Website chat","Is this OK for patient records? We're a dental practice."],["Website chat · topics","Asked 30 times last month."],["Product sign-ups","29 in 100 practices start a trial. 40 in 100 law firms, which have their own page, do."]],
+        src:"website chat · web analytics · product sign-ups"}
+    },
+    order:["arr","demo","trial"],
+    goals:{
+      arr:{label:"More ARR",set:"$3M more ARR in 2027, from new and existing customers",
+        intro:"CloudBox wants to grow ARR. Structural Content has examined its customer data and found several opportunities for Marketing to contribute.",
+        finds:["ent","onb","exp"],
+        /* in rank order */
+        opps:[
+          {f:"onb",h:"New customers stop at one team",work:"Onboarding email sequence and setup guide",
+           audience:"360 new accounts a year, about 30 a month",stake:"$1.1M ARR kept a year",
+           evidence:"Strong: usage data, cancellations and support chats agree",content:"Yes: a setup step that onboarding emails reliably move",
+           impact:"$110k–$215k ARR kept a year",conf:"Medium",effort:"About 2 weeks",signal:"first reading in 4–6 weeks",
+           maths:[["At stake: 360 accounts × 20 points less first-year churn × $15,000","= $1.08M if every one set up company-wide"],["If it works: 20–40% of them set up company-wide (72–144 accounts)","assumption to test"],["× 10 points less churn: only half the 20-point gap counted, since some of it is who these customers are","assumption"],["× $15,000 average contract","CRM"],["= about $110k–$215k ARR kept a year",""]]},
+          {f:"exp",h:"Multi-office customers don't know one account holds every office",work:"Existing-customer education campaign",
+           audience:"420 customers",stake:"$504k expansion ARR",
+           evidence:"Strong: asked directly in support chats",content:"Yes: the missing piece is information",
+           impact:"$75k–$125k expansion ARR",conf:"High",effort:"About 2 weeks",signal:"first reading in one quarter",
+           maths:[["At stake: 420 customers × 30% upgrade × $4,000","= $504k if every one moved to one account"],["If it works: 15–25% of them move to one account (63–105)","assumption to test"],["× 30% upgrade × $4,000 more a year","CRM"],["= about $75k–$125k expansion ARR",""]]},
+          {f:"ent",h:"Enterprise prospects can't see how it works across offices",work:"Deployment guide and customer case study",
+           audience:"1,630 enterprise prospects",stake:"$4.1M new ARR",
+           evidence:"Thin: a handful of sales calls",content:"Partly: content answers the question, but enterprise deals turn on many factors",
+           impact:"$120k–$245k new ARR",conf:"Low",effort:"About 6 weeks, a named customer and ad budget",signal:"first reading in 2–3 quarters",
+           maths:[["At stake: 1,630 prospects × 10% win rate × $25,000","= $4.1M if every one booked a demo"],["If it works: 3–6% more of them book (49–98)","assumption to test"],["× 10% win rate × $25,000","CRM"],["= about $120k–$245k new ARR, mostly landing after 2027",""]]}
+        ],
+        rule:"Ranked by estimated impact for the effort, adjusted for confidence. Revenue at stake shows what a step is worth, not what the work will bring in, which is why the biggest number ranks last. Within 2027, the top two are estimated at $185k–$340k; the enterprise campaign's impact would mostly land after 2027. Real progress against the $3M goal, not the whole answer.",
+        rec:[["Why it ranks first","The affected customers are identifiable, the setup gap recurs with every new cohort, and the work is relatively small. The enterprise campaign has more revenue at stake and a similar estimate, but its impact is less certain and would mostly land after 2027. Expansion is the most certain of the three, but smaller."],
+             ["Behaviour to change","New customers back up every team in their first week, not just one."],
+             ["Evidence","360 of 600 new customers set up one team only. First-year churn is 30% for them and 10% for customers who set up company-wide. In week-one support chats, new admins ask how to add the other teams."],
+             ["Assumptions","Part of the churn gap is down to who these customers are, not the setup step, so the estimate counts only half of it. The 20–40% lift in setup is an assumption the first month will test."],
+             ["What Marketing would do","An onboarding email sequence and a whole-company setup guide, sent in the first week."]],
+        brief:{id:"CAM-014",title:"Improve first-week backup activation",
+          /* jira: shown on the project-tool issue; go: the demo stage it links back to */
+          rows:[{k:"Audience",v:"New customers who haven't completed company-wide backup in their first week: about 30 a month.",jira:true},
+                {k:"Customer barrier",v:"Setup confusion. Setup starts with one team, and new admins ask support how to add the rest, so the value for the whole company is never seen.",jira:true},
+                {k:"Evidence",v:"Product usage: 360 of 600 new customers set up one team only. CRM: first-year churn 30% for them, 10% for customers who set up company-wide. Support chats: week-one questions about adding teams.",jira:true,go:0,goLabel:"See the findings"},
+                {k:"Proposed work",v:"An onboarding email sequence (days 1, 3 and 6) and a practical whole-company setup guide.",jira:true},
+                {k:"Distribution",v:"Customer onboarding touchpoints: onboarding emails, the in-app setup checklist and the Customer Success welcome call.",jira:true},
+                {k:"Success measure",v:"First-week company-wide backup, 40% today, month by month; then first-year retention for those accounts.",jira:true},
+                {k:"Estimated impact",v:"$110k–$215k ARR kept a year, if it works. An estimate, not a forecast."}]},
+        track:"first-week company-wide backup and retention"},
+      demo:{label:"Demo requests",set:"300 more demo requests in 2027",
+        intro:"CloudBox wants more suitable prospects to book a demo. Structural Content has looked at who visits but doesn't book, and found what stops them.",
+        finds:["ent","hack","sw"],
+        opps:[
+          {f:"hack",h:"Searchers find no answer about recovering from a hack",work:"A recovery page built for search, with a first-hour checklist",
+           audience:"198 mid-size companies that searched and didn't book, and about 140 searches a month",stake:"198 demo requests, if every one booked",
+           evidence:"Strong: searches with no page found, and the same question in first sales calls",content:"Yes: the missing piece is a page",
+           impact:"20–40 more demo requests a year",conf:"High",effort:"About 1 week",signal:"first reading in 4–6 weeks",
+           maths:[["At stake: 200 non-customers searched, 2 booked","= 198 demo requests if every one booked"],["If it works: 10–20% of them book once they find an answer","assumption to test"],["= about 20–40 more demo requests a year, before new searchers",""]]},
+          {f:"ent",h:"Enterprise prospects can't see how it works across offices",work:"Deployment guide and customer case study",
+           audience:"1,630 enterprise prospects",stake:"1,630 demo requests, if every one booked",
+           evidence:"Thin: a handful of sales calls",content:"Yes for booking a demo: the guide answers the question they ask. Winning the deal afterwards isn't counted under this goal",
+           impact:"49–98 more demo requests a year",conf:"Medium",effort:"About 6 weeks, a named customer and ad budget",signal:"first reading in one quarter",
+           maths:[["At stake: 1,630 enterprise prospects visited and didn't book","= 1,630 demo requests if every one booked"],["If it works: 3–6% more of them book","assumption to test"],["= about 49–98 more demo requests a year",""]]},
+          {f:"sw",h:"Companies on another backup fear losing files",work:"A how-switching-works page, linked from website chat",
+           audience:"146 mid-size companies that asked and didn't book",stake:"146 demo requests, if every one booked",
+           evidence:"Medium: a recurring chat question",content:"Partly: a clear answer removes the doubt, but switching is a real risk some will still put off",
+           impact:"15–29 more demo requests a year",conf:"Medium",effort:"About 2 weeks",signal:"first reading in 4–6 weeks",
+           maths:[["At stake: 150 non-customers asked, 4 booked","= 146 demo requests if every one booked"],["If it works: 10–20% of them book","assumption to test"],["= about 15–29 more demo requests a year",""]]}
+        ],
+        rule:"Ranked by estimated impact for the effort, adjusted for confidence. The enterprise opportunity moves up from third: this goal counts the demo itself, not revenue that lands after a long sales cycle. Together, the three are estimated at 84–167 more demo requests. Real progress against 300, not the whole answer.",
+        rec:[["Why it ranks first","The smallest piece of work with the most direct evidence: prospects search for this exact answer and find nothing. The enterprise guide could bring more demo requests, but takes six weeks, needs a named customer and rests on a handful of calls."],
+             ["Behaviour to change","Mid-size prospects who look for hack recovery find an answer and book a demo."],
+             ["Evidence","“get files back after a hack” was searched 140 times on CloudBox's site last month, with no page found. 2 of the 200 non-customers who searched it booked a demo. The question also comes up in first sales calls."],
+             ["Assumptions","That 10–20% of searchers book once they find an answer. The page's first month will test it."],
+             ["What Marketing would do","A recovery page built for search, a first-hour checklist to download, and a link to book a demo from both."]],
+        brief:{id:"CAM-015",title:"Answer “how do I get my files back after a hack?”",
+          rows:[{k:"Audience",v:"Mid-size companies that search CloudBox's site for hack recovery: about 140 searches a month."},
+                {k:"Customer barrier",v:"They want to know how recovery works, find no page, and leave without booking."},
+                {k:"Evidence",v:"Website search: 140 searches last month, no page found. CRM: 2 of 200 non-customers who searched booked a demo. Sales calls: the same question in first calls.",go:0,goLabel:"See the findings"},
+                {k:"Proposed work",v:"A recovery page built for search, and a first-hour checklist to download."},
+                {k:"Distribution",v:"Site search results, organic search and the help centre."},
+                {k:"Success measure",v:"Demo requests from people who searched for recovery or read the page, month by month."},
+                {k:"Estimated impact",v:"20–40 more demo requests a year, if it works. An estimate, not a forecast."}]},
+        track:"demo requests from the page"},
+      trial:{label:"Trial sign-ups",set:"1,200 more trial sign-ups in 2027",
+        intro:"CloudBox wants more prospective customers to start a trial. Structural Content has looked at who visits but doesn't sign up, and found what stops them.",
+        finds:["smb","dbx","med"],
+        opps:[
+          {f:"smb",h:"Small offices without IT don't see themselves on the home page",work:"Plain-language home page and a set-it-up-yourself video",
+           audience:"5,110 small offices without an IT person",stake:"5,110 trial sign-ups, if every one started",
+           evidence:"Strong: sign-up survey, analytics and the home page's own words agree",content:"Yes: the barrier is the words on the page",
+           impact:"204–409 more trial sign-ups a year",conf:"Medium",effort:"About 3 weeks",signal:"first reading in 4–6 weeks",
+           maths:[["At stake: 5,110 small offices without IT visited and didn't start","= 5,110 trial sign-ups if every one started"],["If it works: 4–8 more in every 100 start a trial","assumption to test: a third to a half of the gap to plain-language readers (21 vs 35 in 100)"],["= about 204–409 more trial sign-ups a year",""]]},
+          {f:"dbx",h:"Visitors think backup is the same as Dropbox",work:"A backup-or-file-sharing comparison, linked from chat",
+           audience:"1,260 small offices that arrived from Dropbox searches",stake:"1,260 trial sign-ups, if every one started",
+           evidence:"Medium: a recurring chat question",content:"Partly: a clear answer shows the difference, but some will decide Dropbox is enough",
+           impact:"63–126 more trial sign-ups a year",conf:"Medium",effort:"About 2 weeks",signal:"first reading in 4–6 weeks",
+           maths:[["At stake: 1,260 visitors from Dropbox searches who didn't start","= 1,260 trial sign-ups if every one started"],["If it works: 5–10 more in every 100 start a trial","assumption to test: a quarter to a half of the gap to other small offices (10 vs 29 in 100)"],["= about 63–126 more trial sign-ups a year",""]]},
+          {f:"med",h:"Practices ask about patient records and get no answer",work:"A page for dental and medical practices on patient files",
+           audience:"480 practices",stake:"480 trial sign-ups, if every one started",
+           evidence:"Strong: asked directly, 30 times last month",content:"Yes: the missing piece is an answer",
+           impact:"24–48 more trial sign-ups a year",conf:"High",effort:"About 2 weeks",signal:"first reading in 4–6 weeks",
+           maths:[["At stake: 480 practices visited and didn't start","= 480 trial sign-ups if every one started"],["If it works: 5–10 more in every 100 start a trial","assumption to test: half to most of the gap to law firms (29 vs 40 in 100)"],["= about 24–48 more trial sign-ups a year",""]]}
+        ],
+        rule:"Ranked by estimated impact for the effort, adjusted for confidence. Under this goal the evidence comes from small offices, not enterprise accounts: trials are where they start. Together, the three are estimated at 291–583 more trial sign-ups. Real progress against 1,200, not the whole answer.",
+        rec:[["Why it ranks first","The largest group with the clearest barrier: they say they have no IT person, and the home page talks to IT people. The work rewrites pages CloudBox already has. The practices page is more certain, but reaches a much smaller group."],
+             ["Behaviour to change","Small offices without an IT person start a trial."],
+             ["Evidence","21 in 100 of these visitors start a trial, against 35 in 100 small offices who read the plain-language help pages. Sign-up survey: “Our IT guy left and nobody knows what's backed up.” The home page leads with “centralised endpoint protection”."],
+             ["Assumptions","That plain language closes a third to a half of the gap; the first month after the rewrite will test it. More trials only help if small offices keep converting to paid at today's 34%."],
+             ["What Marketing would do","Rewrite the home and sign-up pages in plain language for offices without IT, and add a two-minute set-it-up-yourself video."]],
+        brief:{id:"CAM-016",title:"Show small offices they can set it up themselves",
+          rows:[{k:"Audience",v:"Companies under 50 staff without an IT person: about 5,100 visit a year without starting a trial."},
+                {k:"Customer barrier",v:"The home page speaks to IT people, so owners without IT don't see that they can set it up themselves."},
+                {k:"Evidence",v:"Product sign-ups: 21 in 100 start a trial, against 35 in 100 plain-language readers. Sign-up survey: no IT person. Home page: “centralised endpoint protection”.",go:0,goLabel:"See the findings"},
+                {k:"Proposed work",v:"A plain-language home page and sign-up page, and a two-minute setup video."},
+                {k:"Distribution",v:"The home page, search ads on “backup for small business without IT”, and the sign-up flow."},
+                {k:"Success measure",v:"Trial sign-ups from small offices without IT, month by month; then trial-to-paid for those accounts."},
+                {k:"Estimated impact",v:"204–409 more trial sign-ups a year, if it works. An estimate, not a forecast."}]},
+        track:"trial sign-ups from small offices and how many go on to pay"}
+    }
   };
-  const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
-  const STAGES=["Discover","Compare","Decide","Brief"];
-  const body=document.getElementById('demo-body'),prog=document.getElementById('prog'),back=document.getElementById('d-back'),next=document.getElementById('d-next');
-  document.getElementById('d-goal').innerHTML=`<b>${esc(CB.goal)}</b> · CloudBox, a fictional company · all data made up`;
-  let step=0,note="";
+  /* the workflow animation follows the default goal: who receives its first recommendation, asks why, approves it */
+  const A=CB.goals[CB.order[0]], top=A.opps[0], alt=A.opps[2];
+  CB.story={
+    when:"Monday 9:02",
+    s1:["I've reviewed the latest customer evidence against CloudBox's growth priorities.","Three opportunities are worth reviewing. First-week onboarding is currently the strongest candidate.","New customers who don't complete company-wide backup setup are less likely to stay. An onboarding campaign could help address this."],
+    ask:"Why onboarding rather than another acquisition campaign?",
+    answer:`The affected customers are identifiable: ${top.audience}. The activation gap recurs with every new cohort, and the proposed work is relatively small: ${top.effort.toLowerCase()}, with a ${top.signal}. The enterprise acquisition opportunity has more total revenue at stake, ${alt.stake}, but the expected incremental impact of the proposed campaign is less certain, and most of it would land after 2027.`,
+    go:"Makes sense. Let's do the onboarding campaign.",
+    assignee:"Jennifer",
+    comments:[["Jennifer","J","#6C7FB0","<span class=\"lnk\">@Jon</span>, could you start on the setup guide?"],["Jon","Jo","#8A6FA8","On it."]]
+  };
+  const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+
+  /* ---- the workflow animation, rendered from CB ---- */
+  (function(){
+    const S=CB.story,B=A.brief,slack=document.getElementById('slack'),flow=document.getElementById('flow');
+    document.getElementById('ex-note').textContent=`Simulated example · CloudBox's ${A.label} goal · a fictional company`;
+    const sc=`<div class="av" style="background:#1F5E55">SC</div>`,sam=`<div class="av" style="background:#B9855C">S</div>`;
+    flow.setAttribute('aria-label',`Simulated example with CloudBox, a fictional company. On ${S.when}, Structural Content posts in Slack that it has reviewed the latest customer evidence and that ${top.h.toLowerCase()} is the strongest of three opportunities. Sam, Head of Marketing, asks in the thread: ${S.ask} Claude answers from Structural Content's ranking and evidence. Sam approves the onboarding campaign, and Structural Content creates ${B.id} in Jira, assigned to ${S.assignee}. In Jira, ${S.assignee} asks Jon to start on the setup guide, and Jon says he's on it.`);
+    flow.innerHTML=
+      `<div class="sc sA"><div class="top"># marketing</div><div class="msg rA rv">${sc}<div><div><b>Structural Content</b> <span class="meta">APP · ${esc(S.when)}</span></div>${S.s1.map(t=>`<div>${esc(t)}</div>`).join('')}<ol>${A.opps.map(o=>`<li>${esc(o.h)} → ${esc(o.work.toLowerCase())} · est. ${esc(o.impact)}</li>`).join('')}</ol><div class="lnk" style="font-weight:600">View recommendation and evidence →</div></div></div></div>`+
+      `<div class="sc sB"><div class="top">Thread · # marketing</div><div class="msg parent">${sc}<div><div><b>Structural Content</b> <span class="meta">APP</span></div><div>${esc(S.s1[1])}</div></div></div>`+
+        `<div class="msg rB1 rv">${sam}<div><div><b>Sam</b> <span class="meta">Head of Marketing</span></div><div><span class="lnk">@Claude</span> ${esc(S.ask)}</div></div></div>`+
+        `<div class="msg rB2 rv"><div class="av" style="background:#C96A4A">C</div><div><div><b>Claude</b> <span class="meta">APP</span></div><div class="conn"><span class="cdot">SC</span>Answered from <b>Structural Content</b> · ranking and evidence</div><div class="swap"><div class="wk"><b>Checking the ranking…</b><i>${esc(A.finds.map(k=>CB.F[k].src).join(' · '))}</i></div><div class="rB3 rv">${esc(S.answer)}</div></div></div></div></div>`+
+      `<div class="sc sC"><div class="top">Thread · # marketing</div><div class="msg rC1 rv">${sam}<div><div><b>Sam</b> <span class="meta">Head of Marketing</span></div><div>${esc(S.go)}</div></div></div>`+
+        `<div class="msg rC2 rv">${sc}<div><div><b>Structural Content</b> <span class="meta">APP</span></div><div>Approved. Created ${esc(B.id)} in Jira and assigned it to ${esc(S.assignee)}.</div><div class="unf"><b>${esc(B.id)} · ${esc(B.title)}</b><span>Approved by Sam · Assignee: ${esc(S.assignee)}</span></div></div></div></div>`+
+      `<div class="sc sD"><div class="top jtop"><span>Marketing</span> / <span class="jkey">${esc(B.id)}</span></div><div class="jtitle">${esc(B.title)}</div><div class="jmeta"><span class="jstat">TO DO</span><span>Assignee <b>${esc(S.assignee)}</b></span><span>Approved by <b>Sam</b></span></div>`+
+        `<div class="jbody"><div class="jl"><div class="jsec">Brief</div><div class="brief-lines">${B.rows.filter(r=>r.jira).map(r=>`<div><b>${esc(r.k)}:</b> ${esc(r.v)}</div>`).join('')}</div></div>`+
+        `<div class="jr"><div class="jsec">Comments</div><span class="jbox">Add a comment…</span>${S.comments.map((c,i)=>`<div class="jcom rD${i+1} rv"><div class="jav" style="background:${c[2]}">${c[1]}</div><div><div><b>${esc(c[0])}</b> <span class="meta">just now</span></div><div>${c[3]}</div></div></div>`).join('')}</div></div></div>`;
+    /* controls (WCAG 2.2.2): pause, replay, and chapters that hold one scene as a still */
+    const fp=document.getElementById('fp'),fr=document.getElementById('fr');
+    /* a still marks one scene and its chapter as .on; scene n and chapter n pair by position */
+    const scenes=[...flow.querySelectorAll('.sc')],chapters=[...slack.querySelectorAll('.fsteps button')];
+    const clearStill=()=>{slack.classList.remove('still');scenes.concat(chapters).forEach(e=>e.classList.remove('on'))};
+    const restart=()=>{clearStill();slack.classList.remove('paused');fp.textContent='Pause';slack.classList.add('restart');void slack.offsetWidth;slack.classList.remove('restart')};
+    fp.addEventListener('click',()=>{if(slack.classList.contains('still')){restart();return}const on=slack.classList.toggle('paused');fp.textContent=on?'Play':'Pause'});
+    chapters.forEach((b,i)=>b.addEventListener('click',()=>{clearStill();scenes[i].classList.add('on');b.classList.add('on');slack.classList.add('still');fp.textContent='Play'}));
+    fr.addEventListener('click',restart);
+  })();
+
+  /* ---- the interactive demo ---- */
+  const STAGES=["Discovered","Prioritized","Recommended","Ready for production"];
+  const body=document.getElementById('demo-body'),prog=document.getElementById('prog'),back=document.getElementById('d-back'),next=document.getElementById('d-next'),goalsEl=document.getElementById('goals'),setby=document.getElementById('d-goal');
+  let goal=CB.order[0],step=0,note="";
+  const G=()=>CB.goals[goal];
   const head=(i,q)=>`<span class="label stage">${i+1} of ${STAGES.length} · ${STAGES[i]}</span><h3>${q}</h3>`;
   const views=[
-    ()=>head(0,"What is preventing CloudBox from growing?")+`<p class="muted">Structural Content read CloudBox's records and found three groups that aren't taking a step worth money to the business. These come from the data, not from a list of campaign ideas.</p>
-      <div class="finds">${CB.findings.map(f=>`<div class="find"><span class="label">${esc(f.stage)}</span><h4>${esc(f.h)}</h4><p>${esc(f.p)}</p><div class="raw">${f.ev.map(e=>`<div class="rawc"><span class="s">${esc(e[0])}</span><q>${esc(e[1])}</q></div>`).join('')}</div><p class="sim">Found in: ${esc(f.src)}</p></div>`).join('')}</div>`,
-    ()=>head(1,"Which opportunity deserves attention first?")+`<div class="groups">${CB.opps.map((o,i)=>`<div class="grp ${i===0?'top':''}"><span class="n">${i+1}</span><span class="label">${esc(CB.findings[o.f].stage)}</span><h4>${esc(o.h)}</h4><span class="work">→ ${esc(o.work)}</span>
-      <dl class="facts"><dt>Estimated impact if it works</dt><dd class="imp">${esc(o.impact)}</dd><dt>Confidence</dt><dd>${esc(o.conf)}</dd><dt>Effort</dt><dd>${esc(o.effort)}</dd><dt>Audience</dt><dd>${esc(o.audience)}</dd><dt>At stake (not the expected result)</dt><dd>${esc(o.stake)}</dd><dt>Evidence for the barrier</dt><dd>${esc(o.evidence)}</dd><dt>Can content move it?</dt><dd>${esc(o.content)}</dd></dl>
-      <details class="maths"><summary>Show the maths</summary><ul>${o.maths.map(m=>`<li>${esc(m[0])}${m[1]?`<small>${esc(m[1])}</small>`:''}</li>`).join('')}</ul></details></div>`).join('')}</div><p class="rule">${esc(CB.rule)}</p>`,
-    ()=>head(2,"What should Marketing do next?")+`<div class="brief"><span class="label stage">Recommendation</span><h3>${esc(CB.opps[0].h)} → ${esc(CB.opps[0].work.toLowerCase())}.</h3><dl>${CB.rec.map(r=>`<dt>${esc(r[0])}</dt><dd>${esc(r[1])}</dd>`).join('')}</dl></div>
-      <div class="decide"><p class="sim">Your call. Structural Content recommends; your team decides. These buttons are a simulation.</p><div class="row"><button class="btn" type="button" data-act="approve">Approve</button><button class="btn ghost" type="button" data-act="revise">Revise</button><button class="btn ghost" type="button" data-act="pass">Pass</button></div>${note?`<p class="dnote">${esc(note)}</p>`:''}</div>`,
-    ()=>head(3,"What does the team actually receive?")+`<div class="s4"><div class="brief"><span class="label">${CB.brief.id} · approved brief</span><h3>${esc(CB.brief.title)}</h3><dl>${CB.brief.rows.map(r=>`<dt>${esc(r.k)}</dt><dd>${esc(r.v)}${r.go!==undefined?` <button class="linkbtn" type="button" data-go="${r.go}">${esc(r.goLabel)}</button>`:''}</dd>`).join('')}</dl></div>
-      <div class="jira"><div class="jtop">Marketing / <span class="jkey">${CB.brief.id}</span></div><div class="jtitle">${esc(CB.brief.title.replace(/\.$/,''))}</div><div class="jmeta"><span class="jstat">TO DO</span><span>Assignee <b>Jennifer</b></span></div><div class="jsec">Description</div><div class="brief-lines">${CB.brief.rows.filter(r=>r.jira).map(r=>`<div><b>${esc(r.k)}:</b> ${esc(r.v)}</div>`).join('')}</div><p class="sim">Simulated. In the product, approved briefs go to Jira, Asana or your existing tool.</p></div></div>
-      <p class="muted">Once it's live, Structural Content tracks week-one setup and retention, and re-ranks what comes next as results arrive.</p><div class="row"><button class="btn ghost" type="button" data-go="0">Start over</button></div>`
+    g=>head(0,"Here's what Structural Content found for CloudBox this week.")+`<p class="muted">${esc(g.intro)} These are problems found in CloudBox's data, not campaign ideas someone typed in.</p>
+      <div class="finds">${g.finds.map(k=>CB.F[k]).map(f=>`<div class="find"><span class="label">${esc(f.stage)}</span><h4>${esc(f.h)}</h4><p>${esc(f.p)}</p><div class="raw">${f.ev.map(e=>`<div class="rawc"><span class="s">${esc(e[0])}</span><q>${esc(e[1])}</q></div>`).join('')}</div><p class="sim">Found in: ${esc(f.src)}</p></div>`).join('')}</div>`,
+    g=>head(1,"Which opportunities deserve attention against this goal?")+`<div class="groups">${g.opps.map((o,i)=>`<div class="grp ${i===0?'top':''}"><span class="n">${i+1}</span><span class="label">${esc(CB.F[o.f].stage)}</span><h4>${esc(o.h)}</h4><span class="work">→ ${esc(o.work)}</span>
+      <dl class="facts"><dt>Estimated impact if it works</dt><dd class="imp">${esc(o.impact)}</dd><dt>Confidence</dt><dd>${esc(o.conf)}</dd><dt>Effort</dt><dd>${esc(o.effort)} · ${esc(o.signal)}</dd><dt>Audience</dt><dd>${esc(o.audience)}</dd><dt>At stake (not the expected result)</dt><dd>${esc(o.stake)}</dd><dt>Evidence for the barrier</dt><dd>${esc(o.evidence)}</dd><dt>Can content move it?</dt><dd>${esc(o.content)}</dd></dl>
+      <details class="maths"><summary>Show the maths and assumptions</summary><ul>${o.maths.map(m=>`<li>${esc(m[0])}${m[1]?`<small>${esc(m[1])}</small>`:''}</li>`).join('')}</ul></details></div>`).join('')}</div><p class="rule">${esc(g.rule)}</p>`,
+    g=>head(2,"What should Sam consider doing next, and why?")+`<div class="brief"><span class="label stage">Recommendation · from Structural Content</span><h3>${esc(g.opps[0].h)} → ${esc(g.opps[0].work.toLowerCase())}.</h3><dl>${g.rec.map(r=>`<dt>${esc(r[0])}</dt><dd>${esc(r[1])}</dd>`).join('')}</dl><div><button class="linkbtn" type="button" data-go="1">Compare it with the alternatives</button> · <button class="linkbtn" type="button" data-go="0">See the findings</button></div></div>
+      <div class="decide"><p class="sim">Sam decides. Structural Content recommends; it doesn't commit the team's time or budget. These buttons are a simulation.</p><div class="row"><button class="btn" type="button" data-act="approve">Approve</button><button class="btn ghost" type="button" data-act="revise">Revise</button><button class="btn ghost" type="button" data-act="defer">Defer</button><button class="btn ghost" type="button" data-act="pass">Pass</button></div>${note?`<p class="dnote">${esc(note)}</p>`:''}</div>`,
+    g=>head(3,"What does the team receive?")+`<div class="brief"><span class="label">${esc(g.brief.id)} · approved by Sam</span><h3>${esc(g.brief.title)}</h3><dl>${g.brief.rows.map(r=>`<dt>${esc(r.k)}</dt><dd>${esc(r.v)}${r.go!==undefined?` <button class="linkbtn" type="button" data-go="${r.go}">${esc(r.goLabel)}</button>`:''}</dd>`).join('')}</dl></div>
+      <p class="muted">The brief goes to the team's project tool. Once the work is live, Structural Content tracks ${esc(g.track)}, and re-ranks what comes next as results arrive.</p><div class="row"><a class="btn" href="#workflow">See how approved work reaches the team, shown with the ${esc(A.label)} example ↓</a><button class="btn ghost" type="button" data-go="0">Start over</button></div>`
   ];
+  const NOTES={
+    revise:()=>"In the product, Sam says what to change, for example “in-app only, no emails”, and Structural Content rewrites the brief. Simulated here.",
+    defer:()=>"Deferred. In the product, it comes back at the next review, or sooner if new evidence changes its rank. Simulated here.",
+    pass:g=>`Passed. Next in line: ${g.opps[1].work.toLowerCase()} (${g.opps[1].h}), estimated at ${g.opps[1].impact}. In the product, Structural Content records why Sam passed and takes it into later rankings. Simulated here.`
+  };
   function render(focus){
+    const g=G();
+    goalsEl.innerHTML=CB.order.map(k=>`<button type="button" data-goal="${k}" aria-pressed="${k===goal}">${esc(CB.goals[k].label)}</button>`).join('');
+    setby.innerHTML=`<b>${esc(g.set)}</b> · CloudBox is a fictional company; all data made up`;
     prog.innerHTML=STAGES.map((_,i)=>`<span class="${i<=step?'on':''}"></span>`).join('');
     back.hidden=step===0; next.hidden=step>=2;
-    next.textContent=step===0?"Compare them":"See the recommendation";
-    body.innerHTML=views[step]();
+    next.textContent=step===0?"Prioritize them":"See the recommendation";
+    body.innerHTML=views[step](g);
     if(focus)body.focus({preventScroll:true});
   }
   function go(s){step=s;note="";render(true)}
@@ -475,9 +678,11 @@ img.photo{object-fit:cover;width:160px;height:160px;border-radius:50%;border:1px
     if(t.dataset.go)go(+t.dataset.go);
     const a=t.dataset.act;
     if(a==='approve')go(3);
-    if(a==='revise'){note="In the product, you'd say what to change, for example “in-app only, no emails”, and it rewrites the brief. Simulated here.";render()}
-    if(a==='pass'){note=CB.pass;render()}});
-  next.onclick=()=>go(Math.min(step+1,STAGES.length-1)); back.onclick=()=>go(Math.max(step-1,0));
+    else if(NOTES[a]){note=NOTES[a](G());render()}});
+  /* a new goal keeps the visitor's stage; an approval belongs to one recommendation, so it returns to the decision */
+  goalsEl.addEventListener('click',e=>{const t=e.target.closest('button[data-goal]');if(!t||t.dataset.goal===goal)return;
+    goal=t.dataset.goal;step=Math.min(step,2);note="";render();t.ownerDocument.querySelector(`#goals [data-goal="${goal}"]`).focus()});
+  next.onclick=()=>go(Math.min(step+1,2)); back.onclick=()=>go(Math.max(step-1,0));
   render();
 })();
 </script>
