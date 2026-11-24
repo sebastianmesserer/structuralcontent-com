@@ -149,450 +149,225 @@ p{margin:0}
 .seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
 .note{font-size:13px;color:var(--muted);font-style:italic}
 
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.site-header{padding-block:20px}
+.site-header .wrap{display:flex;align-items:center;gap:10px}
+.site-header img{width:28px;height:28px;border-radius:6px}
+.site-header span{font:600 15px var(--sans);color:var(--ink)}
+.site-header .btn{margin-left:auto;padding:10px 16px;font-size:15px;white-space:nowrap}
+.site-footer{border-top:1px solid var(--line);padding-block:32px 48px;font-size:14px;color:var(--muted)}
+.site-footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center}
+.site-footer .fw{color:var(--ink);font-weight:600}
+.site-footer a{color:var(--muted);text-decoration:none}
+.site-footer a:hover{color:var(--accent)}
+
 /* hero */
 .hero{padding-block:96px 72px}
-.hero .hl{color:var(--accent)}
-.hero .not{color:var(--muted)}
+.hero-text{align-items:center;text-align:center;max-width:980px;margin-inline:auto}
+.hero-text .lede{margin-inline:auto}
+.hero-text .row{justify-content:center}
+.hero h1{font-size:clamp(30px,5.6vw,68px)}
+@media (max-width:480px){.hero h1{font-size:29px}}
+.cred{font-size:14px;color:var(--muted);margin-top:-4px}
+.cred a{color:var(--ink-soft);text-decoration:underline;text-underline-offset:3px}
 
-/* before/after */
-.tabs{display:flex;flex-wrap:wrap;gap:8px}
-.tab{font:500 15px var(--sans);padding:9px 16px;border-radius:999px;border:1px solid var(--line-strong);background:transparent;color:var(--ink-soft);cursor:pointer}
-.tab[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
-.ba-scroll{overflow-x:auto}
-table.ba{width:100%;border-collapse:collapse;min-width:720px;table-layout:fixed}
-table.ba th,table.ba td{text-align:left;vertical-align:top;padding:24px 20px;border-bottom:1px solid var(--line);font-size:15px}
-table.ba thead th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
-table.ba td.before{color:var(--muted)}
-.chips{display:flex;flex-wrap:wrap;gap:6px}
-.chip{font:14px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--grey-soft);border-radius:5px;padding:3px 8px;color:var(--ink)}
-td.after .chip{background:var(--bg)}
-.snip{font:400 19px/1.35 var(--serif);color:var(--ink);display:grid;gap:6px}
-.snip .tgt{font:600 13px/1.4 var(--sans);color:var(--accent)}
-td.before .snip,td.before .chip{color:var(--muted)}
-.why{margin-top:14px;font-size:14px;line-height:1.5;color:var(--ink-soft)}
-td.before .why{color:var(--muted)}
-table.ba td.after{background:var(--accent-soft)}
-table.ba th[scope=row]{font:600 13px/1.4 var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
-.onerow{border:1px solid var(--line-strong);border-radius:14px;padding:28px;display:grid;gap:18px}
-.onerow .art{font-family:var(--serif);font-size:24px}
-.onerow .txt{font-size:18px;min-height:5.5em;max-width:68ch}
-.onerow .txt.before{color:var(--muted)}
-.onerow .foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:center}
-.dots{display:flex;gap:6px}
-.dots span{width:8px;height:8px;border-radius:50%;background:var(--line-strong)}
-.dots span.on{background:var(--accent)}
-.closing{font-family:var(--serif);font-size:24px;line-height:1.35;max-width:40ch}
-.closing b{font-weight:600}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
-
-/* how it works */
+/* problem + how it works */
+.prose{display:grid;gap:16px;max-width:62ch}
+.prose p{font-size:18px;color:var(--ink-soft)}
+.prose .last{color:var(--ink);font-weight:600}
 .flow3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .f3{border:1px solid var(--line-strong);border-radius:14px;padding:20px;display:grid;gap:12px;align-content:start}
 .f3 h3{font-size:20px}
-.f3 .ex{background:var(--accent-soft);border-radius:10px;padding:14px 16px;font-size:15px;color:var(--ink)}
-.f3 .ex small{color:var(--accent);font-size:12px;font-weight:600;white-space:nowrap}
-@media (max-width:760px){.flow3{grid-template-columns:1fr}}
-.steps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
-.step{display:grid;gap:14px;align-content:start}
-.step .n{font:600 13px var(--sans);color:var(--accent)}
-.step h3{font-size:21px}
-
-.step .ex{background:var(--accent-soft);border-radius:10px;padding:14px 16px;font-size:15px;color:var(--ink)}
-.step .ex i{color:var(--accent)}
-.dayline{font-size:18px;color:var(--ink);max-width:62ch}
-.cfo-block{border:2px solid var(--accent);border-radius:14px;padding:32px;display:grid;gap:22px}
-.cfo-block h3{font-size:28px}
-.cfo-block>p:not(.note){font-size:18px;max-width:70ch;color:var(--ink-soft)}
-.cfo-cmp{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);gap:20px}
-.cfo-cmp>div{border:1px solid var(--line-strong);border-radius:12px;padding:24px;display:grid;gap:14px;align-content:start}
-.cfo-cmp .with{border:2px solid var(--accent)}
-.cfo-cmp .quote{font:400 22px/1.3 var(--serif);color:var(--muted)}
-.cfo-nums{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
-.cfo-nums .k{display:block;margin-bottom:6px}
-.cfo-nums b{display:block;font:500 clamp(26px,2.6vw,34px)/1.1 var(--serif);color:var(--ink)}
-.cfo-nums .moved b{color:var(--accent)}
-.cfo-nums span:not(.label){font-size:15px}
-.start3{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-.start3 li{border:1px solid var(--line-strong);border-radius:12px;padding:18px;display:grid;gap:6px;align-content:start;font-size:15px}
-.start3 li b{font-size:17px}
-.start3 li span:not(.label){color:var(--ink-soft)}
-@media (max-width:760px){.start3{grid-template-columns:1fr}}
-.start3.s4{grid-template-columns:repeat(4,minmax(0,1fr))}
-.start3 ul{margin:4px 0 0;padding-left:18px;display:grid;gap:6px;color:var(--ink-soft)}
-.start3 ul li{border:0;border-radius:0;padding:0;display:list-item;font-size:14.5px}
-.start3 small{color:var(--accent);font-weight:600;font-size:13px;margin-top:4px}
-@media (max-width:1000px){.start3.s4{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:600px){.start3.s4{grid-template-columns:1fr}}
-.fit{color:var(--ink-soft);font-size:15px;margin-top:-8px}
-.start3 .eff{font-size:14px;color:var(--ink-soft);border-top:1px solid var(--line);padding-top:8px;margin-top:4px}
-.start3 .eff b{font-size:14px;display:inline;color:var(--ink)}
-.book{border-top:1px solid var(--line);margin-top:56px;padding-top:36px;display:grid;gap:24px}
-.book-text{max-width:62ch;font-size:17px;line-height:1.6}
-.book-copy{display:grid;gap:12px}
-.book-data{font-size:14px;color:var(--ink-soft)}
-.book-data a{color:var(--accent)}
-.site-header .btn{margin-left:auto;padding:10px 16px;font-size:15px;white-space:nowrap}
-/* hero: text left, the product's flow right */
-.hero-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:56px;justify-items:center}
-.hero-text{align-items:center;text-align:center;max-width:980px}
-.hero-text .lede{max-width:62ch}
-.hero-text .lede{margin-inline:auto}
-.hero-text .row{justify-content:center}
-
-.hero h1{font-size:clamp(30px,5.6vw,68px)}
-@media (max-width:480px){.hero h1{font-size:29px}}
-.slack{container:slack/inline-size;overflow:hidden;background:#1A1D21;color:#D1D2D3;border-radius:14px;padding:20px 22px 16px;font-size:15px;line-height:1.5;box-shadow:0 8px 24px rgba(0,0,0,.12)}
-.slack .ex-note{text-align:right;color:#A0A1A3;font-size:12.5px;margin-bottom:8px}
-.slack b{color:#F8F8F8}
-.slack .top{color:#E8E8E8;font-weight:600;padding-bottom:10px;border-bottom:1px solid #34373B}
-.slack .msg{display:flex;gap:12px}
-.slack .msg>div:last-child{min-width:0;display:grid;gap:5px;align-content:start}
-.slack .av{flex:none;width:34px;height:34px;border-radius:8px;color:#F7F5F0;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px}
-.slack .meta{color:#A0A1A3;font-size:12.5px;font-weight:400}
-.slack .lnk{color:#4FB3E8}
-.flow{display:grid}
-.sc{grid-area:1/1;display:flex;flex-direction:column;gap:14px}
-.jcols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.jcol{background:#24272B;border-radius:9px;padding:10px;display:grid;grid-template-columns:minmax(0,1fr);gap:8px;align-content:start;min-height:200px}
-.jcol>span{color:#A0A1A3;font-size:11px;font-weight:600;letter-spacing:.09em}
-.jcard{background:#2E3236;border:1px solid #3A3E43;border-radius:7px;padding:9px;color:#E8E8E8;font-size:13.5px;line-height:1.35}
-.jcard small{display:block;color:#A0A1A3;font-size:12px}
-.jcard.new{border-color:#4FB3E8}
-.brief-lines{display:grid;gap:8px;font-size:14.5px}
-@container slack (max-width:340px){.jcols{gap:6px}.jcol{padding:6px}.jcard{padding:6px;font-size:12.5px}.jcard small{font-size:11px}}
-.slack .jtop{font-weight:400;color:#A0A1A3;font-size:13px}.jkey{color:#4FB3E8}
-.jtitle{color:#F8F8F8;font-size:19px;font-weight:600;line-height:1.25}
-.jmeta{display:flex;gap:12px;align-items:center;flex-wrap:wrap;color:#A0A1A3;font-size:12.5px;margin-top:-6px}
-.jstat{background:#3A3E43;color:#E8E8E8;font-size:11px;font-weight:700;letter-spacing:.05em;padding:2px 6px;border-radius:3px}
-.jsec{color:#E8E8E8;font-weight:600;font-size:13px;margin-bottom:-6px}
-.sD .brief-lines{font-size:13.5px;gap:5px}
-.jbody,.jl,.jr{display:flex;flex-direction:column;gap:14px}
-@container slack (min-width:640px){.jbody{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:28px}}
-.conn{display:inline-flex;align-items:center;gap:8px;width:fit-content;border:1px solid #3A3E43;border-radius:999px;padding:3px 10px 3px 4px;font-size:12.5px;color:#BDBEC0}
-.conn .cdot{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#1F5E55;color:#F7F5F0;font-size:9.5px;font-weight:700}
-.unf{border-left:3px solid #4FB3E8;padding:4px 0 4px 12px;display:grid;gap:3px;font-size:13.5px;color:#BDBEC0;margin-top:4px}
-.jbox{border:1px solid #3A3E43;padding:7px 10px;color:#8E9093;font-size:13px}
-.jbox .cur{right:auto;left:72px}
-.jcom{display:flex;gap:10px;font-size:13.5px}.jcom>div:last-child{min-width:0;display:grid;gap:3px}
-.jav{flex:none;width:28px;height:28px;border-radius:50%;color:#F7F5F0;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:11.5px}
-.tg{position:relative;display:inline-block;border-radius:6px}
-.cur{position:absolute;right:-14px;bottom:-18px;width:22px;height:22px;opacity:0;pointer-events:none}
-.fsteps{display:flex;gap:4px;flex-wrap:wrap;margin-top:12px;font-size:12px;font-weight:600;letter-spacing:.03em}
-.fsteps button{font:inherit;letter-spacing:inherit;background:none;border:0;border-bottom:2px solid transparent;padding:3px 7px;color:#8E9093;cursor:pointer}
-.fsteps button:hover{color:#F8F8F8}
-.swap{display:grid}.swap>div{grid-area:1/1}
-.wk{display:grid;gap:3px;align-content:start;opacity:0;animation:wk 30s infinite}.wk i{color:#BDBEC0}
-.stk{display:block;margin-top:4px;color:#7CC4A8;font-size:12px;font-weight:600}
-@keyframes wk{0%,2%{opacity:0}3%,10%{opacity:1}11%,100%{opacity:0}}
-.slack.still *{animation:none!important}
-.slack.still .sc{opacity:0;visibility:hidden}
-.slack.still-0 .sA,.slack.still-1 .sB,.slack.still-2 .sC,.slack.still-3 .sD{opacity:1;visibility:visible}
-.slack.still .a2,.slack.still .a3,.slack.still .d2,.slack.still .d3{opacity:1;transform:none}
-.slack.still .wk{opacity:0}
-.slack.still .fsteps button{color:#8E9093;border-color:transparent}
-.slack.still-0 .L0,.slack.still-1 .L1,.slack.still-2 .L2,.slack.still-3 .L3{color:#F8F8F8;border-color:#4FB3E8}
-.fbar{display:flex;justify-content:space-between;align-items:flex-end;gap:8px}
-.fpause{flex:none;margin-top:12px;font:600 12px var(--sans);color:#D1D2D3;background:transparent;border:1px solid #3A3E43;border-radius:6px;padding:4px 10px;cursor:pointer}
-.slack.paused *{animation-play-state:paused!important}
-.slack.restart *{animation:none!important}
-.fbtns{display:flex;gap:6px;flex:none}
-.slack .fpause:focus-visible{outline-color:#4FB3E8}
-@keyframes sA{0%{opacity:0;visibility:hidden}1%,29%{opacity:1;visibility:visible}30%,100%{opacity:0;visibility:hidden}}.sA{animation:sA 30s infinite}
-@keyframes sB{0%,29%{opacity:0;visibility:hidden}30%,46%{opacity:1;visibility:visible}47%,100%{opacity:0;visibility:hidden}}.sB{opacity:0;visibility:hidden;animation:sB 30s infinite}
-@keyframes sC{0%,46%{opacity:0;visibility:hidden}47%,61%{opacity:1;visibility:visible}62%,100%{opacity:0;visibility:hidden}}.sC{opacity:0;visibility:hidden;animation:sC 30s infinite}
-@keyframes sD{0%,61%{opacity:0;visibility:hidden}62%,98%{opacity:1;visibility:visible}99%,100%{opacity:0;visibility:hidden}}.sD{opacity:0;visibility:hidden;animation:sD 30s infinite}
-@keyframes a2{0%,10%{opacity:0;transform:translateY(8px)}12%,100%{opacity:1;transform:none}}.a2{opacity:0;animation:a2 30s infinite}
-@keyframes a3{0%,22%{opacity:0;transform:translateY(8px)}24%,100%{opacity:1;transform:none}}.a3{opacity:0;animation:a3 30s infinite}
-@keyframes d2{0%,73%{opacity:0;transform:translateY(8px)}75%,100%{opacity:1;transform:none}}.d2{opacity:0;animation:d2 30s infinite}
-@keyframes d3{0%,86%{opacity:0;transform:translateY(8px)}88%,100%{opacity:1;transform:none}}.d3{opacity:0;animation:d3 30s infinite}
-@keyframes kB{0%,37%{opacity:0;transform:translate(70px,60px)}38%{opacity:1;transform:translate(70px,60px)}42%{opacity:1;transform:translate(0,0) scale(1)}43%{opacity:1;transform:translate(0,0) scale(.8)}44%{opacity:1;transform:translate(0,0) scale(1)}46%,100%{opacity:0;transform:translate(0,0)}}.kB{animation:kB 30s infinite}
-@keyframes pkB{0%,42%{box-shadow:0 0 0 0 rgba(79,179,232,0)}43%{box-shadow:0 0 0 4px rgba(79,179,232,.55)}46%,100%{box-shadow:0 0 0 0 rgba(79,179,232,0)}}.pkB{animation:pkB 30s infinite}
-@keyframes kC{0%,51%{opacity:0;transform:translate(70px,60px)}52%{opacity:1;transform:translate(70px,60px)}57%{opacity:1;transform:translate(0,0) scale(1)}58%{opacity:1;transform:translate(0,0) scale(.8)}59%{opacity:1;transform:translate(0,0) scale(1)}61%,100%{opacity:0;transform:translate(0,0)}}.kC{animation:kC 30s infinite}
-@keyframes pkC{0%,57%{box-shadow:0 0 0 0 rgba(79,179,232,0)}58%{box-shadow:0 0 0 4px rgba(79,179,232,.55)}61%,100%{box-shadow:0 0 0 0 rgba(79,179,232,0)}}.pkC{animation:pkC 30s infinite}
-@keyframes kD{0%,65%{opacity:0;transform:translate(70px,60px)}66%{opacity:1;transform:translate(70px,60px)}70%{opacity:1;transform:translate(0,0) scale(1)}71%{opacity:1;transform:translate(0,0) scale(.8)}72%{opacity:1;transform:translate(0,0) scale(1)}74%,100%{opacity:0;transform:translate(0,0)}}.kD{animation:kD 30s infinite}
-@keyframes pkD{0%,70%{box-shadow:0 0 0 0 rgba(79,179,232,0)}71%{box-shadow:0 0 0 4px rgba(79,179,232,.55)}74%,100%{box-shadow:0 0 0 0 rgba(79,179,232,0)}}.pkD{animation:pkD 30s infinite}
-@keyframes L0{0%,29%{color:#F8F8F8;border-color:#4FB3E8}30%,100%{color:#8E9093;border-color:transparent}}.L0{animation:L0 30s infinite}
-@keyframes L1{0%,29%{color:#8E9093;border-color:transparent}30%,46%{color:#F8F8F8;border-color:#4FB3E8}47%,100%{color:#8E9093;border-color:transparent}}.L1{animation:L1 30s infinite}
-@keyframes L2{0%,46%{color:#8E9093;border-color:transparent}47%,61%{color:#F8F8F8;border-color:#4FB3E8}62%,100%{color:#8E9093;border-color:transparent}}.L2{animation:L2 30s infinite}
-@keyframes L3{0%,61%{color:#8E9093;border-color:transparent}62%,98%{color:#F8F8F8;border-color:#4FB3E8}99%,100%{color:#8E9093;border-color:transparent}}.L3{animation:L3 30s infinite}
-@media (prefers-reduced-motion:reduce){.sA,.sB,.sC,.sD,.a2,.a3,.d2,.d3,.kB,.kC,.kD,.pkB,.pkC,.pkD,.L0,.L1,.L2,.L3,.wk{animation:none}.a2,.a3,.d2,.d3{opacity:1;transform:none}.fsteps .L0{color:#F8F8F8;border-color:#4FB3E8}.fpause{display:none}}
+.f3 p{font-size:15px;color:var(--ink-soft)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:14px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--grey-soft);border-radius:5px;padding:3px 8px;color:var(--ink)}
+.onward{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--ink-soft);max-width:52ch}
 
 /* demo */
 .demo{border:1px solid var(--line-strong);border-radius:16px;overflow:hidden;background:var(--bg)}
-.demo-top{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid var(--line);background:var(--grey-soft)}
+.demo-top{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid var(--line);background:var(--grey-soft);font-size:14px}
 .prog{display:flex;gap:6px}
 .prog span{width:22px;height:4px;border-radius:2px;background:var(--line-strong)}
 .prog span.on{background:var(--accent)}
 .demo-body{padding:28px;display:grid;grid-template-columns:minmax(0,1fr);gap:22px;min-height:420px;align-content:start}
+.demo-body:focus{outline:none}
 .demo-nav{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;padding:16px 20px;border-top:1px solid var(--line)}
-.pick{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.pick button{font:500 17px var(--sans);text-align:left;padding:20px;border-radius:12px;border:1px solid var(--line-strong);background:var(--bg);color:var(--ink);cursor:pointer;display:grid;gap:6px}
-.pick button:hover{border-color:var(--accent)}
-.pick button small{color:var(--muted);font-size:13px}
-.raw{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.rawc{border:1px solid var(--line);border-radius:10px;padding:14px;font-size:14px;display:grid;gap:8px;align-content:start;background:var(--bg)}
+.stage{color:var(--accent)}
+.finds{display:grid;gap:14px}
+.find{border:1px solid var(--line);border-radius:12px;padding:18px;display:grid;gap:12px}
+.find h4,.grp h4{margin:0;font:600 17px/1.35 var(--sans)}
+.find>p{font-size:15px;color:var(--ink-soft)}
+.raw{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.rawc{border:1px solid var(--line);border-radius:10px;padding:12px;font-size:14px;display:grid;gap:6px;align-content:start;background:var(--grey-soft)}
 .rawc .s{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
 .rawc q{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;color:var(--ink-soft);quotes:none}
-.groups{display:grid;gap:12px}
-.grp{border:1px solid var(--line);border-radius:12px;padding:18px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 20px}
+.groups{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.grp{border:1px solid var(--line);border-radius:12px;padding:18px;display:grid;gap:10px;align-content:start}
 .grp.top{border-color:var(--accent);background:var(--accent-soft)}
-.grp h4{margin:0;font:600 16px var(--sans)}
-.grp .why{font-size:14px;color:var(--ink-soft)}
-.grp .maths{grid-column:1/-1;font-size:13px;color:var(--ink-soft)}
-.grp .maths summary{cursor:pointer;color:var(--accent);font-size:13px}
-.grp .maths .lines{list-style:none;margin:10px 0 8px;padding:0;display:grid;gap:6px;font-variant-numeric:tabular-nums}
-.grp .maths .lines small{display:block;font-size:12px;color:var(--muted)}
-.grp .maths .lines .eq{border-top:1px solid var(--line);padding-top:6px;font-weight:600;color:var(--ink)}
-.grp .maths p{margin:0}
-.stakes{list-style:none;margin:0;padding:0;display:grid;gap:10px}
-.stakes li{display:flex;justify-content:space-between;gap:16px;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:10px}
-.stakes .stake{font-family:var(--serif);font-size:20px;color:var(--accent);white-space:nowrap;text-align:right}
-.stakes .stake small{display:block;font:12px var(--sans);color:var(--muted);white-space:normal}
-@media (max-width:600px){.stakes li{flex-wrap:wrap}.stakes .stake{text-align:left}}
-@media (max-width:600px){.groups .grp{grid-template-columns:1fr}.groups .grp .mv{grid-row:auto;text-align:left;order:3;white-space:normal}.groups .grp .mv small{display:block}.groups .grp .maths{order:4}}
-.grp .mv{text-align:right;font-family:var(--serif);font-size:22px;color:var(--accent);grid-row:span 2;align-self:center;white-space:nowrap}
-.grp .mv small{display:block;font:12px var(--sans);color:var(--muted)}
-.cal-scroll{overflow-x:auto}
-.cal{min-width:760px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.cal .head,.cal .line{display:grid;grid-template-columns:260px repeat(12,minmax(0,1fr));align-items:center}
-.cal .head{background:var(--grey-soft);font-size:12px;color:var(--muted);padding:8px 0}
-.cal .head span{text-align:center}
-.cal .line{border-top:1px solid var(--line);padding:12px 0;cursor:pointer;background:var(--bg);text-align:left;border-left:0;border-right:0;border-bottom:0;width:100%;font:inherit;color:inherit}
-.cal .line:hover{background:var(--grey-soft)}
-.cal .meta{padding:0 14px;display:grid;gap:2px}
-.cal .meta b{font:600 11px var(--sans);color:var(--accent);letter-spacing:.05em}
-.cal .meta span{font-size:14px;line-height:1.3}
-.cal .meta small{font-size:12px;color:var(--muted)}
-.gbar{height:14px;border-radius:7px}
-.cal .gbar{margin:0 3px}
-.gbar.make{background:repeating-linear-gradient(135deg,var(--hatch) 0 6px,transparent 6px 11px)}
-.gbar.live{background:var(--accent)}
-.board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.bcol{background:var(--grey-soft);border-radius:12px;padding:12px;display:grid;gap:10px;align-content:start}
-.bcol .h{display:flex;justify-content:space-between;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
-.bcard{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px;display:grid;gap:4px;font-size:14px;text-align:left;cursor:pointer;font-family:inherit;color:inherit}
-.bcard b{font-size:11px;color:var(--accent);letter-spacing:.05em}
-.bcard small{color:var(--muted);font-size:12px}
-.legend{display:flex;flex-wrap:wrap;gap:16px;align-items:center;font-size:13px;color:var(--muted)}
-.legend i{display:inline-block;width:28px;height:10px;border-radius:5px;vertical-align:middle;margin-right:6px}
-.brief{border:1px solid var(--line-strong);border-radius:14px;padding:24px;display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:24px}
-.brief .big{font-family:var(--serif);font-size:56px;line-height:1;color:var(--accent)}
-.brief dl{display:grid;grid-template-columns:110px 1fr;gap:10px 16px;margin:0;font-size:15px}
+.grp .n{font:500 26px/1 var(--serif);color:var(--muted)}
+.grp.top .n{color:var(--accent)}
+.grp .work{color:var(--accent);font-weight:600;font-size:15px}
+.facts{display:grid;gap:8px;margin:0;font-size:14px}
+.facts dt{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.facts dd{margin:0 0 4px}
+.facts .imp{font:500 20px/1.2 var(--serif);color:var(--ink)}
+.grp.top .facts .imp{color:var(--accent)}
+.maths{font-size:13px;color:var(--ink-soft)}
+.maths summary{cursor:pointer;color:var(--accent)}
+.maths ul{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:6px;font-variant-numeric:tabular-nums}
+.maths small{display:block;color:var(--muted)}
+.rule{font-size:15px;color:var(--ink-soft);max-width:75ch}
+.brief{border:1px solid var(--line-strong);border-radius:14px;padding:24px;display:grid;gap:16px;align-content:start}
+.brief dl{display:grid;grid-template-columns:150px minmax(0,1fr);gap:10px 16px;margin:0;font-size:15px}
 .brief dt{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;padding-top:3px}
 .brief dd{margin:0}
-.brief details{grid-column:1/-1;border:1px solid var(--line);border-radius:10px;padding:12px 16px}
-.brief summary{cursor:pointer;font-weight:600;color:var(--accent)}
-.brief details dl{margin-top:12px}
-.bring{display:grid;grid-template-columns:minmax(0,1fr);gap:18px}
-.chain{list-style:none;margin:0;padding:0;display:grid;gap:0}
-.chain li{display:grid;grid-template-columns:150px minmax(0,1fr);gap:16px;padding:12px 0 12px 18px;border-left:2px solid var(--accent-soft);position:relative;font-size:15px}
-.chain li::before{content:"";position:absolute;left:-6px;top:18px;width:10px;height:10px;border-radius:50%;background:var(--accent)}
-.chain .k{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;padding-top:3px}
-@media (max-width:760px){.chain li{grid-template-columns:1fr;gap:4px}}
-.close-demo{display:grid;gap:18px;padding:12px 0}
-.close-demo h3{font-size:28px;max-width:28ch}
+.linkbtn{font:inherit;font-size:14px;background:none;border:0;padding:0;color:var(--accent);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.decide{display:grid;gap:12px}
+.dnote{border-left:3px solid var(--accent);padding:6px 0 6px 14px;font-size:15px;color:var(--ink-soft);max-width:70ch}
+.sim{font-size:13px;color:var(--muted)}
+.s4{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:16px;align-items:start}
+/* the Jira issue, a static still */
+.jira{background:#1A1D21;color:#D1D2D3;border-radius:14px;padding:18px 20px;font-size:14px;line-height:1.5;display:grid;gap:12px}
+.jira b{color:#F8F8F8}
+.jtop{color:#A0A1A3;font-size:13px}.jkey{color:#4FB3E8}
+.jtitle{color:#F8F8F8;font-size:19px;font-weight:600;line-height:1.25}
+.jmeta{display:flex;gap:12px;align-items:center;flex-wrap:wrap;color:#A0A1A3;font-size:12.5px}
+.jstat{background:#3A3E43;color:#E8E8E8;font-size:11px;font-weight:700;letter-spacing:.05em;padding:2px 6px;border-radius:3px}
+.jsec{color:#E8E8E8;font-weight:600;font-size:13px}
+.brief-lines{display:grid;gap:6px;font-size:13.5px}
+.jira .sim{color:#A0A1A3;border-top:1px solid #34373B;padding-top:10px}
 
-/* ways, who, faq */
-.ways{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 36px}
-.ways div{display:grid;gap:6px}
-.ways h3{font-size:19px}
-.ways p{color:var(--ink-soft);font-size:15px}
-.why-now{font-family:var(--serif);font-size:22px;line-height:1.45;max-width:52ch}
+/* who, offer, faq */
 .who{display:grid;grid-template-columns:160px minmax(0,1fr);gap:32px;align-items:start}
-.photo{aspect-ratio:1;max-width:100%;border-radius:50%;background:var(--grey-soft);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px}
+img.photo{object-fit:cover;width:160px;height:160px;border-radius:50%;border:1px solid var(--line)}
+.start3{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.start3 li{border:1px solid var(--line-strong);border-radius:12px;padding:18px;display:grid;gap:6px;align-content:start;font-size:15px}
+.start3 li b{font-size:17px}
+.start3 li span:not(.label){color:var(--ink-soft)}
+.book-data{font-size:14px;color:var(--ink-soft)}
+.book-data a{color:var(--accent)}
 .faq details{border-bottom:1px solid var(--line);padding:18px 0}
 .faq summary{cursor:pointer;font:500 18px var(--sans);list-style:none;display:flex;justify-content:space-between;gap:16px}
 .faq summary::after{content:"+";color:var(--muted)}
 .faq details[open] summary::after{content:"−"}
 .faq details p{margin-top:10px;color:var(--ink-soft);max-width:70ch}
 
-/* experiment panel */
-.exp{position:fixed;left:calc(16px + env(safe-area-inset-left,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:20;background:var(--bg);border:1px solid var(--line-strong);border-radius:14px;padding:14px;display:grid;gap:10px;box-shadow:0 8px 30px rgba(0,0,0,.12);font-size:13px;max-width:calc(100vw - 32px)}
-.exp .label{color:var(--accent)}
-.exp .seg button{font-size:13px;padding:6px 10px}
-.exp-min{display:none}
+@media (max-width:1000px){.start3{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:760px){
   section{padding-block:64px}
-  .steps,.pick,.raw,.board,.ways,.cfo-cmp,.cfo-nums{grid-template-columns:1fr}
-  .hero-grid{grid-template-columns:1fr;gap:40px}
-  .cfo-block{padding:22px}
-  .brief{grid-template-columns:1fr}
+  .flow3,.raw,.groups,.s4{grid-template-columns:1fr}
+  .demo-body{padding:20px 16px}
+  .brief{padding:18px}
+  .brief dl{grid-template-columns:1fr;gap:2px}
+  .brief dd{margin-bottom:10px}
   .who{grid-template-columns:1fr}
-  .who .photo{width:120px}
+  img.photo{width:120px;height:120px}
 }
-.site-header{padding-block:20px}
-.site-header .wrap{display:flex;align-items:center;gap:10px}
-.site-header img{width:28px;height:28px;border-radius:6px}
-.site-header span{font:600 15px var(--sans);color:var(--ink)}
-.site-footer{border-top:1px solid var(--line);padding-block:32px 48px;font-size:14px;color:var(--muted)}
-.site-footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center}
-.site-footer .fw{color:var(--ink);font-weight:600}
-.site-footer a{color:var(--muted);text-decoration:none}
-.site-footer a:hover{color:var(--accent)}
-img.photo{object-fit:cover;width:160px;height:160px}
-.cred{font-size:14px;color:var(--muted);margin-top:-4px}
-.cred a{color:var(--ink-soft);text-decoration:underline;text-underline-offset:3px}
-.cred-sm{font-size:12px;letter-spacing:.04em;color:var(--muted);opacity:.8;margin-top:-14px}
-.rank{width:100%;max-width:880px;border:1px solid var(--line-strong);border-radius:16px;background:var(--bg);box-shadow:0 8px 28px rgba(0,0,0,.08);overflow:hidden;text-align:left}
-.rank-top{display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:space-between;align-items:center;padding:16px 22px;background:var(--grey-soft);border-bottom:1px solid var(--line);font-size:15px}
-.rank-row{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:16px;align-items:start;padding:18px 22px;border-bottom:1px solid var(--line)}
-.rank-row.top{background:var(--accent-soft)}
-.rank-row .n{font:500 22px/1 var(--serif);color:var(--muted);width:20px}
-.rank-row.top .n{color:var(--accent)}
-.rank-row>div:nth-child(2){display:grid;gap:3px;font-size:15px}
-.rank-row>div:nth-child(2) span{color:var(--ink-soft)}
-.rank-row .camp{color:var(--accent)!important;font-weight:600}
-.rank-row .amt{text-align:right;font-size:13px;color:var(--muted);white-space:nowrap}
-.rank-row .amt b{display:block;font:500 28px/1.1 var(--serif);color:var(--ink)}
-.rank-row.top .amt b{color:var(--accent)}
-.rank-row .amt small{display:block;font-size:12px}
-.rank-foot{padding:14px 22px;font-size:13.5px;color:var(--muted)}
-#in-slack .slack{width:100%;max-width:880px;text-align:left}
-@media (max-width:600px){.rank-row{grid-template-columns:auto minmax(0,1fr);padding:16px}.rank-row .amt{grid-column:2;text-align:left}.rank-row .amt b{display:inline;font-size:24px}.rank-top,.rank-foot{padding-inline:16px}}
-
+@media (max-width:600px){.start3{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <header class="site-header"><div class="wrap"><img src="Media/logo/sc-favicon.svg" alt="" width="28" height="28"><span>Structural Content</span><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form" target="_blank" rel="noopener">Try it first</a></div></header>
 
-
 <main>
 <!-- 1. Hero -->
-<section class="hero"><div class="wrap hero-grid">
+<section class="hero"><div class="wrap">
   <div class="stack hero-text" style="gap:22px">
   <span class="eyebrow">AI content strategy for B2B marketing</span>
   <h1>Know what marketing should work on next.</h1>
   <p class="lede">Structural Content understands what your business is trying to achieve, finds and ranks the marketing opportunities most likely to help, and turns them into ready-to-execute briefs for your team to review and approve.</p>
-  <div class="row"><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form" target="_blank" rel="noopener">Try it first</a><a class="btn ghost" href="#in-slack">Learn more ↓</a></div>
+  <div class="row"><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form" target="_blank" rel="noopener">Try it first</a><a class="btn ghost" href="#demo">See the example ↓</a></div>
   <p class="cred">Built by Sebastian Messerer, ex-Amazon Senior Content Strategist · <a href="https://sebastianmesserer.com/essays/structural-content/" target="_blank" rel="noopener">As featured in TLDR Marketing</a></p>
   </div>
-  <div class="rank" role="img" aria-label="Example, CloudBox, a fictional company. Goal: 3 million dollars more ARR in 2027. Three campaigns ranked by revenue at stake: enterprise prospects who can't see how it works across offices, up to 4.1 million dollars of new ARR; new customers who don't back up the whole company in their first week, up to 1.1 million dollars of ARR kept; customers with several offices who don't know one account can hold them all, up to 504 thousand dollars of expansion ARR.">
-    <div class="rank-top"><span><b>Goal:</b> $3M more ARR in 2027</span><span class="label">Example: CloudBox (fictional)</span></div>
-    <div class="rank-row top"><span class="n">1</span><div><b>1,630 enterprise prospects visit and never book.</b><span>They can't see how it would work across 12 offices.</span><span class="camp">→ Enterprise page and rollout story</span></div><div class="amt">up to <b>$4.1M</b><small>new ARR at stake</small></div></div>
-    <div class="rank-row"><span class="n">2</span><div><b>360 new customers didn't back up the whole company in week one.</b><span>They leave three times as often in their first year.</span><span class="camp">→ An onboarding series</span></div><div class="amt">up to <b>$1.1M</b><small>ARR kept</small></div></div>
-    <div class="rank-row"><span class="n">3</span><div><b>420 customers run their offices on separate accounts.</b><span>They don't know one account can hold them all.</span><span class="camp">→ Show them how, and what it adds</span></div><div class="amt">up to <b>$504k</b><small>expansion ARR</small></div></div>
-    <div class="rank-foot">Ranked from the CRM, sales calls, product usage and support chats. Each campaign arrives in your board as a ready brief.</div>
-  </div>
 </div></section>
 
-<!-- 2. Which first: competing opportunities across the lifecycle -->
-<section id="which-first"><div class="wrap stack" style="gap:40px">
-  <h2>Three good ideas. One team. Which first?</h2>
-  <div class="ways">
-    <div><span class="label">Acquire · Pipeline</span><h3>Enterprise prospects can't see how CloudBox works across 12 offices.</h3><p>→ Enterprise page and rollout story</p></div>
-    <div><span class="label">Activate · Retention</span><h3>New customers who back up their whole company in week one stay three times longer. Many don't.</h3><p>→ Onboarding series</p></div>
-    <div><span class="label">Expand · Existing ARR</span><h3>Customers with several offices don't realize they can manage them under one account.</h3><p>→ Customer education campaign</p></div>
+<!-- 2. The problem -->
+<section id="problem"><div class="wrap stack" style="gap:24px">
+  <h2>The most valuable thing to work on might not be in your plan.</h2>
+  <div class="prose">
+    <p>Marketing can help win customers, unblock deals, drive adoption, grow accounts and prevent churn.</p>
+    <p>But the evidence for where it could make the biggest difference is scattered across the business. Sales hears why buyers hesitate. Support knows what customers struggle with. Product data reveals where customers get stuck.</p>
+    <p>Some of the best opportunities never make it onto the marketing calendar. And there are more opportunities than any team has time to pursue.</p>
+    <p class="last">Structural Content finds them and helps you decide which deserve attention.</p>
   </div>
-  <p class="note">Illustrative example: CloudBox, a fictional company.</p>
-  <p class="closing">Same team. Three opportunities. Which deserves attention first?</p>
-</div></section>
-
-<!-- 2. Where it finds it -->
-<section id="how"><div class="wrap stack" style="gap:32px">
-  <div class="stack" style="gap:10px"><h2>Built on data only you have.</h2><p class="lede" style="max-width:60ch">Your competitors use the same keyword tools, search data and AI as you, so everyone ends up making the same content. What only you have is your customer and funnel data: who stalls where, and why, in their own words. Add it to the market data, and the picture gets precise enough to say exactly who to move, how, and what it's worth.</p></div>
-  <div class="flow3">
-    <div class="f3"><span class="label">1 · Reads</span><h3>Everything you know about your buyers.</h3>
-      <div class="chips"><span class="chip">CRM</span><span class="chip">Sales calls</span><span class="chip">Support chats</span><span class="chip">Product usage</span><span class="chip">Web analytics</span><span class="chip">Reviews</span><span class="chip">Search data</span></div></div>
-    <div class="f3"><span class="label">2 · Finds</span><h3>Who's worth winning, and what's stopping them.</h3>
-      <p class="ex">1,630 enterprise prospects visit and never book <small>CRM · web analytics</small>. The few who call all ask: "How would this work across 12 offices?" <small>sales calls</small></p></div>
-    <div class="f3"><span class="label">3 · Delivers</span><h3>The campaigns that move them, on your board.</h3>
-      <p class="ex">Enterprise page and rollout story · up to $4.1M at stake · assigned to Jennifer. Then it tracks what each campaign moved, and picks the next one better.</p></div>
-  </div>
-  <p class="why-now">The opportunities were always in your data. Finding and comparing them meant reading thousands of calls, tickets and CRM records. Structural Content makes that work practical to do continuously.</p>
-  <p class="note">Example: CloudBox, online backup for businesses (fictional).</p>
-</div></section>
-
-<!-- In Slack and Jira -->
-<section id="in-slack"><div class="wrap stack" style="gap:28px;align-items:center;text-align:center">
-  <h2>Ask where you work. Get the campaigns on your board.</h2>
-  <p class="lede" style="margin-inline:auto">It works with the team and tools you already have. Ask in Slack, Microsoft Teams or Claude. Every campaign lands in Jira, Asana, monday.com or whatever your team plans in, with what's at stake and who it's for.</p>
-  <div class="slack"><div class="ex-note" aria-hidden="true">Example: CloudBox, a fictional company</div><div class="flow" role="img" aria-label="Example, CloudBox, a fictional company. In Slack, Sam asks Claude, which uses the Structural Content connector, how marketing can help reach a goal of 3 million dollars more ARR. Structural Content suggests three campaigns, ranked by what is at stake. Sam gives the first, up to $4.1M at stake, to Jennifer, who opens the brief in Jira and asks Jon in design, in a comment, to start on the assets."><div class="sc sA"><div class="top"># marketing</div><div class="msg "><div class="av" style="background:#B9855C">S</div><div><div><b>Sam</b> <span class="meta">Head of Marketing</span></div><div><span class="lnk">@Claude</span> Our 2027 goal is $3M more ARR. How can marketing help?</div></div></div><div class="msg"><div class="av" style="background:#C96A4A">C</div><div><div><b>Claude</b> <span class="meta">APP</span></div><div class="conn"><span class="cdot">SC</span>Used <b>Structural Content</b> · CRM, sales calls, product usage</div><div class="swap"><div class="wk"><div><b>Reading the priority…</b></div><i>Finding who has to act for it to move</i><i>Finding what stops them</i><i>Ranking by what's at stake, and how likely each campaign is to work</i></div><div class="a2"><div>I see these campaigns:</div><div><b>1.</b> Enterprise prospects leave without booking a demo → show how it works across offices · <b>up to $4.1M new ARR at stake</b> · likely to work: high</div><div><b>2.</b> New customers don't back up the whole company in week one → an onboarding series · up to $1.1M ARR kept · medium</div><div><b>3.</b> Customers with several offices don't know one account holds them all → show them · up to $504k expansion ARR · high</div></div></div></div></div><div class="msg a3"><div class="av" style="background:#B9855C">S</div><div><div><b>Sam</b> <span class="meta"></span></div><div>Jennifer takes 1</div></div></div></div><div class="sc sB"><div class="top">Direct message · Jennifer</div><div class="msg "><div class="av" style="background:#C96A4A">C</div><div><div><b>Claude</b> <span class="meta">APP</span></div><div>Hey Jennifer – Sam gave you a new campaign: <b>show enterprise buyers how it works across offices.</b></div><div class="unf"><b>CAM-12 · Enterprise page</b><span>Up to $4.1M new ARR at stake · likely to work: high</span><span>Who: 1,630 companies with 1,000+ staff that visited and never booked a demo</span><span>Why: they can't see how it works across 12 offices</span></div><div><span class="tg pkB lnk" style="font-weight:600;padding:2px 4px">Open in Jira →<svg class="cur kB" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2l7 19 2.5-7.5L20 11z" fill="#fff" stroke="#111" stroke-width="1.5" stroke-linejoin="round"/></svg></span></div></div></div></div><div class="sc sC"><div class="top">Jira · Campaigns</div><div class="jcols"><div class="jcol"><span>TO DO</span><div class="jcard new tg pkC" style="display:block">Enterprise page<small>New · Jennifer</small><span class="stk">up to $4.1M at stake</span><svg class="cur kC" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2l7 19 2.5-7.5L20 11z" fill="#fff" stroke="#111" stroke-width="1.5" stroke-linejoin="round"/></svg></div><div class="jcard">Onboarding series<small>Unassigned</small><span class="stk">up to $1.1M ARR kept</span></div></div><div class="jcol"><span>IN PROGRESS</span><div class="jcard">Pricing page<small>Jon</small></div></div></div></div><div class="sc sD"><div class="top jtop"><span>Campaigns</span> / <span class="jkey">CAM-12</span></div><div class="jtitle">Enterprise page</div><div class="jmeta"><span class="jstat">TO DO</span><span>Assignee <b>Jennifer</b></span></div><div class="jbody"><div class="jl"><div class="jsec">Description</div><div class="brief-lines"><div><b>At stake:</b> up to $4.1M new ARR · likely to work: high</div><div><b>Who:</b> 1,630 companies with 1,000+ staff that visited and never booked a demo.</div><div><b>Why they stop:</b> they can't see how it works across 12 offices.</div><div><b>Make:</b> an enterprise page, with a rollout diagram.</div><div><b>Promote:</b> search ads on "backup for many offices".</div><div><b>Measured by:</b> demo requests from those companies, month by month.</div></div></div><div class="jr"><div class="jsec">Comments</div><span class="tg pkD jbox">Add a comment…<svg class="cur kD" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2l7 19 2.5-7.5L20 11z" fill="#fff" stroke="#111" stroke-width="1.5" stroke-linejoin="round"/></svg></span><div class="jcom d2"><div class="jav" style="background:#6C7FB0">J</div><div><div><b>Jennifer</b> <span class="meta">just now</span></div><div><span class="lnk">@Jon</span> could you start on the assets for this one?</div></div></div><div class="jcom d3"><div class="jav" style="background:#8A6FA8">Jo</div><div><div><b>Jon</b> <span class="meta">just now</span></div><div>On it. Drafts by Thursday.</div></div></div></div></div></div></div><div class="fbar"><div class="fsteps"><button type="button" class="L0" data-s="0">1 The plan</button><button type="button" class="L1" data-s="1">2 Jennifer's message</button><button type="button" class="L2" data-s="2">3 Jira</button><button type="button" class="L3" data-s="3">4 The brief</button></div><span class="fbtns"><button class="freplay fpause" type="button">Replay</button><button class="fpause" id="fp" type="button">Pause</button></span></div></div>
-</div></section>
-
-<!-- Try it (directly under the hero) -->
-<section id="demo"><div class="wrap stack" style="gap:24px">
-  <h2>See it work on an example.</h2>
-  <p class="lede">Watch Structural Content work through the data of CloudBox, a made-up company: pick one of its goals, and see the content worth making right now. It takes two minutes.</p>
-  <div class="demo">
-    <div class="demo-top"><span class="label">Example: CloudBox, online backup for businesses (fictional)</span><span class="prog" id="prog"></span></div>
-    <div class="demo-body" id="demo-body" aria-live="polite"></div>
-    <div class="demo-nav"><button class="btn ghost" id="d-back">Back</button><button class="btn" id="d-next">Next</button></div>
-  </div>
-</div></section>
-
-<!-- 2. Before / after -->
-<section id="before-after"><div class="wrap stack" style="gap:28px">
-  <h2>Your keyword list looks like your competitors'? It doesn't have to.</h2>
-  <p class="lede">Most content plans start from keyword tools and competitor research, so everyone ends up with the same plan. Add what your own buyers have told you, and here's what changes.</p>
-  <div id="ba-tabs" hidden></div>
-  <p class="note">Example: CloudBox, online backup for businesses (fictional).</p>
-  <div id="ba-table"></div>
-  <div id="ba-row" hidden></div>
-  <div class="cfo-block">
-    <h3>Impress your CFO.</h3>
-    <p>Lots of traffic is great. But when your CFO asks, "And what did that traffic bring us, for five figures a month?", things get awkward. With Structural Content, each campaign is aimed at a specific group of people, so you can show how many of them act, and what that's worth:</p>
-    <div class="cfo-cmp">
-      <div><span class="label">Today</span><p class="quote">“Our blog got 120,000 visits this quarter.”</p></div>
-      <div class="with"><span class="label" style="color:var(--accent)">With Structural Content: one campaign</span>
-        <div class="cfo-nums">
-          <p><span class="label k">Who it's for</span><b>1,630</b><span>big companies that visited and never booked a demo</span></p>
-          <p><span class="label k">What's at stake</span><b>$4.1M</b><span>at stake if they all did, and bought at today's rate</span></p>
-          <p class="moved"><span class="label k">What it moved</span><b>+9</b><span>more of them book a demo each month since the campaign went live</span></p>
-        </div></div>
-    </div>
-    <p class="note">Example: CloudBox, a fictional company.</p>
-  </div>
-  <p class="closing"><b>One continuous process:</b> your business goal, your customer data, prioritized opportunities, ready-to-produce briefs, and measured results that inform what comes next.</p>
 </div></section>
 
 <!-- 3. How it works -->
+<section id="how"><div class="wrap stack" style="gap:32px">
+  <div class="stack" style="gap:10px"><h2>Find the opportunities hiding in your own data.</h2><p class="lede">Structural Content connects the evidence your company already has to identify where Marketing could make the biggest difference.</p></div>
+  <div class="flow3">
+    <div class="f3"><span class="label">1</span><h3>Find what matters.</h3>
+      <p>Examine CRM records, sales conversations, support interactions, product usage and other available evidence. Identify groups of customers or prospects who aren't taking actions valuable to the business, and investigate what's preventing them.</p>
+      <div class="chips"><span class="chip">CRM</span><span class="chip">Sales calls</span><span class="chip">Support chats</span><span class="chip">Product usage</span><span class="chip">Web analytics</span><span class="chip">Reviews</span><span class="chip">Search data</span></div></div>
+    <div class="f3"><span class="label">2</span><h3>Decide what's worth doing.</h3>
+      <p>Identify content and campaign opportunities, including ones not already in the marketing plan. Compare them against the company's objectives using estimated impact, evidence, confidence and effort.</p></div>
+    <div class="f3"><span class="label">3</span><h3>Get the work ready.</h3>
+      <p>Present recommendations for human review and approval. Turn approved opportunities into actionable briefs in the team's existing workflow.</p></div>
+  </div>
+  <p class="onward">As new evidence and results become available, Structural Content reassesses what deserves attention next.</p>
+</div></section>
 
+<!-- 4. Interactive demo -->
+<section id="demo"><div class="wrap stack" style="gap:24px">
+  <h2>See what Structural Content would recommend.</h2>
+  <p class="lede">CloudBox is a fictional B2B software company. Explore what its customer data reveals, which opportunities deserve attention, and what its marketing team could do about them.</p>
+  <div class="demo">
+    <div class="demo-top"><span id="d-goal"></span><span class="prog" id="prog" aria-hidden="true"></span></div>
+    <div class="demo-body" id="demo-body" aria-live="polite" tabindex="-1"></div>
+    <div class="demo-nav"><button class="btn ghost" id="d-back" type="button">Back</button><button class="btn" id="d-next" type="button">Next</button></div>
+  </div>
+</div></section>
 
-<!-- 6. Who -->
+<!-- 5. From recommendation to production -->
+<section id="production"><div class="wrap stack" style="gap:24px">
+  <h2>From recommendation to production.</h2>
+  <div class="prose">
+    <p>Each approved opportunity becomes a brief with the audience, customer barrier, supporting evidence, proposed content, distribution and success measure.</p>
+    <p>Your team or agency creates the content. Structural Content helps determine what deserves to be made and uses the results to inform future recommendations.</p>
+    <p>Work with it through Slack, Microsoft Teams or Claude. Send approved briefs to Jira, Asana or your existing project management tool.</p>
+  </div>
+</div></section>
+
+<!-- 6. Founder -->
 <section id="who"><div class="wrap">
   <div class="who">
     <img class="photo" src="Media/Headshot-24.jpg" width="160" height="160" alt="Portrait of Sebastian Messerer" />
     <div class="stack">
       <h2>Built on what worked at Amazon.</h2>
-      <p class="lede">Hi, I'm Sebastian, a content strategist in Berlin. For more than ten years I've made content that gets people to act, for brands like Amazon, Adobe, Allianz and Corning: international campaigns, measurement frameworks, multi-million-euro video budgets, and award-winning work.</p>
-      <p class="lede">Most recently, at Amazon, I led B2B content strategy for Germany, the UK and Ireland, and ran the international channel strategy for Amazon Logistics' delivery partners. There I built AI-driven planning systems that scaled across 13 markets and more than doubled conversion on the actions they targeted. They started from what Amazon needed its partners to do, and found what was stopping them in Amazon's own data.</p>
-      <p class="lede">Structural Content is a new, much better version of that approach, built from scratch for B2B marketing teams.</p>
+      <p class="lede">I'm Sebastian Messerer. At Amazon Logistics, I developed AI-driven content planning systems that started with business goals and used internal data to understand what prevented people from taking valuable actions.</p>
+      <p class="lede">The approach more than doubled conversion on the specific actions it targeted and expanded across 13 markets.</p>
+      <p class="lede">I founded Structural Content to make a more capable version of that approach available to B2B marketing teams.</p>
       <p class="label" style="letter-spacing:.06em">Worked with Amazon · Adobe · Allianz · Corning</p>
-      <p><a href="https://sebastianmesserer.com/essays/structural-content/" style="color:var(--accent);font-weight:600">Read the founding essay, as featured in TLDR Marketing →</a></p>
-      <a href="https://www.linkedin.com/in/sebastianmesserer" target="_blank" rel="noopener" style="color:var(--accent);font-weight:600">Connect with me on LinkedIn →</a>
+      <div class="row" style="gap:20px"><a href="https://sebastianmesserer.com/essays/structural-content/" style="color:var(--accent);font-weight:600">Read the founding essay →</a><a href="https://www.linkedin.com/in/sebastianmesserer" target="_blank" rel="noopener" style="color:var(--accent);font-weight:600">Connect on LinkedIn →</a></div>
     </div>
-  </div>
-  <div class="book" id="offer">
-    <h3>What happens when you start.</h3>
-    <div class="book-copy"><p class="fit">Works best for B2B teams with a CRM, sales calls or support conversations to learn from, and a team or agency to make the content.</p>
-    <ol class="start3 s4">
-      <li><span class="label">1 · Free trial</span><b>See it on a twin of your company.</b><span>We build it from your public footprint, with synthetic data, in the chat and project tool you use. Send the form, start within a day.</span></li>
-      <li><span class="label">2 · 30-minute demo</span><b>See it on your number.</b><span>The goal you need to move, and the data you already have.</span></li>
-      <li><span class="label">3 · Paid pilot</span><b>Proof on your own number.</b>
-        <ul><li>We agree one outcome to move, like demo requests.</li><li>We set the baseline: what marketing brings in today.</li><li>Your team runs Structural Content for a set period, with every campaign it finds.</li><li>We measure whether it lifted the baseline.</li></ul>
-        <span class="eff"><b>What it takes from you:</b> one owner, read-only exports of the data you choose, and a short review each fortnight.</span>
-        <small>The result sets your subscription price.</small></li>
-      <li><span class="label">4 · Subscription</span><b>Kept current, every month.</b>
-        <ul><li>New evidence reviewed as it comes in.</li><li>Live campaigns checked against their numbers.</li><li>The next campaigns ranked and briefed.</li><li>A monthly review with you on what to do next.</li><li>It learns from every result, so each round ranks better.</li></ul>
-        <small>Priced on the lift the pilot measured.</small></li>
-    </ol>
-    <p class="book-data">Your data stays in the EU, under our data processing agreement. <a href="trust.html">How we handle your data →</a></p></div>
-    <div class="row"><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form" target="_blank" rel="noopener">Try it first</a><a class="btn ghost" href="https://calendar.app.google/uPeQFcDajNFzsZJYA" target="_blank" rel="noopener">Book a demo</a></div>
   </div>
 </div></section>
 
-<!-- 7. FAQ -->
+<!-- 7. Next step -->
+<section id="offer"><div class="wrap stack" style="gap:24px">
+  <h2>See what it could find for your business.</h2>
+  <p class="lede">If you have a business goal, customer data and a team that creates content, we can explore whether Structural Content could help you identify better opportunities for that team's work.</p>
+  <ol class="start3">
+    <li><span class="label">1 · Free trial</span><b>See it on a twin of your company.</b><span>We build it from your public footprint, with synthetic data, in the chat and project tool you use. Send the form, start within a day.</span></li>
+    <li><span class="label">2 · 30-minute demo</span><b>See it on your number.</b><span>The goal you need to move, and the data you already have.</span></li>
+    <li><span class="label">3 · Paid pilot</span><b>Proof on your own number.</b><span>We agree one outcome, set the baseline, and measure whether it lifted it.</span></li>
+    <li><span class="label">4 · Subscription</span><b>Kept current, every month.</b><span>Priced on the lift the pilot measured.</span></li>
+  </ol>
+  <div class="row"><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form" target="_blank" rel="noopener">Try it first</a><a class="btn ghost" href="https://calendar.app.google/uPeQFcDajNFzsZJYA" target="_blank" rel="noopener">Book a demo</a></div>
+  <p class="book-data">Your data stays in the EU, under our data processing agreement. <a href="trust.html">How we handle your data →</a></p>
+</div></section>
+
+<!-- 8. FAQ -->
 <section id="faq"><div class="wrap stack faq" style="gap:8px">
   <h2 style="margin-bottom:16px">Fair questions</h2>
   <details><summary>Isn't this just an attribution tool?</summary><p>No. Attribution looks back at which content worked. Structural Content looks ahead: it finds what's stopping your buyers, tells you what to make about it, and then checks whether it moved your number.</p></details>
-  <details><summary>Does this mean I stop doing what I do now?</summary><p>No. Same channels, same team, same tools. What changes is where your money goes. You keep the search terms and campaigns that bring in customers, add the ones only your buyers use, and stop spending time and money competing for terms that only bring in engagement that doesn't convert.</p></details>
   <details><summary>Couldn't we build this ourselves? Isn't it just Gong with an LLM?</summary><p>You can build with it. Most teams start by asking ChatGPT or Claude, and get good ideas. Structural Content is what turns them into campaigns that work: your data joined and checked, every number traced to its source, each campaign a ready brief with what's at stake, and a record of which campaigns moved which number, growing every month. Your team, your agency or your own AI agents can all work from it.</p></details>
-  <details><summary>How is this different from hiring an agency?</summary><p>An agency works from what you hand them a few times a year. They're not in your calls or your CRM, so they guess what your buyers need, and plan for the clicks they can show you in a report. Structural Content reads every call, chat and deal, every week, and aims each campaign at a group counted in your own data. Your team or your agency still makes the pieces.</p></details>
+  <details><summary>How is this different from hiring an agency?</summary><p>An agency works from what you hand them a few times a year. Structural Content reads every call, chat and deal, every week, and aims each campaign at a group counted in your own data. Your team or your agency still makes the pieces.</p></details>
   <details><summary>Isn't this just an SEO tool?</summary><p>SEO tools start from what everyone searches for, so you get the same list as your competitors. Structural Content starts from what's stopping your buyers, which only your data knows, then finds the searches that reach them.</p></details>
   <details><summary>Is it an AI writing tool?</summary><p>No, on purpose: there are plenty of good ones already. Structural Content gives you unusually rich briefs, so whoever makes your content, your AI tools, your agency, your team or a mix, knows exactly what to make and can make it fast.</p></details>
   <details><summary>Isn't this an intent-data or ABM tool?</summary><p>Those start from outside signals about who might be in the market. Structural Content starts from your own customers, finds who to win and why they'd buy, and can then use outside signals to find more like them.</p></details>
   <details><summary>Isn't this stepping on sales' or CS's toes?</summary><p>No. Sales and CS work one-to-one, especially with your biggest accounts. Marketing reaches whole groups at once: before the sale, and after it in lifecycle marketing, from onboarding to cross-sell. Structural Content does the group part, using what sales and CS already know. Say your CS notes show that customers who back up the whole company in their first week stay three times longer. It can suggest a campaign that brings in more companies like them, and an onboarding series that gets every new customer there in their first week.</p></details>
-  <details><summary>Is it more work for my team?</summary><p>Less than today. Deciding what to make usually takes research, workshops and debate, or briefing an agency and reviewing what comes back. With Structural Content, you connect your data once, and campaigns arrive in your content board as tickets, already briefed and ranked. Your team reviews them and makes the pieces, as it does now.</p></details>
+  <details><summary>Is it more work for my team?</summary><p>Less than today. Deciding what to make usually takes research, workshops and debate, or briefing an agency and reviewing what comes back. With Structural Content, you connect your data once, and ranked recommendations arrive with their briefs, for you to approve. Your team makes the pieces, as it does now.</p></details>
   <details><summary>How does it work under the hood?</summary><p>Structural Content is cloud software that gives AI the data, infrastructure and memory it needs to produce campaign briefs that are reliable and effective, and that get better with every campaign you run. Your team works with it in Slack, Teams or Claude, and approved campaigns go to your project tool.</p></details>
   <details><summary>Is our data safe?</summary><p>Here's exactly how we handle it. Your data stays in the EU, on Amazon's servers in Frankfurt. The AI runs on Amazon Bedrock, which stores nothing, and your data is never used to train any model. One sub-processor (Amazon). Everything except a record without your files or any personal data taken from them (listed in Annex II of our data processing agreement) is deleted within 30 days of the end, with written confirmation. No SOC 2 yet; you can review our full data processing agreement and security measures instead. <a href="https://structuralcontent.com/trust.html" style="color:var(--accent)">See how we handle your data →</a></p></details>
 </div></section>
@@ -609,107 +384,101 @@ img.photo{object-fit:cover;width:160px;height:160px}
 </div></footer>
 <script>
 (function(){
-  /* hero click-through: pause control (WCAG 2.2.2) */
-  const slack=document.querySelector('.slack'), fp=document.getElementById('fp'), fr=document.querySelector('.freplay');
-  const clearStill=()=>slack.classList.remove('still','still-0','still-1','still-2','still-3');
-  const restart=()=>{clearStill();slack.classList.remove('paused');fp.textContent='Pause';slack.classList.add('restart');void slack.offsetWidth;slack.classList.remove('restart')};
-  fp.addEventListener('click',()=>{if(slack.classList.contains('still')){restart();return}const on=slack.classList.toggle('paused');fp.textContent=on?'Play':'Pause'});
-  /* chapters: click one to hold that step as a still */
-  slack.querySelectorAll('.fsteps button').forEach(b=>b.addEventListener('click',()=>{clearStill();slack.classList.add('still','still-'+b.dataset.s);fp.textContent='Play'}));
-  /* replay: drop every animation for one frame, then restart them all from 0 */
-  fr.addEventListener('click',restart);
-
-  /* before / after */
-  const BA={
-   "Demo requests":[["Your keyword list", {"chips": ["cloud backup software", "business backup solution", "secure data backup"]}, "The same list as your five competitors.", {"chips": ["backup for many offices", "get files back after a hack"]}, "Your buyers' own words. Nobody else has them."], ["Your content calendar", {"snip": "Four posts a month on data security trends."}, "Judged by traffic.", {"snip": "An enterprise page and customer story, answering the question they all ask on their first call."}, "Judged by demos booked."], ["Your messaging", {"snip": "“Secure, scalable, effortless backup.”"}, "The same words as every competitor.", {"snip": "“We moved 12 offices in a month, and nobody lost a file.” On your ads and landing pages."}, "The words your customers decide on."]],
-   "Trial sign-ups":[
-    ["Your keyword list",'"free desk booking software", "best hybrid office app". Your five competitors have the same list.','"book desks for a team of 30 without IT", "replace the office spreadsheet": how your best self-serve customers described their problem in their first support chat. Content on these terms brings in more people like them.'],
-    ["Your content calendar","A weekly blog post and social posts, judged by traffic.","Three pieces for office managers at 20–100-person companies, the group most likely to sign up and pay: a template that answers the question they all asked in their first support chat. Watch: trial sign-ups from them, month by month."],
-    ["Your messaging",'"Get started free in minutes." The same words as every competitor.','"We stopped double-booking desks in the first week": why your best self-serve customers stayed, from their reviews and sign-up survey. On your pricing page and ads. Watch: trial starts on the pricing page, 4% of visitors today.'],
-    ["A line in your 2027 plan",'"Paid social: €80k (last year plus 10%)."','"€25k: retarget the 2,400 companies that look like your best self-serve customers and visited pricing but never started a trial, with the answer to their top question. Watch: trial starts from these companies, month by month."']],
-   "Qualified pipeline":[
-    ["Your target-account list","1,000 mid-market accounts from an intent-data tool, in your industries. Your competitors buy the same list.","320 accounts that match what your best customers had in common in your CRM: a recent office move and a new COO. You know why each account is on the list."],
-    ["Your content calendar","A monthly webinar on industry trends, judged by registrations.","Three pieces for heads of workplace at companies with a recent office move, the group that turns into pipeline most often: a cost guide that answers the question they all asked first on the discovery call. Watch: qualified opportunities from them, month by month."],
-    ["Your messaging",'"The leading workplace platform for the modern enterprise." The same words as every competitor.','"We knew within a month which floors we could give back": why your best customers chose you over the alternative, from won-deal calls. It becomes a customer-story campaign: three of your best customers telling that story, in short videos for the 320 target accounts. Watch: accounts engaging with the campaign, month by month.'],
-    ["A line in your 2027 plan",'"Trade shows: €150k (same as last year)."','"€50k: account-based campaign for the 320 accounts above, built on the reason your best customers chose you. Watch: qualified opportunities from these accounts, month by month."']]
+  /* CloudBox (fictional): the only place on the page that holds its numbers.
+     At stake = what the behaviour is worth if every affected account took the step, at today's rates.
+     Estimated impact = what the proposed work might add if it works; a range, not a forecast. */
+  const CB={
+    goal:"Goal: $3M more ARR in 2027, from new and existing customers",
+    findings:[
+      {stage:"Acquire · prospects",h:"Enterprise prospects are interested, but don't book a demo.",
+       p:"1,630 companies with 1,000+ staff visited in the last 12 months and never booked. The few who called all asked how CloudBox would work across many offices.",
+       ev:[["Web analytics","Enterprise visitors: 4 in 100 book a demo. Mid-size visitors: 7 in 100."],["Sales call · first call","We have 12 offices. How would this work for all of them?"],["CRM","Win rate after an enterprise demo: 10%. Average contract: $25,000."]],
+       src:"CRM · sales calls · web analytics"},
+      {stage:"Activate · new customers",h:"Many new customers never set up backup for the whole company.",
+       p:"360 of this year's 600 new customers backed up only one team in their first week. Customers who back up everyone in week one leave a third as often in their first year.",
+       ev:[["Product usage · first 7 days","240 of 600 new accounts backed up every team. 360 backed up one."],["CRM · cancellations","First-year churn: 10% if set up company-wide in week one, 30% if not. Average contract: $15,000."],["Cancellation note","We only ever backed up the finance team, so we never saw the point."]],
+       src:"product usage · CRM · cancellation notes"},
+      {stage:"Expand · existing customers",h:"Multi-office customers don't know one account can hold every office.",
+       p:"420 customers run several offices on separate accounts. Of those who moved to one account, 30% upgraded to the multi-office plan.",
+       ev:[["Account records","420 customers with 2+ offices on separate accounts."],["Support chat","Can we see all our offices in one place?"],["CRM · upgrades","30% of customers who merged accounts upgraded to multi-office: $4,000 more a year."]],
+       src:"account records · support chats · product usage"}
+    ],
+    /* in rank order */
+    opps:[
+      {f:1,h:"New customers stop at one team",work:"Onboarding sequence and setup guide",
+       audience:"360 new accounts a year, about 30 a month",
+       stake:"$1.1M ARR kept a year",
+       evidence:"Strong: usage data and cancellations agree",
+       content:"Yes: a setup step that onboarding emails reliably move",
+       impact:"$110k–$215k ARR kept a year",conf:"Medium",effort:"About 2 weeks · first reading in 4–6 weeks",
+       maths:[["At stake: 360 accounts × 20 points less first-year churn × $15,000","= $1.08M if every one set up company-wide"],["If it works: 20–40% of them set up company-wide (72–144 accounts)","assumption to test"],["× 10 points less churn: only half the 20-point gap counted, since some of it is who these customers are","assumption"],["× $15,000 average contract","CRM"],["= about $110k–$215k ARR kept a year",""]]},
+      {f:2,h:"Multi-office customers don't know one account holds every office",work:"Existing-customer education campaign",
+       audience:"420 customers",
+       stake:"$504k expansion ARR",
+       evidence:"Strong: asked directly in support chats",
+       content:"Yes: the missing piece is information",
+       impact:"$75k–$125k expansion ARR",conf:"High",effort:"About 2 weeks · first reading in one quarter",
+       maths:[["At stake: 420 customers × 30% upgrade × $4,000","= $504k if every one moved to one account"],["If it works: 15–25% of them move to one account (63–105)","assumption to test"],["× 30% upgrade × $4,000 more a year","CRM"],["= about $75k–$125k expansion ARR",""]]},
+      {f:0,h:"Enterprise prospects can't see how it works across offices",work:"Deployment guide and customer case study",
+       audience:"1,630 enterprise prospects",
+       stake:"$4.1M new ARR",
+       evidence:"Thin: a handful of sales calls",
+       content:"Partly: content answers the question, but enterprise deals turn on many factors",
+       impact:"$120k–$245k new ARR",conf:"Low",effort:"About 6 weeks, a named customer and ad budget · first reading in 2–3 quarters",
+       maths:[["At stake: 1,630 prospects × 10% win rate × $25,000","= $4.1M if every one booked a demo"],["If it works: 3–6% more of them book (49–98)","assumption to test"],["× 10% win rate × $25,000","CRM"],["= about $120k–$245k new ARR, mostly landing after 2027",""]]}
+    ],
+    rule:"Ranked by estimated impact for the effort, adjusted for confidence. Revenue at stake shows what a behaviour is worth, not what the work will bring in, which is why the biggest number ranks last. Within 2027, the top two are estimated at $185k–$340k; the enterprise campaign's impact would mostly land after 2027. Real progress against the $3M goal, not the whole answer.",
+    rec:[["Why it ranks first","A similar estimated impact to the enterprise campaign at a third of the effort, with a first reading in weeks, not quarters."],
+         ["Behaviour to change","New customers back up every team in their first week, not just one."],
+         ["Evidence","360 of 600 new customers set up one team only. First-year churn is 30% for them and 10% for customers who set up company-wide. Cancellation notes say they never saw the point."],
+         ["Assumptions","Part of the churn gap is down to who these customers are, not the setup step, so the estimate counts only half of it. The 20–40% lift in setup is an assumption the first month will test."],
+         ["What Marketing would do","A three-email onboarding sequence and a whole-company setup guide, sent in the first week."]],
+    brief:{id:"CB-1",title:"Improve first-week backup activation.",
+      /* jira: shown on the project-tool issue; go: the demo stage it links back to */
+      rows:[{k:"Audience",v:"New accounts that haven't set up backup for every team in their first week: about 30 a month.",jira:true},
+            {k:"Evidence",v:"360 of 600 new customers set up one team only (product usage). First-year churn: 30% for them, 10% for customers who set up company-wide (CRM). \u201cWe only ever backed up the finance team\u201d (cancellation note).",go:0,goLabel:"See the findings"},
+            {k:"Customer barrier",v:"Setup starts with one team, and nothing prompts the admin to add the rest, so the value for the whole company is never seen."},
+            {k:"Recommended work",v:"An onboarding email sequence (days 1, 3 and 6) and a practical whole-company setup guide.",jira:true},
+            {k:"Distribution",v:"Onboarding emails, the in-app setup checklist, and the Customer Success welcome call."},
+            {k:"Outcome",v:"More new accounts back up every team in their first week."},
+            {k:"Measurement",v:"Week-one company-wide setup, 40% today, month by month; then first-year retention for those accounts.",jira:true},
+            {k:"Estimated impact",v:"$110k–$215k ARR kept a year, if it works. An estimate, not a forecast."}]},
+    pass:"Passed. The next recommendation moves up: multi-office customers → an education campaign, estimated at $75k–$125k expansion ARR. In the product, it records why you passed and takes that into later rankings. Simulated here."
   };
-  let tab="Demo requests", row=0, side="after", baMode="table";
-  const tabsEl=document.getElementById('ba-tabs'), tEl=document.getElementById('ba-table'), rEl=document.getElementById('ba-row');
-  const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
-  const ex=e=>e.chips?`<div class="chips">${e.chips.map(c=>`<span class="chip">${esc(c)}</span>`).join('')}</div>`:`<div class="snip">${esc(e.snip)}${e.target?`<span class="tgt">Target: ${esc(e.target)}</span>`:''}</div>`;
-  const cell=(e,w)=>`${ex(e)}<p class="why">${esc(w)}</p>`;
-  function renderBA(){
-    tabsEl.innerHTML=Object.keys(BA).map(k=>`<button class="tab" role="tab" aria-selected="${k===tab}" data-k="${k}">${k}</button>`).join('');
-    tEl.innerHTML=`<div class="ba-scroll"><table class="ba"><colgroup><col style="width:16%"><col style="width:40%"><col style="width:44%"></colgroup><thead><tr><th><span class="sr">Artefact</span></th><th>Before: starts from keyword tools</th><th>After: starts from your number</th></tr></thead><tbody>${BA[tab].map(r=>`<tr><th scope="row">${r[0]}</th><td class="before">${cell(r[1],r[2])}</td><td class="after">${cell(r[3],r[4])}</td></tr>`).join('')}</tbody></table></div>`;
-    const r=BA[tab][row];
-    rEl.innerHTML=`<div class="onerow"><div class="row" style="justify-content:space-between;align-items:center"><span class="art">${r[0]}</span>
-      <span class="seg"><button data-side="before" aria-pressed="${side==='before'}">Before</button><button data-side="after" aria-pressed="${side==='after'}">After</button></span></div>
-      <p class="label">${side==='before'?'Starts from keyword tools':'Starts from your number'}</p>
-      <p class="txt ${side}">${esc(side==='before'?r[1]:r[2])}</p>
-      <div class="foot"><span class="dots">${BA[tab].map((_,i)=>`<span class="${i===row?'on':''}"></span>`).join('')}</span>
-      <span class="row"><a href="#demo" data-plan style="color:var(--accent);font-weight:600;align-self:center">See it in the plan →</a><button class="btn ghost" data-nav="-1">←</button><button class="btn ghost" data-nav="1">Next →</button></span></div></div>`;
+  const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  const STAGES=["Discover","Compare","Decide","Brief"];
+  const body=document.getElementById('demo-body'),prog=document.getElementById('prog'),back=document.getElementById('d-back'),next=document.getElementById('d-next');
+  document.getElementById('d-goal').innerHTML=`<b>${esc(CB.goal)}</b> · CloudBox, a fictional company · all data made up`;
+  let step=0,note="";
+  const head=(i,q)=>`<span class="label stage">${i+1} of ${STAGES.length} · ${STAGES[i]}</span><h3>${q}</h3>`;
+  const views=[
+    ()=>head(0,"What is preventing CloudBox from growing?")+`<p class="muted">Structural Content read CloudBox's records and found three groups that aren't taking a step worth money to the business. These come from the data, not from a list of campaign ideas.</p>
+      <div class="finds">${CB.findings.map(f=>`<div class="find"><span class="label">${esc(f.stage)}</span><h4>${esc(f.h)}</h4><p>${esc(f.p)}</p><div class="raw">${f.ev.map(e=>`<div class="rawc"><span class="s">${esc(e[0])}</span><q>${esc(e[1])}</q></div>`).join('')}</div><p class="sim">Found in: ${esc(f.src)}</p></div>`).join('')}</div>`,
+    ()=>head(1,"Which opportunity deserves attention first?")+`<div class="groups">${CB.opps.map((o,i)=>`<div class="grp ${i===0?'top':''}"><span class="n">${i+1}</span><span class="label">${esc(CB.findings[o.f].stage)}</span><h4>${esc(o.h)}</h4><span class="work">→ ${esc(o.work)}</span>
+      <dl class="facts"><dt>Estimated impact if it works</dt><dd class="imp">${esc(o.impact)}</dd><dt>Confidence</dt><dd>${esc(o.conf)}</dd><dt>Effort</dt><dd>${esc(o.effort)}</dd><dt>Audience</dt><dd>${esc(o.audience)}</dd><dt>At stake (not the expected result)</dt><dd>${esc(o.stake)}</dd><dt>Evidence for the barrier</dt><dd>${esc(o.evidence)}</dd><dt>Can content move it?</dt><dd>${esc(o.content)}</dd></dl>
+      <details class="maths"><summary>Show the maths</summary><ul>${o.maths.map(m=>`<li>${esc(m[0])}${m[1]?`<small>${esc(m[1])}</small>`:''}</li>`).join('')}</ul></details></div>`).join('')}</div><p class="rule">${esc(CB.rule)}</p>`,
+    ()=>head(2,"What should Marketing do next?")+`<div class="brief"><span class="label stage">Recommendation</span><h3>${esc(CB.opps[0].h)} → ${esc(CB.opps[0].work.toLowerCase())}.</h3><dl>${CB.rec.map(r=>`<dt>${esc(r[0])}</dt><dd>${esc(r[1])}</dd>`).join('')}</dl></div>
+      <div class="decide"><p class="sim">Your call. Structural Content recommends; your team decides. These buttons are a simulation.</p><div class="row"><button class="btn" type="button" data-act="approve">Approve</button><button class="btn ghost" type="button" data-act="revise">Revise</button><button class="btn ghost" type="button" data-act="pass">Pass</button></div>${note?`<p class="dnote">${esc(note)}</p>`:''}</div>`,
+    ()=>head(3,"What does the team actually receive?")+`<div class="s4"><div class="brief"><span class="label">${CB.brief.id} · approved brief</span><h3>${esc(CB.brief.title)}</h3><dl>${CB.brief.rows.map(r=>`<dt>${esc(r.k)}</dt><dd>${esc(r.v)}${r.go!==undefined?` <button class="linkbtn" type="button" data-go="${r.go}">${esc(r.goLabel)}</button>`:''}</dd>`).join('')}</dl></div>
+      <div class="jira"><div class="jtop">Marketing / <span class="jkey">${CB.brief.id}</span></div><div class="jtitle">${esc(CB.brief.title.replace(/\.$/,''))}</div><div class="jmeta"><span class="jstat">TO DO</span><span>Assignee <b>Jennifer</b></span></div><div class="jsec">Description</div><div class="brief-lines">${CB.brief.rows.filter(r=>r.jira).map(r=>`<div><b>${esc(r.k)}:</b> ${esc(r.v)}</div>`).join('')}</div><p class="sim">Simulated. In the product, approved briefs go to Jira, Asana or your existing tool.</p></div></div>
+      <p class="muted">Once it's live, Structural Content tracks week-one setup and retention, and re-ranks what comes next as results arrive.</p><div class="row"><button class="btn ghost" type="button" data-go="0">Start over</button></div>`
+  ];
+  function render(focus){
+    prog.innerHTML=STAGES.map((_,i)=>`<span class="${i<=step?'on':''}"></span>`).join('');
+    back.hidden=step===0; next.hidden=step>=2;
+    next.textContent=step===0?"Compare them":"See the recommendation";
+    body.innerHTML=views[step]();
+    if(focus)body.focus({preventScroll:true});
   }
-  tabsEl.addEventListener('click',e=>{const k=e.target.dataset.k;if(k){tab=k;row=0;side="after";renderBA()}});
-  rEl.addEventListener('click',e=>{if(e.target.hasAttribute('data-plan')){setPath(FIRST);step=4;render()}
-    const s=e.target.dataset.side,n=e.target.dataset.nav;
-    if(s){side=s;renderBA()} if(n){row=(row+Number(n)+BA[tab].length)%BA[tab].length;side="before";renderBA()}});
-  renderBA();
-
-
-  /* demo */
-  const PATHS={"More ARR": {"target": "CloudBox needs $3M more ARR next year, from new and existing customers.", "unit": "ARR", "raw": [["Website analytics", "Enterprise prospects (1,000+ staff): 4 in 100 book a demo. 50–999 staff prospects: 7 in 100."], ["Sales call · first call", "We have 12 offices. How would this work for all of them?"], ["Product usage · first week", "240 of 600 new customers backed up the whole company in their first week. 360 backed up one team."], ["CRM · cancellation note", "We only ever backed up the finance team, so we never saw the point."], ["Product usage · accounts", "420 customers run several offices on separate accounts."], ["Support chat", "Can we see all our offices in one place?"]], "groups": [{"h": "Enterprise prospects leave without booking a demo → show enterprise buyers how it works across offices", "why": "The few who call all ask how it works across many offices. Your website only shows single teams.", "big": "up to $4.1M", "lines": [["2,000 enterprise companies visited your site", "Website analytics · 1,000+ staff · last 12 months"], ["− 300 of them were customers before this year", "CRM · customers, matched by company"], ["= 1,700 in play this year", "the lines above"], ["− 70 of them booked a demo", "CRM · demo bookings"], ["= 1,630 still to take the step", "the lines above"], ["× 10% of enterprise companies that booked a demo this year became customers", "CRM · customers won this year"], ["× $25,000 average contract value of the customers among them", "CRM · customers"]], "level": "high", "reason": "4 in 100 of enterprise companies in play book a demo, against 7 in 100 of companies with 50–999 staff in play, and what stops them is a question your site never answers. A missing answer is what content supplies directly."}, {"h": "New customers don't back up the whole company in week one → an onboarding series that gets them there", "why": "Customers who back up the whole company in their first week leave a third as often in their first year. 360 of this year's 600 new customers didn't.", "big": "up to $1.1M", "lines": [["600 companies became customers this year", "CRM · customers won this year"], ["− 240 of them backed up the whole company in their first week", "Product usage · first 7 days"], ["= 360 still to take the step", "the lines above"], ["× 20 points fewer leave in their first year: 10% of those who did, against 30% of those who didn't", "CRM · cancellations, last 3 years"], ["× $15,000 average contract value of the customers among them", "CRM · customers"]], "level": "medium", "reason": "Customers who back up the whole company in week one leave a third as often, and cancellation notes say those who don't never saw the point. But staying may partly be down to who they are, not only the backup, so onboarding can't move all of it."}, {"h": "Customers with several offices don't know one account can hold them all → show them how, and what it adds", "why": "Support chats keep asking \"can we see all our offices in one place?\" Nothing you send customers says they can.", "big": "up to $504k", "lines": [["420 customers run several offices on separate accounts", "Product usage · accounts matched by company"], ["× 30% of customers who moved their offices to one account upgraded to the multi-office plan", "CRM · upgrades, last 12 months"], ["× $4,000 more a year on the multi-office plan", "Price list"]], "level": "high", "reason": "Nearly a third of the customers who found out upgraded, and the question keeps coming up in support chats. A missing answer is what content supplies directly."}], "camps": [["AR-1", "Show enterprise buyers how it works across offices.", 3, 2, "Jan", "up to $4.1M"], ["AR-2", "Get every new customer to back up the whole company in week one.", 3, 3, "Feb", "up to $1.1M"], ["AR-3", "Show multi-office customers they can run everything from one account.", 2, 4, "Mar", "up to $504k"], ["AR-4", "Speak to accounting firms, your fastest buyers.", 2, 4, "Mar", ""], ["AR-5", "Answer \"how do I get my files back after a hack?\"", 2, 6, "May", ""]], "pieces": {"todo": [["AR-2", "Day one: back up everyone, not just one team", "Email · new customers"], ["AR-2", "The whole-company checklist", "In-app guide · first login"], ["AR-2", "What happens when only one team is backed up", "Customer story · onboarding"], ["AR-3", "All your offices, one account", "Page · linked from the admin console"], ["AR-3", "Bring your offices together", "Email · multi-office customers"], ["AR-4", "Backup for accounting firms", "Page"], ["AR-4", "Every client file, safe every night", "One-pager · for search and ads"], ["AR-5", "Get your files back after a hack", "Page · built for search"], ["AR-5", "The first hour after a hack: a checklist", "Checklist · free download"]], "prog": [["AR-1", "Roll CloudBox out across your company", "Page · linked from home and pricing"], ["AR-1", "How a 2,000-person firm moved 12 offices in a month", "Customer story"], ["AR-1", "Backup for many offices", "Search ads"]], "done": []}, "brief": {"id": "AR-1", "above": "Enterprise prospects visit you often, but leave without booking a demo.", "title": "Show enterprise buyers how it works across offices.", "summary": "An enterprise page with one rollout story, answers on offices and who can see what, and search ads on the questions they ask.", "forr": "Companies with 1,000+ staff who visit your site: about 1,700 in play a year. When they buy, they pay about $25,000 a year.", "big": "up to $4.1M", "stuck": "\"We have 12 offices. How would this work for all of them?\" and \"Who can see whose files across teams?\" Your website only shows single teams, so they leave before asking.", "content": "Roll CloudBox out across your company (page) · How a 2,000-person firm moved 12 offices in a month (customer story) · Backup for many offices (search ads)", "reach": "Search ads on the rollout questions; the page linked from the homepage and the pricing page.", "watch": "The share of enterprise companies in play who book a demo, 4 in 100 today, month by month.", "level": "high", "reason": "4 in 100 of enterprise companies in play book a demo, against 7 in 100 of companies with 50–999 staff in play, and what stops them is a question your site never answers. A missing answer is what content supplies directly."}, "bring_big": "What's at stake in CloudBox's top three campaigns.", "lead": "To get CloudBox $3M more ARR next year, from new and existing customers, Structural Content sees these campaigns, ranked by what's at stake and how likely each is to work:", "combined": "up to $5.7M ARR at stake across the three, against the $3M CloudBox needs. These are ceilings for comparing what each campaign could contribute, not a forecast of the revenue content will cause.", "stakes": [["AR-1", "Enterprise prospects leave without booking a demo → show enterprise buyers how it works across offices", "up to $4.1M", "high"], ["AR-2", "New customers don't back up the whole company in week one → an onboarding series that gets them there", "up to $1.1M", "medium"], ["AR-3", "Customers with several offices don't know one account can hold them all → show them how, and what it adds", "up to $504k", "high"]]}, "Demo requests": {"target": "CloudBox needs 300 more demo requests next year.", "unit": "new ARR", "raw": [["Website analytics", "Enterprise prospects (1,000+ staff): 4 in 100 book a demo. 50–999 staff prospects: 7 in 100."], ["Sales call · first call", "We have 12 offices. How would this work for all of them?"], ["Website search", "\"get files back after a hack\", searched 140 times last month. No page found."], ["Website chat", "Can I switch from my current backup without losing anything?"], ["CRM · won deal", "Accounting firm, 40 staff. Closed in 19 days."], ["Your website", "Examples and customer stories for single teams only."]], "groups": [{"h": "Enterprise prospects leave without booking a demo → show enterprise buyers how it works across offices", "why": "The few who call all ask how it works across many offices. Your website only shows single teams.", "big": "up to $4.1M", "lines": [["2,000 enterprise companies visited your site", "Website analytics · 1,000+ staff · last 12 months"], ["− 300 of them were customers before this year", "CRM · customers, matched by company"], ["= 1,700 in play this year", "the lines above"], ["− 70 of them booked a demo", "CRM · demo bookings"], ["= 1,630 still to take the step", "the lines above"], ["× 10% of enterprise companies that booked a demo this year became customers", "CRM · customers won this year"], ["× $25,000 average contract value of the customers among them", "CRM · customers"]], "level": "high", "reason": "4 in 100 of enterprise companies in play book a demo, against 7 in 100 of companies with 50–999 staff in play, and what stops them is a question your site never answers. A missing answer is what content supplies directly."}, {"h": "People look for how to recover from a hack and find nothing → answer \"how do I get my files back after a hack?\"", "why": "\"Get files back after a hack\" was searched 140 times last month on your site. You have no page about it.", "big": "up to $535k", "lines": [["500 mid-size companies searched \"get files back after a hack\" on your site", "Website search · last 12 months"], ["− 300 of them were customers before this year", "CRM · customers, matched by company"], ["= 200 in play this year", "the lines above"], ["− 2 of them booked a demo", "CRM · demo bookings after that search"], ["= 198 still to take the step", "the lines above"], ["× 15% of mid-size companies that booked a demo this year became customers", "CRM · customers won this year"], ["× $18,000 average contract value of the customers among them", "CRM · customers"]], "level": "high", "reason": "1 in 100 of the companies in play who search books a demo, against 1 in 30 of mid-size companies who read your other help pages, and the question came up in 1 of 3 first sales calls. They search for a page that doesn't exist."}, {"h": "People switching from another backup fear losing files → show how switching works, without losing a file", "why": "Website chats keep asking \"can I switch without losing anything?\" Your site never says how switching works.", "big": "up to $394k", "lines": [["180 mid-size companies asked in website chat about switching", "Website chat · topic: switching · last 12 months"], ["− 30 of them were customers before this year", "CRM · customers, matched by company"], ["= 150 in play this year", "the lines above"], ["− 4 of them booked a demo", "CRM · demo bookings from chat"], ["= 146 still to take the step", "the lines above"], ["× 15% of mid-size companies that booked a demo this year became customers", "CRM · customers won this year"], ["× $18,000 average contract value of the customers among them", "CRM · customers"]], "level": "medium", "reason": "3 in 100 of the companies in play who ask book a demo, against 4 in 100 of companies in other website chats. A clear answer removes the doubt, but switching is a real risk some will still put off."}], "camps": [["DC-1", "Show enterprise buyers how it works across offices.", 3, 2, "Jan", "up to $4.1M"], ["DC-2", "Answer \"how do I get my files back after a hack?\"", 2, 3, "Feb", "up to $535k"], ["DC-3", "Show how switching works, without losing a file.", 2, 4, "Mar", "up to $394k"], ["DC-4", "Speak to accounting firms, your fastest buyers.", 2, 4, "Mar", ""], ["DC-5", "Invite newsletter readers who look like your best customers.", 2, 6, "May", ""]], "pieces": {"todo": [["DC-2", "Get your files back after a hack", "Page · built for search"], ["DC-2", "The first hour after a hack: a checklist", "Checklist · free download"], ["DC-3", "Switch to CloudBox without losing a file", "Page · linked from website chat"], ["DC-3", "What leaving your old backup really costs", "Calculator"], ["DC-4", "Backup for accounting firms", "Page"], ["DC-4", "Every client file, safe every night", "One-pager · for search and ads"], ["DC-5", "Three things our best customers did first", "Email series · newsletter readers"], ["DC-5", "Book 15 minutes", "Booking prompt · in every email"]], "prog": [["DC-1", "Roll CloudBox out across your company", "Page · linked from home and pricing"], ["DC-1", "How a 2,000-person firm moved 12 offices in a month", "Customer story"], ["DC-1", "Backup for many offices", "Search ads"]], "done": []}, "brief": {"id": "DC-1", "above": "Enterprise prospects visit you often, but leave without booking a demo.", "title": "Show enterprise buyers how it works across offices.", "summary": "An enterprise page with one rollout story, answers on offices and who can see what, and search ads on the questions they ask.", "forr": "Companies with 1,000+ staff who visit your site: about 1,700 in play a year. When they buy, they pay about $25,000 a year.", "big": "up to $4.1M", "stuck": "\"We have 12 offices. How would this work for all of them?\" and \"Who can see whose files across teams?\" Your website only shows single teams, so they leave before asking.", "content": "Roll CloudBox out across your company (page) · How a 2,000-person firm moved 12 offices in a month (customer story) · Backup for many offices (search ads)", "reach": "Search ads on the rollout questions; the page linked from the homepage and the pricing page.", "watch": "The share of enterprise companies in play who book a demo, 4 in 100 today, month by month.", "level": "high", "reason": "4 in 100 of enterprise companies in play book a demo, against 7 in 100 of companies with 50–999 staff in play, and what stops them is a question your site never answers. A missing answer is what content supplies directly."}, "bring_big": "What's at stake in CloudBox's top three campaigns.", "stakes": [["DC-1", "Enterprise prospects leave without booking a demo → show enterprise buyers how it works across offices", "up to $4.1M", "high"], ["DC-2", "People look for how to recover from a hack and find nothing → answer \"how do I get my files back after a hack?\"", "up to $535k", "high"], ["DC-3", "People switching from another backup fear losing files → show how switching works, without losing a file", "up to $394k", "medium"]], "lead": "To get CloudBox 300 more demo requests next year, Structural Content sees these campaigns, ranked by what's at stake:", "combined": "$5.0M new ARR at stake across the three: 1,974 prospects still to take the step, each counted once, against the 300 more demo requests CloudBox needs."}, "Trial sign-ups": {"target": "CloudBox needs 1,200 more trial sign-ups next year.", "unit": "new ARR", "raw": [["CRM · trial accounts", "Under 50 staff: 729 of 2,140 trials became paying customers (34%). 50 staff or more: 18%."], ["Sign-up survey · why did you try us?", "Our IT guy left and nobody knows what's backed up."], ["Your website · home page", "Centralised endpoint protection with granular retention policies."], ["Website chat", "Is this the same as Dropbox? We already have that."], ["Website chat", "Is this OK for patient records? We're a dental practice. (asked 30 times last month)"], ["Search data", "\"backup for small business without IT\": about 2,400 searches a month."]], "groups": [{"h": "Small offices without IT don't start a trial → show small offices they can set it up themselves", "why": "Many tell you they have no IT person. Your home page talks about \"endpoint protection\" and \"retention policies\".", "big": "up to $4.2M", "lines": [["7,000 companies under 50 staff with no IT person visited your site", "Website analytics · under 50 staff · CRM: no IT contact · last 12 months"], ["− 550 of them were customers before this year", "CRM · customers, matched by company"], ["= 6,450 in play this year", "the lines above"], ["− 1,340 of them started a trial", "Product sign-ups"], ["= 5,110 still to take the step", "the lines above"], ["× 34% of small offices that started a trial this year became customers", "CRM · customers won this year"], ["× $2,400 average contract value of the customers among them", "CRM · customers"]], "level": "high", "reason": "21 in 100 of these companies in play start a trial, against 35 in 100 of small offices with an IT person who read your plain-language help pages, and once they try, 34% of small offices pay against 18% of bigger companies. Your home page speaks to IT people, and its words are what content changes directly."}, {"h": "Visitors think backup is the same as Dropbox → show what backup does that Dropbox doesn't", "why": "\"Is this the same as Dropbox?\" came up 80 times in website chat last month. Your site never says what backup does that file sharing doesn't.", "big": "up to $1.0M", "lines": [["1,500 small offices arrived from searches that mention Dropbox", "Website analytics · search terms · last 12 months"], ["− 100 of them were customers before this year", "CRM · customers, matched by company"], ["= 1,400 in play this year", "the lines above"], ["− 140 of them started a trial", "Product sign-ups"], ["= 1,260 still to take the step", "the lines above"], ["× 34% of small offices that started a trial this year became customers", "CRM · customers won this year"], ["× $2,400 average contract value of the customers among them", "CRM · customers"]], "level": "medium", "reason": "10 in 100 of these companies in play start a trial, against 29 in 100 of other small offices with an IT person. A clear answer shows the difference, but some will decide Dropbox is enough."}, {"h": "Practices ask about patient records and get no answer → speak to dental and medical practices about patient files", "why": "Practices are 1 in 14 of your trials, and 34% of them pay. No page on your site says whether CloudBox is fine for patient records.", "big": "up to $490k", "lines": [["680 medical and dental practices visited your site", "Website analytics · industry: healthcare practice · last 12 months"], ["− 0 of them were customers before this year", "CRM · customers, matched by company"], ["= 680 in play this year", "the lines above"], ["− 200 of them started a trial", "Product sign-ups"], ["= 480 still to take the step", "the lines above"], ["× 34% of small offices that started a trial this year became customers", "CRM · customers won this year"], ["× $3,000 average contract value of the customers among them", "CRM · customers"]], "level": "high", "reason": "29 in 100 of these practices start a trial, against 40 in 100 of law firms, which have a page of their own. In chats they ask \"is this OK for patient records?\", 30 times last month, and no page answers it."}], "camps": [["TS-1", "Show small offices they can set it up themselves.", 3, 2, "Jan", "up to $4.2M"], ["TS-2", "Show what backup does that Dropbox doesn't.", 2, 3, "Feb", "up to $1.0M"], ["TS-3", "Speak to dental and medical practices about patient files.", 2, 4, "Mar", "up to $490k"], ["TS-4", "Answer \"do I need a credit card?\" on the pricing page.", 2, 3, "Feb", ""], ["TS-5", "Give small offices a plan for the day after a hack.", 2, 6, "May", ""]], "pieces": {"todo": [["TS-2", "Backup or file sharing: what happens when someone deletes a folder", "Page · linked from website chat"], ["TS-2", "Dropbox and CloudBox, side by side", "Comparison · built for search"], ["TS-3", "Backup for dental and medical practices", "Page · linked from website chat"], ["TS-3", "Patient files, safe every night", "Search ads"], ["TS-4", "Try it free, no credit card", "Pricing page wording"], ["TS-4", "What happens when the free trial ends", "Answer · on the pricing page"], ["TS-5", "The day after a hack: a plan for small offices", "Checklist · free download"], ["TS-5", "Back to work by lunchtime", "Customer story"]], "prog": [["TS-1", "Backup for offices without an IT person", "Page · linked from the home page"], ["TS-1", "Set up CloudBox in 10 minutes", "Video · on the page and in ads"], ["TS-1", "Backup without IT", "Search ads"]], "done": []}, "brief": {"id": "TS-1", "above": "Small offices with no IT person start fewer trials than those who read your plain-language help pages, and your website talks to IT people.", "title": "Show small offices they can set it up themselves.", "summary": "A page for offices without an IT person, a 10-minute setup video, and search ads in their own words.", "forr": "Companies under 50 staff with no IT person who visit your site: about 6,450 in play a year. Once they try CloudBox, 34% of small offices pay, almost twice the rate of bigger companies.", "big": "up to $4.2M", "stuck": "\"Our IT guy left and nobody knows what's backed up.\" They want to set it up themselves, but your website talks about \"endpoint protection\" and \"retention policies\", so they think it isn't for them.", "content": "Backup for offices without an IT person (page) · Set up CloudBox in 10 minutes (video) · Backup without IT (search ads)", "reach": "Search ads on \"backup for small business without IT\" (about 2,400 searches a month, from search data); the page linked from the home page.", "watch": "The share of small offices with no IT person in play who start a trial, 21 in 100 today, month by month.", "level": "high", "reason": "21 in 100 of these companies in play start a trial, against 35 in 100 of small offices with an IT person who read your plain-language help pages, and once they try, 34% of small offices pay against 18% of bigger companies. Your home page speaks to IT people, and its words are what content changes directly."}, "bring_big": "What's at stake in CloudBox's top three campaigns.", "stakes": [["TS-1", "Small offices without IT don't start a trial → show small offices they can set it up themselves", "up to $4.2M", "high"], ["TS-2", "Visitors think backup is the same as Dropbox → show what backup does that Dropbox doesn't", "up to $1.0M", "medium"], ["TS-3", "Practices ask about patient records and get no answer → speak to dental and medical practices about patient files", "up to $490k", "high"]], "lead": "To get CloudBox 1,200 more trial sign-ups next year, Structural Content sees these campaigns, ranked by what's at stake:", "combined": "$5.7M new ARR at stake across the three: 6,850 prospects still to take the step, each counted once, against the 1,200 more trial sign-ups CloudBox needs."}};
-  /* the first goal in PATHS is the default; every goal change goes through setPath */
-  const FIRST=Object.keys(PATHS)[0];
-  let D,RAW,GROUPS,CAMPS,PIECES,B;
-  function setPath(k){num=k;D=PATHS[k];RAW=D.raw;GROUPS=D.groups;CAMPS=D.camps;PIECES=D.pieces;B=D.brief}
-  const MONTHS=["Nov","Dec","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct"];
-  let step=0, num=null, planView="board";
-  setPath(FIRST);
-  const body=document.getElementById('demo-body'), prog=document.getElementById('prog'), back=document.getElementById('d-back'), next=document.getElementById('d-next');
-  const N=7;
-  function cal(){return `<div class="cal-scroll"><div class="cal"><div class="head"><span></span>${MONTHS.map(m=>`<span>${m}</span>`).join('')}</div>${CAMPS.map(c=>{const live=c[3];const mk=live-2;
-      return `<button class="line" data-open="${c[0]}"><span class="meta" style="grid-row:1;grid-column:1"><b>${c[0]}</b><span>${c[1]}</span><small>${c[2]} pieces · live from ${c[4]}</small></span><div class="gbar make" style="grid-row:1;grid-column:${mk+2}/${live+2}"></div><div class="gbar live" style="grid-row:1;grid-column:${live+2}/14"></div></button>`}).join('')}</div></div>`}
-  function board(){const col=(h,arr)=>`<div class="bcol"><span class="h"><span>${h}</span><span>${arr.length}</span></span>${arr.map(p=>`<button class="bcard" data-open="${p[0]}"><b>${p[0]}</b>${p[1]}<small>${p[2]}</small></button>`).join('')}</div>`;
-    return `<div class="board">${col("To do",PIECES.todo)}${col("In progress",PIECES.prog)}${col("Done",PIECES.done)}</div>`}
-  function render(){
-    prog.innerHTML=Array.from({length:N},(_,i)=>`<span class="${i<=step?'on':''}"></span>`).join('');
-    back.hidden=step===0; next.hidden=step===0||step===N-1;
-    next.textContent=step===3?"See the whole plan":step===4?"What's at stake?":"Next";
-    let h="";
-    if(step===1) h=`<p class="label" style="color:var(--accent)">${D.target}</p><h3>Here's what CloudBox already has.</h3><div class="raw">${RAW.map(r=>`<div class="rawc"><span class="s">${r[0]}</span><q>${esc(r[1])}</q></div>`).join('')}</div>`;
-    if(step===0) h=`<h3>Which goal should CloudBox reach?</h3><p class="muted">Everything you'll see is CloudBox's made-up data.</p>
-      <div class="pick"><button data-num="More ARR">More ARR</button><button data-num="Demo requests">Demo requests</button><button data-num="Trial sign-ups">Trial sign-ups</button></div>`;
-    if(step===2) h=`<h3>What Structural Content found.</h3><p class="muted">${esc(D.lead)}</p>
-      <div class="groups">${GROUPS.map((g,i)=>`<div class="grp ${i===0?'top':''}"><h4>${esc(g.h)}</h4><span class="mv">${esc(g.big)}<small>${D.unit} at stake</small><small>likely to work: ${esc(g.level)}</small></span><p class="why">${esc(g.why)}</p><details class="maths"><summary>Show the maths</summary><ul class="lines">${g.lines.map(l=>`<li>${esc(l[0])}<small>${esc(l[1])}</small></li>`).join('')}<li class="eq">= ${esc(g.big)} ${D.unit}</li></ul><p><b>Likely to work, ${esc(g.level)}:</b> ${esc(g.reason)}</p></details></div>`).join('')}</div>`;
-    if(step===4) h=`<div class="row" style="justify-content:space-between;align-items:end"><div class="stack" style="gap:6px"><span class="label">Every group becomes a campaign like this</span><h3>CloudBox's content board.</h3><p class="muted">Structural Content keeps track of how close CloudBox is to its number, and suggests what to do next until it gets there.</p><p class="muted" style="font-size:13px">In Asana, Jira or Notion, wherever CloudBox's team already works.</p></div>
-      <span class="seg"><button data-view="board" aria-pressed="${planView==='board'}">Board</button><button data-view="calendar" aria-pressed="${planView==='calendar'}">Calendar</button></span></div>
-      ${planView==='calendar'?cal():board()}
-      <div class="legend"><span><i class="gbar make" style="display:inline-block"></i>being made</span><span><i style="background:var(--accent)"></i>live</span><span>Each campaign arrives as a ticket with its brief and its pieces. Click one to open it.</span></div>`;
-    if(step===3) h=`<div class="stack" style="gap:6px"><span class="label">The first group, as a campaign</span><p class="lede">${esc(B.above)}</p></div>
-      <div class="brief"><div class="stack" style="gap:16px"><span class="label">${B.id}</span><h3 style="font-size:30px">${esc(B.title)}</h3>
-      <p class="muted">${esc(B.summary)}</p>
-      <dl><dt>For</dt><dd>${esc(B.forr)}</dd>
-      <dt>Likely to work</dt><dd>${esc(B.level[0].toUpperCase()+B.level.slice(1))}. ${esc(B.reason)}</dd></dl></div>
-      <div class="stack" style="gap:6px;align-self:center"><span class="label">up to</span><span class="big">${B.big.replace(/^up to /,'')}</span><b>${D.unit} at stake</b><span class="muted" style="font-size:14px">a ceiling, not a forecast</span></div>
-      <details><summary>Open brief</summary><dl>
-      <dt>Stuck on</dt><dd>${esc(B.stuck)}</dd>
-      <dt>Content</dt><dd>${esc(B.content)}</dd>
-      <dt>Reach</dt><dd>${esc(B.reach)}</dd>
-      <dt>Watch</dt><dd>${esc(B.watch)}</dd></dl></details></div>`;
-    if(step===5) h=`<div class="bring"><span class="label">What's at stake?</span><p class="lede"><b>${esc(D.bring_big)}</b></p><ul class="stakes">${D.stakes.map(s=>`<li><span><b>${s[0]}</b> ${esc(s[1])}</span><span class="stake">${esc(s[2])}<small>${D.unit} at stake</small><small>likely to work: ${esc(s[3])}</small></span></li>`).join('')}</ul>
-      <p class="lede"><b>Combined:</b> ${esc(D.combined)}</p></div>`;
-    if(step===6) h=`<div class="close-demo"><h3>This was CloudBox's data. Try it first on a company like yours, in the tools you use.</h3>
-      <div class="row" style="align-items:center;gap:20px"><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form" target="_blank" rel="noopener">Try it first</a><button class="btn ghost" data-restart>Try another goal</button><a href="https://calendar.app.google/uPeQFcDajNFzsZJYA" target="_blank" rel="noopener" style="color:var(--accent);font-weight:600">or book a 30-minute call</a></div></div>`;
-    body.innerHTML=h;
-  }
+  function go(s){step=s;note="";render(true)}
   body.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)return;
-    if(t.dataset.num){setPath(t.dataset.num);step=1;render()}
-        if(t.dataset.view){planView=t.dataset.view;render()}
-    if(t.dataset.open){step=3;render()}
-    if(t.hasAttribute('data-restart')){step=0;render()}});
-  next.onclick=()=>{step=Math.min(N-1,step+1);render()}; back.onclick=()=>{step=Math.max(0,step-1);render()};
+    if(t.dataset.go)go(+t.dataset.go);
+    const a=t.dataset.act;
+    if(a==='approve')go(3);
+    if(a==='revise'){note="In the product, you'd say what to change, for example “in-app only, no emails”, and it rewrites the brief. Simulated here.";render()}
+    if(a==='pass'){note=CB.pass;render()}});
+  next.onclick=()=>go(Math.min(step+1,STAGES.length-1)); back.onclick=()=>go(Math.max(step-1,0));
   render();
-
 })();
 </script>
   <!-- Cloudflare Web Analytics (cookieless; see privacy.html) -->
