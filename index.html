@@ -153,7 +153,7 @@ p{margin:0}
 .site-header{padding-block:20px}
 .site-header .wrap{display:flex;align-items:center;gap:10px}
 .site-header img{width:28px;height:28px;border-radius:6px}
-.site-header span{font:600 15px var(--sans);color:var(--ink)}
+.site-header span{font:600 15px var(--sans);color:var(--ink);white-space:nowrap}
 .site-header .btn{margin-left:auto;padding:10px 16px;font-size:15px;white-space:nowrap}
 .site-footer{border-top:1px solid var(--line);padding-block:32px 48px;font-size:14px;color:var(--muted)}
 .site-footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center}
@@ -166,6 +166,42 @@ p{margin:0}
 .hero-text{align-items:center;text-align:center;max-width:980px;margin-inline:auto}
 .hero-text .lede{margin-inline:auto}
 .hero-text .row{justify-content:center}
+.hero .wrap.hero-grid{max-width:1200px;display:grid;grid-template-columns:minmax(0,1fr);gap:48px;justify-items:center}
+@media (min-width:1000px){
+  .hero{padding-block:72px}
+  .hero .wrap.hero-grid{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);align-items:center;gap:56px}
+  .hero-text{align-items:flex-start;text-align:left;margin-inline:0}
+  .hero-text .lede{margin-inline:0;font-size:18px}
+  .hero-text .row{justify-content:flex-start}
+  .hero .hero-grid h1{font-size:clamp(36px,4.2vw,56px)}
+}
+/* the gist: four beats of the workflow, 18s loop */
+.mini{width:100%;max-width:440px;background:var(--grey-soft);color:var(--ink-soft);border:1px solid var(--line-strong);border-radius:3px;padding:16px 18px 12px;font-size:14px;line-height:1.45;display:grid;gap:12px;text-align:left}
+.mini b{color:var(--ink);font-weight:600}
+.mtop{display:flex;justify-content:space-between;gap:8px;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-bottom:10px;border-bottom:1px solid var(--line-strong)}
+.mtop span:last-child{font-weight:500}
+.mflow{display:grid;gap:12px}
+.mm{display:flex;gap:10px;align-items:flex-start}
+.mm small{color:var(--muted);font-size:11.5px}
+.mcard{border-left:2px solid var(--ink);padding:2px 0 2px 10px;margin-top:3px}
+.mbar{display:flex;justify-content:space-between;align-items:flex-end;gap:8px;font-size:12.5px}
+.mbar a{color:var(--ink);text-decoration:underline;text-underline-offset:3px;margin-top:12px}
+.mini .fpause{margin-top:6px}
+/* people and tools in both animations: square marks; only Structural Content's mark carries colour (Ultramarine) */
+.av{flex:none;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font:600 11px var(--sans)}
+.av.scm{background:#2D6BD7;color:#FCF3EF;font:400 12px var(--serif);letter-spacing:-.04em}
+.av.p{background:var(--ink);color:var(--bg)}
+.av.ai{border:1px solid var(--ink);color:var(--ink)}
+.mini .lnk,.slack .lnk{color:var(--ink);font-weight:600}
+.mini button:focus-visible,.slack button:focus-visible{outline-color:var(--ink)}
+@keyframes m1{0%,2%{opacity:0;transform:translateY(6px)}5%,94%{opacity:1;transform:none}98%,100%{opacity:0}}.m1{opacity:0;animation:m1 18s infinite}
+@keyframes m2{0%,24%{opacity:0;transform:translateY(6px)}27%,94%{opacity:1;transform:none}98%,100%{opacity:0}}.m2{opacity:0;animation:m2 18s infinite}
+@keyframes m3{0%,35%{opacity:0;transform:translateY(6px)}38%,94%{opacity:1;transform:none}98%,100%{opacity:0}}.m3{opacity:0;animation:m3 18s infinite}
+@keyframes m4{0%,55%{opacity:0;transform:translateY(6px)}58%,94%{opacity:1;transform:none}98%,100%{opacity:0}}.m4{opacity:0;animation:m4 18s infinite}
+@keyframes m5{0%,65%{opacity:0;transform:translateY(6px)}68%,94%{opacity:1;transform:none}98%,100%{opacity:0}}.m5{opacity:0;animation:m5 18s infinite}
+.mini.paused *{animation-play-state:paused!important}
+.mini.restart *{animation:none!important}
+@media (prefers-reduced-motion:reduce){.mini *{animation:none!important}.mini .mm{opacity:1;transform:none}.mini .fpause{display:none}}
 .hero h1{font-size:clamp(30px,5.6vw,68px)}
 @media (max-width:480px){.hero h1{font-size:29px}}
 .cred{font-size:14px;color:var(--muted);margin-top:-4px}
@@ -194,6 +230,11 @@ p{margin:0}
 .demo-nav{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;padding:16px 20px;border-top:1px solid var(--line)}
 .stage{color:var(--accent)}
 .finds{display:grid;gap:14px}
+.focus3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.focus3 button{font:600 16px/1.3 var(--sans);text-align:left;padding:14px 16px;border-radius:12px;border:1px solid var(--line-strong);background:var(--bg);color:var(--ink);cursor:pointer;display:grid;gap:4px}
+.focus3 button small{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.focus3 button:hover{border-color:var(--accent)}
+.focus3 button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
 .find{border:1px solid var(--line);border-radius:12px;padding:18px;display:grid;gap:12px}
 .find h4,.grp h4{margin:0;font:600 17px/1.35 var(--sans)}
 .find>p{font-size:15px;color:var(--ink-soft)}
@@ -232,43 +273,47 @@ p{margin:0}
 @media (max-width:480px){.demo-top{padding:12px 14px}.goalpick .seg button{padding:7px 8px;font-size:13px}}
 
 /* the workflow animation: CSS keyframes on a 40s loop; the script adds pause, replay and chapter stills */
-.slack{container:slack/inline-size;overflow:hidden;background:#1A1D21;color:#D1D2D3;border-radius:14px;padding:20px 22px 16px;font-size:15px;line-height:1.5;box-shadow:0 8px 24px rgba(0,0,0,.12)}
-.slack .ex-note{text-align:right;color:#A0A1A3;font-size:12.5px;margin-bottom:8px}
-.slack b{color:#F8F8F8}
-.slack .top{color:#E8E8E8;font-weight:600;padding-bottom:10px;border-bottom:1px solid #34373B}
+.slack{--pad:22px;container:slack/inline-size;overflow:hidden;background:var(--grey-soft);color:var(--ink-soft);border:1px solid var(--line-strong);border-radius:3px;padding:18px var(--pad) 14px;font-size:15px;line-height:1.5}
+.slack .ex-note{text-align:right;color:var(--muted);font-size:12px;margin-bottom:8px}
+.slack b{color:var(--ink);font-weight:600}
+.slack .top{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-bottom:10px;border-bottom:1px solid var(--line-strong)}
 .slack .msg{display:flex;gap:12px}
 .slack .msg>div:last-child{min-width:0;display:grid;gap:5px;align-content:start}
-.slack .av{flex:none;width:34px;height:34px;border-radius:8px;color:#F7F5F0;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px}
-.slack .meta{color:#A0A1A3;font-size:12.5px;font-weight:400}
-.slack .lnk{color:#4FB3E8}
+.slack .av{width:32px;height:32px;font-size:12px}
+.slack .av.scm{font-size:13px}
+.slack .meta{color:var(--muted);font-size:12.5px;font-weight:400}
 .slack ol{margin:2px 0;padding-left:20px;display:grid;gap:3px;font-size:14px}
-.slack .parent{opacity:.65;font-size:14px}
+.slack .parent{opacity:.6;font-size:14px}
 .flow{display:grid}
 .sc{grid-area:1/1;display:flex;flex-direction:column;gap:14px}
-.jtop{color:#A0A1A3;font-size:13px}.jkey{color:#4FB3E8}
-.jtitle{color:#F8F8F8;font-size:19px;font-weight:600;line-height:1.25}
-.jmeta{display:flex;gap:12px;align-items:center;flex-wrap:wrap;color:#A0A1A3;font-size:12.5px;margin-top:-6px}
-.jstat{background:#3A3E43;color:#E8E8E8;font-size:11px;font-weight:700;letter-spacing:.05em;padding:2px 6px;border-radius:3px}
-.jsec{color:#E8E8E8;font-weight:600;font-size:13px;margin-bottom:-6px}
-.brief-lines{display:grid;gap:5px;font-size:13.5px}
+/* the approved brief: a campaign brief carries the Velvet field, edge to edge, holding its title */
+.jfield{background:#4E0510;color:#FCF3EF;margin:0 calc(-1 * var(--pad));padding:18px var(--pad) 20px;display:grid;gap:6px}
+.jkey{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#E1AE83}
+.jtitle{font:400 24px/1.2 var(--serif);letter-spacing:-.01em;color:#FCF3EF}
+.jmeta{display:flex;gap:12px;align-items:center;flex-wrap:wrap;color:var(--muted);font-size:12.5px}
+.jstat{border:1px solid var(--ink);color:var(--ink);font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:1px 6px;border-radius:3px}
+.jsec{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:-6px}
+.brief-lines{display:grid;gap:8px;font-size:13.5px}
+.brief-lines .jk{display:block;font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .jbody,.jl,.jr{display:flex;flex-direction:column;gap:14px}
 @container slack (min-width:640px){.jbody{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:28px}}
-.conn{display:inline-flex;align-items:center;gap:8px;width:fit-content;border:1px solid #3A3E43;border-radius:999px;padding:3px 10px 3px 4px;font-size:12.5px;color:#BDBEC0}
-.conn .cdot{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#1F5E55;color:#F7F5F0;font-size:9.5px;font-weight:700}
-.unf{border-left:3px solid #4FB3E8;padding:4px 0 4px 12px;display:grid;gap:3px;font-size:13.5px;color:#BDBEC0;margin-top:4px}
-.jbox{border:1px solid #3A3E43;border-radius:6px;padding:7px 10px;color:#8E9093;font-size:13px}
+/* a tool call: Claude using Structural Content */
+.conn{display:inline-grid;grid-template-columns:auto minmax(0,1fr);column-gap:8px;align-items:center;width:fit-content;max-width:100%;border:1px solid var(--line-strong);border-radius:3px;padding:6px 10px 6px 6px;font-size:12.5px;line-height:1.35;color:var(--ink-soft);background:var(--bg)}
+.conn .cdot{grid-row:span 2;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background:#2D6BD7;color:#FCF3EF;font:400 9.5px var(--serif)}
+.conn i{font-style:normal;color:var(--muted)}
+.unf{border-left:2px solid var(--ink);padding:4px 0 4px 12px;display:grid;gap:3px;font-size:13.5px;margin-top:4px}
+.jbox{border:1px solid var(--line-strong);border-radius:3px;padding:7px 10px;color:var(--muted);font-size:13px;background:var(--bg)}
 .jcom{display:flex;gap:10px;font-size:13.5px}.jcom>div:last-child{min-width:0;display:grid;gap:3px}
-.jav{flex:none;width:28px;height:28px;border-radius:50%;color:#F7F5F0;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:11.5px}
+.jcom .av{width:26px;height:26px;font-size:10.5px}
 .swap{display:grid}.swap>div{grid-area:1/1}
-.wk{display:grid;gap:3px;align-content:start;opacity:0;animation:wk 40s infinite}.wk i{color:#BDBEC0}
+.wk{display:grid;gap:3px;align-content:start;opacity:0;animation:wk 40s infinite}.wk i{color:var(--muted)}
 .fbar{display:flex;justify-content:space-between;align-items:flex-end;gap:8px}
-.fsteps{display:flex;gap:4px;flex-wrap:wrap;margin-top:12px;font-size:12px;font-weight:600;letter-spacing:.03em}
-.fsteps button{font:inherit;letter-spacing:inherit;background:none;border:0;border-bottom:2px solid transparent;padding:3px 7px;color:#8E9093;cursor:pointer}
-.fsteps button:hover{color:#F8F8F8}
+.fsteps{display:flex;gap:4px;flex-wrap:wrap;margin-top:12px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.fsteps button{font:inherit;letter-spacing:inherit;text-transform:inherit;background:none;border:0;border-bottom:2px solid transparent;padding:3px 7px;color:var(--muted);cursor:pointer}
+.fsteps button:hover{color:var(--ink)}
 .fbtns{display:flex;gap:6px;flex:none}
-.fpause{flex:none;margin-top:12px;font:600 12px var(--sans);color:#D1D2D3;background:transparent;border:1px solid #3A3E43;border-radius:6px;padding:4px 10px;cursor:pointer}
-.slack button:focus-visible{outline-color:#4FB3E8}
-/* scenes: 1 recommendation 0–10s · 2 Sam asks 10–21s · 3 Sam approves 21–27s · 4 Jira 27–40s */
+.fpause{flex:none;margin-top:12px;font:600 12px var(--sans);color:var(--ink);background:var(--bg);border:1px solid var(--line-strong);border-radius:3px;padding:4px 10px;cursor:pointer}
+/* scenes: 1 recommendation 0–10s, 2 Sam asks 10–21s, 3 Sam approves 21–27s, 4 Jira 27–40s */
 @keyframes sA{0%{opacity:0;visibility:hidden}1%,24%{opacity:1;visibility:visible}25%,100%{opacity:0;visibility:hidden}}.sA{animation:sA 40s infinite}
 @keyframes sB{0%,24%{opacity:0;visibility:hidden}25%,51%{opacity:1;visibility:visible}52%,100%{opacity:0;visibility:hidden}}.sB{opacity:0;visibility:hidden;animation:sB 40s infinite}
 @keyframes sC{0%,51%{opacity:0;visibility:hidden}52%,67%{opacity:1;visibility:visible}68%,100%{opacity:0;visibility:hidden}}.sC{opacity:0;visibility:hidden;animation:sC 40s infinite}
@@ -283,10 +328,10 @@ p{margin:0}
 @keyframes rC2{0%,57%{opacity:0;transform:translateY(8px)}59%,100%{opacity:1;transform:none}}.rC2{opacity:0;animation:rC2 40s infinite}
 @keyframes rD1{0%,78%{opacity:0;transform:translateY(8px)}80%,100%{opacity:1;transform:none}}.rD1{opacity:0;animation:rD1 40s infinite}
 @keyframes rD2{0%,86%{opacity:0;transform:translateY(8px)}88%,100%{opacity:1;transform:none}}.rD2{opacity:0;animation:rD2 40s infinite}
-@keyframes L0{0%,24%{color:#F8F8F8;border-color:#4FB3E8}25%,100%{color:#8E9093;border-color:transparent}}.L0{animation:L0 40s infinite}
-@keyframes L1{0%,24%{color:#8E9093;border-color:transparent}25%,51%{color:#F8F8F8;border-color:#4FB3E8}52%,100%{color:#8E9093;border-color:transparent}}.L1{animation:L1 40s infinite}
-@keyframes L2{0%,51%{color:#8E9093;border-color:transparent}52%,67%{color:#F8F8F8;border-color:#4FB3E8}68%,100%{color:#8E9093;border-color:transparent}}.L2{animation:L2 40s infinite}
-@keyframes L3{0%,67%{color:#8E9093;border-color:transparent}68%,98%{color:#F8F8F8;border-color:#4FB3E8}99%,100%{color:#8E9093;border-color:transparent}}.L3{animation:L3 40s infinite}
+@keyframes L0{0%,24%{color:var(--ink);border-color:var(--ink)}25%,100%{color:var(--muted);border-color:transparent}}.L0{animation:L0 40s infinite}
+@keyframes L1{0%,24%{color:var(--muted);border-color:transparent}25%,51%{color:var(--ink);border-color:var(--ink)}52%,100%{color:var(--muted);border-color:transparent}}.L1{animation:L1 40s infinite}
+@keyframes L2{0%,51%{color:var(--muted);border-color:transparent}52%,67%{color:var(--ink);border-color:var(--ink)}68%,100%{color:var(--muted);border-color:transparent}}.L2{animation:L2 40s infinite}
+@keyframes L3{0%,67%{color:var(--muted);border-color:transparent}68%,98%{color:var(--ink);border-color:var(--ink)}99%,100%{color:var(--muted);border-color:transparent}}.L3{animation:L3 40s infinite}
 /* controls: paused, restarted, or held on one scene as a still */
 .slack.paused *{animation-play-state:paused!important}
 .slack.restart *{animation:none!important}
@@ -295,17 +340,13 @@ p{margin:0}
 .slack.still .sc.on{opacity:1;visibility:visible}
 .slack.still .rv{opacity:1;transform:none}
 .slack.still .wk{opacity:0}
-.slack.still .fsteps button{color:#8E9093;border-color:transparent}
-.slack.still .fsteps button.on{color:#F8F8F8;border-color:#4FB3E8}
-@media (prefers-reduced-motion:reduce){.slack *{animation:none!important}.slack .rv{opacity:1;transform:none}.slack:not(.still) .fsteps .L0{color:#F8F8F8;border-color:#4FB3E8}.slack .fpause{display:none}}
+.slack.still .fsteps button{color:var(--muted);border-color:transparent}
+.slack.still .fsteps button.on{color:var(--ink);border-color:var(--ink)}
+@media (prefers-reduced-motion:reduce){.slack *{animation:none!important}.slack .rv{opacity:1;transform:none}.slack:not(.still) .fsteps .L0{color:var(--ink);border-color:var(--ink)}.slack .fpause{display:none}}
 
 /* who, offer, faq */
 .who{display:grid;grid-template-columns:160px minmax(0,1fr);gap:32px;align-items:start}
 img.photo{object-fit:cover;width:160px;height:160px;border-radius:50%;border:1px solid var(--line)}
-.start3{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
-.start3 li{border:1px solid var(--line-strong);border-radius:12px;padding:18px;display:grid;gap:6px;align-content:start;font-size:15px}
-.start3 li b{font-size:17px}
-.start3 li span:not(.label){color:var(--ink-soft)}
 .book-data{font-size:14px;color:var(--ink-soft)}
 .book-data a{color:var(--accent)}
 .faq details{border-bottom:1px solid var(--line);padding:18px 0}
@@ -314,11 +355,10 @@ img.photo{object-fit:cover;width:160px;height:160px;border-radius:50%;border:1px
 .faq details[open] summary::after{content:"−"}
 .faq details p{margin-top:10px;color:var(--ink-soft);max-width:70ch}
 
-@media (max-width:1000px){.start3{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:760px){
   section{padding-block:64px}
-  .flow3,.raw,.groups{grid-template-columns:1fr}
-  .slack{padding:16px 14px 12px;font-size:14px}
+  .flow3,.raw,.groups,.focus3{grid-template-columns:1fr}
+  .slack{--pad:14px;padding:16px var(--pad) 12px;font-size:14px}
   .demo-body{padding:20px 16px}
   .brief{padding:18px}
   .brief dl{grid-template-columns:1fr;gap:2px}
@@ -326,22 +366,22 @@ img.photo{object-fit:cover;width:160px;height:160px;border-radius:50%;border:1px
   .who{grid-template-columns:1fr}
   img.photo{width:120px;height:120px}
 }
-@media (max-width:600px){.start3{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<header class="site-header"><div class="wrap"><img src="Media/logo/sc-favicon.svg" alt="" width="28" height="28"><span>Structural Content</span><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form" target="_blank" rel="noopener">Try it first</a></div></header>
+<header class="site-header"><div class="wrap"><img src="Media/logo/sc-favicon.svg" alt="" width="28" height="28"><span>Structural Content</span><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form" target="_blank" rel="noopener">Get your example</a></div></header>
 
 <main>
 <!-- 1. Hero -->
-<section class="hero"><div class="wrap">
+<section class="hero"><div class="wrap hero-grid">
   <div class="stack hero-text" style="gap:22px">
   <span class="eyebrow">AI content strategy for B2B marketing</span>
   <h1>Know what marketing should work on next.</h1>
   <p class="lede">Structural Content understands what your business is trying to achieve, finds and ranks the marketing opportunities most likely to help, and turns them into ready-to-execute briefs for your team to review and approve.</p>
-  <div class="row"><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form" target="_blank" rel="noopener">Try it first</a><a class="btn ghost" href="#demo">See the example ↓</a></div>
-  <p class="cred">Built by Sebastian Messerer, ex-Amazon Senior Content Strategist · <a href="https://sebastianmesserer.com/essays/structural-content/" target="_blank" rel="noopener">As featured in TLDR Marketing</a></p>
+  <div class="row"><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form" target="_blank" rel="noopener">Get your example</a><a class="btn ghost" href="#demo">Explore the demo</a></div>
+  <p class="cred">Built by Sebastian Messerer, ex-Amazon Senior Content Strategist. <a href="https://sebastianmesserer.com/essays/structural-content/" target="_blank" rel="noopener">As featured in TLDR Marketing</a></p>
   </div>
+  <div class="mini" id="mini"><div class="mtop"><span>Slack, #marketing</span><span>Simulated example</span></div><div class="mflow" id="mflow" role="img"></div><div class="mbar"><a href="#workflow">See the full workflow ↓</a><span class="fbtns"><button class="fpause" id="mfr" type="button">Replay</button><button class="fpause" id="mfp" type="button">Pause</button></span></div></div>
 </div></section>
 
 <!-- 2. The problem -->
@@ -402,7 +442,7 @@ img.photo{object-fit:cover;width:160px;height:160px;border-radius:50%;border:1px
       <p class="lede">I'm Sebastian Messerer. At Amazon Logistics, I developed AI-driven content planning systems that started with business goals and used internal data to understand what prevented people from taking valuable actions.</p>
       <p class="lede">The approach more than doubled conversion on the specific actions it targeted and expanded across 13 markets.</p>
       <p class="lede">I founded Structural Content to make a more capable version of that approach available to B2B marketing teams.</p>
-      <p class="label" style="letter-spacing:.06em">Worked with Amazon · Adobe · Allianz · Corning</p>
+      <p class="label" style="letter-spacing:.06em">Worked with Amazon, Adobe, Allianz and Corning</p>
       <div class="row" style="gap:20px"><a href="https://sebastianmesserer.com/essays/structural-content/" style="color:var(--accent);font-weight:600">Read the founding essay →</a><a href="https://www.linkedin.com/in/sebastianmesserer" target="_blank" rel="noopener" style="color:var(--accent);font-weight:600">Connect on LinkedIn →</a></div>
     </div>
   </div>
@@ -411,15 +451,13 @@ img.photo{object-fit:cover;width:160px;height:160px;border-radius:50%;border:1px
 <!-- 7. Next step -->
 <section id="offer"><div class="wrap stack" style="gap:24px">
   <h2>See what it could find for your business.</h2>
-  <p class="lede">If you have a business goal, customer data and a team that creates content, we can explore whether Structural Content could help you identify better opportunities for that team's work.</p>
-  <ol class="start3">
-    <li><span class="label">1 · Free trial</span><b>See it on a twin of your company.</b><span>We build it from your public footprint, with synthetic data, in the chat and project tool you use. Send the form, start within a day.</span></li>
-    <li><span class="label">2 · 30-minute demo</span><b>See it on your number.</b><span>The goal you need to move, and the data you already have.</span></li>
-    <li><span class="label">3 · Paid pilot</span><b>Proof on your own number.</b><span>We agree one outcome, set the baseline, and measure whether it lifted it.</span></li>
-    <li><span class="label">4 · Subscription</span><b>Kept current, every month.</b><span>Priced on the lift the pilot measured.</span></li>
-  </ol>
-  <div class="row"><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form" target="_blank" rel="noopener">Try it first</a><a class="btn ghost" href="https://calendar.app.google/uPeQFcDajNFzsZJYA" target="_blank" rel="noopener">Book a demo</a></div>
-  <p class="book-data">Your data stays in the EU, under our data processing agreement. <a href="trust.html">How we handle your data →</a></p>
+  <div class="prose">
+    <p>We'll build a fictional version of your company using publicly available information and synthetic customer data.</p>
+    <p>You'll see the kinds of opportunities Structural Content could discover, how it would prioritize them against your business goals, and what the resulting briefs look like, without connecting your systems or sharing confidential data.</p>
+  </div>
+  <div class="row"><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form" target="_blank" rel="noopener">Get your example</a><a class="btn ghost" href="https://calendar.app.google/uPeQFcDajNFzsZJYA" target="_blank" rel="noopener">Talk to Sebastian</a></div>
+  <p class="note">No access to your customer data required for the example.</p>
+  <p class="book-data"><a href="trust.html">How we handle your data →</a></p>
 </div></section>
 
 <!-- 8. FAQ -->
@@ -442,7 +480,8 @@ img.photo{object-fit:cover;width:160px;height:160px;border-radius:50%;border:1px
 <footer class="site-footer"><div class="wrap">
   <span class="fw">Structural Content</span>
   <span>Berlin, Germany</span>
-  <span>NVIDIA Inception · AWS Activate</span>
+  <span>NVIDIA Inception</span>
+  <span>AWS Activate</span>
   <a href="trust.html">Trust</a>
   <a href="privacy.html">Privacy</a>
   <a href="impressum.html">Impressum</a>
@@ -457,38 +496,38 @@ img.photo{object-fit:cover;width:160px;height:160px;border-radius:50%;border:1px
      Estimated impact = what the proposed work might add if it works: a range, not a forecast. */
   const CB={
     F:{
-      ent:{stage:"Acquire · prospects",h:"Enterprise prospects hesitate because they don't understand how CloudBox works across multiple offices.",
+      ent:{tab:["Acquire","Enterprise prospects"],stage:"Acquire prospects",h:"Enterprise prospects hesitate because they don't understand how CloudBox works across multiple offices.",
         p:"1,630 companies with 1,000+ staff visited in the last 12 months and never booked a demo. The few who called all asked how CloudBox would work across many offices.",
-        ev:[["Web analytics","Enterprise visitors: 4 in 100 book a demo. Mid-size visitors: 7 in 100."],["Sales call · first call","We have 12 offices. How would this work for all of them?"],["CRM","Win rate after an enterprise demo: 10%. Average contract: $25,000."]],
-        src:"CRM · sales calls · web analytics"},
-      onb:{stage:"Retain · new customers",h:"New customers who don't complete their first company-wide backup have weaker retention.",
+        ev:[["Web analytics","Enterprise visitors: 4 in 100 book a demo. Mid-size visitors: 7 in 100."],["First sales call","We have 12 offices. How would this work for all of them?"],["CRM","Win rate after an enterprise demo: 10%. Average contract: $25,000."]],
+        src:"CRM, sales calls, web analytics"},
+      onb:{tab:["Retain","New customers"],stage:"Retain new customers",h:"New customers who don't complete their first company-wide backup have weaker retention.",
         p:"360 of this year's 600 new customers backed up only one team in their first week. Customers who back up everyone in week one leave a third as often in their first year.",
-        ev:[["Product usage · first 7 days","240 of 600 new accounts backed up every team. 360 backed up one."],["CRM · cancellations","First-year churn: 10% if set up company-wide in week one, 30% if not. Average contract: $15,000."],["Support chat · first week","Setup only shows my team. How do I add the other departments?"]],
-        src:"product usage · CRM · support chats"},
-      exp:{stage:"Expand · existing customers",h:"Existing multi-office customers appear unaware of capabilities that could help them consolidate or expand their accounts.",
+        ev:[["Product usage, first 7 days","240 of 600 new accounts backed up every team. 360 backed up one."],["CRM cancellations","First-year churn: 10% if set up company-wide in week one, 30% if not. Average contract: $15,000."],["Support chat, first week","Setup only shows my team. How do I add the other departments?"]],
+        src:"product usage, CRM, support chats"},
+      exp:{tab:["Expand","Multi-office customers"],stage:"Expand existing customers",h:"Existing multi-office customers appear unaware of capabilities that could help them consolidate or expand their accounts.",
         p:"420 customers run several offices on separate accounts. Of those who moved to one account, 30% upgraded to the multi-office plan.",
-        ev:[["Account records","420 customers with 2+ offices on separate accounts."],["Support chat","Can we see all our offices in one place?"],["CRM · upgrades","30% of customers who merged accounts upgraded to multi-office: $4,000 more a year."]],
-        src:"account records · support chats · CRM"},
-      hack:{stage:"Acquire · prospects",h:"Prospects search for how to recover from a hack and find nothing.",
+        ev:[["Account records","420 customers with 2+ offices on separate accounts."],["Support chat","Can we see all our offices in one place?"],["CRM upgrades","30% of customers who merged accounts upgraded to multi-office: $4,000 more a year."]],
+        src:"account records, support chats, CRM"},
+      hack:{tab:["Acquire","Hack-recovery searchers"],stage:"Acquire prospects",h:"Prospects search for how to recover from a hack and find nothing.",
         p:"200 mid-size companies that weren't customers searched CloudBox's site for “get files back after a hack” in the last 12 months. 2 of them booked a demo.",
-        ev:[["Website search","“get files back after a hack”: 140 searches last month. No page found."],["Sales call · first call","If we get hit, how fast do we get everything back?"],["CRM · demo bookings","2 of the 200 non-customers who searched it booked a demo."]],
-        src:"website search · sales calls · CRM"},
-      sw:{stage:"Acquire · prospects",h:"Companies on another backup fear losing files if they switch.",
+        ev:[["Website search","“get files back after a hack”: 140 searches last month. No page found."],["First sales call","If we get hit, how fast do we get everything back?"],["CRM demo bookings","2 of the 200 non-customers who searched it booked a demo."]],
+        src:"website search, sales calls, CRM"},
+      sw:{tab:["Acquire","Companies switching backup"],stage:"Acquire prospects",h:"Companies on another backup fear losing files if they switch.",
         p:"150 mid-size companies that weren't customers asked about switching in website chat in the last 12 months. 4 of them booked a demo. No page explains how switching works.",
-        ev:[["Website chat","Can I switch from my current backup without losing anything?"],["CRM · demo bookings","3 in 100 who ask about switching book a demo. 4 in 100 from other chats do."],["Your website","No page on how switching works."]],
-        src:"website chat · CRM · site content"},
-      smb:{stage:"Acquire · small offices",h:"Small offices without an IT person don't start a trial. The home page speaks to IT people.",
+        ev:[["Website chat","Can I switch from my current backup without losing anything?"],["CRM demo bookings","3 in 100 who ask about switching book a demo. 4 in 100 from other chats do."],["Your website","No page on how switching works."]],
+        src:"website chat, CRM, site content"},
+      smb:{tab:["Acquire","Small offices without IT"],stage:"Acquire small offices",h:"Small offices without an IT person don't start a trial. The home page speaks to IT people.",
         p:"6,450 companies under 50 staff, with no IT person and not yet customers, visited in the last 12 months. 1,340 started a trial, leaving 5,110.",
-        ev:[["Sign-up survey · why did you try us?","Our IT guy left and nobody knows what's backed up."],["Your website · home page","Centralised endpoint protection with granular retention policies."],["Product sign-ups","21 in 100 of these visitors start a trial. 35 in 100 small offices who read the plain-language help pages do."]],
-        src:"web analytics · sign-up survey · product sign-ups"},
-      dbx:{stage:"Acquire · small offices",h:"Visitors think backup is the same as Dropbox.",
+        ev:[["Sign-up survey: why did you try us?","Our IT guy left and nobody knows what's backed up."],["Your home page","Centralised endpoint protection with granular retention policies."],["Product sign-ups","21 in 100 of these visitors start a trial. 35 in 100 small offices who read the plain-language help pages do."]],
+        src:"web analytics, sign-up survey, product sign-ups"},
+      dbx:{tab:["Acquire","Visitors comparing Dropbox"],stage:"Acquire small offices",h:"Visitors think backup is the same as Dropbox.",
         p:"1,400 small offices that weren't customers arrived from searches mentioning Dropbox. 140 started a trial, leaving 1,260.",
-        ev:[["Website chat","Is this the same as Dropbox? We already have that."],["Website chat · topics","Asked 80 times last month."],["Product sign-ups","10 in 100 of these visitors start a trial. 29 in 100 other small offices do."]],
-        src:"website chat · web analytics · product sign-ups"},
-      med:{stage:"Acquire · practices",h:"Dental and medical practices ask about patient records and get no answer.",
+        ev:[["Website chat","Is this the same as Dropbox? We already have that."],["Website chat topics","Asked 80 times last month."],["Product sign-ups","10 in 100 of these visitors start a trial. 29 in 100 other small offices do."]],
+        src:"website chat, web analytics, product sign-ups"},
+      med:{tab:["Acquire","Dental and medical practices"],stage:"Acquire practices",h:"Dental and medical practices ask about patient records and get no answer.",
         p:"680 practices visited in the last 12 months. 200 started a trial, leaving 480. No page says whether CloudBox is fine for patient records.",
-        ev:[["Website chat","Is this OK for patient records? We're a dental practice."],["Website chat · topics","Asked 30 times last month."],["Product sign-ups","29 in 100 practices start a trial. 40 in 100 law firms, which have their own page, do."]],
-        src:"website chat · web analytics · product sign-ups"}
+        ev:[["Website chat","Is this OK for patient records? We're a dental practice."],["Website chat topics","Asked 30 times last month."],["Product sign-ups","29 in 100 practices start a trial. 40 in 100 law firms, which have their own page, do."]],
+        src:"website chat, web analytics, product sign-ups"}
     },
     order:["arr","demo","trial"],
     goals:{
@@ -609,27 +648,32 @@ img.photo{object-fit:cover;width:160px;height:160px;border-radius:50%;border:1px
     ask:"Why onboarding rather than another acquisition campaign?",
     answer:`The affected customers are identifiable: ${top.audience}. The activation gap recurs with every new cohort, and the proposed work is relatively small: ${top.effort.toLowerCase()}, with a ${top.signal}. The enterprise acquisition opportunity has more total revenue at stake, ${alt.stake}, but the expected incremental impact of the proposed campaign is less certain, and most of it would land after 2027.`,
     go:"Makes sense. Let's do the onboarding campaign.",
+    toolAsk:"Compared onboarding and enterprise acquisition opportunities",
+    toolGo:`Approved the onboarding brief and created ${A.brief.id} in Jira`,
+    miniAsk:"Why not the enterprise campaign?",
+    miniAnswer:"More revenue at stake there, but its impact is less certain.",
+    miniGo:"Makes sense. Approved.",
     assignee:"Jennifer",
-    comments:[["Jennifer","J","#6C7FB0","<span class=\"lnk\">@Jon</span>, could you start on the setup guide?"],["Jon","Jo","#8A6FA8","On it."]]
+    comments:[["Jennifer","J","<span class=\"lnk\">@Jon</span>, could you start on the setup guide?"],["Jon","Jo","On it."]]
   };
   const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
 
   /* ---- the workflow animation, rendered from CB ---- */
   (function(){
     const S=CB.story,B=A.brief,slack=document.getElementById('slack'),flow=document.getElementById('flow');
-    document.getElementById('ex-note').textContent=`Simulated example · CloudBox's ${A.label} goal · a fictional company`;
-    const sc=`<div class="av" style="background:#1F5E55">SC</div>`,sam=`<div class="av" style="background:#B9855C">S</div>`;
-    flow.setAttribute('aria-label',`Simulated example with CloudBox, a fictional company. On ${S.when}, Structural Content posts in Slack that it has reviewed the latest customer evidence and that ${top.h.toLowerCase()} is the strongest of three opportunities. Sam, Head of Marketing, asks in the thread: ${S.ask} Claude answers from Structural Content's ranking and evidence. Sam approves the onboarding campaign, and Structural Content creates ${B.id} in Jira, assigned to ${S.assignee}. In Jira, ${S.assignee} asks Jon to start on the setup guide, and Jon says he's on it.`);
+    document.getElementById('ex-note').textContent=`Simulated example of CloudBox's ${A.label} goal. CloudBox is a fictional company.`;
+    const claude=`<div class="av ai">C</div>`,sc=`<div class="av scm">SC</div>`,sam=`<div class="av p">S</div>`;
+    flow.setAttribute('aria-label',`Simulated example with CloudBox, a fictional company. On ${S.when}, Structural Content posts in Slack that it has reviewed the latest customer evidence and that ${top.h.toLowerCase()} is the strongest of three opportunities. Sam, Head of Marketing, asks in the thread: ${S.ask} Claude uses Structural Content to compare the onboarding and enterprise opportunities and answers. Sam replies to Claude to approve the onboarding campaign, and Claude uses Structural Content to create ${B.id} in Jira, assigned to ${S.assignee}. In Jira, ${S.assignee} asks Jon to start on the setup guide, and Jon says he's on it.`);
     flow.innerHTML=
-      `<div class="sc sA"><div class="top"># marketing</div><div class="msg rA rv">${sc}<div><div><b>Structural Content</b> <span class="meta">APP · ${esc(S.when)}</span></div>${S.s1.map(t=>`<div>${esc(t)}</div>`).join('')}<ol>${A.opps.map(o=>`<li>${esc(o.h)} → ${esc(o.work.toLowerCase())} · est. ${esc(o.impact)}</li>`).join('')}</ol><div class="lnk" style="font-weight:600">View recommendation and evidence →</div></div></div></div>`+
-      `<div class="sc sB"><div class="top">Thread · # marketing</div><div class="msg parent">${sc}<div><div><b>Structural Content</b> <span class="meta">APP</span></div><div>${esc(S.s1[1])}</div></div></div>`+
+      `<div class="sc sA"><div class="top">Slack, #marketing</div><div class="msg rA rv">${sc}<div><div><b>Structural Content</b> <span class="meta">${esc(S.when)}</span></div>${S.s1.map(t=>`<div>${esc(t)}</div>`).join('')}<ol>${A.opps.map(o=>`<li>${esc(o.h)} → ${esc(o.work.toLowerCase())}. Est. ${esc(o.impact)}</li>`).join('')}</ol><div class="lnk" style="font-weight:600">View recommendation and evidence →</div></div></div></div>`+
+      `<div class="sc sB"><div class="top">Slack, thread in #marketing</div><div class="msg parent">${sc}<div><div><b>Structural Content</b> <span class="meta">APP</span></div><div>${esc(S.s1[1])}</div></div></div>`+
         `<div class="msg rB1 rv">${sam}<div><div><b>Sam</b> <span class="meta">Head of Marketing</span></div><div><span class="lnk">@Claude</span> ${esc(S.ask)}</div></div></div>`+
-        `<div class="msg rB2 rv"><div class="av" style="background:#C96A4A">C</div><div><div><b>Claude</b> <span class="meta">APP</span></div><div class="conn"><span class="cdot">SC</span>Answered from <b>Structural Content</b> · ranking and evidence</div><div class="swap"><div class="wk"><b>Checking the ranking…</b><i>${esc(A.finds.map(k=>CB.F[k].src).join(' · '))}</i></div><div class="rB3 rv">${esc(S.answer)}</div></div></div></div></div>`+
-      `<div class="sc sC"><div class="top">Thread · # marketing</div><div class="msg rC1 rv">${sam}<div><div><b>Sam</b> <span class="meta">Head of Marketing</span></div><div>${esc(S.go)}</div></div></div>`+
-        `<div class="msg rC2 rv">${sc}<div><div><b>Structural Content</b> <span class="meta">APP</span></div><div>Approved. Created ${esc(B.id)} in Jira and assigned it to ${esc(S.assignee)}.</div><div class="unf"><b>${esc(B.id)} · ${esc(B.title)}</b><span>Approved by Sam · Assignee: ${esc(S.assignee)}</span></div></div></div></div>`+
-      `<div class="sc sD"><div class="top jtop"><span>Marketing</span> / <span class="jkey">${esc(B.id)}</span></div><div class="jtitle">${esc(B.title)}</div><div class="jmeta"><span class="jstat">TO DO</span><span>Assignee <b>${esc(S.assignee)}</b></span><span>Approved by <b>Sam</b></span></div>`+
-        `<div class="jbody"><div class="jl"><div class="jsec">Brief</div><div class="brief-lines">${B.rows.filter(r=>r.jira).map(r=>`<div><b>${esc(r.k)}:</b> ${esc(r.v)}</div>`).join('')}</div></div>`+
-        `<div class="jr"><div class="jsec">Comments</div><span class="jbox">Add a comment…</span>${S.comments.map((c,i)=>`<div class="jcom rD${i+1} rv"><div class="jav" style="background:${c[2]}">${c[1]}</div><div><div><b>${esc(c[0])}</b> <span class="meta">just now</span></div><div>${c[3]}</div></div></div>`).join('')}</div></div></div>`;
+        `<div class="msg rB2 rv">${claude}<div><div><b>Claude</b> <span class="meta">APP</span></div><div class="conn"><span class="cdot">SC</span><span>Used <b>Structural Content</b></span><i>${esc(S.toolAsk)}</i></div><div class="swap"><div class="wk"><b>Checking the ranking…</b><i>${esc(A.finds.map(k=>CB.F[k].src).join(', '))}</i></div><div class="rB3 rv">${esc(S.answer)}</div></div></div></div></div>`+
+      `<div class="sc sC"><div class="top">Slack, thread in #marketing</div><div class="msg rC1 rv">${sam}<div><div><b>Sam</b> <span class="meta">Head of Marketing</span></div><div><span class="lnk">@Claude</span> ${esc(S.go)}</div></div></div>`+
+        `<div class="msg rC2 rv">${claude}<div><div><b>Claude</b> <span class="meta">APP</span></div><div class="conn"><span class="cdot">SC</span><span>Used <b>Structural Content</b></span><i>${esc(S.toolGo)}</i></div><div>Approved. Created ${esc(B.id)} in Jira and assigned it to ${esc(S.assignee)}.</div><div class="unf"><b>${esc(B.id)}: ${esc(B.title)}</b><span>Approved by Sam. Assignee: ${esc(S.assignee)}</span></div></div></div></div>`+
+      `<div class="sc sD"><div class="top">Jira, Marketing board</div><div class="jfield"><span class="jkey">${esc(B.id)} campaign brief</span><div class="jtitle">${esc(B.title)}</div></div><div class="jmeta"><span class="jstat">To do</span><span>Assignee <b>${esc(S.assignee)}</b></span><span>Approved by <b>Sam</b></span></div>`+
+        `<div class="jbody"><div class="jl"><div class="jsec">Brief</div><div class="brief-lines">${B.rows.filter(r=>r.jira).map(r=>`<div><span class="jk">${esc(r.k)}</span>${esc(r.v)}</div>`).join('')}</div></div>`+
+        `<div class="jr"><div class="jsec">Comments</div><span class="jbox">Add a comment…</span>${S.comments.map((c,i)=>`<div class="jcom rD${i+1} rv"><div class="av p">${c[1]}</div><div><div><b>${esc(c[0])}</b> <span class="meta">just now</span></div><div>${c[2]}</div></div></div>`).join('')}</div></div></div>`;
     /* controls (WCAG 2.2.2): pause, replay, and chapters that hold one scene as a still */
     const fp=document.getElementById('fp'),fr=document.getElementById('fr');
     /* a still marks one scene and its chapter as .on; scene n and chapter n pair by position */
@@ -641,21 +685,39 @@ img.photo{object-fit:cover;width:160px;height:160px;border-radius:50%;border:1px
     fr.addEventListener('click',restart);
   })();
 
+  /* ---- the gist in the hero: the same story in four beats ---- */
+  (function(){
+    const S=CB.story,B=A.brief,mini=document.getElementById('mini'),mflow=document.getElementById('mflow');
+    const av=(t,c)=>`<div class="av ${c}">${t}</div>`;
+    const beats=[
+      [av('SC','scm'),`<b>Structural Content</b> <small>Monday 9:02</small><div>Top opportunity this week: <b>first-week onboarding</b>. Est. ${esc(top.impact)}. <span class="lnk">View evidence →</span></div>`],
+      [av('S','p'),`<b>Sam</b> <small>Head of Marketing</small><div><span class="lnk">@Claude</span> ${esc(S.miniAsk)}</div>`],
+      [av('C','ai'),`<b>Claude</b> <small>used Structural Content</small><div>${esc(S.miniAnswer)}</div>`],
+      [av('S','p'),`<b>Sam</b><div><span class="lnk">@Claude</span> ${esc(S.miniGo)}</div>`],
+      [av('C','ai'),`<b>Claude</b> <small>used Structural Content</small><div class="mcard"><b>${esc(B.id)}: ${esc(B.title)}</b><br>Created in Jira for ${esc(S.assignee)}</div>`]];
+    mflow.setAttribute('aria-label',`Simulated example. Structural Content tells Sam that first-week onboarding is this week's top opportunity, estimated at ${top.impact}. Sam asks ${S.miniAsk} Claude uses Structural Content and answers: ${S.miniAnswer} Sam approves, and Claude uses Structural Content to create ${B.id}, ${B.title}, in Jira for ${S.assignee}.`);
+    mflow.innerHTML=beats.map((b,i)=>`<div class="mm m${i+1}">${b[0]}<div>${b[1]}</div></div>`).join('');
+    const fp=document.getElementById('mfp');
+    fp.addEventListener('click',()=>{const on=mini.classList.toggle('paused');fp.textContent=on?'Play':'Pause'});
+    document.getElementById('mfr').addEventListener('click',()=>{mini.classList.remove('paused');fp.textContent='Pause';mini.classList.add('restart');void mini.offsetWidth;mini.classList.remove('restart')});
+  })();
+
   /* ---- the interactive demo ---- */
   const STAGES=["Discovered","Prioritized","Recommended","Ready for production"];
   const body=document.getElementById('demo-body'),prog=document.getElementById('prog'),back=document.getElementById('d-back'),next=document.getElementById('d-next'),goalsEl=document.getElementById('goals'),setby=document.getElementById('d-goal');
-  let goal=CB.order[0],step=0,note="";
+  let goal=CB.order[0],step=0,note="",pick=null;
   const G=()=>CB.goals[goal];
-  const head=(i,q)=>`<span class="label stage">${i+1} of ${STAGES.length} · ${STAGES[i]}</span><h3>${q}</h3>`;
+  const head=(i,q)=>`<span class="label stage">Step ${i+1} of ${STAGES.length}: ${STAGES[i]}</span><h3>${q}</h3>`;
   const views=[
     g=>head(0,"Here's what Structural Content found for CloudBox this week.")+`<p class="muted">${esc(g.intro)} These are problems found in CloudBox's data, not campaign ideas someone typed in.</p>
-      <div class="finds">${g.finds.map(k=>CB.F[k]).map(f=>`<div class="find"><span class="label">${esc(f.stage)}</span><h4>${esc(f.h)}</h4><p>${esc(f.p)}</p><div class="raw">${f.ev.map(e=>`<div class="rawc"><span class="s">${esc(e[0])}</span><q>${esc(e[1])}</q></div>`).join('')}</div><p class="sim">Found in: ${esc(f.src)}</p></div>`).join('')}</div>`,
+      <div class="focus3" role="group" aria-label="Choose a focus">${g.finds.map((k,i)=>`<button type="button" data-pick="${i}" aria-pressed="${i===pick}"><small>${esc(CB.F[k].tab[0])}</small>${esc(CB.F[k].tab[1])}</button>`).join('')}</div>
+      ${pick===null?`<p class="sim">Choose a focus to see what Structural Content found.</p>`:''}<div class="finds">${g.finds.filter((_,i)=>i===pick).map(k=>CB.F[k]).map(f=>`<div class="find"><span class="label">${esc(f.stage)}</span><h4>${esc(f.h)}</h4><p>${esc(f.p)}</p><div class="raw">${f.ev.map(e=>`<div class="rawc"><span class="s">${esc(e[0])}</span><q>${esc(e[1])}</q></div>`).join('')}</div><p class="sim">Found in: ${esc(f.src)}</p></div>`).join('')}</div>`,
     g=>head(1,"Which opportunities deserve attention against this goal?")+`<div class="groups">${g.opps.map((o,i)=>`<div class="grp ${i===0?'top':''}"><span class="n">${i+1}</span><span class="label">${esc(CB.F[o.f].stage)}</span><h4>${esc(o.h)}</h4><span class="work">→ ${esc(o.work)}</span>
-      <dl class="facts"><dt>Estimated impact if it works</dt><dd class="imp">${esc(o.impact)}</dd><dt>Confidence</dt><dd>${esc(o.conf)}</dd><dt>Effort</dt><dd>${esc(o.effort)} · ${esc(o.signal)}</dd><dt>Audience</dt><dd>${esc(o.audience)}</dd><dt>At stake (not the expected result)</dt><dd>${esc(o.stake)}</dd><dt>Evidence for the barrier</dt><dd>${esc(o.evidence)}</dd><dt>Can content move it?</dt><dd>${esc(o.content)}</dd></dl>
+      <dl class="facts"><dt>Estimated impact if it works</dt><dd class="imp">${esc(o.impact)}</dd><dt>Confidence</dt><dd>${esc(o.conf)}</dd><dt>Effort</dt><dd>${esc(o.effort)}, ${esc(o.signal)}</dd><dt>Audience</dt><dd>${esc(o.audience)}</dd><dt>At stake (not the expected result)</dt><dd>${esc(o.stake)}</dd><dt>Evidence for the barrier</dt><dd>${esc(o.evidence)}</dd><dt>Can content move it?</dt><dd>${esc(o.content)}</dd></dl>
       <details class="maths"><summary>Show the maths and assumptions</summary><ul>${o.maths.map(m=>`<li>${esc(m[0])}${m[1]?`<small>${esc(m[1])}</small>`:''}</li>`).join('')}</ul></details></div>`).join('')}</div><p class="rule">${esc(g.rule)}</p>`,
-    g=>head(2,"What should Sam consider doing next, and why?")+`<div class="brief"><span class="label stage">Recommendation · from Structural Content</span><h3>${esc(g.opps[0].h)} → ${esc(g.opps[0].work.toLowerCase())}.</h3><dl>${g.rec.map(r=>`<dt>${esc(r[0])}</dt><dd>${esc(r[1])}</dd>`).join('')}</dl><div><button class="linkbtn" type="button" data-go="1">Compare it with the alternatives</button> · <button class="linkbtn" type="button" data-go="0">See the findings</button></div></div>
+    g=>head(2,"What should Sam consider doing next, and why?")+`<div class="brief"><span class="label stage">Recommendation from Structural Content</span><h3>${esc(g.opps[0].h)} → ${esc(g.opps[0].work.toLowerCase())}.</h3><dl>${g.rec.map(r=>`<dt>${esc(r[0])}</dt><dd>${esc(r[1])}</dd>`).join('')}</dl><div class="row" style="gap:8px 20px"><button class="linkbtn" type="button" data-go="1">Compare it with the alternatives</button><button class="linkbtn" type="button" data-go="0">See the findings</button></div></div>
       <div class="decide"><p class="sim">Sam decides. Structural Content recommends; it doesn't commit the team's time or budget. These buttons are a simulation.</p><div class="row"><button class="btn" type="button" data-act="approve">Approve</button><button class="btn ghost" type="button" data-act="revise">Revise</button><button class="btn ghost" type="button" data-act="defer">Defer</button><button class="btn ghost" type="button" data-act="pass">Pass</button></div>${note?`<p class="dnote">${esc(note)}</p>`:''}</div>`,
-    g=>head(3,"What does the team receive?")+`<div class="brief"><span class="label">${esc(g.brief.id)} · approved by Sam</span><h3>${esc(g.brief.title)}</h3><dl>${g.brief.rows.map(r=>`<dt>${esc(r.k)}</dt><dd>${esc(r.v)}${r.go!==undefined?` <button class="linkbtn" type="button" data-go="${r.go}">${esc(r.goLabel)}</button>`:''}</dd>`).join('')}</dl></div>
+    g=>head(3,"What does the team receive?")+`<div class="brief"><span class="label">${esc(g.brief.id)}, approved by Sam</span><h3>${esc(g.brief.title)}</h3><dl>${g.brief.rows.map(r=>`<dt>${esc(r.k)}</dt><dd>${esc(r.v)}${r.go!==undefined?` <button class="linkbtn" type="button" data-go="${r.go}">${esc(r.goLabel)}</button>`:''}</dd>`).join('')}</dl></div>
       <p class="muted">The brief goes to the team's project tool. Once the work is live, Structural Content tracks ${esc(g.track)}, and re-ranks what comes next as results arrive.</p><div class="row"><a class="btn" href="#workflow">See how approved work reaches the team, shown with the ${esc(A.label)} example ↓</a><button class="btn ghost" type="button" data-go="0">Start over</button></div>`
   ];
   const NOTES={
@@ -666,7 +728,7 @@ img.photo{object-fit:cover;width:160px;height:160px;border-radius:50%;border:1px
   function render(focus){
     const g=G();
     goalsEl.innerHTML=CB.order.map(k=>`<button type="button" data-goal="${k}" aria-pressed="${k===goal}">${esc(CB.goals[k].label)}</button>`).join('');
-    setby.innerHTML=`<b>${esc(g.set)}</b> · CloudBox is a fictional company; all data made up`;
+    setby.innerHTML=`<b>${esc(g.set)}.</b> CloudBox is a fictional company, and all data is made up.`;
     prog.innerHTML=STAGES.map((_,i)=>`<span class="${i<=step?'on':''}"></span>`).join('');
     back.hidden=step===0; next.hidden=step>=2;
     next.textContent=step===0?"Prioritize them":"See the recommendation";
@@ -676,12 +738,13 @@ img.photo{object-fit:cover;width:160px;height:160px;border-radius:50%;border:1px
   function go(s){step=s;note="";render(true)}
   body.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)return;
     if(t.dataset.go)go(+t.dataset.go);
+    if(t.dataset.pick){pick=+t.dataset.pick;render();body.querySelector(`[data-pick="${pick}"]`).focus()}
     const a=t.dataset.act;
     if(a==='approve')go(3);
     else if(NOTES[a]){note=NOTES[a](G());render()}});
   /* a new goal keeps the visitor's stage; an approval belongs to one recommendation, so it returns to the decision */
   goalsEl.addEventListener('click',e=>{const t=e.target.closest('button[data-goal]');if(!t||t.dataset.goal===goal)return;
-    goal=t.dataset.goal;step=Math.min(step,2);note="";render();t.ownerDocument.querySelector(`#goals [data-goal="${goal}"]`).focus()});
+    goal=t.dataset.goal;step=Math.min(step,2);note="";pick=null;render();t.ownerDocument.querySelector(`#goals [data-goal="${goal}"]`).focus()});
   next.onclick=()=>go(Math.min(step+1,2)); back.onclick=()=>go(Math.max(step-1,0));
   render();
 })();
