@@ -381,7 +381,7 @@ img.photo{object-fit:cover;width:160px;height:160px;border-radius:50%;border:1px
   <div class="row"><a class="btn" href="https://airtable.com/appY8zkbmG48YT7UT/pagGuwzEjOCVpxzyI/form" target="_blank" rel="noopener">Get your example</a><a class="btn ghost" href="#demo">Explore the demo</a></div>
   <p class="cred">Built by Sebastian Messerer, ex-Amazon Senior Content Strategist. <a href="https://sebastianmesserer.com/essays/structural-content/" target="_blank" rel="noopener">As featured in TLDR Marketing</a></p>
   </div>
-  <div class="mini" id="mini"><div class="mtop"><span>Slack, #marketing</span><span>Simulated example</span></div><div class="mflow" id="mflow" role="img"></div><div class="mbar"><a href="#workflow">See the full workflow ↓</a><span class="fbtns"><button class="fpause" id="mfr" type="button">Replay</button><button class="fpause" id="mfp" type="button">Pause</button></span></div></div>
+  <div class="mini" id="mini"><div class="mtop"><span>Slack, #marketing</span><span>Fictional company</span></div><div class="mflow" id="mflow" role="img"></div><div class="mbar"><a href="#workflow">See the full workflow ↓</a><span class="fbtns"><button class="fpause" id="mfr" type="button">Replay</button><button class="fpause" id="mfp" type="button">Pause</button></span></div></div>
 </div></section>
 
 <!-- 2. The problem -->
@@ -661,9 +661,9 @@ img.photo{object-fit:cover;width:160px;height:160px;border-radius:50%;border:1px
   /* ---- the workflow animation, rendered from CB ---- */
   (function(){
     const S=CB.story,B=A.brief,slack=document.getElementById('slack'),flow=document.getElementById('flow');
-    document.getElementById('ex-note').textContent=`Simulated example of CloudBox's ${A.label} goal. CloudBox is a fictional company.`;
+    document.getElementById('ex-note').textContent=`Example: CloudBox's ${A.label} goal. CloudBox is a fictional company.`;
     const claude=`<div class="av ai">C</div>`,sc=`<div class="av scm">SC</div>`,sam=`<div class="av p">S</div>`;
-    flow.setAttribute('aria-label',`Simulated example with CloudBox, a fictional company. On ${S.when}, Structural Content posts in Slack that it has reviewed the latest customer evidence and that ${top.h.toLowerCase()} is the strongest of three opportunities. Sam, Head of Marketing, asks in the thread: ${S.ask} Claude uses Structural Content to compare the onboarding and enterprise opportunities and answers. Sam replies to Claude to approve the onboarding campaign, and Claude uses Structural Content to create ${B.id} in Jira, assigned to ${S.assignee}. In Jira, ${S.assignee} asks Jon to start on the setup guide, and Jon says he's on it.`);
+    flow.setAttribute('aria-label',`Example with CloudBox, a fictional company. On ${S.when}, Structural Content posts in Slack that it has reviewed the latest customer evidence and that ${top.h.toLowerCase()} is the strongest of three opportunities. Sam, Head of Marketing, asks in the thread: ${S.ask} Claude uses Structural Content to compare the onboarding and enterprise opportunities and answers. Sam replies to Claude to approve the onboarding campaign, and Claude uses Structural Content to create ${B.id} in Jira, assigned to ${S.assignee}. In Jira, ${S.assignee} asks Jon to start on the setup guide, and Jon says he's on it.`);
     flow.innerHTML=
       `<div class="sc sA"><div class="top">Slack, #marketing</div><div class="msg rA rv">${sc}<div><div><b>Structural Content</b> <span class="meta">${esc(S.when)}</span></div>${S.s1.map(t=>`<div>${esc(t)}</div>`).join('')}<ol>${A.opps.map(o=>`<li>${esc(o.h)} → ${esc(o.work.toLowerCase())}. Est. ${esc(o.impact)}</li>`).join('')}</ol><div class="lnk" style="font-weight:600">View recommendation and evidence →</div></div></div></div>`+
       `<div class="sc sB"><div class="top">Slack, thread in #marketing</div><div class="msg parent">${sc}<div><div><b>Structural Content</b> <span class="meta">APP</span></div><div>${esc(S.s1[1])}</div></div></div>`+
@@ -695,7 +695,7 @@ img.photo{object-fit:cover;width:160px;height:160px;border-radius:50%;border:1px
       [av('C','ai'),`<b>Claude</b> <small>used Structural Content</small><div>${esc(S.miniAnswer)}</div>`],
       [av('S','p'),`<b>Sam</b><div><span class="lnk">@Claude</span> ${esc(S.miniGo)}</div>`],
       [av('C','ai'),`<b>Claude</b> <small>used Structural Content</small><div class="mcard"><b>${esc(B.id)}: ${esc(B.title)}</b><br>Created in Jira for ${esc(S.assignee)}</div>`]];
-    mflow.setAttribute('aria-label',`Simulated example. Structural Content tells Sam that first-week onboarding is this week's top opportunity, estimated at ${top.impact}. Sam asks ${S.miniAsk} Claude uses Structural Content and answers: ${S.miniAnswer} Sam approves, and Claude uses Structural Content to create ${B.id}, ${B.title}, in Jira for ${S.assignee}.`);
+    mflow.setAttribute('aria-label',`Example with CloudBox, a fictional company. Structural Content tells Sam that first-week onboarding is this week's top opportunity, estimated at ${top.impact}. Sam asks ${S.miniAsk} Claude uses Structural Content and answers: ${S.miniAnswer} Sam approves, and Claude uses Structural Content to create ${B.id}, ${B.title}, in Jira for ${S.assignee}.`);
     mflow.innerHTML=beats.map((b,i)=>`<div class="mm m${i+1}">${b[0]}<div>${b[1]}</div></div>`).join('');
     const fp=document.getElementById('mfp');
     fp.addEventListener('click',()=>{const on=mini.classList.toggle('paused');fp.textContent=on?'Play':'Pause'});
