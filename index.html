@@ -292,11 +292,11 @@ p{margin:0}
 .slack.restart *{animation:none!important}
 .slack.still *{animation:none!important}
 .slack.still .sc{opacity:0;visibility:hidden}
-.slack.still-0 .sA,.slack.still-1 .sB,.slack.still-2 .sC,.slack.still-3 .sD{opacity:1;visibility:visible}
+.slack.still .sc.on{opacity:1;visibility:visible}
 .slack.still .rv{opacity:1;transform:none}
 .slack.still .wk{opacity:0}
 .slack.still .fsteps button{color:#8E9093;border-color:transparent}
-.slack.still-0 .fsteps .L0,.slack.still-1 .fsteps .L1,.slack.still-2 .fsteps .L2,.slack.still-3 .fsteps .L3{color:#F8F8F8;border-color:#4FB3E8}
+.slack.still .fsteps button.on{color:#F8F8F8;border-color:#4FB3E8}
 @media (prefers-reduced-motion:reduce){.slack *{animation:none!important}.slack .rv{opacity:1;transform:none}.slack:not(.still) .fsteps .L0{color:#F8F8F8;border-color:#4FB3E8}.slack .fpause{display:none}}
 
 /* who, offer, faq */
@@ -386,7 +386,7 @@ img.photo{object-fit:cover;width:160px;height:160px;border-radius:50%;border:1px
 <section id="workflow"><div class="wrap stack" style="gap:24px">
   <h2>The work arrives where your team already works.</h2>
   <p class="lede">Structural Content brings recommendations to the person responsible for marketing priorities. They can review the evidence, ask questions and approve the work. Approved briefs go straight into the team's existing workflow.</p>
-  <div class="slack" id="slack"><div class="ex-note">Simulated example · CloudBox is a fictional company</div><div class="flow" id="flow" role="img"></div><div class="fbar"><div class="fsteps"><button type="button" class="L0" data-s="0">1 A recommendation arrives</button><button type="button" class="L1" data-s="1">2 Sam asks why</button><button type="button" class="L2" data-s="2">3 Sam approves</button><button type="button" class="L3" data-s="3">4 The team starts</button></div><span class="fbtns"><button class="fpause" id="fr" type="button">Replay</button><button class="fpause" id="fp" type="button">Pause</button></span></div></div>
+  <div class="slack" id="slack"><div class="ex-note" id="ex-note"></div><div class="flow" id="flow" role="img"></div><div class="fbar"><div class="fsteps"><button type="button" class="L0">1 A recommendation arrives</button><button type="button" class="L1">2 Sam asks why</button><button type="button" class="L2">3 Sam approves</button><button type="button" class="L3">4 The team starts</button></div><span class="fbtns"><button class="fpause" id="fr" type="button">Replay</button><button class="fpause" id="fp" type="button">Pause</button></span></div></div>
   <div class="prose">
     <p>Your team or agency creates the content. Structural Content uses the results to inform future recommendations.</p>
     <p>Work with it through Slack, Microsoft Teams or Claude. Send approved briefs to Jira, Asana or your existing project management tool.</p>
@@ -617,6 +617,7 @@ img.photo{object-fit:cover;width:160px;height:160px;border-radius:50%;border:1px
   /* ---- the workflow animation, rendered from CB ---- */
   (function(){
     const S=CB.story,B=A.brief,slack=document.getElementById('slack'),flow=document.getElementById('flow');
+    document.getElementById('ex-note').textContent=`Simulated example · CloudBox's ${A.label} goal · a fictional company`;
     const sc=`<div class="av" style="background:#1F5E55">SC</div>`,sam=`<div class="av" style="background:#B9855C">S</div>`;
     flow.setAttribute('aria-label',`Simulated example with CloudBox, a fictional company. On ${S.when}, Structural Content posts in Slack that it has reviewed the latest customer evidence and that ${top.h.toLowerCase()} is the strongest of three opportunities. Sam, Head of Marketing, asks in the thread: ${S.ask} Claude answers from Structural Content's ranking and evidence. Sam approves the onboarding campaign, and Structural Content creates ${B.id} in Jira, assigned to ${S.assignee}. In Jira, ${S.assignee} asks Jon to start on the setup guide, and Jon says he's on it.`);
     flow.innerHTML=
@@ -631,10 +632,12 @@ img.photo{object-fit:cover;width:160px;height:160px;border-radius:50%;border:1px
         `<div class="jr"><div class="jsec">Comments</div><span class="jbox">Add a comment…</span>${S.comments.map((c,i)=>`<div class="jcom rD${i+1} rv"><div class="jav" style="background:${c[2]}">${c[1]}</div><div><div><b>${esc(c[0])}</b> <span class="meta">just now</span></div><div>${c[3]}</div></div></div>`).join('')}</div></div></div>`;
     /* controls (WCAG 2.2.2): pause, replay, and chapters that hold one scene as a still */
     const fp=document.getElementById('fp'),fr=document.getElementById('fr');
-    const clearStill=()=>slack.classList.remove('still','still-0','still-1','still-2','still-3');
+    /* a still marks one scene and its chapter as .on; scene n and chapter n pair by position */
+    const scenes=[...flow.querySelectorAll('.sc')],chapters=[...slack.querySelectorAll('.fsteps button')];
+    const clearStill=()=>{slack.classList.remove('still');scenes.concat(chapters).forEach(e=>e.classList.remove('on'))};
     const restart=()=>{clearStill();slack.classList.remove('paused');fp.textContent='Pause';slack.classList.add('restart');void slack.offsetWidth;slack.classList.remove('restart')};
     fp.addEventListener('click',()=>{if(slack.classList.contains('still')){restart();return}const on=slack.classList.toggle('paused');fp.textContent=on?'Play':'Pause'});
-    slack.querySelectorAll('.fsteps button').forEach(b=>b.addEventListener('click',()=>{clearStill();slack.classList.add('still','still-'+b.dataset.s);fp.textContent='Play'}));
+    chapters.forEach((b,i)=>b.addEventListener('click',()=>{clearStill();scenes[i].classList.add('on');b.classList.add('on');slack.classList.add('still');fp.textContent='Play'}));
     fr.addEventListener('click',restart);
   })();
 
@@ -653,7 +656,7 @@ img.photo{object-fit:cover;width:160px;height:160px;border-radius:50%;border:1px
     g=>head(2,"What should Sam consider doing next, and why?")+`<div class="brief"><span class="label stage">Recommendation · from Structural Content</span><h3>${esc(g.opps[0].h)} → ${esc(g.opps[0].work.toLowerCase())}.</h3><dl>${g.rec.map(r=>`<dt>${esc(r[0])}</dt><dd>${esc(r[1])}</dd>`).join('')}</dl><div><button class="linkbtn" type="button" data-go="1">Compare it with the alternatives</button> · <button class="linkbtn" type="button" data-go="0">See the findings</button></div></div>
       <div class="decide"><p class="sim">Sam decides. Structural Content recommends; it doesn't commit the team's time or budget. These buttons are a simulation.</p><div class="row"><button class="btn" type="button" data-act="approve">Approve</button><button class="btn ghost" type="button" data-act="revise">Revise</button><button class="btn ghost" type="button" data-act="defer">Defer</button><button class="btn ghost" type="button" data-act="pass">Pass</button></div>${note?`<p class="dnote">${esc(note)}</p>`:''}</div>`,
     g=>head(3,"What does the team receive?")+`<div class="brief"><span class="label">${esc(g.brief.id)} · approved by Sam</span><h3>${esc(g.brief.title)}</h3><dl>${g.brief.rows.map(r=>`<dt>${esc(r.k)}</dt><dd>${esc(r.v)}${r.go!==undefined?` <button class="linkbtn" type="button" data-go="${r.go}">${esc(r.goLabel)}</button>`:''}</dd>`).join('')}</dl></div>
-      <p class="muted">The brief goes to the team's project tool. Once the work is live, Structural Content tracks ${esc(g.track)}, and re-ranks what comes next as results arrive.</p><div class="row"><a class="btn" href="#workflow">See how approved work reaches the team ↓</a><button class="btn ghost" type="button" data-go="0">Start over</button></div>`
+      <p class="muted">The brief goes to the team's project tool. Once the work is live, Structural Content tracks ${esc(g.track)}, and re-ranks what comes next as results arrive.</p><div class="row"><a class="btn" href="#workflow">${g===A?`See how ${esc(g.brief.id)} reaches the team ↓`:`See how approved work reaches the team, shown with the ${esc(A.label)} example ↓`}</a><button class="btn ghost" type="button" data-go="0">Start over</button></div>`
   ];
   const NOTES={
     revise:()=>"In the product, Sam says what to change, for example “in-app only, no emails”, and Structural Content rewrites the brief. Simulated here.",
